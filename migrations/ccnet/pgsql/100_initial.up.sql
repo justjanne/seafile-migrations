@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS OrgFileExtWhiteList (
+  id BIGSERIAL PRIMARY KEY,
+  org_id INTEGER UNIQUE,
+  white_list TEXT
+);

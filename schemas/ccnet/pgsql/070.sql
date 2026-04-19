@@ -1,0 +1,128 @@
+create table if not exists emailuser
+(
+	id serial,
+	email varchar(255),
+	passwd varchar(256),
+	is_staff integer not null,
+	is_active integer not null,
+	ctime bigint,
+	reference_id varchar(255),
+	primary key (id),
+	unique (email)
+);
+
+create unique index if not exists emailuser_reference_id_idx
+	on emailuser (reference_id);
+
+create table if not exists binding
+(
+	email varchar(255),
+	peer_id char(41),
+	unique (peer_id)
+);
+
+create table if not exists userrole
+(
+	email varchar(255),
+	role varchar(255),
+	unique (email, role)
+);
+
+create index if not exists userrole_email_idx
+	on userrole (email);
+
+create table if not exists ldapusers
+(
+	id serial,
+	email varchar(255) not null,
+	password varchar(255) not null,
+	is_staff smallint not null,
+	is_active smallint not null,
+	extra_attrs text,
+	reference_id varchar(255),
+	primary key (id)
+);
+
+create unique index if not exists ldapusers_email_idx
+	on ldapusers (email);
+
+create unique index if not exists ldapusers_reference_id_idx
+	on ldapusers (reference_id);
+
+create table if not exists ldapconfig
+(
+	cfg_group varchar(255) not null,
+	cfg_key varchar(255) not null,
+	value varchar(255),
+	property integer
+);
+
+create table if not exists "Group"
+(
+	group_id serial,
+	group_name varchar(255),
+	creator_name varchar(255),
+	timestamp bigint,
+	type varchar(32),
+	parent_group_id integer,
+	primary key (group_id)
+);
+
+create table if not exists groupuser
+(
+	group_id integer,
+	user_name varchar(255),
+	is_staff smallint,
+	unique (group_id, user_name)
+);
+
+create index if not exists groupuser_username_idx
+	on groupuser (user_name);
+
+create table if not exists groupdnpair
+(
+	group_id integer,
+	dn varchar(255)
+);
+
+create table if not exists groupstructure
+(
+	group_id integer not null,
+	path varchar(1024),
+	primary key (group_id)
+);
+
+create index if not exists structure_path_idx
+	on groupstructure (path);
+
+create table if not exists organization
+(
+	org_id serial,
+	org_name varchar(255),
+	url_prefix varchar(255),
+	creator varchar(255),
+	ctime bigint,
+	primary key (org_id),
+	unique (url_prefix)
+);
+
+create table if not exists orguser
+(
+	org_id integer,
+	email varchar(255),
+	is_staff integer not null,
+	unique (org_id, email)
+);
+
+create index if not exists orguser_email_idx
+	on orguser (email);
+
+create table if not exists orggroup
+(
+	org_id integer,
+	group_id integer,
+	unique (org_id, group_id)
+);
+
+create index if not exists orggroup_groupid_idx
+	on orggroup (group_id);

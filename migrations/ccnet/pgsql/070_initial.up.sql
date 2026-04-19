@@ -1,0 +1,2 @@
+ALTER TABLE UserRole
+    ADD COLUMN IF NOT EXISTS is_manual_set BOOLEAN DEFAULT false;

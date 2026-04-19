@@ -1,0 +1,2 @@
+ALTER TABLE UserRole
+    ADD COLUMN is_manual_set INTEGER DEFAULT 0;
