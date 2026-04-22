@@ -1,0 +1,3 @@
+ALTER TABLE `Binding` 
+  ADD COLUMN `id` bigint NOT NULL AUTO_INCREMENT FIRST,
+  ADD PRIMARY KEY (`id`);

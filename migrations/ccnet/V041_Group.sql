@@ -1,0 +1,1 @@
+ALTER TABLE `Group` ADD COLUMN `type` varchar(32) DEFAULT NULL;

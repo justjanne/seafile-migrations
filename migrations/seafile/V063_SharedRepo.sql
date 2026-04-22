@@ -1,0 +1,1 @@
+ALTER TABLE `SharedRepo` MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
