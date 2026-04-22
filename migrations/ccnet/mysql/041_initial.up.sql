@@ -1,2 +1,0 @@
-ALTER TABLE `Group`
-    ADD type VARCHAR(32);

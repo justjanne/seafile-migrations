@@ -1,2 +1,0 @@
-ALTER TABLE EmailUser
-    ALTER COLUMN passwd TYPE VARCHAR(256);
