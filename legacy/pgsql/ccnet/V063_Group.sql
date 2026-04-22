@@ -1,0 +1,1 @@
+ALTER TABLE "group" add column parent_group_id integer DEFAULT 0;

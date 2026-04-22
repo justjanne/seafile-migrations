@@ -1,0 +1,2 @@
+ALTER TABLE RepoSyncError
+    MODIFY COLUMN error_con VARCHAR (1024);

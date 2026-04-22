@@ -1,0 +1,1 @@
+ALTER TABLE RepoTokenPeerInfo ALTER COLUMN peer_ip TYPE VARCHAR(50);
