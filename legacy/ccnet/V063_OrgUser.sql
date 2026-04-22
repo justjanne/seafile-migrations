@@ -1,0 +1,5 @@
+ALTER TABLE `OrgUser`
+  DROP PRIMARY KEY,
+  ADD COLUMN `id` bigint NOT NULL AUTO_INCREMENT FIRST,
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE (`org_id`, `email`);
