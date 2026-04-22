@@ -1,0 +1,8 @@
+CREATE TABLE `UserRole` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  `is_manual_set` int DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB;
