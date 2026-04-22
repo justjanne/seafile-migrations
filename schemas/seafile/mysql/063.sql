@@ -6,7 +6,7 @@ CREATE TABLE `Branch` (
   `commit_id` char(41) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`,`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2;
+) ENGINE=InnoDB;
 
 -- GarbageRepos: table
 CREATE TABLE `GarbageRepos` (
@@ -50,7 +50,7 @@ CREATE TABLE `Repo` (
   `repo_id` char(37) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2;
+) ENGINE=InnoDB;
 
 -- RepoFileCount: table
 CREATE TABLE `RepoFileCount` (
@@ -59,7 +59,7 @@ CREATE TABLE `RepoFileCount` (
   `file_count` bigint unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2;
+) ENGINE=InnoDB;
 
 -- RepoGroup: table
 CREATE TABLE `RepoGroup` (
@@ -81,7 +81,7 @@ CREATE TABLE `RepoHead` (
   `branch_name` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2;
+) ENGINE=InnoDB;
 
 -- RepoHistoryLimit: table
 CREATE TABLE `RepoHistoryLimit` (
@@ -103,7 +103,7 @@ CREATE TABLE `RepoInfo` (
   `last_modifier` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3;
+) ENGINE=InnoDB;
 
 -- RepoOwner: table
 CREATE TABLE `RepoOwner` (
@@ -113,7 +113,7 @@ CREATE TABLE `RepoOwner` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`),
   KEY `owner_id` (`owner_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2;
+) ENGINE=InnoDB;
 
 -- RepoSize: table
 CREATE TABLE `RepoSize` (
@@ -123,7 +123,7 @@ CREATE TABLE `RepoSize` (
   `head_id` char(41) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2;
+) ENGINE=InnoDB;
 
 -- RepoTokenPeerInfo: table
 CREATE TABLE `RepoTokenPeerInfo` (
@@ -203,7 +203,7 @@ CREATE TABLE `SystemInfo` (
   `info_key` varchar(256) DEFAULT NULL,
   `info_value` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2;
+) ENGINE=InnoDB;
 
 -- UserQuota: table
 CREATE TABLE `UserQuota` (
