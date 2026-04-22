@@ -31,7 +31,7 @@ create index if not exists idx_emailuser_is_active
 create index if not exists idx_emailuser_is_department_owner
     on emailuser (is_department_owner);
 
-create table if not exists "group"
+create table if not exists "Group"
 (
     group_id bigserial,
     group_name varchar(255),

@@ -2,6 +2,12 @@ databaseChangeLog:
   - changeSet:
       id: v063-update-binding-id
       author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not:
+            columnExists:
+              tableName: binding
+              columnName: id
       changes:
         - addColumn:
             tableName: binding
@@ -13,7 +19,6 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  beforeColumn: email
 
   - changeSet:
       id: v063-update-emailuser-id-type
@@ -38,15 +43,21 @@ databaseChangeLog:
               - column:
                   name: parent_group_id
                   type: int
+      preConditions:
+        - onFail: CONTINUE
+          not:
+            columnExists:
+              tableName: "Group"
+              columnName: parent_group_id
 
   - changeSet:
       id: v063-create-groupstructure
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: groupstructure
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'groupstructure'"
       changes:
         - createTable:
             tableName: groupstructure
@@ -70,6 +81,12 @@ databaseChangeLog:
   - changeSet:
       id: v063-update-groupuser-id
       author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not:
+            columnExists:
+              tableName: groupuser
+              columnName: id
       changes:
         - dropPrimaryKey:
             tableName: groupuser
@@ -83,7 +100,6 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  beforeColumn: group_id
         - modifyDataType:
             tableName: groupuser
             columnName: group_id
@@ -92,6 +108,12 @@ databaseChangeLog:
   - changeSet:
       id: v063-update-ldapconfig-id
       author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not:
+            columnExists:
+              tableName: ldapconfig
+              columnName: id
       changes:
         - addColumn:
             tableName: ldapconfig
@@ -103,7 +125,6 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  beforeColumn: cfg_group
 
   - changeSet:
       id: v063-update-ldapusers-id-type
@@ -126,6 +147,12 @@ databaseChangeLog:
   - changeSet:
       id: v063-update-orggroup-id
       author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not:
+            columnExists:
+              tableName: orggroup
+              columnName: id
       changes:
         - dropPrimaryKey:
             tableName: orggroup
@@ -139,11 +166,16 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  beforeColumn: org_id
 
   - changeSet:
       id: v063-update-orguser-id
       author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not:
+            columnExists:
+              tableName: orguser
+              columnName: id
       changes:
         - dropPrimaryKey:
             tableName: orguser
@@ -157,4 +189,3 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  beforeColumn: org_id

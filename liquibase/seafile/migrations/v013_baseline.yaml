@@ -4,9 +4,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: branch
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'branch'"
       changes:
         - createTable:
             tableName: branch
@@ -34,9 +34,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: innerpubrepo
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'innerpubrepo'"
       changes:
         - createTable:
             tableName: innerpubrepo
@@ -56,9 +56,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: orgquota
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'orgquota'"
       changes:
         - createTable:
             tableName: orgquota
@@ -78,9 +78,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: orguserquota
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'orguserquota'"
       changes:
         - createTable:
             tableName: orguserquota
@@ -108,9 +108,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: repo
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'repo'"
       changes:
         - createTable:
             tableName: repo
@@ -127,9 +127,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: repogroup
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'repogroup'"
       changes:
         - createTable:
             tableName: repogroup
@@ -168,9 +168,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: repohead
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'repohead'"
       changes:
         - createTable:
             tableName: repohead
@@ -190,9 +190,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: repoowner
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'repoowner'"
       changes:
         - createTable:
             tableName: repoowner
@@ -218,9 +218,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: reposize
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'reposize'"
       changes:
         - createTable:
             tableName: reposize
@@ -243,9 +243,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: repousertoken
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'repousertoken'"
       changes:
         - createTable:
             tableName: repousertoken
@@ -269,9 +269,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: sharedrepo
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'sharedrepo'"
       changes:
         - createTable:
             tableName: sharedrepo
@@ -300,9 +300,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: userquota
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'userquota'"
       changes:
         - createTable:
             tableName: userquota
@@ -322,9 +322,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: webap
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'webap'"
       changes:
         - createTable:
             tableName: webap
@@ -338,3 +338,4 @@ databaseChangeLog:
               - column:
                   name: access_property
                   type: char(10)
+

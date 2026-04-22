@@ -4,210 +4,122 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: orgdownloadratelimit
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'orgdownloadratelimit'"
       changes:
         - createTable:
             tableName: orgdownloadratelimit
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: org_id
-                  type: int
-                  constraints:
-                    unique: true
-              - column:
-                  name: download_limit
-                  type: bigint
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: org_id, type: int, constraints: { unique: true } }
+              - column: { name: download_limit, type: bigint }
 
   - changeSet:
       id: v130-create-orguploadratelimit
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: orguploadratelimit
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'orguploadratelimit'"
       changes:
         - createTable:
             tableName: orguploadratelimit
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: org_id
-                  type: int
-                  constraints:
-                    unique: true
-              - column:
-                  name: upload_limit
-                  type: bigint
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: org_id, type: int, constraints: { unique: true } }
+              - column: { name: upload_limit, type: bigint }
 
   - changeSet:
       id: v130-create-orguserdefaultquota
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: orguserdefaultquota
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'orguserdefaultquota'"
       changes:
         - createTable:
             tableName: orguserdefaultquota
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: org_id
-                  type: int
-                  constraints:
-                    unique: true
-              - column:
-                  name: quota
-                  type: bigint
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: org_id, type: int, constraints: { unique: true } }
+              - column: { name: quota, type: bigint }
 
   - changeSet:
       id: v130-create-roledownloadratelimit
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: roledownloadratelimit
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'roledownloadratelimit'"
       changes:
         - createTable:
             tableName: roledownloadratelimit
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: role
-                  type: varchar(255)
-                  constraints:
-                    unique: true
-              - column:
-                  name: download_limit
-                  type: bigint
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: role, type: varchar(255), constraints: { unique: true } }
+              - column: { name: download_limit, type: bigint }
 
   - changeSet:
       id: v130-create-roleuploadratelimit
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: roleuploadratelimit
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'roleuploadratelimit'"
       changes:
         - createTable:
             tableName: roleuploadratelimit
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: role
-                  type: varchar(255)
-                  constraints:
-                    unique: true
-              - column:
-                  name: upload_limit
-                  type: bigint
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: role, type: varchar(255), constraints: { unique: true } }
+              - column: { name: upload_limit, type: bigint }
 
   - changeSet:
       id: v130-create-userdownloadratelimit
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: userdownloadratelimit
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'userdownloadratelimit'"
       changes:
         - createTable:
             tableName: userdownloadratelimit
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: user
-                  type: varchar(255)
-                  constraints:
-                    unique: true
-              - column:
-                  name: download_limit
-                  type: bigint
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: user, type: varchar(255), constraints: { unique: true } }
+              - column: { name: download_limit, type: bigint }
 
   - changeSet:
       id: v130-create-useruploadratelimit
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: useruploadratelimit
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'useruploadratelimit'"
       changes:
         - createTable:
             tableName: useruploadratelimit
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: user
-                  type: varchar(255)
-                  constraints:
-                    unique: true
-              - column:
-                  name: upload_limit
-                  type: bigint
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: user, type: varchar(255), constraints: { unique: true } }
+              - column: { name: upload_limit, type: bigint }
 
   - changeSet:
       id: v130-update-webuploadtempfiles-idx
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            indexExists:
-              indexName: idx_webuploadtempfiles_repo_id
-              tableName: webuploadtempfiles
+          not: { indexExists: { indexName: idx_webuploadtempfiles_repo_id, tableName: webuploadtempfiles } }
       changes:
         - createIndex:
             indexName: idx_webuploadtempfiles_repo_id
             tableName: webuploadtempfiles
             columns:
-              - column:
-                  name: repo_id
+              - column: { name: repo_id }

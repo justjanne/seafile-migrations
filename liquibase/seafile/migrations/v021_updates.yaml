@@ -4,16 +4,12 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: systeminfo
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'systeminfo'"
       changes:
         - createTable:
             tableName: systeminfo
             columns:
-              - column:
-                  name: info_key
-                  type: varchar(256)
-              - column:
-                  name: info_value
-                  type: varchar(1024)
+              - column: { name: info_key, type: varchar(256) }
+              - column: { name: info_value, type: varchar(1024) }

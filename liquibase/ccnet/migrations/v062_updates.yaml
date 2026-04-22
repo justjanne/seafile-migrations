@@ -23,9 +23,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: ldapconfig
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'ldapconfig'"
       changes:
         - createTable:
             tableName: ldapconfig

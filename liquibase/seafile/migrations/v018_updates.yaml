@@ -4,31 +4,19 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: virtualrepo
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'virtualrepo'"
       changes:
         - createTable:
             tableName: virtualrepo
             columns:
-              - column:
-                  name: repo_id
-                  type: char(36)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: origin_repo
-                  type: char(36)
-              - column:
-                  name: path
-                  type: text
-              - column:
-                  name: base_commit
-                  type: char(40)
+              - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: origin_repo, type: char(36) }
+              - column: { name: path, type: text }
+              - column: { name: base_commit, type: char(40) }
         - createIndex:
             indexName: idx_virtualrepo_origin_repo
             tableName: virtualrepo
             columns:
-              - column:
-                  name: origin_repo
+              - column: { name: origin_repo }

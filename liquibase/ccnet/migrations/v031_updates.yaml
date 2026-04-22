@@ -4,9 +4,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: userrole
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'userrole'"
       changes:
         - createTable:
             tableName: userrole

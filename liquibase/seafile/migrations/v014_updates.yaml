@@ -4,41 +4,27 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: repohistorylimit
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'repohistorylimit'"
       changes:
         - createTable:
             tableName: repohistorylimit
             columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: days
-                  type: int
+              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: days, type: int }
 
   - changeSet:
       id: v014-create-repovalidsince
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: repovalidsince
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'repovalidsince'"
       changes:
         - createTable:
             tableName: repovalidsince
             columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: timestamp
-                  type: bigint
+              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: timestamp, type: bigint }

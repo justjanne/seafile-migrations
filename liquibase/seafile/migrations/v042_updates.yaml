@@ -4,36 +4,24 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            columnExists:
-              tableName: repotrash
-              columnName: del_time
+          not: { columnExists: { tableName: repotrash, columnName: del_time } }
       changes:
         - addColumn:
             tableName: repotrash
             columns:
-              - column:
-                  name: del_time
-                  type: bigint
+              - column: { name: del_time, type: bigint }
 
   - changeSet:
       id: v042-create-usersharequota
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: usersharequota
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'usersharequota'"
       changes:
         - createTable:
             tableName: usersharequota
             columns:
-              - column:
-                  name: user
-                  type: varchar(255)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: quota
-                  type: bigint
+              - column: { name: user, type: varchar(255), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: quota, type: bigint }

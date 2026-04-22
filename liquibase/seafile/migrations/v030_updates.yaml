@@ -4,16 +4,11 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: garbagerepos
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'garbagerepos'"
       changes:
         - createTable:
             tableName: garbagerepos
             columns:
-              - column:
-                  name: repo_id
-                  type: char(36)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+              - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }

@@ -4,62 +4,33 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: repoinfo
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'repoinfo'"
       changes:
         - createTable:
             tableName: repoinfo
             columns:
-              - column:
-                  name: repo_id
-                  type: char(36)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: name
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: update_time
-                  type: bigint
-              - column:
-                  name: version
-                  type: int
-              - column:
-                  name: is_encrypted
-                  type: int
-              - column:
-                  name: last_modifier
-                  type: varchar(255)
+              - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: name, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: update_time, type: bigint }
+              - column: { name: version, type: int }
+              - column: { name: is_encrypted, type: int }
+              - column: { name: last_modifier, type: varchar(255) }
 
   - changeSet:
       id: v062-create-seafileconf
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: seafileconf
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'seafileconf'"
       changes:
         - createTable:
             tableName: seafileconf
             columns:
-              - column:
-                  name: cfg_group
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: cfg_key
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: value
-                  type: varchar(255)
-              - column:
-                  name: property
-                  type: int
+              - column: { name: cfg_group, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: cfg_key, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: value, type: varchar(255) }
+              - column: { name: property, type: int }

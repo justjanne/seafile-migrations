@@ -21,9 +21,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: ldapusers
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'ldapusers'"
       changes:
         - createTable:
             tableName: ldapusers
@@ -70,9 +70,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: groupdnpair
+          sqlCheck:
+            expectedResult: 0
+            sql: "${table_exists_query} 'groupdnpair'"
       changes:
         - createTable:
             tableName: groupdnpair
