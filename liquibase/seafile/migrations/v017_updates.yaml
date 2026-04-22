@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: v017-create-repotokenpeerinfo
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: repotokenpeerinfo
+      changes:
+        - createTable:
+            tableName: repotokenpeerinfo
+            columns:
+              - column:
+                  name: token
+                  type: char(41)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: peer_id
+                  type: char(41)
+              - column:
+                  name: peer_ip
+                  type: varchar(41)
+              - column:
+                  name: peer_name
+                  type: varchar(255)
+              - column:
+                  name: sync_time
+                  type: bigint
+
+  - changeSet:
+      id: v017-update-repousertoken-email-idx
+      author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not:
+            indexExists:
+              indexName: idx_repousertoken_email
+              tableName: repousertoken
+      changes:
+        - createIndex:
+            indexName: idx_repousertoken_email
+            tableName: repousertoken
+            columns:
+              - column:
+                  name: email

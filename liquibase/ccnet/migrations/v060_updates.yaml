@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: v060-update-ldapusers-unique-email
+      author: seafile
+      changes:
+        - dropIndex:
+            indexName: idx_ldapusers_email
+            tableName: ldapusers
+        - addUniqueConstraint:
+            columnNames: email
+            constraintName: uq_ldapusers_email
+            tableName: ldapusers

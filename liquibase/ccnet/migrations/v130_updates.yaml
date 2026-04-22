@@ -1,0 +1,86 @@
+databaseChangeLog:
+  - changeSet:
+      id: v130-update-emailuser-dept-owner
+      author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not:
+            columnExists:
+              tableName: emailuser
+              columnName: is_department_owner
+      changes:
+        - addColumn:
+            tableName: emailuser
+            columns:
+              - column:
+                  name: is_department_owner
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: v130-fix-legacy-typo-index
+      author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          indexExists:
+            indexName: EmailUser_is_department_owenr
+      changes:
+        - dropIndex:
+            indexName: EmailUser_is_department_owenr
+            tableName: emailuser
+
+  - changeSet:
+      id: v130-create-emailuser-indices
+      author: seafile
+      changes:
+        - createIndex:
+            indexName: idx_emailuser_is_active
+            tableName: emailuser
+            columns:
+              - column:
+                  name: is_active
+        - createIndex:
+            indexName: idx_emailuser_is_department_owner
+            tableName: emailuser
+            columns:
+              - column:
+                  name: is_department_owner
+
+  - changeSet:
+      id: v130-create-orgfileextwhitelist
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: orgfileextwhitelist
+      changes:
+        - createTable:
+            tableName: orgfileextwhitelist
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    unique: true
+              - column:
+                  name: white_list
+                  type: text
+
+  - changeSet:
+      id: v130-update-group-parent-default
+      author: seafile
+      changes:
+        - addDefaultValue:
+            tableName: "Group"
+            columnName: parent_group_id
+            defaultValueNumeric: 0

@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: v090-update-repotokenpeerinfo-indices
+      author: seafile
+      changes:
+        - createIndex:
+            indexName: idx_repotokenpeerinfo_peer_id
+            tableName: repotokenpeerinfo
+            columns:
+              - column:
+                  name: peer_id
+
+  - changeSet:
+      id: v090-update-repousertoken-indices
+      author: seafile
+      changes:
+        - createIndex:
+            indexName: idx_repousertoken_token
+            tableName: repousertoken
+            columns:
+              - column:
+                  name: token

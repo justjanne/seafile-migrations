@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: v040-update-sharedrepo
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: sharedrepo
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - modifyDataType:
+            tableName: sharedrepo
+            columnName: from_email
+            newDataType: varchar(255)
+        - modifyDataType:
+            tableName: sharedrepo
+            columnName: to_email
+            newDataType: varchar(255)
+        - createIndex:
+            indexName: idx_sharedrepo_from_email
+            tableName: sharedrepo
+            columns:
+              - column:
+                  name: from_email
+        - createIndex:
+            indexName: idx_sharedrepo_to_email
+            tableName: sharedrepo
+            columns:
+              - column:
+                  name: to_email

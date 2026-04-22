@@ -1,0 +1,469 @@
+databaseChangeLog:
+  - changeSet:
+      id: v063-update-branch-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: branch
+        - addColumn:
+            tableName: branch
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: name
+        - addUniqueConstraint:
+            columnNames: repo_id, name
+            constraintName: uq_branch_repo_name
+            tableName: branch
+
+  - changeSet:
+      id: v063-update-garbagerepos-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: garbagerepos
+        - addColumn:
+            tableName: garbagerepos
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - addUniqueConstraint:
+            columnNames: repo_id
+            constraintName: uq_garbagerepos_repo_id
+            tableName: garbagerepos
+
+  - changeSet:
+      id: v063-update-innerpubrepo-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: innerpubrepo
+        - addColumn:
+            tableName: innerpubrepo
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - addUniqueConstraint:
+            columnNames: repo_id
+            constraintName: uq_innerpubrepo_repo_id
+            tableName: innerpubrepo
+
+  - changeSet:
+      id: v063-update-orgquota-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: orgquota
+        - addColumn:
+            tableName: orgquota
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: org_id
+        - addUniqueConstraint:
+            columnNames: org_id
+            constraintName: uq_orgquota_org_id
+            tableName: orgquota
+
+  - changeSet:
+      id: v063-update-orguserquota-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: orguserquota
+        - addColumn:
+            tableName: orguserquota
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: org_id
+        - addUniqueConstraint:
+            columnNames: org_id, user
+            constraintName: uq_orguserquota_org_user
+            tableName: orguserquota
+
+  - changeSet:
+      id: v063-update-repo-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: repo
+        - addColumn:
+            tableName: repo
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - addUniqueConstraint:
+            columnNames: repo_id
+            constraintName: uq_repo_repo_id
+            tableName: repo
+
+  - changeSet:
+      id: v063-update-repofilecount-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: repofilecount
+        - addColumn:
+            tableName: repofilecount
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - addUniqueConstraint:
+            columnNames: repo_id
+            constraintName: uq_repofilecount_repo_id
+            tableName: repofilecount
+
+  - changeSet:
+      id: v063-update-repogroup-id
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: repogroup
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+
+  - changeSet:
+      id: v063-update-repohead-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: repohead
+        - addColumn:
+            tableName: repohead
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - addUniqueConstraint:
+            columnNames: repo_id
+            constraintName: uq_repohead_repo_id
+            tableName: repohead
+
+  - changeSet:
+      id: v063-update-repohistorylimit-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: repohistorylimit
+        - addColumn:
+            tableName: repohistorylimit
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - addUniqueConstraint:
+            columnNames: repo_id
+            constraintName: uq_repohistorylimit_repo_id
+            tableName: repohistorylimit
+
+  - changeSet:
+      id: v063-update-repoinfo-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: repoinfo
+        - addColumn:
+            tableName: repoinfo
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - addUniqueConstraint:
+            columnNames: repo_id
+            constraintName: uq_repoinfo_repo_id
+            tableName: repoinfo
+
+  - changeSet:
+      id: v063-update-repoowner-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: repoowner
+        - addColumn:
+            tableName: repoowner
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - addUniqueConstraint:
+            columnNames: repo_id
+            constraintName: uq_repoowner_repo_id
+            tableName: repoowner
+
+  - changeSet:
+      id: v063-update-reposize-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: reposize
+        - addColumn:
+            tableName: reposize
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - addUniqueConstraint:
+            columnNames: repo_id
+            constraintName: uq_reposize_repo_id
+            tableName: reposize
+
+  - changeSet:
+      id: v063-update-repotokenpeerinfo-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: repotokenpeerinfo
+        - addColumn:
+            tableName: repotokenpeerinfo
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: token
+        - addUniqueConstraint:
+            columnNames: token
+            constraintName: uq_repotokenpeerinfo_token
+            tableName: repotokenpeerinfo
+
+  - changeSet:
+      id: v063-update-repotrash-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: repotrash
+        - addColumn:
+            tableName: repotrash
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - addUniqueConstraint:
+            columnNames: repo_id
+            constraintName: uq_repotrash_repo_id
+            tableName: repotrash
+
+  - changeSet:
+      id: v063-update-repousertoken-id
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: repousertoken
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+
+  - changeSet:
+      id: v063-update-repovalidsince-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: repovalidsince
+        - addColumn:
+            tableName: repovalidsince
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - addUniqueConstraint:
+            columnNames: repo_id
+            constraintName: uq_repovalidsince_repo_id
+            tableName: repovalidsince
+
+  - changeSet:
+      id: v063-update-seafileconf-id
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: seafileconf
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: cfg_group
+
+  - changeSet:
+      id: v063-update-sharedrepo-id-type
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: sharedrepo
+            columnName: id
+            newDataType: bigint
+
+  - changeSet:
+      id: v063-update-systeminfo-id
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: systeminfo
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: info_key
+
+  - changeSet:
+      id: v063-update-userquota-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: userquota
+        - addColumn:
+            tableName: userquota
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: user
+        - addUniqueConstraint:
+            columnNames: user
+            constraintName: uq_userquota_user
+            tableName: userquota
+
+  - changeSet:
+      id: v063-update-usersharequota-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: usersharequota
+        - addColumn:
+            tableName: usersharequota
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: user
+        - addUniqueConstraint:
+            columnNames: user
+            constraintName: uq_usersharequota_user
+            tableName: usersharequota
+
+  - changeSet:
+      id: v063-update-virtualrepo-id
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: virtualrepo
+        - addColumn:
+            tableName: virtualrepo
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  beforeColumn: repo_id
+        - addUniqueConstraint:
+            columnNames: repo_id
+            constraintName: uq_virtualrepo_repo_id
+            tableName: virtualrepo

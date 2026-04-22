@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: v060-create-repofilecount
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: repofilecount
+      changes:
+        - createTable:
+            tableName: repofilecount
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: file_count
+                  type: bigint
+
+  - changeSet:
+      id: v060-update-repotokenpeerinfo-client-ver
+      author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not:
+            columnExists:
+              tableName: repotokenpeerinfo
+              columnName: client_ver
+      changes:
+        - addColumn:
+            tableName: repotokenpeerinfo
+            columns:
+              - column:
+                  name: client_ver
+                  type: varchar(20)

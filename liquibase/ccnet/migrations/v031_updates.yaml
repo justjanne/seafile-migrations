@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: v031-create-userrole
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: userrole
+      changes:
+        - createTable:
+            tableName: userrole
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+              - column:
+                  name: role
+                  type: varchar(255)

@@ -1,5 +1,0 @@
-ALTER TABLE `OrgGroup`
-  DROP PRIMARY KEY,
-  ADD COLUMN `id` bigint NOT NULL AUTO_INCREMENT FIRST,
-  ADD PRIMARY KEY (`id`)
-  ADD UNIQUE KEY (`org_id`, `group_id`);

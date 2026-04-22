@@ -1,1 +1,0 @@
-ALTER TABLE `EmailUser` MODIFY `id` bigint NOT NULL AUTO_INCREMENT;

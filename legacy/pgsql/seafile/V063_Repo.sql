@@ -1,8 +1,0 @@
-ALTER TABLE Repo
-DROP CONSTRAINT Repo_pkey;
-
-ALTER TABLE Repo
-    ADD COLUMN id serial NOT NULL;
-ALTER TABLE ONLY Repo
-    ADD CONSTRAINT Repo_id_pkey PRIMARY KEY (id);
-CREATE UNIQUE INDEX Repo_repo_id ON Repo USING btree (repo_id);

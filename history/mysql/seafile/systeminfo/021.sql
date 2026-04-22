@@ -1,4 +1,0 @@
-CREATE TABLE `SystemInfo` (
-  `info_key` varchar(256) DEFAULT NULL,
-  `info_value` varchar(1024) DEFAULT NULL
-) ENGINE=InnoDB;
