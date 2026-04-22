@@ -11,8 +11,8 @@ CREATE TABLE `EmailUser` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) DEFAULT NULL,
   `passwd` varchar(256) DEFAULT NULL,
-  `is_staff` tinyint(1) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
+  `is_staff` boolean NOT NULL,
+  `is_active` boolean NOT NULL,
   `ctime` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
@@ -48,8 +48,8 @@ CREATE TABLE `LDAPUsers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `is_staff` tinyint(1) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
+  `is_staff` boolean NOT NULL,
+  `is_active` boolean NOT NULL,
   `extra_attrs` text,
   PRIMARY KEY (`id`),
   KEY `email` (`email`)
@@ -67,7 +67,7 @@ CREATE TABLE `OrgGroup` (
 CREATE TABLE `OrgUser` (
   `org_id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `is_staff` tinyint(1) NOT NULL,
+  `is_staff` boolean NOT NULL,
   PRIMARY KEY (`org_id`,`email`),
   KEY `email` (`email`)
 ) ENGINE=InnoDB;

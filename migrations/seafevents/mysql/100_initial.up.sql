@@ -207,8 +207,8 @@ CREATE TABLE IF NOT EXISTS `VirusFile` (
   `repo_id` varchar(36) NOT NULL,
   `commit_id` varchar(40) NOT NULL,
   `file_path` text NOT NULL,
-  `has_deleted` tinyint(1) NOT NULL,
-  `has_ignored` tinyint(1) NOT NULL,
+  `has_deleted` boolean NOT NULL,
+  `has_ignored` boolean NOT NULL,
   PRIMARY KEY (`vid`),
   KEY `ix_VirusFile_has_ignored` (`has_ignored`),
   KEY `ix_VirusFile_has_deleted` (`has_deleted`)
