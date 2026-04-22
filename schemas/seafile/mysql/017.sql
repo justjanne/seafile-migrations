@@ -15,16 +15,16 @@ CREATE TABLE `InnerPubRepo` (
 
 -- OrgQuota: table
 CREATE TABLE `OrgQuota` (
-  `org_id` int(11) NOT NULL,
-  `quota` bigint(20) DEFAULT NULL,
+  `org_id` int NOT NULL,
+  `quota` bigint DEFAULT NULL,
   PRIMARY KEY (`org_id`)
 ) ENGINE=InnoDB;
 
 -- OrgUserQuota: table
 CREATE TABLE `OrgUserQuota` (
-  `org_id` int(11) NOT NULL,
+  `org_id` int NOT NULL,
   `user` varchar(255) NOT NULL,
-  `quota` bigint(20) DEFAULT NULL,
+  `quota` bigint DEFAULT NULL,
   PRIMARY KEY (`org_id`,`user`)
 ) ENGINE=InnoDB;
 
@@ -37,7 +37,7 @@ CREATE TABLE `Repo` (
 -- RepoGroup: table
 CREATE TABLE `RepoGroup` (
   `repo_id` char(37) DEFAULT NULL,
-  `group_id` int(11) DEFAULT NULL,
+  `group_id` int DEFAULT NULL,
   `user_name` varchar(255) DEFAULT NULL,
   `permission` char(15) DEFAULT NULL,
   UNIQUE KEY `group_id` (`group_id`,`repo_id`),
@@ -55,7 +55,7 @@ CREATE TABLE `RepoHead` (
 -- RepoHistoryLimit: table
 CREATE TABLE `RepoHistoryLimit` (
   `repo_id` char(37) NOT NULL,
-  `days` int(11) DEFAULT NULL,
+  `days` int DEFAULT NULL,
   PRIMARY KEY (`repo_id`)
 ) ENGINE=InnoDB;
 
@@ -70,7 +70,7 @@ CREATE TABLE `RepoOwner` (
 -- RepoSize: table
 CREATE TABLE `RepoSize` (
   `repo_id` char(37) NOT NULL,
-  `size` bigint(20) unsigned DEFAULT NULL,
+  `size` bigint unsigned DEFAULT NULL,
   `head_id` char(41) DEFAULT NULL,
   PRIMARY KEY (`repo_id`)
 ) ENGINE=InnoDB;
@@ -81,7 +81,7 @@ CREATE TABLE `RepoTokenPeerInfo` (
   `peer_id` char(41) DEFAULT NULL,
   `peer_ip` varchar(41) DEFAULT NULL,
   `peer_name` varchar(255) DEFAULT NULL,
-  `sync_time` bigint(20) DEFAULT NULL,
+  `sync_time` bigint DEFAULT NULL,
   PRIMARY KEY (`token`)
 ) ENGINE=InnoDB;
 
@@ -97,7 +97,7 @@ CREATE TABLE `RepoUserToken` (
 -- RepoValidSince: table
 CREATE TABLE `RepoValidSince` (
   `repo_id` char(37) NOT NULL,
-  `timestamp` bigint(20) DEFAULT NULL,
+  `timestamp` bigint DEFAULT NULL,
   PRIMARY KEY (`repo_id`)
 ) ENGINE=InnoDB;
 
@@ -113,7 +113,7 @@ CREATE TABLE `SharedRepo` (
 -- UserQuota: table
 CREATE TABLE `UserQuota` (
   `user` varchar(255) NOT NULL,
-  `quota` bigint(20) DEFAULT NULL,
+  `quota` bigint DEFAULT NULL,
   PRIMARY KEY (`user`)
 ) ENGINE=InnoDB;
 

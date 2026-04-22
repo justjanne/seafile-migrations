@@ -1,15 +1,15 @@
 CREATE TABLE IF NOT EXISTS `deleted_files_count` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` varchar(36) NOT NULL,
   `deleted_time` datetime NOT NULL,
-  `files_count` bigint(20) NOT NULL,
+  `files_count` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_deleted_files_count_repo_id` (`repo_id`),
   KEY `ix_deleted_files_count_deleted_time` (`deleted_time`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `ContentScanRecord` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `repo_id` varchar(36) NOT NULL,
   `commit_id` varchar(40) NOT NULL,
   `timestamp` datetime NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `ContentScanRecord` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `ContentScanResult` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `repo_id` varchar(36) NOT NULL,
   `path` text NOT NULL,
   `platform` varchar(32) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `ContentScanResult` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `Activity` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `op_type` varchar(128) NOT NULL,
   `op_user` varchar(255) NOT NULL,
   `obj_type` varchar(128) NOT NULL,
@@ -42,9 +42,9 @@ CREATE TABLE IF NOT EXISTS `Activity` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `UserActivity` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
-  `activity_id` int(11) DEFAULT NULL,
+  `activity_id` int DEFAULT NULL,
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `activity_id` (`activity_id`),
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `UserActivity` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `FileHistory` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `op_type` varchar(128) NOT NULL,
   `op_user` varchar(255) NOT NULL,
   `timestamp` datetime NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `FileHistory` (
   `file_uuid` varchar(40) DEFAULT NULL,
   `path` text NOT NULL,
   `repo_id_path_md5` varchar(32) DEFAULT NULL,
-  `size` bigint(20) NOT NULL,
+  `size` bigint NOT NULL,
   `old_path` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_FileHistory_file_uuid` (`file_uuid`),
@@ -71,13 +71,13 @@ CREATE TABLE IF NOT EXISTS `FileHistory` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `FileAudit` (
-  `eid` int(11) NOT NULL AUTO_INCREMENT,
+  `eid` int NOT NULL AUTO_INCREMENT,
   `timestamp` datetime NOT NULL,
   `etype` varchar(128) NOT NULL,
   `user` varchar(255) NOT NULL,
   `ip` varchar(45) NOT NULL,
   `device` text NOT NULL,
-  `org_id` int(11) NOT NULL,
+  `org_id` int NOT NULL,
   `repo_id` varchar(36) NOT NULL,
   `file_path` text NOT NULL,
   PRIMARY KEY (`eid`),
@@ -89,10 +89,10 @@ CREATE TABLE IF NOT EXISTS `FileAudit` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `FileUpdate` (
-  `eid` int(11) NOT NULL AUTO_INCREMENT,
+  `eid` int NOT NULL AUTO_INCREMENT,
   `timestamp` datetime NOT NULL,
   `user` varchar(255) NOT NULL,
-  `org_id` int(11) NOT NULL,
+  `org_id` int NOT NULL,
   `repo_id` varchar(36) NOT NULL,
   `commit_id` varchar(40) NOT NULL,
   `file_oper` text NOT NULL,
@@ -103,12 +103,12 @@ CREATE TABLE IF NOT EXISTS `FileUpdate` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `PermAudit` (
-  `eid` int(11) NOT NULL AUTO_INCREMENT,
+  `eid` int NOT NULL AUTO_INCREMENT,
   `timestamp` datetime NOT NULL,
   `etype` varchar(128) NOT NULL,
   `from_user` varchar(255) NOT NULL,
   `to` varchar(255) NOT NULL,
-  `org_id` int(11) NOT NULL,
+  `org_id` int NOT NULL,
   `repo_id` varchar(36) NOT NULL,
   `file_path` text NOT NULL,
   `permission` varchar(15) NOT NULL,
@@ -118,30 +118,30 @@ CREATE TABLE IF NOT EXISTS `PermAudit` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `TotalStorageStat` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `timestamp` datetime NOT NULL,
-  `total_size` bigint(20) NOT NULL,
-  `org_id` int(11) NOT NULL,
+  `total_size` bigint NOT NULL,
+  `org_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_storage_time_org` (`timestamp`,`org_id`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `FileOpsStat` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `timestamp` datetime NOT NULL,
   `op_type` varchar(16) NOT NULL,
-  `number` int(11) NOT NULL,
-  `org_id` int(11) NOT NULL,
+  `number` int NOT NULL,
+  `org_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_file_ops_time_org` (`timestamp`,`org_id`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `UserActivityStat` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name_time_md5` varchar(32) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `timestamp` datetime NOT NULL,
-  `org_id` int(11) NOT NULL,
+  `org_id` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_time_md5` (`name_time_md5`),
   KEY `idx_activity_time_org` (`timestamp`,`org_id`),
@@ -149,49 +149,49 @@ CREATE TABLE IF NOT EXISTS `UserActivityStat` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `UserTraffic` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `user` varchar(255) NOT NULL,
-  `org_id` int(11) DEFAULT NULL,
+  `org_id` int DEFAULT NULL,
   `timestamp` datetime NOT NULL,
   `op_type` varchar(48) NOT NULL,
-  `size` bigint(20) NOT NULL,
+  `size` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_UserTraffic_org_id` (`org_id`),
   KEY `idx_traffic_time_user` (`timestamp`,`user`,`org_id`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `SysTraffic` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `org_id` int(11) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `org_id` int DEFAULT NULL,
   `timestamp` datetime NOT NULL,
   `op_type` varchar(48) NOT NULL,
-  `size` bigint(20) NOT NULL,
+  `size` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_systraffic_time_org` (`timestamp`,`org_id`),
   KEY `ix_SysTraffic_org_id` (`org_id`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `SysTraffic` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `org_id` int(11) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `org_id` int DEFAULT NULL,
   `timestamp` datetime NOT NULL,
   `op_type` varchar(48) NOT NULL,
-  `size` bigint(20) NOT NULL,
+  `size` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_systraffic_time_org` (`timestamp`,`org_id`),
   KEY `ix_SysTraffic_org_id` (`org_id`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `MonthlySysTraffic` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `org_id` int(11) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `org_id` int DEFAULT NULL,
   `timestamp` datetime NOT NULL,
-  `web_file_upload` bigint(20) NOT NULL,
-  `web_file_download` bigint(20) NOT NULL,
-  `sync_file_upload` bigint(20) NOT NULL,
-  `sync_file_download` bigint(20) NOT NULL,
-  `link_file_upload` bigint(20) NOT NULL,
-  `link_file_download` bigint(20) NOT NULL,
+  `web_file_upload` bigint NOT NULL,
+  `web_file_download` bigint NOT NULL,
+  `sync_file_upload` bigint NOT NULL,
+  `sync_file_download` bigint NOT NULL,
+  `link_file_upload` bigint NOT NULL,
+  `link_file_download` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_monthlysystraffic_time_org` (`timestamp`,`org_id`)
 ) ENGINE=InnoDB;
@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `VirusScanRecord` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `VirusFile` (
-  `vid` int(11) NOT NULL AUTO_INCREMENT,
+  `vid` int NOT NULL AUTO_INCREMENT,
   `repo_id` varchar(36) NOT NULL,
   `commit_id` varchar(40) NOT NULL,
   `file_path` text NOT NULL,
@@ -215,8 +215,8 @@ CREATE TABLE IF NOT EXISTS `VirusFile` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `GroupIdLDAPUuidPair` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `group_id` int NOT NULL,
   `group_uuid` varchar(36) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `group_id` (`group_id`),

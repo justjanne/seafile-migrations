@@ -1,6 +1,6 @@
 -- Branch: table
 CREATE TABLE `Branch` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(10) DEFAULT NULL,
   `repo_id` char(41) DEFAULT NULL,
   `commit_id` char(41) DEFAULT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE `Branch` (
 
 -- GarbageRepos: table
 CREATE TABLE `GarbageRepos` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(36) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`)
@@ -18,7 +18,7 @@ CREATE TABLE `GarbageRepos` (
 
 -- InnerPubRepo: table
 CREATE TABLE `InnerPubRepo` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(37) DEFAULT NULL,
   `permission` char(15) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -27,26 +27,26 @@ CREATE TABLE `InnerPubRepo` (
 
 -- OrgQuota: table
 CREATE TABLE `OrgQuota` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `org_id` int(11) DEFAULT NULL,
-  `quota` bigint(20) DEFAULT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `org_id` int DEFAULT NULL,
+  `quota` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `org_id` (`org_id`)
 ) ENGINE=InnoDB;
 
 -- OrgUserQuota: table
 CREATE TABLE `OrgUserQuota` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `org_id` int(11) DEFAULT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `org_id` int DEFAULT NULL,
   `user` varchar(255) DEFAULT NULL,
-  `quota` bigint(20) DEFAULT NULL,
+  `quota` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `org_id` (`org_id`,`user`)
 ) ENGINE=InnoDB;
 
 -- Repo: table
 CREATE TABLE `Repo` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(37) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`)
@@ -54,18 +54,18 @@ CREATE TABLE `Repo` (
 
 -- RepoFileCount: table
 CREATE TABLE `RepoFileCount` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(36) DEFAULT NULL,
-  `file_count` bigint(20) unsigned DEFAULT NULL,
+  `file_count` bigint unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2;
 
 -- RepoGroup: table
 CREATE TABLE `RepoGroup` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(37) DEFAULT NULL,
-  `group_id` int(11) DEFAULT NULL,
+  `group_id` int DEFAULT NULL,
   `user_name` varchar(255) DEFAULT NULL,
   `permission` char(15) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -76,7 +76,7 @@ CREATE TABLE `RepoGroup` (
 
 -- RepoHead: table
 CREATE TABLE `RepoHead` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(37) DEFAULT NULL,
   `branch_name` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -85,21 +85,21 @@ CREATE TABLE `RepoHead` (
 
 -- RepoHistoryLimit: table
 CREATE TABLE `RepoHistoryLimit` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(37) DEFAULT NULL,
-  `days` int(11) DEFAULT NULL,
+  `days` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`)
 ) ENGINE=InnoDB;
 
 -- RepoInfo: table
 CREATE TABLE `RepoInfo` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(36) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
-  `update_time` bigint(20) DEFAULT NULL,
-  `version` int(11) DEFAULT NULL,
-  `is_encrypted` int(11) DEFAULT NULL,
+  `update_time` bigint DEFAULT NULL,
+  `version` int DEFAULT NULL,
+  `is_encrypted` int DEFAULT NULL,
   `last_modifier` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`)
@@ -107,7 +107,7 @@ CREATE TABLE `RepoInfo` (
 
 -- RepoOwner: table
 CREATE TABLE `RepoOwner` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(37) DEFAULT NULL,
   `owner_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -117,9 +117,9 @@ CREATE TABLE `RepoOwner` (
 
 -- RepoSize: table
 CREATE TABLE `RepoSize` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(37) DEFAULT NULL,
-  `size` bigint(20) unsigned DEFAULT NULL,
+  `size` bigint unsigned DEFAULT NULL,
   `head_id` char(41) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`)
@@ -127,12 +127,12 @@ CREATE TABLE `RepoSize` (
 
 -- RepoTokenPeerInfo: table
 CREATE TABLE `RepoTokenPeerInfo` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `token` char(41) DEFAULT NULL,
   `peer_id` char(41) DEFAULT NULL,
   `peer_ip` varchar(41) DEFAULT NULL,
   `peer_name` varchar(255) DEFAULT NULL,
-  `sync_time` bigint(20) DEFAULT NULL,
+  `sync_time` bigint DEFAULT NULL,
   `client_ver` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `token` (`token`)
@@ -140,14 +140,14 @@ CREATE TABLE `RepoTokenPeerInfo` (
 
 -- RepoTrash: table
 CREATE TABLE `RepoTrash` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(36) DEFAULT NULL,
   `repo_name` varchar(255) DEFAULT NULL,
   `head_id` char(40) DEFAULT NULL,
   `owner_id` varchar(255) DEFAULT NULL,
-  `size` bigint(20) DEFAULT NULL,
-  `org_id` int(11) DEFAULT NULL,
-  `del_time` bigint(20) DEFAULT NULL,
+  `size` bigint DEFAULT NULL,
+  `org_id` int DEFAULT NULL,
+  `del_time` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`),
   KEY `owner_id` (`owner_id`),
@@ -156,7 +156,7 @@ CREATE TABLE `RepoTrash` (
 
 -- RepoUserToken: table
 CREATE TABLE `RepoUserToken` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(37) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `token` char(41) DEFAULT NULL,
@@ -167,26 +167,26 @@ CREATE TABLE `RepoUserToken` (
 
 -- RepoValidSince: table
 CREATE TABLE `RepoValidSince` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(37) DEFAULT NULL,
-  `timestamp` bigint(20) DEFAULT NULL,
+  `timestamp` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `repo_id` (`repo_id`)
 ) ENGINE=InnoDB;
 
 -- SeafileConf: table
 CREATE TABLE `SeafileConf` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `cfg_group` varchar(255) NOT NULL,
   `cfg_key` varchar(255) NOT NULL,
   `value` varchar(255) DEFAULT NULL,
-  `property` int(11) DEFAULT NULL,
+  `property` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 -- SharedRepo: table
 CREATE TABLE `SharedRepo` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(37) DEFAULT NULL,
   `from_email` varchar(255) DEFAULT NULL,
   `to_email` varchar(255) DEFAULT NULL,
@@ -199,7 +199,7 @@ CREATE TABLE `SharedRepo` (
 
 -- SystemInfo: table
 CREATE TABLE `SystemInfo` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `info_key` varchar(256) DEFAULT NULL,
   `info_value` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -207,25 +207,25 @@ CREATE TABLE `SystemInfo` (
 
 -- UserQuota: table
 CREATE TABLE `UserQuota` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `user` varchar(255) DEFAULT NULL,
-  `quota` bigint(20) DEFAULT NULL,
+  `quota` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user` (`user`)
 ) ENGINE=InnoDB;
 
 -- UserShareQuota: table
 CREATE TABLE `UserShareQuota` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `user` varchar(255) DEFAULT NULL,
-  `quota` bigint(20) DEFAULT NULL,
+  `quota` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user` (`user`)
 ) ENGINE=InnoDB;
 
 -- VirtualRepo: table
 CREATE TABLE `VirtualRepo` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(36) DEFAULT NULL,
   `origin_repo` char(36) DEFAULT NULL,
   `path` text,
@@ -237,7 +237,7 @@ CREATE TABLE `VirtualRepo` (
 
 -- WebAP: table
 CREATE TABLE `WebAP` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `repo_id` char(37) DEFAULT NULL,
   `access_property` char(10) DEFAULT NULL,
   PRIMARY KEY (`id`),

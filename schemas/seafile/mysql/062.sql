@@ -21,16 +21,16 @@ CREATE TABLE `InnerPubRepo` (
 
 -- OrgQuota: table
 CREATE TABLE `OrgQuota` (
-  `org_id` int(11) NOT NULL,
-  `quota` bigint(20) DEFAULT NULL,
+  `org_id` int NOT NULL,
+  `quota` bigint DEFAULT NULL,
   PRIMARY KEY (`org_id`)
 ) ENGINE=InnoDB;
 
 -- OrgUserQuota: table
 CREATE TABLE `OrgUserQuota` (
-  `org_id` int(11) NOT NULL,
+  `org_id` int NOT NULL,
   `user` varchar(255) NOT NULL,
-  `quota` bigint(20) DEFAULT NULL,
+  `quota` bigint DEFAULT NULL,
   PRIMARY KEY (`org_id`,`user`)
 ) ENGINE=InnoDB;
 
@@ -43,14 +43,14 @@ CREATE TABLE `Repo` (
 -- RepoFileCount: table
 CREATE TABLE `RepoFileCount` (
   `repo_id` char(36) NOT NULL,
-  `file_count` bigint(20) unsigned DEFAULT NULL,
+  `file_count` bigint unsigned DEFAULT NULL,
   PRIMARY KEY (`repo_id`)
 ) ENGINE=InnoDB;
 
 -- RepoGroup: table
 CREATE TABLE `RepoGroup` (
   `repo_id` char(37) DEFAULT NULL,
-  `group_id` int(11) DEFAULT NULL,
+  `group_id` int DEFAULT NULL,
   `user_name` varchar(255) DEFAULT NULL,
   `permission` char(15) DEFAULT NULL,
   UNIQUE KEY `group_id` (`group_id`,`repo_id`),
@@ -68,7 +68,7 @@ CREATE TABLE `RepoHead` (
 -- RepoHistoryLimit: table
 CREATE TABLE `RepoHistoryLimit` (
   `repo_id` char(37) NOT NULL,
-  `days` int(11) DEFAULT NULL,
+  `days` int DEFAULT NULL,
   PRIMARY KEY (`repo_id`)
 ) ENGINE=InnoDB;
 
@@ -76,9 +76,9 @@ CREATE TABLE `RepoHistoryLimit` (
 CREATE TABLE `RepoInfo` (
   `repo_id` char(36) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `update_time` bigint(20) DEFAULT NULL,
-  `version` int(11) DEFAULT NULL,
-  `is_encrypted` int(11) DEFAULT NULL,
+  `update_time` bigint DEFAULT NULL,
+  `version` int DEFAULT NULL,
+  `is_encrypted` int DEFAULT NULL,
   `last_modifier` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`repo_id`)
 ) ENGINE=InnoDB;
@@ -94,7 +94,7 @@ CREATE TABLE `RepoOwner` (
 -- RepoSize: table
 CREATE TABLE `RepoSize` (
   `repo_id` char(37) NOT NULL,
-  `size` bigint(20) unsigned DEFAULT NULL,
+  `size` bigint unsigned DEFAULT NULL,
   `head_id` char(41) DEFAULT NULL,
   PRIMARY KEY (`repo_id`)
 ) ENGINE=InnoDB;
@@ -105,7 +105,7 @@ CREATE TABLE `RepoTokenPeerInfo` (
   `peer_id` char(41) DEFAULT NULL,
   `peer_ip` varchar(41) DEFAULT NULL,
   `peer_name` varchar(255) DEFAULT NULL,
-  `sync_time` bigint(20) DEFAULT NULL,
+  `sync_time` bigint DEFAULT NULL,
   `client_ver` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`token`)
 ) ENGINE=InnoDB;
@@ -116,9 +116,9 @@ CREATE TABLE `RepoTrash` (
   `repo_name` varchar(255) DEFAULT NULL,
   `head_id` char(40) DEFAULT NULL,
   `owner_id` varchar(255) DEFAULT NULL,
-  `size` bigint(20) DEFAULT NULL,
-  `org_id` int(11) DEFAULT NULL,
-  `del_time` bigint(20) DEFAULT NULL,
+  `size` bigint DEFAULT NULL,
+  `org_id` int DEFAULT NULL,
+  `del_time` bigint DEFAULT NULL,
   PRIMARY KEY (`repo_id`),
   KEY `owner_id` (`owner_id`),
   KEY `org_id` (`org_id`)
@@ -136,7 +136,7 @@ CREATE TABLE `RepoUserToken` (
 -- RepoValidSince: table
 CREATE TABLE `RepoValidSince` (
   `repo_id` char(37) NOT NULL,
-  `timestamp` bigint(20) DEFAULT NULL,
+  `timestamp` bigint DEFAULT NULL,
   PRIMARY KEY (`repo_id`)
 ) ENGINE=InnoDB;
 
@@ -145,12 +145,12 @@ CREATE TABLE `SeafileConf` (
   `cfg_group` varchar(255) NOT NULL,
   `cfg_key` varchar(255) NOT NULL,
   `value` varchar(255) DEFAULT NULL,
-  `property` int(11) DEFAULT NULL
+  `property` int DEFAULT NULL
 ) ENGINE=InnoDB;
 
 -- SharedRepo: table
 CREATE TABLE `SharedRepo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `repo_id` char(37) DEFAULT NULL,
   `from_email` varchar(255) DEFAULT NULL,
   `to_email` varchar(255) DEFAULT NULL,
@@ -170,14 +170,14 @@ CREATE TABLE `SystemInfo` (
 -- UserQuota: table
 CREATE TABLE `UserQuota` (
   `user` varchar(255) NOT NULL,
-  `quota` bigint(20) DEFAULT NULL,
+  `quota` bigint DEFAULT NULL,
   PRIMARY KEY (`user`)
 ) ENGINE=InnoDB;
 
 -- UserShareQuota: table
 CREATE TABLE `UserShareQuota` (
   `user` varchar(255) NOT NULL,
-  `quota` bigint(20) DEFAULT NULL,
+  `quota` bigint DEFAULT NULL,
   PRIMARY KEY (`user`)
 ) ENGINE=InnoDB;
 

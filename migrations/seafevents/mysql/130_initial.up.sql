@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS `user_quota_usage` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
-  `org_id` int(11) NOT NULL,
-  `quota` bigint(20) DEFAULT NULL,
-  `usage` bigint(20) DEFAULT NULL,
+  `org_id` int NOT NULL,
+  `quota` bigint DEFAULT NULL,
+  `usage` bigint DEFAULT NULL,
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_user_quota_usage_username` (`username`),
@@ -12,10 +12,10 @@ CREATE TABLE IF NOT EXISTS `user_quota_usage` (
 ) ENGINE=InnoDBmb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `org_quota_usage` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `org_id` int(11) NOT NULL,
-  `quota` bigint(20) DEFAULT NULL,
-  `usage` bigint(20) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `org_id` int NOT NULL,
+  `quota` bigint DEFAULT NULL,
+  `usage` bigint DEFAULT NULL,
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_org_quota_usage_org_id` (`org_id`),
