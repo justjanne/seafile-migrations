@@ -6,6 +6,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: orggroup
+        newTableName: orggroup
+- changeSet:
+    id: normalize-orggroup
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: OrgGroup
         newTableName: orggroup
 - changeSet:
@@ -25,7 +34,7 @@ databaseChangeLog:
         columnNames: org_id, group_id
         tableName: orggroup
     - createIndex:
-        indexName: orggroup_groupid_idx
+        indexName: group_id
         tableName: orggroup
         columns:
         - column:

@@ -19,6 +19,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `groupuser` MODIFY COLUMN `group_id` bigint NOT NULL AUTO_INCREMENT
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `groupuser` MODIFY COLUMN `group_id` bigint NOT NULL AUTO_INCREMENT
     - modifyDataType:
         tableName: groupuser
         columnName: group_id
@@ -30,11 +33,11 @@ databaseChangeLog:
         dbms: mysql
     - dropIndex:
         tableName: groupuser
-        indexName: groupuser_username_idx
+        indexName: user_name
       dbms: postgresql
     - createIndex:
         tableName: groupuser
-        indexName: idx_groupuser_user_name
+        indexName: user_name
         columns:
         - column:
             name: user_name

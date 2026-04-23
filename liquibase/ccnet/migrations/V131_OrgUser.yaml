@@ -7,6 +7,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `orguser` MODIFY COLUMN `is_staff` boolean
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `orguser` MODIFY COLUMN `is_staff` boolean
     - modifyDataType:
         tableName: orguser
         columnName: is_staff
@@ -14,10 +17,10 @@ databaseChangeLog:
         dbms: postgresql
     - dropIndex:
         tableName: orguser
-        indexName: orguser_email_idx
+        indexName: email
     - createIndex:
         tableName: orguser
-        indexName: idx_orguser_email
+        indexName: email
         columns:
         - column:
             name: email

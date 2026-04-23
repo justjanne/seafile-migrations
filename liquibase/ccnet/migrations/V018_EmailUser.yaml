@@ -6,6 +6,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `emailuser` MODIFY COLUMN `passwd` char(64)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `emailuser` MODIFY COLUMN `passwd` char(64)
     - modifyDataType:
         tableName: emailuser
         columnName: passwd

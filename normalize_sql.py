@@ -3,7 +3,7 @@ import re
 
 def normalize_create_table(sql):
     # Extract table name
-    match = re.match(r'create table `?(\w+)`?\s*\((.*)\)', sql)
+    match = re.match(r'create table `?(\w+)`?\s*\((.*)\)', sql, re.DOTALL)
     if not match:
         return sql
     table_name = match.group(1)
@@ -52,18 +52,18 @@ def normalize_sql(text):
     # Remove AUTO_INCREMENT
     text = re.sub(r'auto_increment=\d+', '', text, flags=re.IGNORECASE)
     # Remove character set / collate / engine info at the end of create table
-    text = re.sub(r'\)\s*(engine|default charset|collate|charset).*?;', ');', text, flags=re.IGNORECASE)
+    text = re.sub(r'\)\s*(engine|default charset|collate|charset).*?;', ');', text, flags=re.IGNORECASE | re.DOTALL)
     # Lowercase everything
     text = text.lower()
     # Normalize spaces
     text = re.sub(r'\s+', ' ', text)
     
-    # Extract CREATE TABLE blocks
-    tables = re.findall(r'create table .*?;', text)
+    # Extract CREATE TABLE blocks - USE re.DOTALL
+    tables = re.findall(r'create table .*?;', text, re.DOTALL)
     normalized_tables = [normalize_create_table(t.strip(';')) for t in tables]
     
     # Extract CREATE INDEX blocks (if any)
-    indices = re.findall(r'create index .*?;', text)
+    indices = re.findall(r'create index .*?;', text, re.DOTALL)
     
     # Filter out databasechangelog tables
     final_objects = []

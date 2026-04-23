@@ -12,7 +12,7 @@ databaseChangeLog:
         indexName: virtualrepo_origin_repo_idx
     - createIndex:
         tableName: virtualrepo
-        indexName: idx_virtualrepo_origin_repo
+        indexName: origin_repo
         columns:
         - column:
             name: repo_id

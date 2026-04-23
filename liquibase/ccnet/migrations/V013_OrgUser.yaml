@@ -6,6 +6,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: orguser
+        newTableName: orguser
+- changeSet:
+    id: normalize-orguser
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: OrgUser
         newTableName: orguser
 - changeSet:
@@ -30,7 +39,7 @@ databaseChangeLog:
         columnNames: org_id, email
         tableName: orguser
     - createIndex:
-        indexName: orguser_email_idx
+        indexName: email
         tableName: orguser
         columns:
         - column:

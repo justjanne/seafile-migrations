@@ -4,7 +4,7 @@ databaseChangeLog:
     author: seafile
     changes:
     - dropIndex:
-        indexName: ldapusers_email_idx
+        indexName: email
         tableName: ldapusers
         dbms: postgresql
     - dropIndex:
@@ -12,7 +12,7 @@ databaseChangeLog:
         tableName: ldapusers
         dbms: mysql
     - createIndex:
-        indexName: ldapusers_email_idx
+        indexName: email
         tableName: ldapusers
         columns:
         - column:

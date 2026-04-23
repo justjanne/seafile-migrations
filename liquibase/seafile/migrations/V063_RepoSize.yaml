@@ -19,6 +19,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `reposize` MODIFY COLUMN `repo_id` CHAR(37)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `reposize` MODIFY COLUMN `repo_id` CHAR(37)
     - modifyDataType:
         tableName: reposize
         columnName: repo_id

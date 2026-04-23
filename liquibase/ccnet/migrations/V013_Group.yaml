@@ -6,6 +6,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: group
+        newTableName: group
+- changeSet:
+    id: normalize-group
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: Group
         newTableName: group
 - changeSet:

@@ -6,6 +6,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: sharedrepo
+        newTableName: sharedrepo
+- changeSet:
+    id: normalize-sharedrepo
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: SharedRepo
         newTableName: sharedrepo
 - changeSet:

@@ -16,11 +16,17 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `from_email` varchar(255)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `from_email` varchar(255)
     - modifyDataType:
         tableName: sharedrepo
         columnName: from_email
         newDataType: varchar(255)
         dbms: postgresql
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `to_email` varchar(255)
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `to_email` varchar(255)

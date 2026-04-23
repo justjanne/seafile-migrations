@@ -6,6 +6,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `repotokenpeerinfo` MODIFY COLUMN `peer_id` char(41)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `repotokenpeerinfo` MODIFY COLUMN `peer_id` char(41)
     - modifyDataType:
         tableName: repotokenpeerinfo
         columnName: peer_id
@@ -13,7 +16,7 @@ databaseChangeLog:
         dbms: postgresql
     - createIndex:
         tableName: repotokenpeerinfo
-        indexName: idx_repotokenpeerinfo_peer_id
+        indexName: peer_id
         columns:
         - column:
             name: peer_id

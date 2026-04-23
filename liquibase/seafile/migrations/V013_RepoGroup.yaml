@@ -6,6 +6,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: repogroup
+        newTableName: repogroup
+- changeSet:
+    id: normalize-repogroup
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: RepoGroup
         newTableName: repogroup
 - changeSet:
@@ -33,13 +42,13 @@ databaseChangeLog:
         constraintName: repogroup_group_id_repo_id_key
     - createIndex:
         tableName: repogroup
-        indexName: repogroup_repo_id_idx
+        indexName: repo_id
         columns:
         - column:
             name: repo_id
     - createIndex:
         tableName: repogroup
-        indexName: repogroup_user_name_idx
+        indexName: user_name
         columns:
         - column:
             name: user_name

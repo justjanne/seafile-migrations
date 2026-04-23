@@ -6,6 +6,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `group` MODIFY COLUMN `group_id` bigint NOT NULL AUTO_INCREMENT
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `group` MODIFY COLUMN `group_id` bigint NOT NULL AUTO_INCREMENT
     - modifyDataType:
         tableName: group
         columnName: group_id

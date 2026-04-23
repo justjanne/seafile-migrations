@@ -65,15 +65,15 @@ test_component() {
     run_liquibase "${comp}_legacy" "$comp"
     dump_schema "${comp}_legacy" "${comp}_legacy.sql"
 
-    echo "  - Scenario 4: 130 Schema Directly..."
-    reset_db "${comp}_130"
-    ($CLI -d "${comp}_130" < schemas/${comp}/${FOLDER}/130.sql >/dev/null 2>&1 || $CLI "${comp}_130" < schemas/${comp}/${FOLDER}/130.sql >/dev/null 2>&1)
-    run_liquibase "${comp}_130" "$comp"
-    dump_schema "${comp}_130" "${comp}_130.sql"
+    echo "  - Scenario 4: 131 Schema Directly..."
+    reset_db "${comp}_131"
+    ($CLI -d "${comp}_131" < schemas/${comp}/${FOLDER}/131.sql >/dev/null 2>&1 || $CLI "${comp}_131" < schemas/${comp}/${FOLDER}/131.sql >/dev/null 2>&1)
+    run_liquibase "${comp}_131" "$comp"
+    dump_schema "${comp}_131" "${comp}_131.sql"
 
     echo "--- Parity Results for $comp ---"
     diff -sq "${comp}_fresh.sql" "${comp}_legacy.sql" || echo "    WARNING: Legacy drift detected"
-    diff -sq "${comp}_fresh.sql" "${comp}_130.sql" || echo "    WARNING: 130 drift detected"
+    diff -sq "${comp}_fresh.sql" "${comp}_131.sql" || echo "    WARNING: 131 drift detected"
     echo ""
 }
 

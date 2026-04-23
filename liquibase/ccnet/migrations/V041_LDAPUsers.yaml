@@ -37,7 +37,7 @@ databaseChangeLog:
             name: extra_attrs
             type: text
     - createIndex:
-        indexName: ldapusers_email_idx
+        indexName: email
         tableName: ldapusers
         columns:
         - column:

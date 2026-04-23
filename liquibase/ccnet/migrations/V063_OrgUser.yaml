@@ -22,11 +22,11 @@ databaseChangeLog:
         dbms: mysql
     - dropIndex:
         tableName: orguser
-        indexName: orguser_email_idx
+        indexName: email
       dbms: postgresql
     - createIndex:
         tableName: orguser
-        indexName: idx_orguser_email
+        indexName: email
         columns:
         - column:
             name: email

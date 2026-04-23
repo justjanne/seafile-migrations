@@ -5,7 +5,7 @@ databaseChangeLog:
     changes:
     - createIndex:
         tableName: repousertoken
-        indexName: idx_repousertoken_token
+        indexName: token
         columns:
         - column:
             name: token

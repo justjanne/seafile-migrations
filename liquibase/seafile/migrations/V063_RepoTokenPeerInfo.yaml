@@ -19,6 +19,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `repotokenpeerinfo` MODIFY COLUMN `token` CHAR(41)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `repotokenpeerinfo` MODIFY COLUMN `token` CHAR(41)
     - modifyDataType:
         tableName: repotokenpeerinfo
         columnName: token

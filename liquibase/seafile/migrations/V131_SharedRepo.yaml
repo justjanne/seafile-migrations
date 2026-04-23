@@ -10,11 +10,17 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `repo_id` CHAR(37)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `repo_id` CHAR(37)
     - modifyDataType:
         tableName: sharedrepo
         columnName: repo_id
         newDataType: CHAR(37)
         dbms: postgresql
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `permission` CHAR(15)
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `permission` CHAR(15)
@@ -25,28 +31,28 @@ databaseChangeLog:
         dbms: postgresql
     - dropIndex:
         tableName: sharedrepo
-        indexName: sharedrepo_repoid_idx
+        indexName: repo_id
     - createIndex:
         tableName: sharedrepo
-        indexName: idx_sharedrepo_repo_id
+        indexName: repo_id
         columns:
         - column:
             name: repo_id
     - dropIndex:
         tableName: sharedrepo
-        indexName: sharedrepo_from_email_idx
+        indexName: from_email
     - createIndex:
         tableName: sharedrepo
-        indexName: idx_sharedrepo_from_email
+        indexName: from_email
         columns:
         - column:
             name: from_email
     - dropIndex:
         tableName: sharedrepo
-        indexName: sharedrepo_to_email_idx
+        indexName: to_email
     - createIndex:
         tableName: sharedrepo
-        indexName: idx_sharedrepo_to_email
+        indexName: to_email
         columns:
         - column:
             name: to_email

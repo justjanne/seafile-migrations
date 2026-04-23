@@ -6,6 +6,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: binding
+        newTableName: binding
+- changeSet:
+    id: normalize-binding
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: Binding
         newTableName: binding
 - changeSet:
@@ -23,14 +32,19 @@ databaseChangeLog:
             type: char(41)
             constraints:
               unique: true
+    - sql:
+        dbms: mysql,mariadb
+        sql: CREATE INDEX `email` ON `binding` (`email`(20))
     - createIndex:
-        indexName: idx_binding_email
+        indexName: email
         tableName: binding
         columns:
         - column:
             name: email
+        dbms: postgresql
     preConditions:
       onFail: MARK_RAN
       not:
         tableExists:
           tableName: binding
+    failOnError: false

@@ -6,6 +6,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: repo
+        newTableName: repo
+- changeSet:
+    id: normalize-repo
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: Repo
         newTableName: repo
 - changeSet:

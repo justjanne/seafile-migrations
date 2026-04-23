@@ -17,6 +17,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `virtualrepo` MODIFY COLUMN `repo_id` CHAR(36)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `virtualrepo` MODIFY COLUMN `repo_id` CHAR(36)
     - modifyDataType:
         tableName: virtualrepo
         columnName: repo_id

@@ -13,13 +13,13 @@ databaseChangeLog:
             constraints:
               nullable: false
     - createIndex:
-        indexName: idx_emailuser_is_active
+        indexName: is_active
         tableName: emailuser
         columns:
         - column:
             name: is_active
     - createIndex:
-        indexName: idx_emailuser_is_department_owner
+        indexName: is_department_owner
         tableName: emailuser
         columns:
         - column:

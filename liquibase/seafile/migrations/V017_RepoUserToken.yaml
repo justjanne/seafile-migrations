@@ -7,5 +7,5 @@ databaseChangeLog:
         columns:
         - column:
             name: email
-        indexName: repousertoken_email_idx
+        indexName: email
         tableName: repousertoken

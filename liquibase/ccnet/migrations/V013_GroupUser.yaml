@@ -6,6 +6,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: groupuser
+        newTableName: groupuser
+- changeSet:
+    id: normalize-groupuser
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: GroupUser
         newTableName: groupuser
 - changeSet:
@@ -28,7 +37,7 @@ databaseChangeLog:
         columnNames: group_id, user_name
         tableName: groupuser
     - createIndex:
-        indexName: groupuser_username_idx
+        indexName: user_name
         tableName: groupuser
         columns:
         - column:

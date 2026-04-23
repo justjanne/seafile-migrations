@@ -10,11 +10,17 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `repousertoken` MODIFY COLUMN `repo_id` CHAR(37)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `repousertoken` MODIFY COLUMN `repo_id` CHAR(37)
     - modifyDataType:
         tableName: repousertoken
         columnName: repo_id
         newDataType: CHAR(37)
         dbms: postgresql
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `repousertoken` MODIFY COLUMN `token` CHAR(41)
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `repousertoken` MODIFY COLUMN `token` CHAR(41)
@@ -25,10 +31,10 @@ databaseChangeLog:
         dbms: postgresql
     - dropIndex:
         tableName: repousertoken
-        indexName: repousertoken_email_idx
+        indexName: email
     - createIndex:
         tableName: repousertoken
-        indexName: idx_repousertoken_email
+        indexName: email
         columns:
         - column:
             name: email

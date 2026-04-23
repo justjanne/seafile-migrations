@@ -10,7 +10,7 @@ databaseChangeLog:
             name: reference_id
             type: varchar(255)
     - createIndex:
-        indexName: ldapusers_reference_id_idx
+        indexName: reference_id
         tableName: ldapusers
         columns:
         - column:

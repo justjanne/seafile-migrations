@@ -12,7 +12,7 @@ databaseChangeLog:
         indexName: repoowner_owner_idx
     - createIndex:
         tableName: repoowner
-        indexName: idx_repoowner_owner_id
+        indexName: owner_id
         columns:
         - column:
             name: owner_id

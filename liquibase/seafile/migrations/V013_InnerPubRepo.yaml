@@ -6,6 +6,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: innerpubrepo
+        newTableName: innerpubrepo
+- changeSet:
+    id: normalize-innerpubrepo
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: InnerPubRepo
         newTableName: innerpubrepo
 - changeSet:
