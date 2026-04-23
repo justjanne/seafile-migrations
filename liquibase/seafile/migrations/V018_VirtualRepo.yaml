@@ -32,7 +32,12 @@ databaseChangeLog:
             name: origin_repo
     preConditions:
       onFail: MARK_RAN
-      not:
-        tableExists:
-          tableName: virtualrepo
+      and:
+      - not:
+          tableExists:
+            tableName: virtualrepo
+      - not:
+          indexExists:
+            tableName: virtualrepo
+            indexName: idx_virtualrepo_origin_repo
     failOnError: false

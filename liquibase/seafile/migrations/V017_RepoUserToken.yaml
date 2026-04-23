@@ -15,6 +15,12 @@ databaseChangeLog:
     - dropIndex:
         tableName: repousertoken
         indexName: repousertoken_email_idx
+    - dropIndex:
+        tableName: repousertoken
+        indexName: email
+    - dropIndex:
+        tableName: repousertoken
+        indexName: repousertoken_email_idx
     - createIndex:
         tableName: repousertoken
         indexName: idx_repousertoken_email
@@ -22,3 +28,16 @@ databaseChangeLog:
         - column:
             name: email
     failOnError: false
+    preConditions:
+      onFail: CONTINUE
+      or:
+      - indexExists:
+          tableName: repousertoken
+          indexName: email
+      - indexExists:
+          tableName: repousertoken
+          indexName: repousertoken_email_idx
+      - not:
+          indexExists:
+            tableName: repousertoken
+            indexName: idx_repousertoken_email

@@ -29,6 +29,18 @@ databaseChangeLog:
     - dropIndex:
         tableName: ldapusers
         indexName: ldapusers_reference_id_idx
+    - dropIndex:
+        tableName: ldapusers
+        indexName: email
+    - dropIndex:
+        tableName: ldapusers
+        indexName: ldapusers_email_idx
+    - dropIndex:
+        tableName: ldapusers
+        indexName: reference_id
+    - dropIndex:
+        tableName: ldapusers
+        indexName: ldapusers_reference_id_idx
     - createIndex:
         tableName: ldapusers
         indexName: idx_ldapusers_email
@@ -36,3 +48,22 @@ databaseChangeLog:
         - column:
             name: email
     failOnError: false
+    preConditions:
+      onFail: CONTINUE
+      or:
+      - indexExists:
+          tableName: ldapusers
+          indexName: email
+      - indexExists:
+          tableName: ldapusers
+          indexName: ldapusers_email_idx
+      - indexExists:
+          tableName: ldapusers
+          indexName: reference_id
+      - indexExists:
+          tableName: ldapusers
+          indexName: ldapusers_reference_id_idx
+      - not:
+          indexExists:
+            tableName: ldapusers
+            indexName: idx_ldapusers_email

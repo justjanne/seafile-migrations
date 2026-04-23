@@ -41,10 +41,18 @@ databaseChangeLog:
         tableName: orgquota
         columnName: org_id
         columnDataType: int
+    - addAutoIncrement:
+        tableName: orgquota
+        columnName: org_id
+        columnDataType: int
     preConditions:
       onFail: CONTINUE
-      not:
-        columnExists:
+      and:
+      - not:
+          columnExists:
+            tableName: orgquota
+            columnName: id
+      - columnExists:
           tableName: orgquota
-          columnName: id
+          columnName: org_id
     failOnError: false

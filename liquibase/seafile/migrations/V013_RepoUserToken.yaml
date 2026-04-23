@@ -2,37 +2,48 @@ databaseChangeLog:
 - changeSet:
     id: normalize-repousertoken
     author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: repousertoken
-        newTableName: repousertoken
-- changeSet:
-    id: normalize-repousertoken
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: repousertoken
-        newTableName: repousertoken
-- changeSet:
-    id: normalize-repousertoken
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: repousertoken
-        newTableName: repousertoken
-- changeSet:
-    id: normalize-repousertoken
-    author: seafile
-    failOnError: false
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: RepoUserToken
     changes:
     - renameTable:
         oldTableName: RepoUserToken
+        newTableName: repousertoken
+- changeSet:
+    id: normalize-repousertoken
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repousertoken
+        newTableName: repousertoken
+- changeSet:
+    id: normalize-repousertoken
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repousertoken
+        newTableName: repousertoken
+- changeSet:
+    id: normalize-repousertoken
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repousertoken
+        newTableName: repousertoken
+- changeSet:
+    id: normalize-repousertoken
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repousertoken
         newTableName: repousertoken
 - changeSet:
     id: V013_RepoUserToken

@@ -41,6 +41,10 @@ databaseChangeLog:
         tableName: orguserquota
         columnName: org_id
         columnDataType: int
+    - addAutoIncrement:
+        tableName: orguserquota
+        columnName: org_id
+        columnDataType: int
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `orguserquota` MODIFY COLUMN `user` varchar(255)
@@ -57,8 +61,12 @@ databaseChangeLog:
         newDataType: varchar(255)
     preConditions:
       onFail: CONTINUE
-      not:
-        columnExists:
+      and:
+      - not:
+          columnExists:
+            tableName: orguserquota
+            columnName: id
+      - columnExists:
           tableName: orguserquota
-          columnName: id
+          columnName: org_id
     failOnError: false

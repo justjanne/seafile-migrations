@@ -36,6 +36,24 @@ databaseChangeLog:
     - dropIndex:
         tableName: emailuser
         indexName: emailuser_reference_id_idx
+    - dropIndex:
+        tableName: emailuser
+        indexName: is_active
+    - dropIndex:
+        tableName: emailuser
+        indexName: emailuser_is_active
+    - dropIndex:
+        tableName: emailuser
+        indexName: is_department_owner
+    - dropIndex:
+        tableName: emailuser
+        indexName: emailuser_is_department_owenr
+    - dropIndex:
+        tableName: emailuser
+        indexName: reference_id
+    - dropIndex:
+        tableName: emailuser
+        indexName: emailuser_reference_id_idx
     - createIndex:
         tableName: emailuser
         indexName: idx_emailuser_is_active
@@ -66,6 +84,24 @@ databaseChangeLog:
     - dropIndex:
         tableName: emailuser
         indexName: emailuser_reference_id_idx
+    - dropIndex:
+        tableName: emailuser
+        indexName: is_active
+    - dropIndex:
+        tableName: emailuser
+        indexName: emailuser_is_active
+    - dropIndex:
+        tableName: emailuser
+        indexName: is_department_owner
+    - dropIndex:
+        tableName: emailuser
+        indexName: emailuser_is_department_owenr
+    - dropIndex:
+        tableName: emailuser
+        indexName: reference_id
+    - dropIndex:
+        tableName: emailuser
+        indexName: emailuser_reference_id_idx
     - createIndex:
         tableName: emailuser
         indexName: idx_emailuser_is_department_owner
@@ -74,8 +110,35 @@ databaseChangeLog:
             name: is_department_owner
     preConditions:
       onFail: CONTINUE
-      not:
-        columnExists:
+      or:
+      - not:
+          columnExists:
+            tableName: emailuser
+            columnName: is_department_owner
+      - indexExists:
           tableName: emailuser
-          columnName: is_department_owner
+          indexName: is_active
+      - indexExists:
+          tableName: emailuser
+          indexName: emailuser_is_active
+      - indexExists:
+          tableName: emailuser
+          indexName: is_department_owner
+      - indexExists:
+          tableName: emailuser
+          indexName: emailuser_is_department_owenr
+      - indexExists:
+          tableName: emailuser
+          indexName: reference_id
+      - indexExists:
+          tableName: emailuser
+          indexName: emailuser_reference_id_idx
+      - not:
+          indexExists:
+            tableName: emailuser
+            indexName: idx_emailuser_is_active
+      - not:
+          indexExists:
+            tableName: emailuser
+            indexName: idx_emailuser_is_department_owner
     failOnError: false

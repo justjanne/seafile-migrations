@@ -2,37 +2,48 @@ databaseChangeLog:
 - changeSet:
     id: normalize-repohead
     author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: repohead
-        newTableName: repohead
-- changeSet:
-    id: normalize-repohead
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: repohead
-        newTableName: repohead
-- changeSet:
-    id: normalize-repohead
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: repohead
-        newTableName: repohead
-- changeSet:
-    id: normalize-repohead
-    author: seafile
-    failOnError: false
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: RepoHead
     changes:
     - renameTable:
         oldTableName: RepoHead
+        newTableName: repohead
+- changeSet:
+    id: normalize-repohead
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repohead
+        newTableName: repohead
+- changeSet:
+    id: normalize-repohead
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repohead
+        newTableName: repohead
+- changeSet:
+    id: normalize-repohead
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repohead
+        newTableName: repohead
+- changeSet:
+    id: normalize-repohead
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repohead
         newTableName: repohead
 - changeSet:
     id: V013_RepoHead

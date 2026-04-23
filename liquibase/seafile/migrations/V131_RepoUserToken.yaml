@@ -3,9 +3,18 @@ databaseChangeLog:
     id: V131_RepoUserToken
     author: seafile
     preConditions:
-    - onFail: MARK_RAN
-      dbms:
-        type: postgresql
+      onFail: CONTINUE
+      or:
+      - indexExists:
+          tableName: repousertoken
+          indexName: email
+      - indexExists:
+          tableName: repousertoken
+          indexName: repousertoken_email_idx
+      - not:
+          indexExists:
+            tableName: repousertoken
+            indexName: idx_repousertoken_email
     changes:
     - sql:
         dbms: mysql,mariadb
@@ -38,6 +47,12 @@ databaseChangeLog:
     - dropIndex:
         tableName: repousertoken
         indexName: email
+    - dropIndex:
+        tableName: repousertoken
+        indexName: email
+    - dropIndex:
+        tableName: repousertoken
+        indexName: repousertoken_email_idx
     - dropIndex:
         tableName: repousertoken
         indexName: email

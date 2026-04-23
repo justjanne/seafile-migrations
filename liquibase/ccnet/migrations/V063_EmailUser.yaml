@@ -21,3 +21,12 @@ databaseChangeLog:
         tableName: emailuser
         columnName: id
         columnDataType: bigint
+    - addAutoIncrement:
+        tableName: emailuser
+        columnName: id
+        columnDataType: bigint
+    preConditions:
+      onFail: CONTINUE
+      columnExists:
+        tableName: emailuser
+        columnName: id

@@ -2,37 +2,48 @@ databaseChangeLog:
 - changeSet:
     id: normalize-groupuser
     author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: groupuser
-        newTableName: groupuser
-- changeSet:
-    id: normalize-groupuser
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: groupuser
-        newTableName: groupuser
-- changeSet:
-    id: normalize-groupuser
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: groupuser
-        newTableName: groupuser
-- changeSet:
-    id: normalize-groupuser
-    author: seafile
-    failOnError: false
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: GroupUser
     changes:
     - renameTable:
         oldTableName: GroupUser
+        newTableName: groupuser
+- changeSet:
+    id: normalize-groupuser
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: groupuser
+        newTableName: groupuser
+- changeSet:
+    id: normalize-groupuser
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: groupuser
+        newTableName: groupuser
+- changeSet:
+    id: normalize-groupuser
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: groupuser
+        newTableName: groupuser
+- changeSet:
+    id: normalize-groupuser
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: groupuser
         newTableName: groupuser
 - changeSet:
     id: V013_GroupUser
@@ -65,6 +76,12 @@ databaseChangeLog:
     - dropIndex:
         tableName: groupuser
         indexName: groupuser_username_idx
+    - dropIndex:
+        tableName: groupuser
+        indexName: user_name
+    - dropIndex:
+        tableName: groupuser
+        indexName: groupuser_username_idx
     - createIndex:
         tableName: groupuser
         indexName: idx_groupuser_user_name
@@ -73,7 +90,18 @@ databaseChangeLog:
             name: user_name
     preConditions:
       onFail: MARK_RAN
-      not:
-        tableExists:
+      or:
+      - not:
+          tableExists:
+            tableName: groupuser
+      - indexExists:
           tableName: groupuser
+          indexName: user_name
+      - indexExists:
+          tableName: groupuser
+          indexName: groupuser_username_idx
+      - not:
+          indexExists:
+            tableName: groupuser
+            indexName: idx_groupuser_user_name
     failOnError: false

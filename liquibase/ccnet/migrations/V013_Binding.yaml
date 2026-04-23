@@ -2,37 +2,48 @@ databaseChangeLog:
 - changeSet:
     id: normalize-binding
     author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: binding
-        newTableName: binding
-- changeSet:
-    id: normalize-binding
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: binding
-        newTableName: binding
-- changeSet:
-    id: normalize-binding
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: binding
-        newTableName: binding
-- changeSet:
-    id: normalize-binding
-    author: seafile
-    failOnError: false
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: Binding
     changes:
     - renameTable:
         oldTableName: Binding
+        newTableName: binding
+- changeSet:
+    id: normalize-binding
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: binding
+        newTableName: binding
+- changeSet:
+    id: normalize-binding
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: binding
+        newTableName: binding
+- changeSet:
+    id: normalize-binding
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: binding
+        newTableName: binding
+- changeSet:
+    id: normalize-binding
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: binding
         newTableName: binding
 - changeSet:
     id: V013_Binding
@@ -61,6 +72,9 @@ databaseChangeLog:
     - dropIndex:
         tableName: binding
         indexName: email
+    - dropIndex:
+        tableName: binding
+        indexName: email
     - createIndex:
         tableName: binding
         indexName: idx_binding_email
@@ -69,7 +83,15 @@ databaseChangeLog:
             name: email
     preConditions:
       onFail: MARK_RAN
-      not:
-        tableExists:
+      or:
+      - not:
+          tableExists:
+            tableName: binding
+      - indexExists:
           tableName: binding
+          indexName: email
+      - not:
+          indexExists:
+            tableName: binding
+            indexName: idx_binding_email
     failOnError: false

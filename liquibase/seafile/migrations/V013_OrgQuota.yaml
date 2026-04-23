@@ -2,37 +2,48 @@ databaseChangeLog:
 - changeSet:
     id: normalize-orgquota
     author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: orgquota
-        newTableName: orgquota
-- changeSet:
-    id: normalize-orgquota
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: orgquota
-        newTableName: orgquota
-- changeSet:
-    id: normalize-orgquota
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: orgquota
-        newTableName: orgquota
-- changeSet:
-    id: normalize-orgquota
-    author: seafile
-    failOnError: false
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: OrgQuota
     changes:
     - renameTable:
         oldTableName: OrgQuota
+        newTableName: orgquota
+- changeSet:
+    id: normalize-orgquota
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: orgquota
+        newTableName: orgquota
+- changeSet:
+    id: normalize-orgquota
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: orgquota
+        newTableName: orgquota
+- changeSet:
+    id: normalize-orgquota
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: orgquota
+        newTableName: orgquota
+- changeSet:
+    id: normalize-orgquota
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: orgquota
         newTableName: orgquota
 - changeSet:
     id: V013_OrgQuota

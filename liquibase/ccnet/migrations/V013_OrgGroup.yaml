@@ -2,37 +2,48 @@ databaseChangeLog:
 - changeSet:
     id: normalize-orggroup
     author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: orggroup
-        newTableName: orggroup
-- changeSet:
-    id: normalize-orggroup
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: orggroup
-        newTableName: orggroup
-- changeSet:
-    id: normalize-orggroup
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: orggroup
-        newTableName: orggroup
-- changeSet:
-    id: normalize-orggroup
-    author: seafile
-    failOnError: false
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: OrgGroup
     changes:
     - renameTable:
         oldTableName: OrgGroup
+        newTableName: orggroup
+- changeSet:
+    id: normalize-orggroup
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: orggroup
+        newTableName: orggroup
+- changeSet:
+    id: normalize-orggroup
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: orggroup
+        newTableName: orggroup
+- changeSet:
+    id: normalize-orggroup
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: orggroup
+        newTableName: orggroup
+- changeSet:
+    id: normalize-orggroup
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: orggroup
         newTableName: orggroup
 - changeSet:
     id: V013_OrgGroup
@@ -62,6 +73,12 @@ databaseChangeLog:
     - dropIndex:
         tableName: orggroup
         indexName: orggroup_groupid_idx
+    - dropIndex:
+        tableName: orggroup
+        indexName: group_id
+    - dropIndex:
+        tableName: orggroup
+        indexName: orggroup_groupid_idx
     - createIndex:
         tableName: orggroup
         indexName: idx_orggroup_group_id
@@ -70,7 +87,18 @@ databaseChangeLog:
             name: group_id
     preConditions:
       onFail: MARK_RAN
-      not:
-        tableExists:
+      or:
+      - not:
+          tableExists:
+            tableName: orggroup
+      - indexExists:
           tableName: orggroup
+          indexName: group_id
+      - indexExists:
+          tableName: orggroup
+          indexName: orggroup_groupid_idx
+      - not:
+          indexExists:
+            tableName: orggroup
+            indexName: idx_orggroup_group_id
     failOnError: false

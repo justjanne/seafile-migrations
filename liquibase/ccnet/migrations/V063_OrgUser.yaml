@@ -36,6 +36,12 @@ databaseChangeLog:
     - dropIndex:
         tableName: orguser
         indexName: orguser_email_idx
+    - dropIndex:
+        tableName: orguser
+        indexName: email
+    - dropIndex:
+        tableName: orguser
+        indexName: orguser_email_idx
     - createIndex:
         tableName: orguser
         indexName: idx_orguser_email
@@ -44,8 +50,19 @@ databaseChangeLog:
             name: email
     preConditions:
       onFail: CONTINUE
-      not:
-        columnExists:
+      or:
+      - not:
+          columnExists:
+            tableName: orguser
+            columnName: id
+      - indexExists:
           tableName: orguser
-          columnName: id
+          indexName: email
+      - indexExists:
+          tableName: orguser
+          indexName: orguser_email_idx
+      - not:
+          indexExists:
+            tableName: orguser
+            indexName: idx_orguser_email
     failOnError: false

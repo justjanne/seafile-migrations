@@ -2,37 +2,48 @@ databaseChangeLog:
 - changeSet:
     id: normalize-repoowner
     author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: repoowner
-        newTableName: repoowner
-- changeSet:
-    id: normalize-repoowner
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: repoowner
-        newTableName: repoowner
-- changeSet:
-    id: normalize-repoowner
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: repoowner
-        newTableName: repoowner
-- changeSet:
-    id: normalize-repoowner
-    author: seafile
-    failOnError: false
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: RepoOwner
     changes:
     - renameTable:
         oldTableName: RepoOwner
+        newTableName: repoowner
+- changeSet:
+    id: normalize-repoowner
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repoowner
+        newTableName: repoowner
+- changeSet:
+    id: normalize-repoowner
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repoowner
+        newTableName: repoowner
+- changeSet:
+    id: normalize-repoowner
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repoowner
+        newTableName: repoowner
+- changeSet:
+    id: normalize-repoowner
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repoowner
         newTableName: repoowner
 - changeSet:
     id: V013_RepoOwner
@@ -68,6 +79,15 @@ databaseChangeLog:
     - dropIndex:
         tableName: repoowner
         indexName: repoowner_owner_id_uq
+    - dropIndex:
+        tableName: repoowner
+        indexName: owner_id
+    - dropIndex:
+        tableName: repoowner
+        indexName: repoowner_owner_id_idx
+    - dropIndex:
+        tableName: repoowner
+        indexName: repoowner_owner_id_uq
     - createIndex:
         tableName: repoowner
         indexName: idx_repoowner_owner_id
@@ -76,7 +96,21 @@ databaseChangeLog:
             name: owner_id
     preConditions:
       onFail: MARK_RAN
-      not:
-        tableExists:
+      or:
+      - not:
+          tableExists:
+            tableName: repoowner
+      - indexExists:
           tableName: repoowner
+          indexName: owner_id
+      - indexExists:
+          tableName: repoowner
+          indexName: repoowner_owner_id_idx
+      - indexExists:
+          tableName: repoowner
+          indexName: repoowner_owner_id_uq
+      - not:
+          indexExists:
+            tableName: repoowner
+            indexName: idx_repoowner_owner_id
     failOnError: false

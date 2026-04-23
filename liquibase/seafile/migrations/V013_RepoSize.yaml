@@ -2,37 +2,48 @@ databaseChangeLog:
 - changeSet:
     id: normalize-reposize
     author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: reposize
-        newTableName: reposize
-- changeSet:
-    id: normalize-reposize
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: reposize
-        newTableName: reposize
-- changeSet:
-    id: normalize-reposize
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: reposize
-        newTableName: reposize
-- changeSet:
-    id: normalize-reposize
-    author: seafile
-    failOnError: false
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: RepoSize
     changes:
     - renameTable:
         oldTableName: RepoSize
+        newTableName: reposize
+- changeSet:
+    id: normalize-reposize
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: reposize
+        newTableName: reposize
+- changeSet:
+    id: normalize-reposize
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: reposize
+        newTableName: reposize
+- changeSet:
+    id: normalize-reposize
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: reposize
+        newTableName: reposize
+- changeSet:
+    id: normalize-reposize
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: reposize
         newTableName: reposize
 - changeSet:
     id: V013_RepoSize

@@ -65,12 +65,48 @@ databaseChangeLog:
     - dropIndex:
         tableName: sharedrepo
         indexName: sharedrepo_to_email_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: repo_id
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_repoid_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: from_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_from_email_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: to_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_to_email_idx
     - createIndex:
         tableName: sharedrepo
         indexName: idx_sharedrepo_from_email
         columns:
         - column:
             name: from_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: to_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_to_email_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: repo_id
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_repoid_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: from_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_from_email_idx
     - dropIndex:
         tableName: sharedrepo
         indexName: to_email
@@ -103,8 +139,35 @@ databaseChangeLog:
             name: to_email
     preConditions:
       onFail: CONTINUE
-      not:
-        columnExists:
+      or:
+      - not:
+          columnExists:
+            tableName: sharedrepo
+            columnName: id
+      - indexExists:
           tableName: sharedrepo
-          columnName: id
+          indexName: repo_id
+      - indexExists:
+          tableName: sharedrepo
+          indexName: sharedrepo_repoid_idx
+      - indexExists:
+          tableName: sharedrepo
+          indexName: from_email
+      - indexExists:
+          tableName: sharedrepo
+          indexName: sharedrepo_from_email_idx
+      - indexExists:
+          tableName: sharedrepo
+          indexName: to_email
+      - indexExists:
+          tableName: sharedrepo
+          indexName: sharedrepo_to_email_idx
+      - not:
+          indexExists:
+            tableName: sharedrepo
+            indexName: idx_sharedrepo_from_email
+      - not:
+          indexExists:
+            tableName: sharedrepo
+            indexName: idx_sharedrepo_to_email
     failOnError: false

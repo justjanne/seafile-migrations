@@ -2,37 +2,48 @@ databaseChangeLog:
 - changeSet:
     id: normalize-userquota
     author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: userquota
-        newTableName: userquota
-- changeSet:
-    id: normalize-userquota
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: userquota
-        newTableName: userquota
-- changeSet:
-    id: normalize-userquota
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: userquota
-        newTableName: userquota
-- changeSet:
-    id: normalize-userquota
-    author: seafile
-    failOnError: false
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: UserQuota
     changes:
     - renameTable:
         oldTableName: UserQuota
+        newTableName: userquota
+- changeSet:
+    id: normalize-userquota
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: userquota
+        newTableName: userquota
+- changeSet:
+    id: normalize-userquota
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: userquota
+        newTableName: userquota
+- changeSet:
+    id: normalize-userquota
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: userquota
+        newTableName: userquota
+- changeSet:
+    id: normalize-userquota
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: userquota
         newTableName: userquota
 - changeSet:
     id: V013_UserQuota

@@ -21,3 +21,12 @@ databaseChangeLog:
         tableName: organization
         columnName: org_id
         columnDataType: bigint
+    - addAutoIncrement:
+        tableName: organization
+        columnName: org_id
+        columnDataType: bigint
+    preConditions:
+      onFail: CONTINUE
+      columnExists:
+        tableName: organization
+        columnName: org_id

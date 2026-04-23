@@ -21,6 +21,10 @@ databaseChangeLog:
         tableName: group
         columnName: group_id
         columnDataType: bigint
+    - addAutoIncrement:
+        tableName: group
+        columnName: group_id
+        columnDataType: bigint
     - addColumn:
         tableName: group
         columns:
@@ -30,7 +34,11 @@ databaseChangeLog:
             defaultValue: 0
     preConditions:
       onFail: CONTINUE
-      not:
-        columnExists:
+      and:
+      - columnExists:
           tableName: group
-          columnName: parent_group_id
+          columnName: group_id
+      - not:
+          columnExists:
+            tableName: group
+            columnName: parent_group_id

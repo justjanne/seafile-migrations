@@ -3,9 +3,11 @@ databaseChangeLog:
     id: V131_RepoTrash
     author: seafile
     preConditions:
-    - onFail: MARK_RAN
-      dbms:
-        type: postgresql
+      onFail: CONTINUE
+      not:
+        indexExists:
+          tableName: repotrash
+          indexName: idx_repotrash_owner_id
     changes:
     - dropIndex:
         tableName: repotrash

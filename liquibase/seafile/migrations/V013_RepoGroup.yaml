@@ -2,37 +2,48 @@ databaseChangeLog:
 - changeSet:
     id: normalize-repogroup
     author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: repogroup
-        newTableName: repogroup
-- changeSet:
-    id: normalize-repogroup
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: repogroup
-        newTableName: repogroup
-- changeSet:
-    id: normalize-repogroup
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: repogroup
-        newTableName: repogroup
-- changeSet:
-    id: normalize-repogroup
-    author: seafile
-    failOnError: false
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: RepoGroup
     changes:
     - renameTable:
         oldTableName: RepoGroup
+        newTableName: repogroup
+- changeSet:
+    id: normalize-repogroup
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repogroup
+        newTableName: repogroup
+- changeSet:
+    id: normalize-repogroup
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repogroup
+        newTableName: repogroup
+- changeSet:
+    id: normalize-repogroup
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repogroup
+        newTableName: repogroup
+- changeSet:
+    id: normalize-repogroup
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: repogroup
         newTableName: repogroup
 - changeSet:
     id: V013_RepoGroup
@@ -75,12 +86,36 @@ databaseChangeLog:
     - dropIndex:
         tableName: repogroup
         indexName: repogroup_user_name_idx
+    - dropIndex:
+        tableName: repogroup
+        indexName: repo_id
+    - dropIndex:
+        tableName: repogroup
+        indexName: repogroup_repo_id_idx
+    - dropIndex:
+        tableName: repogroup
+        indexName: user_name
+    - dropIndex:
+        tableName: repogroup
+        indexName: repogroup_user_name_idx
     - createIndex:
         tableName: repogroup
         indexName: idx_repogroup_repo_id
         columns:
         - column:
             name: repo_id
+    - dropIndex:
+        tableName: repogroup
+        indexName: user_name
+    - dropIndex:
+        tableName: repogroup
+        indexName: repogroup_user_name_idx
+    - dropIndex:
+        tableName: repogroup
+        indexName: repo_id
+    - dropIndex:
+        tableName: repogroup
+        indexName: repogroup_repo_id_idx
     - dropIndex:
         tableName: repogroup
         indexName: user_name
@@ -107,7 +142,28 @@ databaseChangeLog:
             name: user_name
     preConditions:
       onFail: MARK_RAN
-      not:
-        tableExists:
+      or:
+      - not:
+          tableExists:
+            tableName: repogroup
+      - indexExists:
           tableName: repogroup
+          indexName: repo_id
+      - indexExists:
+          tableName: repogroup
+          indexName: repogroup_repo_id_idx
+      - indexExists:
+          tableName: repogroup
+          indexName: user_name
+      - indexExists:
+          tableName: repogroup
+          indexName: repogroup_user_name_idx
+      - not:
+          indexExists:
+            tableName: repogroup
+            indexName: idx_repogroup_repo_id
+      - not:
+          indexExists:
+            tableName: repogroup
+            indexName: idx_repogroup_user_name
     failOnError: false

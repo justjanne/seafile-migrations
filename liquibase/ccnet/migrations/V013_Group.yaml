@@ -2,37 +2,48 @@ databaseChangeLog:
 - changeSet:
     id: normalize-group
     author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: group
-        newTableName: group
-- changeSet:
-    id: normalize-group
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: group
-        newTableName: group
-- changeSet:
-    id: normalize-group
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: group
-        newTableName: group
-- changeSet:
-    id: normalize-group
-    author: seafile
-    failOnError: false
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: Group
     changes:
     - renameTable:
         oldTableName: Group
+        newTableName: group
+- changeSet:
+    id: normalize-group
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: group
+        newTableName: group
+- changeSet:
+    id: normalize-group
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: group
+        newTableName: group
+- changeSet:
+    id: normalize-group
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: group
+        newTableName: group
+- changeSet:
+    id: normalize-group
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: group
         newTableName: group
 - changeSet:
     id: V013_Group

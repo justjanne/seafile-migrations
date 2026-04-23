@@ -21,6 +21,10 @@ databaseChangeLog:
         tableName: userrole
         columnName: id
         columnDataType: bigint
+    - addAutoIncrement:
+        tableName: userrole
+        columnName: id
+        columnDataType: bigint
     - addColumn:
         tableName: userrole
         dbms: postgresql
@@ -34,7 +38,11 @@ databaseChangeLog:
               nullable: false
     preConditions:
       onFail: CONTINUE
-      not:
-        columnExists:
+      and:
+      - columnExists:
           tableName: userrole
           columnName: id
+      - not:
+          columnExists:
+            tableName: userrole
+            columnName: id

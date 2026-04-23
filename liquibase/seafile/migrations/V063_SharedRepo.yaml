@@ -21,3 +21,12 @@ databaseChangeLog:
         tableName: sharedrepo
         columnName: id
         columnDataType: BIGINT
+    - addAutoIncrement:
+        tableName: sharedrepo
+        columnName: id
+        columnDataType: BIGINT
+    preConditions:
+      onFail: CONTINUE
+      columnExists:
+        tableName: sharedrepo
+        columnName: id

@@ -21,3 +21,12 @@ databaseChangeLog:
         tableName: ldapusers
         columnName: id
         columnDataType: bigint
+    - addAutoIncrement:
+        tableName: ldapusers
+        columnName: id
+        columnDataType: bigint
+    preConditions:
+      onFail: CONTINUE
+      columnExists:
+        tableName: ldapusers
+        columnName: id

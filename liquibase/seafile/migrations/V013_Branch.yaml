@@ -2,37 +2,48 @@ databaseChangeLog:
 - changeSet:
     id: normalize-branch
     author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: branch
-        newTableName: branch
-- changeSet:
-    id: normalize-branch
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: branch
-        newTableName: branch
-- changeSet:
-    id: normalize-branch
-    author: seafile
-    dbms: mysql,mariadb
-    failOnError: false
-    changes:
-    - renameTable:
-        oldTableName: branch
-        newTableName: branch
-- changeSet:
-    id: normalize-branch
-    author: seafile
-    failOnError: false
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: Branch
     changes:
     - renameTable:
         oldTableName: Branch
+        newTableName: branch
+- changeSet:
+    id: normalize-branch
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: branch
+        newTableName: branch
+- changeSet:
+    id: normalize-branch
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: branch
+        newTableName: branch
+- changeSet:
+    id: normalize-branch
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: branch
+        newTableName: branch
+- changeSet:
+    id: normalize-branch
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: branch
         newTableName: branch
 - changeSet:
     id: V013_Branch

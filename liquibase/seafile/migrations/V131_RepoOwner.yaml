@@ -3,13 +3,34 @@ databaseChangeLog:
     id: V131_RepoOwner
     author: seafile
     preConditions:
-    - onFail: MARK_RAN
-      dbms:
-        type: postgresql
+      onFail: CONTINUE
+      or:
+      - indexExists:
+          tableName: repoowner
+          indexName: owner_id
+      - indexExists:
+          tableName: repoowner
+          indexName: repoowner_owner_id_idx
+      - indexExists:
+          tableName: repoowner
+          indexName: repoowner_owner_id_uq
+      - not:
+          indexExists:
+            tableName: repoowner
+            indexName: idx_repoowner_owner_id
     changes:
     - dropIndex:
         tableName: repoowner
         indexName: repoowner_owner_idx
+    - dropIndex:
+        tableName: repoowner
+        indexName: owner_id
+    - dropIndex:
+        tableName: repoowner
+        indexName: repoowner_owner_id_idx
+    - dropIndex:
+        tableName: repoowner
+        indexName: repoowner_owner_id_uq
     - dropIndex:
         tableName: repoowner
         indexName: owner_id

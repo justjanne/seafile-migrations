@@ -3,9 +3,24 @@ databaseChangeLog:
     id: V131_RepoGroup
     author: seafile
     preConditions:
-    - onFail: MARK_RAN
-      dbms:
-        type: postgresql
+      onFail: CONTINUE
+      or:
+      - indexExists:
+          tableName: repogroup
+          indexName: repo_id
+      - indexExists:
+          tableName: repogroup
+          indexName: repogroup_repo_id_idx
+      - indexExists:
+          tableName: repogroup
+          indexName: user_name
+      - indexExists:
+          tableName: repogroup
+          indexName: repogroup_user_name_idx
+      - not:
+          indexExists:
+            tableName: repogroup
+            indexName: idx_repogroup_repo_id
     changes:
     - sql:
         dbms: mysql,mariadb
@@ -44,6 +59,18 @@ databaseChangeLog:
     - dropIndex:
         tableName: repogroup
         indexName: repogroup_repo_id_idx
+    - dropIndex:
+        tableName: repogroup
+        indexName: repo_id
+    - dropIndex:
+        tableName: repogroup
+        indexName: repogroup_repo_id_idx
+    - dropIndex:
+        tableName: repogroup
+        indexName: user_name
+    - dropIndex:
+        tableName: repogroup
+        indexName: repogroup_user_name_idx
     - dropIndex:
         tableName: repogroup
         indexName: repo_id
