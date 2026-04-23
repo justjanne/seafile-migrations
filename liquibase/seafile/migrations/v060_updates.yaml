@@ -4,11 +4,18 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: RepoFileCount, newTableName: repofilecount } } ]
+      changes:
+        - renameTable:
+            oldTableName: RepoFileCount
+            newTableName: repofilecount
   - changeSet:
       id: v060-create-repofilecount
       author: seafile
-      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: repofilecount } } } ]
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: repofilecount
       changes:
         - createTable:
             tableName: repofilecount

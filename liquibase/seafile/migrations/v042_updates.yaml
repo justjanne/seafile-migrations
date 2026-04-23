@@ -16,11 +16,18 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: UserShareQuota, newTableName: usersharequota } } ]
+      changes:
+        - renameTable:
+            oldTableName: UserShareQuota
+            newTableName: usersharequota
   - changeSet:
       id: v042-create-usersharequota
       author: seafile
-      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: usersharequota } } } ]
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: usersharequota
       changes:
         - createTable:
             tableName: usersharequota

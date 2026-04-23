@@ -4,7 +4,10 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: GroupStructure, newTableName: groupstructure } } ]
+      changes:
+        - renameTable:
+            oldTableName: GroupStructure
+            newTableName: groupstructure
   - changeSet:
       id: v063-update-branch-id
       author: seafile

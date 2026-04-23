@@ -4,11 +4,18 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: SystemInfo, newTableName: systeminfo } } ]
+      changes:
+        - renameTable:
+            oldTableName: SystemInfo
+            newTableName: systeminfo
   - changeSet:
       id: v021-create-systeminfo
       author: seafile
-      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: systeminfo } } } ]
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: systeminfo
       changes:
         - createTable:
             tableName: systeminfo

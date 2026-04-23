@@ -4,11 +4,18 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: RepoHistoryLimit, newTableName: repohistorylimit } } ]
+      changes:
+        - renameTable:
+            oldTableName: RepoHistoryLimit
+            newTableName: repohistorylimit
   - changeSet:
       id: v014-create-repohistorylimit
       author: seafile
-      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: repohistorylimit } } } ]
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: repohistorylimit
       changes:
         - createTable:
             tableName: repohistorylimit
@@ -21,11 +28,18 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: RepoValidSince, newTableName: repovalidsince } } ]
+      changes:
+        - renameTable:
+            oldTableName: RepoValidSince
+            newTableName: repovalidsince
   - changeSet:
       id: v014-create-repovalidsince
       author: seafile
-      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: repovalidsince } } } ]
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: repovalidsince
       changes:
         - createTable:
             tableName: repovalidsince

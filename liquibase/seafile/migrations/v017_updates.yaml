@@ -4,11 +4,18 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: RepoTokenPeerInfo, newTableName: repotokenpeerinfo } } ]
+      changes:
+        - renameTable:
+            oldTableName: RepoTokenPeerInfo
+            newTableName: repotokenpeerinfo
   - changeSet:
       id: v017-create-repotokenpeerinfo
       author: seafile
-      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: repotokenpeerinfo } } } ]
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: repotokenpeerinfo
       changes:
         - createTable:
             tableName: repotokenpeerinfo

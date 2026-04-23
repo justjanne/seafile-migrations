@@ -4,11 +4,18 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: VirtualRepo, newTableName: virtualrepo } } ]
+      changes:
+        - renameTable:
+            oldTableName: VirtualRepo
+            newTableName: virtualrepo
   - changeSet:
       id: v018-create-virtualrepo
       author: seafile
-      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: virtualrepo } } } ]
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: virtualrepo
       changes:
         - createTable:
             tableName: virtualrepo

@@ -4,11 +4,18 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: RepoInfo, newTableName: repoinfo } } ]
+      changes:
+        - renameTable:
+            oldTableName: RepoInfo
+            newTableName: repoinfo
   - changeSet:
       id: v062-create-repoinfo
       author: seafile
-      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: repoinfo } } } ]
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: repoinfo
       changes:
         - createTable:
             tableName: repoinfo
@@ -25,11 +32,18 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: SeafileConf, newTableName: seafileconf } } ]
+      changes:
+        - renameTable:
+            oldTableName: SeafileConf
+            newTableName: seafileconf
   - changeSet:
       id: v062-create-seafileconf
       author: seafile
-      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: seafileconf } } } ]
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: seafileconf
       changes:
         - createTable:
             tableName: seafileconf

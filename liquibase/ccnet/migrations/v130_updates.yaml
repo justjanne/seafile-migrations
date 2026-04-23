@@ -36,7 +36,10 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: OrgFileExtWhiteList, newTableName: orgfileextwhitelist } } ]
+      changes:
+        - renameTable:
+            oldTableName: OrgFileExtWhiteList
+            newTableName: orgfileextwhitelist
 
   - changeSet:
       id: v130-create-orgfileextwhitelist

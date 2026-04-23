@@ -4,11 +4,18 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: RepoTrash, newTableName: repotrash } } ]
+      changes:
+        - renameTable:
+            oldTableName: RepoTrash
+            newTableName: repotrash
   - changeSet:
       id: v041-create-repotrash
       author: seafile
-      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: repotrash } } } ]
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: repotrash
       changes:
         - createTable:
             tableName: repotrash

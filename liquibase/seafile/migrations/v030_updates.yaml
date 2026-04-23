@@ -4,11 +4,18 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       dbms: mysql,mariadb
-      changes: [ { renameTable: { oldTableName: GarbageRepos, newTableName: garbagerepos } } ]
+      changes:
+        - renameTable:
+            oldTableName: GarbageRepos
+            newTableName: garbagerepos
   - changeSet:
       id: v030-create-garbagerepos
       author: seafile
-      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: garbagerepos } } } ]
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: garbagerepos
       changes:
         - createTable:
             tableName: garbagerepos
