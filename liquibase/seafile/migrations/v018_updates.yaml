@@ -4,9 +4,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'virtualrepo'"
+          not: { tableExists: { tableName: virtualrepo } }
       changes:
         - createTable:
             tableName: virtualrepo

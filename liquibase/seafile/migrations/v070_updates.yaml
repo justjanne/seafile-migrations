@@ -4,9 +4,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'filelocks'"
+          not: { tableExists: { tableName: filelocks } }
       changes:
         - createTable:
             tableName: filelocks
@@ -28,9 +26,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'filelocktimestamp'"
+          not: { tableExists: { tableName: filelocktimestamp } }
       changes:
         - createTable:
             tableName: filelocktimestamp
@@ -44,9 +40,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'foldergroupperm'"
+          not: { tableExists: { tableName: foldergroupperm } }
       changes:
         - createTable:
             tableName: foldergroupperm
@@ -67,9 +61,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'folderpermtimestamp'"
+          not: { tableExists: { tableName: folderpermtimestamp } }
       changes:
         - createTable:
             tableName: folderpermtimestamp
@@ -83,9 +75,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'folderuserperm'"
+          not: { tableExists: { tableName: folderuserperm } }
       changes:
         - createTable:
             tableName: folderuserperm
@@ -106,9 +96,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'gcid'"
+          not: { tableExists: { tableName: gcid } }
       changes:
         - createTable:
             tableName: gcid
@@ -122,9 +110,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'lastgcid'"
+          not: { tableExists: { tableName: lastgcid } }
       changes:
         - createTable:
             tableName: lastgcid
@@ -140,9 +126,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'orggrouprepo'"
+          not: { tableExists: { tableName: orggrouprepo } }
       changes:
         - createTable:
             tableName: orggrouprepo
@@ -170,9 +154,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'orginnerpubrepo'"
+          not: { tableExists: { tableName: orginnerpubrepo } }
       changes:
         - createTable:
             tableName: orginnerpubrepo
@@ -188,9 +170,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'orgrepo'"
+          not: { tableExists: { tableName: orgrepo } }
       changes:
         - createTable:
             tableName: orgrepo
@@ -217,9 +197,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'orgsharedrepo'"
+          not: { tableExists: { tableName: orgsharedrepo } }
       changes:
         - createTable:
             tableName: orgsharedrepo
@@ -269,9 +247,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'repostorageid'"
+          not: { tableExists: { tableName: repostorageid } }
       changes:
         - createTable:
             tableName: repostorageid
@@ -285,9 +261,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'reposyncerror'"
+          not: { tableExists: { tableName: reposyncerror } }
       changes:
         - createTable:
             tableName: reposyncerror
@@ -302,9 +276,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'rolequota'"
+          not: { tableExists: { tableName: rolequota } }
       changes:
         - createTable:
             tableName: rolequota
@@ -338,9 +310,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'webuploadtempfiles'"
+          not: { tableExists: { tableName: webuploadtempfiles } }
       changes:
         - createTable:
             tableName: webuploadtempfiles

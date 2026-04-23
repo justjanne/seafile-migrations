@@ -4,9 +4,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'orgdownloadratelimit'"
+          not: { tableExists: { tableName: orgdownloadratelimit } }
       changes:
         - createTable:
             tableName: orgdownloadratelimit
@@ -20,9 +18,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'orguploadratelimit'"
+          not: { tableExists: { tableName: orguploadratelimit } }
       changes:
         - createTable:
             tableName: orguploadratelimit
@@ -36,9 +32,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'orguserdefaultquota'"
+          not: { tableExists: { tableName: orguserdefaultquota } }
       changes:
         - createTable:
             tableName: orguserdefaultquota
@@ -52,9 +46,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'roledownloadratelimit'"
+          not: { tableExists: { tableName: roledownloadratelimit } }
       changes:
         - createTable:
             tableName: roledownloadratelimit
@@ -68,9 +60,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'roleuploadratelimit'"
+          not: { tableExists: { tableName: roleuploadratelimit } }
       changes:
         - createTable:
             tableName: roleuploadratelimit
@@ -84,9 +74,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'userdownloadratelimit'"
+          not: { tableExists: { tableName: userdownloadratelimit } }
       changes:
         - createTable:
             tableName: userdownloadratelimit
@@ -100,9 +88,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'useruploadratelimit'"
+          not: { tableExists: { tableName: useruploadratelimit } }
       changes:
         - createTable:
             tableName: useruploadratelimit

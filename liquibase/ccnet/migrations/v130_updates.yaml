@@ -34,6 +34,10 @@ databaseChangeLog:
   - changeSet:
       id: v130-create-emailuser-indices
       author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not: { indexExists: { indexName: idx_emailuser_is_active, tableName: emailuser } }
+          not: { indexExists: { indexName: idx_emailuser_is_department_owner, tableName: emailuser } }
       changes:
         - createIndex:
             indexName: idx_emailuser_is_active
@@ -53,9 +57,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'orgfileextwhitelist'"
+          not: { tableExists: { tableName: orgfileextwhitelist } }
       changes:
         - createTable:
             tableName: orgfileextwhitelist

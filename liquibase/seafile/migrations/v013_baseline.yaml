@@ -1,341 +1,185 @@
 databaseChangeLog:
   - changeSet:
-      id: v013-baseline-branch
+      id: v013-baseline-Branch
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'branch'"
+          not: { tableExists: { tableName: branch } }
       changes:
         - createTable:
             tableName: branch
             columns:
-              - column:
-                  name: name
-                  type: varchar(10)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: repo_id
-                  type: char(41)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: commit_id
-                  type: char(41)
-        - addPrimaryKey:
-            columnNames: repo_id, name
-            constraintName: pk_branch
-            tableName: branch
+              - column: { name: name, type: varchar(10), constraints: { nullable: false } }
+              - column: { name: repo_id, type: char(41), constraints: { nullable: false } }
+              - column: { name: commit_id, type: char(41) }
+        - addPrimaryKey: { columnNames: "repo_id, name", constraintName: pk_branch, tableName: branch }
 
   - changeSet:
-      id: v013-baseline-innerpubrepo
+      id: v013-baseline-InnerPubRepo
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'innerpubrepo'"
+          not: { tableExists: { tableName: innerpubrepo } }
       changes:
         - createTable:
             tableName: innerpubrepo
             columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: permission
-                  type: char(15)
+              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: permission, type: char(15) }
 
   - changeSet:
-      id: v013-baseline-orgquota
+      id: v013-baseline-OrgQuota
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'orgquota'"
+          not: { tableExists: { tableName: orgquota } }
       changes:
         - createTable:
             tableName: orgquota
             columns:
-              - column:
-                  name: org_id
-                  type: int
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: quota
-                  type: bigint
+              - column: { name: org_id, type: int, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: quota, type: bigint }
 
   - changeSet:
-      id: v013-baseline-orguserquota
+      id: v013-baseline-OrgUserQuota
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'orguserquota'"
+          not: { tableExists: { tableName: orguserquota } }
       changes:
         - createTable:
             tableName: orguserquota
             columns:
-              - column:
-                  name: org_id
-                  type: int
-                  constraints:
-                    nullable: false
-              - column:
-                  name: user
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: quota
-                  type: bigint
-        - addPrimaryKey:
-            columnNames: org_id, user
-            constraintName: pk_orguserquota
-            tableName: orguserquota
+              - column: { name: org_id, type: int, constraints: { nullable: false } }
+              - column: { name: user, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: quota, type: bigint }
+        - addPrimaryKey: { columnNames: "org_id, user", constraintName: pk_orguserquota, tableName: orguserquota }
 
   - changeSet:
-      id: v013-baseline-repo
+      id: v013-baseline-Repo
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'repo'"
+          not: { tableExists: { tableName: repo } }
       changes:
         - createTable:
             tableName: repo
             columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
 
   - changeSet:
-      id: v013-baseline-repogroup
+      id: v013-baseline-RepoGroup
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'repogroup'"
+          not: { tableExists: { tableName: repogroup } }
       changes:
         - createTable:
             tableName: repogroup
             columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-              - column:
-                  name: group_id
-                  type: int
-              - column:
-                  name: user_name
-                  type: varchar(255)
-              - column:
-                  name: permission
-                  type: char(15)
-        - addUniqueConstraint:
-            columnNames: group_id, repo_id
-            constraintName: uq_repogroup_group_repo
-            tableName: repogroup
-        - createIndex:
-            indexName: idx_repogroup_repo_id
-            tableName: repogroup
-            columns:
-              - column:
-                  name: repo_id
-        - createIndex:
-            indexName: idx_repogroup_user_name
-            tableName: repogroup
-            columns:
-              - column:
-                  name: user_name
+              - column: { name: repo_id, type: char(37) }
+              - column: { name: group_id, type: int }
+              - column: { name: user_name, type: varchar(255) }
+              - column: { name: permission, type: char(15) }
+        - addUniqueConstraint: { columnNames: "group_id, repo_id", constraintName: uq_repogroup_group_repo, tableName: repogroup }
+        - createIndex: { indexName: idx_RepoGroup_repo_id, tableName: repogroup, columns: [ { name: repo_id } ] }
+        - createIndex: { indexName: idx_RepoGroup_user_name, tableName: repogroup, columns: [ { name: user_name } ] }
 
   - changeSet:
-      id: v013-baseline-repohead
+      id: v013-baseline-RepoHead
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'repohead'"
+          not: { tableExists: { tableName: repohead } }
       changes:
         - createTable:
             tableName: repohead
             columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: branch_name
-                  type: varchar(10)
+              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: branch_name, type: varchar(10) }
 
   - changeSet:
-      id: v013-baseline-repoowner
+      id: v013-baseline-RepoOwner
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'repoowner'"
+          not: { tableExists: { tableName: repoowner } }
       changes:
         - createTable:
             tableName: repoowner
             columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: owner_id
-                  type: varchar(255)
-        - createIndex:
-            indexName: idx_repoowner_owner_id
-            tableName: repoowner
-            columns:
-              - column:
-                  name: owner_id
+              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: owner_id, type: varchar(255) }
+        - createIndex: { indexName: idx_RepoOwner_owner_id, tableName: repoowner, columns: [ { name: owner_id } ] }
 
   - changeSet:
-      id: v013-baseline-reposize
+      id: v013-baseline-RepoSize
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'reposize'"
+          not: { tableExists: { tableName: reposize } }
       changes:
         - createTable:
             tableName: reposize
             columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: size
-                  type: bigint
-              - column:
-                  name: head_id
-                  type: char(41)
+              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: size, type: bigint }
+              - column: { name: head_id, type: char(41) }
 
   - changeSet:
-      id: v013-baseline-repousertoken
+      id: v013-baseline-RepoUserToken
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'repousertoken'"
+          not: { tableExists: { tableName: repousertoken } }
       changes:
         - createTable:
             tableName: repousertoken
             columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-              - column:
-                  name: email
-                  type: varchar(255)
-              - column:
-                  name: token
-                  type: char(41)
-        - addUniqueConstraint:
-            columnNames: repo_id, token
-            constraintName: uq_repousertoken_repo_token
-            tableName: repousertoken
+              - column: { name: repo_id, type: char(37) }
+              - column: { name: email, type: varchar(255) }
+              - column: { name: token, type: char(41) }
+        - addUniqueConstraint: { columnNames: "repo_id, token", constraintName: uq_repousertoken_repo_token, tableName: repousertoken }
 
   - changeSet:
-      id: v013-baseline-sharedrepo
+      id: v013-baseline-SharedRepo
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'sharedrepo'"
+          not: { tableExists: { tableName: sharedrepo } }
       changes:
         - createTable:
             tableName: sharedrepo
             columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-              - column:
-                  name: from_email
-                  type: varchar(512)
-              - column:
-                  name: to_email
-                  type: varchar(512)
-              - column:
-                  name: permission
-                  type: char(15)
-        - createIndex:
-            indexName: idx_sharedrepo_repo_id
-            tableName: sharedrepo
-            columns:
-              - column:
-                  name: repo_id
+              - column: { name: repo_id, type: char(37) }
+              - column: { name: from_email, type: varchar(512) }
+              - column: { name: to_email, type: varchar(512) }
+              - column: { name: permission, type: char(15) }
+        - createIndex: { indexName: idx_SharedRepo_repo_id, tableName: sharedrepo, columns: [ { name: repo_id } ] }
 
   - changeSet:
-      id: v013-baseline-userquota
+      id: v013-baseline-UserQuota
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'userquota'"
+          not: { tableExists: { tableName: userquota } }
       changes:
         - createTable:
             tableName: userquota
             columns:
-              - column:
-                  name: user
-                  type: varchar(255)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: quota
-                  type: bigint
+              - column: { name: user, type: varchar(255), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: quota, type: bigint }
 
   - changeSet:
-      id: v013-baseline-webap
+      id: v013-baseline-WebAP
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'webap'"
+          not: { tableExists: { tableName: webap } }
       changes:
         - createTable:
             tableName: webap
             columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: access_property
-                  type: char(10)
+              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: access_property, type: char(10) }
 

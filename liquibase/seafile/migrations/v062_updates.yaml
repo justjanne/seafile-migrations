@@ -4,9 +4,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'repoinfo'"
+          not: { tableExists: { tableName: repoinfo } }
       changes:
         - createTable:
             tableName: repoinfo
@@ -23,9 +21,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'seafileconf'"
+          not: { tableExists: { tableName: seafileconf } }
       changes:
         - createTable:
             tableName: seafileconf

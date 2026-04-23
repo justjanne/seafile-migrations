@@ -4,9 +4,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'repohistorylimit'"
+          not: { tableExists: { tableName: repohistorylimit } }
       changes:
         - createTable:
             tableName: repohistorylimit
@@ -19,9 +17,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'repovalidsince'"
+          not: { tableExists: { tableName: repovalidsince } }
       changes:
         - createTable:
             tableName: repovalidsince

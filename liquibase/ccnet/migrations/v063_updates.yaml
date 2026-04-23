@@ -55,9 +55,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'groupstructure'"
+          not: { tableExists: { tableName: groupstructure } }
       changes:
         - createTable:
             tableName: groupstructure

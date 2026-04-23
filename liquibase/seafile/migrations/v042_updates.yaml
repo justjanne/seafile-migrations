@@ -16,9 +16,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck:
-            expectedResult: 0
-            sql: "${table_exists_query} 'usersharequota'"
+          not: { tableExists: { tableName: usersharequota } }
       changes:
         - createTable:
             tableName: usersharequota
