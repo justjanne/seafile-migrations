@@ -1,9 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: v022-update-emailuser-passwd
-      author: seafile
-      changes:
-        - modifyDataType:
-            tableName: emailuser
-            columnName: passwd
-            newDataType: varchar(256)
