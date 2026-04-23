@@ -1,328 +1,575 @@
 databaseChangeLog:
-  # --- Branch ---
+  # --- branch ---
   - changeSet:
       id: v013-normalize-branch
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: Branch }
+          tableExists:
+            tableName: Branch
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: branch
       changes:
-        - renameTable: { oldTableName: Branch, newTableName: branch }
+        - renameTable:
+            oldTableName: Branch
+            newTableName: branch
 
   - changeSet:
       id: v013-baseline-branch
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: branch } }
+          not:
+            tableExists:
+              tableName: branch
       changes:
         - createTable:
             tableName: branch
             columns:
-              - column: { name: name, type: varchar(10), constraints: { nullable: false } }
-              - column: { name: repo_id, type: char(41), constraints: { nullable: false } }
-              - column: { name: commit_id, type: char(41) }
-        - addPrimaryKey: { columnNames: "repo_id, name", constraintName: pk_branch, tableName: branch }
+              - column:
+                  name: name
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: char(41)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: commit_id
+                  type: char(41)
+        - addPrimaryKey:
+            tableName: branch
+            columnNames: "repo_id, name"
+            constraintName: pk_branch
 
-  # --- InnerPubRepo ---
+  # --- innerpubrepo ---
   - changeSet:
       id: v013-normalize-innerpubrepo
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: InnerPubRepo }
+          tableExists:
+            tableName: InnerPubRepo
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: innerpubrepo
       changes:
-        - renameTable: { oldTableName: InnerPubRepo, newTableName: innerpubrepo }
+        - renameTable:
+            oldTableName: InnerPubRepo
+            newTableName: innerpubrepo
 
   - changeSet:
       id: v013-baseline-innerpubrepo
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: innerpubrepo } }
+          not:
+            tableExists:
+              tableName: innerpubrepo
       changes:
         - createTable:
             tableName: innerpubrepo
             columns:
-              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
-              - column: { name: permission, type: char(15) }
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: permission
+                  type: char(15)
 
-  # --- OrgQuota ---
+  # --- orgquota ---
   - changeSet:
       id: v013-normalize-orgquota
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: OrgQuota }
+          tableExists:
+            tableName: OrgQuota
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: orgquota
       changes:
-        - renameTable: { oldTableName: OrgQuota, newTableName: orgquota }
+        - renameTable:
+            oldTableName: OrgQuota
+            newTableName: orgquota
 
   - changeSet:
       id: v013-baseline-orgquota
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: orgquota } }
+          not:
+            tableExists:
+              tableName: orgquota
       changes:
         - createTable:
             tableName: orgquota
             columns:
-              - column: { name: org_id, type: int, constraints: { primaryKey: true, nullable: false } }
-              - column: { name: quota, type: bigint }
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: quota
+                  type: bigint
 
-  # --- OrgUserQuota ---
+  # --- orguserquota ---
   - changeSet:
       id: v013-normalize-orguserquota
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: OrgUserQuota }
+          tableExists:
+            tableName: OrgUserQuota
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: orguserquota
       changes:
-        - renameTable: { oldTableName: OrgUserQuota, newTableName: orguserquota }
+        - renameTable:
+            oldTableName: OrgUserQuota
+            newTableName: orguserquota
 
   - changeSet:
       id: v013-baseline-orguserquota
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: orguserquota } }
+          not:
+            tableExists:
+              tableName: orguserquota
       changes:
         - createTable:
             tableName: orguserquota
             columns:
-              - column: { name: org_id, type: int, constraints: { nullable: false } }
-              - column: { name: user, type: varchar(255), constraints: { nullable: false } }
-              - column: { name: quota, type: bigint }
-        - addPrimaryKey: { columnNames: "org_id, user", constraintName: pk_orguserquota, tableName: orguserquota }
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quota
+                  type: bigint
+        - addPrimaryKey:
+            tableName: orguserquota
+            columnNames: "org_id, user"
+            constraintName: pk_orguserquota
 
-  # --- Repo ---
+  # --- repo ---
   - changeSet:
       id: v013-normalize-repo
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: Repo }
+          tableExists:
+            tableName: Repo
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: repo
       changes:
-        - renameTable: { oldTableName: Repo, newTableName: repo }
+        - renameTable:
+            oldTableName: Repo
+            newTableName: repo
 
   - changeSet:
       id: v013-baseline-repo
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: repo } }
+          not:
+            tableExists:
+              tableName: repo
       changes:
         - createTable:
             tableName: repo
             columns:
-              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
 
-  # --- RepoGroup ---
+  # --- repogroup ---
   - changeSet:
       id: v013-normalize-repogroup
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: RepoGroup }
+          tableExists:
+            tableName: RepoGroup
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: repogroup
       changes:
-        - renameTable: { oldTableName: RepoGroup, newTableName: repogroup }
+        - renameTable:
+            oldTableName: RepoGroup
+            newTableName: repogroup
 
   - changeSet:
       id: v013-baseline-repogroup
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: repogroup } }
+          not:
+            tableExists:
+              tableName: repogroup
       changes:
         - createTable:
             tableName: repogroup
             columns:
-              - column: { name: repo_id, type: char(37) }
-              - column: { name: group_id, type: int }
-              - column: { name: user_name, type: varchar(255) }
-              - column: { name: permission, type: char(15) }
-        - addUniqueConstraint: { columnNames: "group_id, repo_id", constraintName: uq_repogroup_group_repo, tableName: repogroup }
-        - createIndex: { indexName: idx_repogroup_repo_id, tableName: repogroup, columns: [ { name: repo_id } ] }
-        - createIndex: { indexName: idx_repogroup_user_name, tableName: repogroup, columns: [ { name: user_name } ] }
+              - column:
+                  name: repo_id
+                  type: char(37)
+              - column:
+                  name: group_id
+                  type: int
+              - column:
+                  name: user_name
+                  type: varchar(255)
+              - column:
+                  name: permission
+                  type: char(15)
+        - addUniqueConstraint:
+            tableName: repogroup
+            columnNames: "group_id, repo_id"
+            constraintName: uq_repogroup_group_repo
+        - createIndex:
+            indexName: idx_repogroup_repo_id
+            tableName: repogroup
+            columns:
+              - column:
+                  name: repo_id
+        - createIndex:
+            indexName: idx_repogroup_user_name
+            tableName: repogroup
+            columns:
+              - column:
+                  name: user_name
 
-  # --- RepoHead ---
+  # --- repohead ---
   - changeSet:
       id: v013-normalize-repohead
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: RepoHead }
+          tableExists:
+            tableName: RepoHead
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: repohead
       changes:
-        - renameTable: { oldTableName: RepoHead, newTableName: repohead }
+        - renameTable:
+            oldTableName: RepoHead
+            newTableName: repohead
 
   - changeSet:
       id: v013-baseline-repohead
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: repohead } }
+          not:
+            tableExists:
+              tableName: repohead
       changes:
         - createTable:
             tableName: repohead
             columns:
-              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
-              - column: { name: branch_name, type: varchar(10) }
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: branch_name
+                  type: varchar(10)
 
-  # --- RepoOwner ---
+  # --- repoowner ---
   - changeSet:
       id: v013-normalize-repoowner
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: RepoOwner }
+          tableExists:
+            tableName: RepoOwner
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: repoowner
       changes:
-        - renameTable: { oldTableName: RepoOwner, newTableName: repoowner }
+        - renameTable:
+            oldTableName: RepoOwner
+            newTableName: repoowner
 
   - changeSet:
       id: v013-baseline-repoowner
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: repoowner } }
+          not:
+            tableExists:
+              tableName: repoowner
       changes:
         - createTable:
             tableName: repoowner
             columns:
-              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
-              - column: { name: owner_id, type: varchar(255) }
-        - createIndex: { indexName: idx_repoowner_owner_id, tableName: repoowner, columns: [ { name: owner_id } ] }
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: owner_id
+                  type: varchar(255)
+        - createIndex:
+            indexName: idx_repoowner_owner_id
+            tableName: repoowner
+            columns:
+              - column:
+                  name: owner_id
 
-  # --- RepoSize ---
+  # --- reposize ---
   - changeSet:
       id: v013-normalize-reposize
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: RepoSize }
+          tableExists:
+            tableName: RepoSize
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: reposize
       changes:
-        - renameTable: { oldTableName: RepoSize, newTableName: reposize }
+        - renameTable:
+            oldTableName: RepoSize
+            newTableName: reposize
 
   - changeSet:
       id: v013-baseline-reposize
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: reposize } }
+          not:
+            tableExists:
+              tableName: reposize
       changes:
         - createTable:
             tableName: reposize
             columns:
-              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
-              - column: { name: size, type: bigint }
-              - column: { name: head_id, type: char(41) }
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: size
+                  type: bigint
+              - column:
+                  name: head_id
+                  type: char(41)
 
-  # --- RepoUserToken ---
+  # --- repousertoken ---
   - changeSet:
       id: v013-normalize-repousertoken
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: RepoUserToken }
+          tableExists:
+            tableName: RepoUserToken
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: repousertoken
       changes:
-        - renameTable: { oldTableName: RepoUserToken, newTableName: repousertoken }
+        - renameTable:
+            oldTableName: RepoUserToken
+            newTableName: repousertoken
 
   - changeSet:
       id: v013-baseline-repousertoken
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: repousertoken } }
+          not:
+            tableExists:
+              tableName: repousertoken
       changes:
         - createTable:
             tableName: repousertoken
             columns:
-              - column: { name: repo_id, type: char(37) }
-              - column: { name: email, type: varchar(255) }
-              - column: { name: token, type: char(41) }
-        - addUniqueConstraint: { columnNames: "repo_id, token", constraintName: uq_repousertoken_repo_token, tableName: repousertoken }
+              - column:
+                  name: repo_id
+                  type: char(37)
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: token
+                  type: char(41)
+        - addUniqueConstraint:
+            tableName: repousertoken
+            columnNames: "repo_id, token"
+            constraintName: uq_repousertoken_repo_token
 
-  # --- SharedRepo ---
+  # --- sharedrepo ---
   - changeSet:
       id: v013-normalize-sharedrepo
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: SharedRepo }
+          tableExists:
+            tableName: SharedRepo
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: sharedrepo
       changes:
-        - renameTable: { oldTableName: SharedRepo, newTableName: sharedrepo }
+        - renameTable:
+            oldTableName: SharedRepo
+            newTableName: sharedrepo
 
   - changeSet:
       id: v013-baseline-sharedrepo
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: sharedrepo } }
+          not:
+            tableExists:
+              tableName: sharedrepo
       changes:
         - createTable:
             tableName: sharedrepo
             columns:
-              - column: { name: repo_id, type: char(37) }
-              - column: { name: from_email, type: varchar(512) }
-              - column: { name: to_email, type: varchar(512) }
-              - column: { name: permission, type: char(15) }
-        - createIndex: { indexName: idx_sharedrepo_repo_id, tableName: sharedrepo, columns: [ { name: repo_id } ] }
+              - column:
+                  name: repo_id
+                  type: char(37)
+              - column:
+                  name: from_email
+                  type: varchar(512)
+              - column:
+                  name: to_email
+                  type: varchar(512)
+              - column:
+                  name: permission
+                  type: char(15)
+        - createIndex:
+            indexName: idx_sharedrepo_repo_id
+            tableName: sharedrepo
+            columns:
+              - column:
+                  name: repo_id
 
-  # --- UserQuota ---
+  # --- userquota ---
   - changeSet:
       id: v013-normalize-userquota
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: UserQuota }
+          tableExists:
+            tableName: UserQuota
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: userquota
       changes:
-        - renameTable: { oldTableName: UserQuota, newTableName: userquota }
+        - renameTable:
+            oldTableName: UserQuota
+            newTableName: userquota
 
   - changeSet:
       id: v013-baseline-userquota
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: userquota } }
+          not:
+            tableExists:
+              tableName: userquota
       changes:
         - createTable:
             tableName: userquota
             columns:
-              - column: { name: user, type: varchar(255), constraints: { primaryKey: true, nullable: false } }
-              - column: { name: quota, type: bigint }
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: quota
+                  type: bigint
 
-  # --- WebAP ---
+  # --- webap ---
   - changeSet:
       id: v013-normalize-webap
       author: seafile
       dbms: mysql,mariadb
       preConditions:
         - onFail: CONTINUE
-          tableExists: { tableName: WebAP }
+          tableExists:
+            tableName: WebAP
+        - onFail: CONTINUE
+          not:
+            tableExists:
+              tableName: webap
       changes:
-        - renameTable: { oldTableName: WebAP, newTableName: webap }
+        - renameTable:
+            oldTableName: WebAP
+            newTableName: webap
 
   - changeSet:
       id: v013-baseline-webap
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: webap } }
+          not:
+            tableExists:
+              tableName: webap
       changes:
         - createTable:
             tableName: webap
             columns:
-              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
-              - column: { name: access_property, type: char(10) }
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: access_property
+                  type: char(10)
 
