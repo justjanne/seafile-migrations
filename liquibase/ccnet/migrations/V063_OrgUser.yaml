@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_OrgUser
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: OrgUser
+            dbms: mysql
+        - addColumn:
+            tableName: OrgUser
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: OrgUser
+            columnNames: org_id, email
+            dbms: mysql
+        - renameIndex:
+            tableName: OrgUser
+            oldIndexName: orguser_email_idx
+            newIndexName: idx_orguser_email
+            dbms: postgresql

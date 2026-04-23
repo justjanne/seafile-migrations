@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: V090_RepoTokenPeerInfo
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: RepoTokenPeerInfo
+            columnName: peer_id
+            newDataType: char(41)
+        - createIndex:
+            tableName: RepoTokenPeerInfo
+            indexName: idx_repotokenpeerinfo_peer_id
+            columns:
+              - column:
+                  name: peer_id

@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_OrgUserDefaultQuota
+      author: seafile
+      changes:
+        - createTable:
+            tableName: OrgUserDefaultQuota
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    unique: true
+              - column:
+                  name: quota
+                  type: bigint

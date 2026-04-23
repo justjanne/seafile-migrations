@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_GroupUser
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: GroupUser
+            dbms: mysql
+        - addColumn:
+            tableName: GroupUser
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - modifyDataType:
+            tableName: GroupUser
+            columnName: group_id
+            newDataType: bigint
+        - addUniqueConstraint:
+            tableName: GroupUser
+            columnNames: group_id, user_name
+            dbms: mysql
+        - renameIndex:
+            tableName: GroupUser
+            oldIndexName: groupuser_username_idx
+            newIndexName: idx_groupuser_user_name
+            dbms: postgresql

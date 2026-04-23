@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_OrgQuota
+      author: seafile
+      changes:
+        - createTable:
+            tableName: OrgQuota
+            columns:
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: quota
+                  type: bigint

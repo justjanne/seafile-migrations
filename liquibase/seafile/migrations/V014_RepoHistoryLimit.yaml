@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: V014_RepoHistoryLimit
+      author: seafile
+      changes:
+        - createTable:
+            tableName: RepoHistoryLimit
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: days
+                  type: int

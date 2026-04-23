@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_OrgFileExtWhiteList
+      author: seafile
+      changes:
+        - createTable:
+            tableName: OrgFileExtWhiteList
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    unique: true
+              - column:
+                  name: white_list
+                  type: text

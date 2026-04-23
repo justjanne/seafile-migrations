@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_OrgUploadRateLimit
+      author: seafile
+      changes:
+        - createTable:
+            tableName: OrgUploadRateLimit
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    unique: true
+              - column:
+                  name: upload_limit
+                  type: bigint

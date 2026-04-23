@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: V070_WebUploadTempFiles
+      author: seafile
+      changes:
+        - createTable:
+            tableName: WebUploadTempFiles
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: repo_id
+                  type: CHAR(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_path
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tmp_file_path
+                  type: TEXT
+                  constraints:
+                    nullable: false

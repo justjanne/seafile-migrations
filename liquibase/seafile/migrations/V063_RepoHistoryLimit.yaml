@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_RepoHistoryLimit
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: RepoHistoryLimit
+            constraintName: RepoHistoryLimit_pkey
+        - addColumn:
+            tableName: RepoHistoryLimit
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: RepoHistoryLimit_pkey
+        - modifyDataType:
+            tableName: RepoHistoryLimit
+            columnName: repo_id
+            newDataType: CHAR(37)
+        - dropDefaultValue:
+            tableName: RepoHistoryLimit
+            columnName: repo_id
+        - addUniqueConstraint:
+            tableName: RepoHistoryLimit
+            columnNames: repo_id
+            constraintName: RepoHistoryLimit_repo_id_uq

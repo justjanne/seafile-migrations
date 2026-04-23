@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: V131_RepoUserToken
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          dbms:
+            type: postgresql
+      changes:
+        - modifyDataType:
+            tableName: RepoUserToken
+            columnName: repo_id
+            newDataType: CHAR(37)
+        - modifyDataType:
+            tableName: RepoUserToken
+            columnName: token
+            newDataType: CHAR(41)
+        - renameIndex:
+            indexName: repousertoken_email_idx
+            newIndexName: idx_repousertoken_email
+            tableName: RepoUserToken

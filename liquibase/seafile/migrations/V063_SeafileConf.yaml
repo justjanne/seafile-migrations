@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_SeafileConf
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: SeafileConf
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true

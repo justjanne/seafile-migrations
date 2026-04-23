@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_RepoTokenPeerInfo
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: RepoTokenPeerInfo
+            constraintName: RepoTokenPeerInfo_pkey
+        - addColumn:
+            tableName: RepoTokenPeerInfo
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: RepoTokenPeerInfo_pkey
+        - modifyDataType:
+            tableName: RepoTokenPeerInfo
+            columnName: token
+            newDataType: CHAR(41)
+        - dropDefaultValue:
+            tableName: RepoTokenPeerInfo
+            columnName: token
+        - addUniqueConstraint:
+            tableName: RepoTokenPeerInfo
+            columnNames: token
+            constraintName: RepoTokenPeerInfo_token_uq

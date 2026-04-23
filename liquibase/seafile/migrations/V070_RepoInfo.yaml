@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: V070_RepoInfo
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: RepoInfo
+            columns:
+              - column:
+                  name: status
+                  type: INT
+                  defaultValueNumeric: 0

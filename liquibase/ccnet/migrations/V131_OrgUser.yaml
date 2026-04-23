@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: V131_OrgUser
+      author: seafile
+      dbms: postgresql
+      changes:
+        - modifyDataType:
+            tableName: OrgUser
+            columnName: is_staff
+            newDataType: boolean
+        - renameIndex:
+            tableName: OrgUser
+            oldIndexName: orguser_email_idx
+            newIndexName: idx_orguser_email

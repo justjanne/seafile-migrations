@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: v070-folderuserperm
+      author: seafile
+      changes:
+        - createTable:
+            tableName: FolderUserPerm
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: repo_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission
+                  type: char(15)
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - createIndex:
+            tableName: FolderUserPerm
+            indexName: idx_folderuserperm_repo_id
+            columns:
+              - column:
+                  name: repo_id

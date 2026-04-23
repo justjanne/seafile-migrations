@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: V041_LDAPUsers
+      author: seafile
+      changes:
+        - createTable:
+            tableName: LDAPUsers
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_staff
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: extra_attrs
+                  type: text
+        - createIndex:
+            indexName: ldapusers_email_idx
+            tableName: LDAPUsers
+            columns:
+              - column:
+                  name: email

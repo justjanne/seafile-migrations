@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: V018_WebAP
+      author: seafile
+      changes:
+        - createTable:
+            tableName: WebAP
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: access_property
+                  type: varchar(10)

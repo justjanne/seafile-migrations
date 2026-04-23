@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_OrgQuota
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            dbms: postgresql
+            tableName: OrgQuota
+            constraintName: orgquota_pkey
+        - dropPrimaryKey:
+            dbms: mysql
+            tableName: OrgQuota
+        - addColumn:
+            tableName: OrgQuota
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: OrgQuota
+            columnNames: org_id
+        - modifyDataType:
+            dbms: mysql
+            tableName: OrgQuota
+            columnName: org_id
+            newDataType: int

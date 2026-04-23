@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_Repo
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            dbms: postgresql
+            tableName: Repo
+            constraintName: repo_pkey
+        - dropPrimaryKey:
+            dbms: mysql
+            tableName: Repo
+        - addColumn:
+            tableName: Repo
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: Repo
+            columnNames: repo_id
+        - modifyDataType:
+            tableName: Repo
+            columnName: repo_id
+            newDataType: char(37)

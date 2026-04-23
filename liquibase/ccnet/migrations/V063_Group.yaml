@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_Group
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: Group
+            columnName: group_id
+            newDataType: bigint
+        - addColumn:
+            tableName: Group
+            columns:
+              - column:
+                  name: parent_group_id
+                  type: int
+                  defaultValue: 0

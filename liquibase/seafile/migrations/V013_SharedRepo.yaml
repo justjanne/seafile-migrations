@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_SharedRepo
+      author: seafile
+      changes:
+        - createTable:
+            tableName: SharedRepo
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+              - column:
+                  name: from_email
+                  type: varchar(512)
+              - column:
+                  name: to_email
+                  type: varchar(512)
+              - column:
+                  name: permission
+                  type: char(15)
+        - createIndex:
+            tableName: SharedRepo
+            indexName: sharedrepo_repo_id_idx
+            columns:
+              - column:
+                  name: repo_id

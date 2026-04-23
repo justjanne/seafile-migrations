@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_Group
+      author: seafile
+      changes:
+        - createTable:
+            tableName: Group
+            columns:
+              - column:
+                  name: group_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_name
+                  type: varchar(255)
+              - column:
+                  name: creator_name
+                  type: varchar(255)
+              - column:
+                  name: timestamp
+                  type: bigint

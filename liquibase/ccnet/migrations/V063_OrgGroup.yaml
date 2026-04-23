@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_OrgGroup
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: OrgGroup
+            dbms: mysql
+        - addColumn:
+            tableName: OrgGroup
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: OrgGroup
+            columnNames: org_id, group_id
+            dbms: mysql

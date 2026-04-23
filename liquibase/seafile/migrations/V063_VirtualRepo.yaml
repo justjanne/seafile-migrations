@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_VirtualRepo
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: VirtualRepo
+        - addColumn:
+            tableName: VirtualRepo
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+        - modifyDataType:
+            tableName: VirtualRepo
+            columnName: repo_id
+            newDataType: CHAR(36)
+        - dropNotNullConstraint:
+            tableName: VirtualRepo
+            columnName: repo_id
+            columnDataType: CHAR(36)
+        - addUniqueConstraint:
+            tableName: VirtualRepo
+            columnNames: repo_id
+            constraintName: UK_VirtualRepo_repo_id

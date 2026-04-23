@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_GarbageRepos
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            dbms: postgresql
+            tableName: GarbageRepos
+            constraintName: garbagerepos_pkey
+        - dropPrimaryKey:
+            dbms: mysql
+            tableName: GarbageRepos
+        - addColumn:
+            tableName: GarbageRepos
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: GarbageRepos
+            columnNames: repo_id
+        - modifyDataType:
+            dbms: mysql
+            tableName: GarbageRepos
+            columnName: repo_id
+            newDataType: char(36)

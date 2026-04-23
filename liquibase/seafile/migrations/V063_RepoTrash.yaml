@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_RepoTrash
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: RepoTrash
+        - addColumn:
+            tableName: RepoTrash
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+        - modifyDataType:
+            tableName: RepoTrash
+            columnName: repo_id
+            newDataType: CHAR(36)
+        - dropNotNullConstraint:
+            tableName: RepoTrash
+            columnName: repo_id
+            columnDataType: CHAR(36)
+        - addUniqueConstraint:
+            tableName: RepoTrash
+            columnNames: repo_id
+            constraintName: UK_RepoTrash_repo_id

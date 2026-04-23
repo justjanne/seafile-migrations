@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: V131_UserRole
+      author: seafile
+      dbms: postgresql
+      changes:
+        - dropUniqueConstraint:
+            tableName: UserRole
+            constraintName: userrole_email_role_key
+        - dropIndex:
+            tableName: UserRole
+            indexName: userrole_email_idx
+        - addUniqueConstraint:
+            tableName: UserRole
+            columnNames: email

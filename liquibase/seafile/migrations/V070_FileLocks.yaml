@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: v070-filelocks
+      author: seafile
+      changes:
+        - createTable:
+            tableName: FileLocks
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: repo_id
+                  type: char(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lock_time
+                  type: bigint
+              - column:
+                  name: expire
+                  type: bigint
+        - createIndex:
+            tableName: FileLocks
+            indexName: idx_filelocks_repo_id
+            columns:
+              - column:
+                  name: repo_id

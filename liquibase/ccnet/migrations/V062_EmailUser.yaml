@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_EmailUser
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: EmailUser
+            columns:
+              - column:
+                  name: reference_id
+                  type: varchar(255)
+        - createIndex:
+            indexName: emailuser_reference_id_idx
+            tableName: EmailUser
+            columns:
+              - column:
+                  name: reference_id
+            unique: true

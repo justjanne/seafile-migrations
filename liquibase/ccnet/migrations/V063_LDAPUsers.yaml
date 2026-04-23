@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_LDAPUsers
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: LDAPUsers
+            columnName: id
+            newDataType: bigint

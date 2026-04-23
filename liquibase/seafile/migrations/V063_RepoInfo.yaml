@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_RepoInfo
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: RepoInfo
+            constraintName: RepoInfo_pkey
+        - addColumn:
+            tableName: RepoInfo
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: RepoInfo_pkey
+        - modifyDataType:
+            tableName: RepoInfo
+            columnName: repo_id
+            newDataType: CHAR(36)
+        - dropDefaultValue:
+            tableName: RepoInfo
+            columnName: repo_id
+        - addUniqueConstraint:
+            tableName: RepoInfo
+            columnNames: repo_id
+            constraintName: RepoInfo_repo_id_uq

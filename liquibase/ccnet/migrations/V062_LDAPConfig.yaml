@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_LDAPConfig
+      author: seafile
+      changes:
+        - createTable:
+            tableName: LDAPConfig
+            columns:
+              - column:
+                  name: cfg_group
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cfg_key
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: varchar(255)
+              - column:
+                  name: property
+                  type: int

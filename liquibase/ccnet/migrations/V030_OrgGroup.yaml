@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: V030_OrgGroup
+      author: seafile
+      dbms: mysql
+      changes:
+        - addPrimaryKey:
+            tableName: OrgGroup
+            columnNames: org_id, group_id
+        - addNotNullConstraint:
+            tableName: OrgGroup
+            columnName: org_id
+            columnDataType: int
+        - addNotNullConstraint:
+            tableName: OrgGroup
+            columnName: group_id
+            columnDataType: int

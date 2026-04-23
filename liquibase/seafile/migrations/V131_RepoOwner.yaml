@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: V131_RepoOwner
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          dbms:
+            type: postgresql
+      changes:
+        - renameIndex:
+            indexName: repoowner_owner_idx
+            newIndexName: idx_repoowner_owner_id
+            tableName: RepoOwner

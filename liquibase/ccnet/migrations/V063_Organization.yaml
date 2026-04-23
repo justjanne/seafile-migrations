@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_Organization
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: Organization
+            columnName: org_id
+            newDataType: bigint

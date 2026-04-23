@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_LDAPConfig
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: LDAPConfig
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false

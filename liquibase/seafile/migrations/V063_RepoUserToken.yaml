@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_RepoUserToken
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: RepoUserToken
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true

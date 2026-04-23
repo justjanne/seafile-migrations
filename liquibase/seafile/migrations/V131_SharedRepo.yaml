@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: V131_SharedRepo
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          dbms:
+            type: postgresql
+      changes:
+        - modifyDataType:
+            tableName: SharedRepo
+            columnName: repo_id
+            newDataType: CHAR(37)
+        - modifyDataType:
+            tableName: SharedRepo
+            columnName: permission
+            newDataType: CHAR(15)
+        - renameIndex:
+            indexName: sharedrepo_repoid_idx
+            newIndexName: idx_sharedrepo_repo_id
+            tableName: SharedRepo
+        - renameIndex:
+            indexName: sharedrepo_from_email_idx
+            newIndexName: idx_sharedrepo_from_email
+            tableName: SharedRepo
+        - renameIndex:
+            indexName: sharedrepo_to_email_idx
+            newIndexName: idx_sharedrepo_to_email
+            tableName: SharedRepo

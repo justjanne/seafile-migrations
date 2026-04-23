@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_SystemInfo
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: SystemInfo
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true

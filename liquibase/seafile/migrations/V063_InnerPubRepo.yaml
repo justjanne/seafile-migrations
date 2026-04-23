@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_InnerPubRepo
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            dbms: postgresql
+            tableName: InnerPubRepo
+            constraintName: innerpubrepo_pkey
+        - dropPrimaryKey:
+            dbms: mysql
+            tableName: InnerPubRepo
+        - addColumn:
+            tableName: InnerPubRepo
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: InnerPubRepo
+            columnNames: repo_id
+        - modifyDataType:
+            tableName: InnerPubRepo
+            columnName: repo_id
+            newDataType: char(37)

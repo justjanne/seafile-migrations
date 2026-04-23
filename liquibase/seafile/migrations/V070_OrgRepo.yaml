@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: V070_OrgRepo
+      author: seafile
+      changes:
+        - createTable:
+            tableName: OrgRepo
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: org_id
+                  type: INT
+              - column:
+                  name: repo_id
+                  type: CHAR(37)
+              - column:
+                  name: user
+                  type: VARCHAR(255)
+        - addUniqueConstraint:
+            tableName: OrgRepo
+            columnNames: org_id, repo_id
+            constraintName: org_id_repo_id_unique_orgrepo
+        - addUniqueConstraint:
+            tableName: OrgRepo
+            columnNames: repo_id
+            constraintName: repo_id_unique_orgrepo
+        - createIndex:
+            tableName: OrgRepo
+            indexName: idx_orgrepo_org_id_user
+            columns:
+              - column:
+                  name: org_id
+              - column:
+                  name: user
+        - createIndex:
+            tableName: OrgRepo
+            indexName: idx_orgrepo_user
+            columns:
+              - column:
+                  name: user

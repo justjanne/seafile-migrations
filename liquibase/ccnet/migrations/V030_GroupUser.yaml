@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: V030_GroupUser
+      author: seafile
+      dbms: mysql
+      changes:
+        - addPrimaryKey:
+            tableName: GroupUser
+            columnNames: group_id, user_name
+        - addNotNullConstraint:
+            tableName: GroupUser
+            columnName: group_id
+            columnDataType: int
+        - addNotNullConstraint:
+            tableName: GroupUser
+            columnName: user_name
+            columnDataType: varchar(255)

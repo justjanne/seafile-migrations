@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: V031_UserRole
+      author: seafile
+      changes:
+        - createTable:
+            tableName: UserRole
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: role
+                  type: varchar(255)
+        - createIndex:
+            indexName: userrole_email_idx
+            tableName: UserRole
+            columns:
+              - column:
+                  name: email
+        - addUniqueConstraint:
+            tableName: UserRole
+            columnNames: email
+            dbms: mysql
+        - addUniqueConstraint:
+            tableName: UserRole
+            columnNames: email, role
+            dbms: postgresql

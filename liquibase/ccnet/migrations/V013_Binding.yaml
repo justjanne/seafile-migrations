@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_Binding
+      author: seafile
+      changes:
+        - createTable:
+            tableName: Binding
+            columns:
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: peer_id
+                  type: char(41)
+                  constraints:
+                    unique: true
+        - createIndex:
+            indexName: idx_binding_email
+            tableName: Binding
+            columns:
+              - column:
+                  name: email

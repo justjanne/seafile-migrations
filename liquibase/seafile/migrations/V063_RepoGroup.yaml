@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_RepoGroup
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: RepoGroup
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: RepoGroup_pkey

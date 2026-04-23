@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: V030_GarbageRepos
+      author: seafile
+      changes:
+        - createTable:
+            tableName: GarbageRepos
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false

@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_RepoUserToken
+      author: seafile
+      changes:
+        - createTable:
+            tableName: RepoUserToken
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: token
+                  type: char(41)
+        - addUniqueConstraint:
+            columnNames: repo_id, token
+            constraintName: UC_REPOUSERTOKEN_REPO_ID_TOKEN
+            tableName: RepoUserToken

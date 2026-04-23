@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_EmailUser
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: EmailUser
+            columnName: id
+            newDataType: bigint

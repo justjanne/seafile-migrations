@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: v070-foldergroupperm
+      author: seafile
+      changes:
+        - createTable:
+            tableName: FolderGroupPerm
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: repo_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission
+                  type: char(15)
+              - column:
+                  name: group_id
+                  type: int
+                  constraints:
+                    nullable: false
+        - createIndex:
+            tableName: FolderGroupPerm
+            indexName: idx_foldergroupperm_repo_id
+            columns:
+              - column:
+                  name: repo_id

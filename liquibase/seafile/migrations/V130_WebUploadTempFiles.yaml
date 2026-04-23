@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_WebUploadTempFiles
+      author: seafile
+      changes:
+        - createIndex:
+            tableName: WebUploadTempFiles
+            indexName: idx_webuploadtempfiles_repo_id
+            columns:
+              - column:
+                  name: repo_id

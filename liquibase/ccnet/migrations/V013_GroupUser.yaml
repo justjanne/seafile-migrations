@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_GroupUser
+      author: seafile
+      changes:
+        - createTable:
+            tableName: GroupUser
+            columns:
+              - column:
+                  name: group_id
+                  type: int
+              - column:
+                  name: user_name
+                  type: varchar(255)
+              - column:
+                  name: is_staff
+                  type: boolean
+        - addUniqueConstraint:
+            columnNames: group_id, user_name
+            tableName: GroupUser
+        - createIndex:
+            indexName: groupuser_username_idx
+            tableName: GroupUser
+            columns:
+              - column:
+                  name: user_name

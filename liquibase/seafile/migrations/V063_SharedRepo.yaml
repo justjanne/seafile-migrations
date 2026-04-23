@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_SharedRepo
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: SharedRepo
+            columnName: id
+            newDataType: BIGINT

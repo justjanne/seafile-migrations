@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_RepoFileCount
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: RepoFileCount
+            constraintName: RepoFileCount_pkey
+        - addColumn:
+            tableName: RepoFileCount
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: RepoFileCount_pkey
+        - modifyDataType:
+            tableName: RepoFileCount
+            columnName: repo_id
+            newDataType: CHAR(36)
+        - dropDefaultValue:
+            tableName: RepoFileCount
+            columnName: repo_id
+        - addUniqueConstraint:
+            tableName: RepoFileCount
+            columnNames: repo_id
+            constraintName: RepoFileCount_repo_id_uq

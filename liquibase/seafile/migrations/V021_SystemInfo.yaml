@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: V021_SystemInfo
+      author: seafile
+      changes:
+        - createTable:
+            tableName: SystemInfo
+            columns:
+              - column:
+                  name: info_key
+                  type: varchar(256)
+              - column:
+                  name: info_value
+                  type: varchar(1024)

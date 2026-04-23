@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: V131_RepoGroup
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          dbms:
+            type: postgresql
+      changes:
+        - modifyDataType:
+            tableName: RepoGroup
+            columnName: repo_id
+            newDataType: CHAR(37)
+        - modifyDataType:
+            tableName: RepoGroup
+            columnName: permission
+            newDataType: CHAR(15)
+        - renameIndex:
+            indexName: repogroup_repoid_idx
+            newIndexName: idx_repogroup_repo_id
+            tableName: RepoGroup
+        - renameIndex:
+            indexName: repogroup_username_idx
+            newIndexName: idx_repogroup_user_name
+            tableName: RepoGroup

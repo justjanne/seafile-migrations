@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: v070-lastgcid
+      author: seafile
+      changes:
+        - createTable:
+            tableName: LastGCID
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: repo_id
+                  type: char(36)
+              - column:
+                  name: client_id
+                  type: varchar(128)
+              - column:
+                  name: gc_id
+                  type: char(36)
+        - addUniqueConstraint:
+            tableName: LastGCID
+            columnNames: repo_id, client_id
+            constraintName: uk_lastgcid_repo_id_client_id

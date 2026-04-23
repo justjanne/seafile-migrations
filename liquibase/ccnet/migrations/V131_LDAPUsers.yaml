@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: V131_LDAPUsers
+      author: seafile
+      dbms: postgresql
+      changes:
+        - modifyDataType:
+            tableName: LDAPUsers
+            columnName: is_staff
+            newDataType: boolean
+        - modifyDataType:
+            tableName: LDAPUsers
+            columnName: is_active
+            newDataType: boolean

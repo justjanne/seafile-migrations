@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: V070_UserRole
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: UserRole
+            columns:
+              - column:
+                  name: is_manual_set
+                  type: int
+                  defaultValue: 0

@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_UserQuota
+      author: seafile
+      changes:
+        - createTable:
+            tableName: UserQuota
+            columns:
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: quota
+                  type: bigint

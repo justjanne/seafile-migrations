@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: v070-gcid
+      author: seafile
+      changes:
+        - createTable:
+            tableName: GCID
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: repo_id
+                  type: char(36)
+                  constraints:
+                    unique: true
+              - column:
+                  name: gc_id
+                  type: char(36)

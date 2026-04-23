@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_UserRole
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: UserRole
+            columnName: id
+            newDataType: bigint
+            dbms: mysql
+        - addColumn:
+            tableName: UserRole
+            dbms: postgresql
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false

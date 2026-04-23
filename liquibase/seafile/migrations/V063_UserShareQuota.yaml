@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_UserShareQuota
+      author: seafile
+      changes:
+        - dropPrimaryKey:
+            tableName: UserShareQuota
+        - addColumn:
+            tableName: UserShareQuota
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+        - modifyDataType:
+            tableName: UserShareQuota
+            columnName: user
+            newDataType: VARCHAR(255)
+        - dropNotNullConstraint:
+            tableName: UserShareQuota
+            columnName: user
+            columnDataType: VARCHAR(255)
+        - addUniqueConstraint:
+            tableName: UserShareQuota
+            columnNames: user
+            constraintName: UK_UserShareQuota_user

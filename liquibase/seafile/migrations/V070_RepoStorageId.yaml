@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: V070_RepoStorageId
+      author: seafile
+      changes:
+        - createTable:
+            tableName: RepoStorageId
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: repo_id
+                  type: CHAR(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: storage_id
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: RepoStorageId
+            columnNames: repo_id
+            constraintName: repo_id_unique_repostorageid

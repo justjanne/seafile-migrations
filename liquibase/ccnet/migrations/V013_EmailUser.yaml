@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_EmailUser
+      author: seafile
+      changes:
+        - createTable:
+            tableName: EmailUser
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+              - column:
+                  name: passwd
+                  type: char(41)
+              - column:
+                  name: is_staff
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ctime
+                  type: bigint
