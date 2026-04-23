@@ -2,8 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: v041-normalize-repotrash
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: repotrash } } ]
       changes: [ { renameTable: { oldTableName: RepoTrash, newTableName: repotrash } } ]
   - changeSet:
       id: v041-create-repotrash

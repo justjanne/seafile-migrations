@@ -4,10 +4,7 @@ databaseChangeLog:
       id: v013-normalize-branch
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: Branch }
-        not: { tableExists: { tableName: branch } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: Branch, newTableName: branch }
 
@@ -31,10 +28,7 @@ databaseChangeLog:
       id: v013-normalize-innerpubrepo
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: InnerPubRepo }
-        not: { tableExists: { tableName: innerpubrepo } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: InnerPubRepo, newTableName: innerpubrepo }
 
@@ -56,10 +50,7 @@ databaseChangeLog:
       id: v013-normalize-orgquota
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: OrgQuota }
-        not: { tableExists: { tableName: orgquota } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: OrgQuota, newTableName: orgquota }
 
@@ -81,10 +72,7 @@ databaseChangeLog:
       id: v013-normalize-orguserquota
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: OrgUserQuota }
-        not: { tableExists: { tableName: orguserquota } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: OrgUserQuota, newTableName: orguserquota }
 
@@ -108,10 +96,7 @@ databaseChangeLog:
       id: v013-normalize-repo
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: Repo }
-        not: { tableExists: { tableName: repo } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: Repo, newTableName: repo }
 
@@ -132,10 +117,7 @@ databaseChangeLog:
       id: v013-normalize-repogroup
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: RepoGroup }
-        not: { tableExists: { tableName: repogroup } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: RepoGroup, newTableName: repogroup }
 
@@ -162,10 +144,7 @@ databaseChangeLog:
       id: v013-normalize-repohead
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: RepoHead }
-        not: { tableExists: { tableName: repohead } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: RepoHead, newTableName: repohead }
 
@@ -187,10 +166,7 @@ databaseChangeLog:
       id: v013-normalize-repoowner
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: RepoOwner }
-        not: { tableExists: { tableName: repoowner } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: RepoOwner, newTableName: repoowner }
 
@@ -213,10 +189,7 @@ databaseChangeLog:
       id: v013-normalize-reposize
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: RepoSize }
-        not: { tableExists: { tableName: reposize } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: RepoSize, newTableName: reposize }
 
@@ -239,10 +212,7 @@ databaseChangeLog:
       id: v013-normalize-repousertoken
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: RepoUserToken }
-        not: { tableExists: { tableName: repousertoken } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: RepoUserToken, newTableName: repousertoken }
 
@@ -266,10 +236,7 @@ databaseChangeLog:
       id: v013-normalize-sharedrepo
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: SharedRepo }
-        not: { tableExists: { tableName: sharedrepo } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: SharedRepo, newTableName: sharedrepo }
 
@@ -294,10 +261,7 @@ databaseChangeLog:
       id: v013-normalize-userquota
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: UserQuota }
-        not: { tableExists: { tableName: userquota } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: UserQuota, newTableName: userquota }
 
@@ -319,10 +283,7 @@ databaseChangeLog:
       id: v013-normalize-webap
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: WebAP }
-        not: { tableExists: { tableName: webap } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: WebAP, newTableName: webap }
 

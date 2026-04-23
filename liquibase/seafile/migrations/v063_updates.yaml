@@ -2,8 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: v063-normalize-groupstructure
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: GroupStructure } } ]
       changes: [ { renameTable: { oldTableName: GroupStructure, newTableName: groupstructure } } ]
   - changeSet:
       id: v063-update-branch-id

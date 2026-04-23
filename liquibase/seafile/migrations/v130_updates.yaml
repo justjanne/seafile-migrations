@@ -2,8 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: v130-normalize-orgdownloadratelimit
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: orgdownloadratelimit } } ]
       changes: [ { renameTable: { oldTableName: OrgDownloadRateLimit, newTableName: orgdownloadratelimit } } ]
   - changeSet:
       id: v130-create-orgdownloadratelimit
@@ -20,8 +20,8 @@ databaseChangeLog:
   - changeSet:
       id: v130-normalize-orguploadratelimit
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: orguploadratelimit } } ]
       changes: [ { renameTable: { oldTableName: OrgUploadRateLimit, newTableName: orguploadratelimit } } ]
   - changeSet:
       id: v130-create-orguploadratelimit
@@ -38,8 +38,8 @@ databaseChangeLog:
   - changeSet:
       id: v130-normalize-orguserdefaultquota
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: orguserdefaultquota } } ]
       changes: [ { renameTable: { oldTableName: OrgUserDefaultQuota, newTableName: orguserdefaultquota } } ]
   - changeSet:
       id: v130-create-orguserdefaultquota
@@ -56,8 +56,8 @@ databaseChangeLog:
   - changeSet:
       id: v130-normalize-roledownloadratelimit
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: roledownloadratelimit } } ]
       changes: [ { renameTable: { oldTableName: RoleDownloadRateLimit, newTableName: roledownloadratelimit } } ]
   - changeSet:
       id: v130-create-roledownloadratelimit
@@ -74,8 +74,8 @@ databaseChangeLog:
   - changeSet:
       id: v130-normalize-roleuploadratelimit
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: roleuploadratelimit } } ]
       changes: [ { renameTable: { oldTableName: RoleUploadRateLimit, newTableName: roleuploadratelimit } } ]
   - changeSet:
       id: v130-create-roleuploadratelimit
@@ -92,8 +92,8 @@ databaseChangeLog:
   - changeSet:
       id: v130-normalize-userdownloadratelimit
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: userdownloadratelimit } } ]
       changes: [ { renameTable: { oldTableName: UserDownloadRateLimit, newTableName: userdownloadratelimit } } ]
   - changeSet:
       id: v130-create-userdownloadratelimit
@@ -110,8 +110,8 @@ databaseChangeLog:
   - changeSet:
       id: v130-normalize-useruploadratelimit
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: useruploadratelimit } } ]
       changes: [ { renameTable: { oldTableName: UserUploadRateLimit, newTableName: useruploadratelimit } } ]
   - changeSet:
       id: v130-create-useruploadratelimit

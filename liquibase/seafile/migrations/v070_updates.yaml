@@ -2,10 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-filelocks
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: filelocks }
       changes:
         - renameTable: { oldTableName: FileLocks, newTableName: filelocks }
 
@@ -30,10 +28,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-filelocktimestamp
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: filelocktimestamp }
       changes:
         - renameTable: { oldTableName: FileLockTimestamp, newTableName: filelocktimestamp }
 
@@ -54,10 +50,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-foldergroupperm
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: foldergroupperm }
       changes:
         - renameTable: { oldTableName: FolderGroupPerm, newTableName: foldergroupperm }
 
@@ -81,10 +75,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-folderpermtimestamp
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: folderpermtimestamp }
       changes:
         - renameTable: { oldTableName: FolderPermTimestamp, newTableName: folderpermtimestamp }
 
@@ -105,10 +97,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-folderuserperm
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: folderuserperm }
       changes:
         - renameTable: { oldTableName: FolderUserPerm, newTableName: folderuserperm }
 
@@ -132,10 +122,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-gcid
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: gcid }
       changes:
         - renameTable: { oldTableName: GCID, newTableName: gcid }
 
@@ -156,10 +144,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-lastgcid
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: lastgcid }
       changes:
         - renameTable: { oldTableName: LastGCID, newTableName: lastgcid }
 
@@ -182,10 +168,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-orggrouprepo
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: orggrouprepo }
       changes:
         - renameTable: { oldTableName: OrgGroupRepo, newTableName: orggrouprepo }
 
@@ -212,10 +196,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-orginnerpubrepo
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: orginnerpubrepo }
       changes:
         - renameTable: { oldTableName: OrgInnerPubRepo, newTableName: orginnerpubrepo }
 
@@ -238,10 +220,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-orgrepo
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: orgrepo }
       changes:
         - renameTable: { oldTableName: OrgRepo, newTableName: orgrepo }
 
@@ -271,10 +251,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-orgsharedrepo
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: orgsharedrepo }
       changes:
         - renameTable: { oldTableName: OrgSharedRepo, newTableName: orgsharedrepo }
 
@@ -319,10 +297,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-repostorageid
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: repostorageid }
       changes:
         - renameTable: { oldTableName: RepoStorageId, newTableName: repostorageid }
 
@@ -343,10 +319,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-reposyncerror
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: reposyncerror }
       changes:
         - renameTable: { oldTableName: RepoSyncError, newTableName: reposyncerror }
 
@@ -368,10 +342,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-rolequota
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: rolequota }
       changes:
         - renameTable: { oldTableName: RoleQuota, newTableName: rolequota }
 
@@ -412,10 +384,8 @@ databaseChangeLog:
   - changeSet:
       id: v070-normalize-webuploadtempfiles
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: webuploadtempfiles }
       changes:
         - renameTable: { oldTableName: WebUploadTempFiles, newTableName: webuploadtempfiles }
 

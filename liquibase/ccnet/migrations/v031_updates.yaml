@@ -2,10 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: v031-normalize-userrole
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: userrole }
       changes:
         - renameTable: { oldTableName: UserRole, newTableName: userrole }
 

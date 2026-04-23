@@ -2,8 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: v018-normalize-virtualrepo
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: virtualrepo } } ]
       changes: [ { renameTable: { oldTableName: VirtualRepo, newTableName: virtualrepo } } ]
   - changeSet:
       id: v018-create-virtualrepo

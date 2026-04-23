@@ -14,10 +14,8 @@ databaseChangeLog:
   - changeSet:
       id: v062-normalize-ldapconfig
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: ldapconfig }
       changes:
         - renameTable: { oldTableName: LDAPConfig, newTableName: ldapconfig }
 

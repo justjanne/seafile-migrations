@@ -2,8 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: v062-normalize-repoinfo
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: repoinfo } } ]
       changes: [ { renameTable: { oldTableName: RepoInfo, newTableName: repoinfo } } ]
   - changeSet:
       id: v062-create-repoinfo
@@ -23,8 +23,8 @@ databaseChangeLog:
   - changeSet:
       id: v062-normalize-seafileconf
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: seafileconf } } ]
       changes: [ { renameTable: { oldTableName: SeafileConf, newTableName: seafileconf } } ]
   - changeSet:
       id: v062-create-seafileconf

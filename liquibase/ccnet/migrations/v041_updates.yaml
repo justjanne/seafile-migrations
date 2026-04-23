@@ -14,10 +14,8 @@ databaseChangeLog:
   - changeSet:
       id: v041-normalize-ldapusers
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: ldapusers }
       changes:
         - renameTable: { oldTableName: LDAPUsers, newTableName: ldapusers }
 
@@ -42,10 +40,8 @@ databaseChangeLog:
   - changeSet:
       id: v041-normalize-groupdnpair
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: groupdnpair }
       changes:
         - renameTable: { oldTableName: GroupDNPair, newTableName: groupdnpair }
 

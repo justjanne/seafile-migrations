@@ -4,10 +4,7 @@ databaseChangeLog:
       id: v013-normalize-binding
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: Binding }
-        not: { tableExists: { tableName: binding } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: Binding, newTableName: binding }
 
@@ -30,10 +27,7 @@ databaseChangeLog:
       id: v013-normalize-emailuser
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: EmailUser }
-        not: { tableExists: { tableName: emailuser } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: EmailUser, newTableName: emailuser }
 
@@ -54,7 +48,7 @@ databaseChangeLog:
               - column: { name: is_active, type: boolean, constraints: { nullable: false } }
               - column: { name: ctime, type: bigint }
 
-  # --- Group (Reserved keyword) ---
+  # --- Group ---
   - changeSet:
       id: v013-baseline-group
       author: seafile
@@ -75,10 +69,7 @@ databaseChangeLog:
       id: v013-normalize-groupuser
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: GroupUser }
-        not: { tableExists: { tableName: groupuser } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: GroupUser, newTableName: groupuser }
 
@@ -103,10 +94,7 @@ databaseChangeLog:
       id: v013-normalize-orggroup
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: OrgGroup }
-        not: { tableExists: { tableName: orggroup } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: OrgGroup, newTableName: orggroup }
 
@@ -130,10 +118,7 @@ databaseChangeLog:
       id: v013-normalize-orguser
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: OrgUser }
-        not: { tableExists: { tableName: orguser } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: OrgUser, newTableName: orguser }
 
@@ -158,10 +143,7 @@ databaseChangeLog:
       id: v013-normalize-organization
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        onFail: CONTINUE
-        tableExists: { tableName: Organization }
-        not: { tableExists: { tableName: organization } }
+      failOnError: false
       changes:
         - renameTable: { oldTableName: Organization, newTableName: organization }
 

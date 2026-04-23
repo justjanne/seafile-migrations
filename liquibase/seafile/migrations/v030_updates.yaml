@@ -2,8 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: v030-normalize-garbagerepos
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: garbagerepos } } ]
       changes: [ { renameTable: { oldTableName: GarbageRepos, newTableName: garbagerepos } } ]
   - changeSet:
       id: v030-create-garbagerepos

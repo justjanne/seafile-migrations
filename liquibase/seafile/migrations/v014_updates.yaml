@@ -2,8 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: v014-normalize-repohistorylimit
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: repohistorylimit } } ]
       changes: [ { renameTable: { oldTableName: RepoHistoryLimit, newTableName: repohistorylimit } } ]
   - changeSet:
       id: v014-create-repohistorylimit
@@ -19,8 +19,8 @@ databaseChangeLog:
   - changeSet:
       id: v014-normalize-repovalidsince
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: repovalidsince } } ]
       changes: [ { renameTable: { oldTableName: RepoValidSince, newTableName: repovalidsince } } ]
   - changeSet:
       id: v014-create-repovalidsince

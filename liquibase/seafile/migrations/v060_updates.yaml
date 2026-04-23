@@ -2,8 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: v060-normalize-repofilecount
       author: seafile
+      failOnError: false
       dbms: mysql,mariadb
-      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: repofilecount } } ]
       changes: [ { renameTable: { oldTableName: RepoFileCount, newTableName: repofilecount } } ]
   - changeSet:
       id: v060-create-repofilecount
