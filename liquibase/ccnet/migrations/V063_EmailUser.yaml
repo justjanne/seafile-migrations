@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_EmailUser_id
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: emailuser
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_EmailUser_autoincrement_id
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: emailuser
+            columnName: id
+            columnDataType: bigserial

@@ -1,0 +1,105 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_EmailUser_is_department_owner
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          columnExists:
+            tableName: emailuser
+            columnName: is_department_owner
+      changes:
+        - addColumn:
+            tableName: emailuser
+            columns:
+              - column:
+                  name: is_department_owner
+                  type: boolean
+                  defaultValue: false
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V130_EmailUser_normalize_is_active
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        indexExists:
+          tableName: emailuser
+          indexName: is_active
+      changes:
+        - dropIndex:
+            tableName: emailuser
+            indexName: is_active
+  - changeSet:
+      id: V130_EmailUser_index_is_active
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          indexExists:
+            tableName: emailuser
+            indexName: idx_emailuser_is_active
+      changes:
+        - createIndex:
+            tableName: emailuser
+            indexName: idx_emailuser_is_active
+            columns:
+              - column:
+                  name: is_active
+  - changeSet:
+      id: V130_EmailUser_normalize_reference_id
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        indexExists:
+          tableName: emailuser
+          indexName: reference_id
+      changes:
+        - dropIndex:
+            tableName: emailuser
+            indexName: reference_id
+  - changeSet:
+      id: V130_EmailUser_index_reference_id
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          indexExists:
+            tableName: emailuser
+            indexName: idx_emailuser_reference_id
+      changes:
+        - createIndex:
+            tableName: emailuser
+            indexName: idx_emailuser_reference_id
+            unique: true
+            columns:
+              - column:
+                  name: reference_id
+  - changeSet:
+      id: V130_EmailUser_normalize_is_department_owner
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        indexExists:
+          tableName: emailuser
+          indexName: emailuser_is_department_owenr
+      changes:
+        - dropIndex:
+            tableName: emailuser
+            indexName: emailuser_is_department_owenr
+  - changeSet:
+      id: V130_EmailUser_index_is_department_owner
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          indexExists:
+            tableName: emailuser
+            indexName: idx_emailuser_is_department_owner
+      changes:
+        - createIndex:
+            tableName: emailuser
+            indexName: idx_emailuser_is_department_owner
+            columns:
+              - column:
+                  name: is_department_owner

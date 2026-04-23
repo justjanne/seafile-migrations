@@ -13,6 +13,11 @@ databaseChangeLog:
   - changeSet:
       id: V013_Binding-table
       author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: binding
       changes:
         - createTable:
             tableName: binding
@@ -25,26 +30,27 @@ databaseChangeLog:
                   type: char(41)
                   constraints:
                     unique: true
-      preConditions:
-        onFail: MARK_RAN
-        not:
-          tableExists:
-            tableName: binding
   - changeSet:
-      id: V013_Binding-index-remove
+      id: V013_Binding_normalize_email
       author: seafile
-      changes:
-        - dropIndex:
-            tableName: binding
-            indexName: email
       preConditions:
         onFail: MARK_RAN
         indexExists:
           tableName: binding
           indexName: email
+      changes:
+        - dropIndex:
+            tableName: binding
+            indexName: email
   - changeSet:
-      id: V013_Binding-index-create
+      id: V013_Binding_index_email
       author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          indexExists:
+            tableName: binding
+            indexName: idx_binding_email
       changes:
         - createIndex:
             tableName: binding
@@ -52,9 +58,3 @@ databaseChangeLog:
             columns:
               - column:
                   name: email
-      preConditions:
-        onFail: MARK_RAN
-        not:
-          indexExists:
-            tableName: binding
-            indexName: idx_binding_email

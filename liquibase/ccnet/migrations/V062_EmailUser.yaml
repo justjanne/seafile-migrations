@@ -1,0 +1,74 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_EmailUser_reference_id
+      author: seafile
+      changes:
+        - addColumn:
+            tableName: emailuser
+            columns:
+              - column:
+                  name: reference_id
+                  type: varchar(255)
+  - changeSet:
+      id: V062_EmailUser_normalize_reference_id_1
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        indexExists:
+          tableName: emailuser
+          indexName: reference_id
+      changes:
+        - dropIndex:
+            tableName: emailuser
+            indexName: reference_id
+  - changeSet:
+      id: V062_EmailUser_normalize_reference_id_2
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        uniqueConstraintExists:
+          tableName: emailuser
+          constraintName: reference_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: emailuser
+            constraintName: reference_id
+  - changeSet:
+      id: V062_EmailUser_normalize_reference_id_3
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        indexExists:
+          tableName: emailuser
+          indexName: emailuser_reference_id_idx
+      changes:
+        - dropIndex:
+            tableName: emailuser
+            indexName: emailuser_reference_id_idx
+  - changeSet:
+      id: V062_EmailUser_normalize_reference_id_4
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        uniqueConstraintExists:
+          tableName: emailuser
+          constraintName: emailuser_reference_id_idx
+      changes:
+        - dropUniqueConstraint:
+            tableName: emailuser
+            constraintName: emailuser_reference_id_idx
+  - changeSet:
+      id: V062_EmailUser_index_reference_id
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          indexExists:
+            tableName: emailuser
+            indexName: idx_emailuser_reference_id
+      changes:
+        - addUniqueConstraint:
+            tableName: emailuser
+            constraintName: idx_emailuser_reference_id
+            columnNames: reference_id
+
