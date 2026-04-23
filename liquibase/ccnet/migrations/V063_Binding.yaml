@@ -14,7 +14,7 @@ databaseChangeLog:
               primaryKey: true
               nullable: false
     preConditions:
-      onFail: CONTINUE
+      onFail: MARK_RAN
       not:
         columnExists:
           tableName: binding
