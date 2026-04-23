@@ -1,21 +1,14 @@
 databaseChangeLog:
-  # --- Binding ---
   - changeSet:
       id: v013-normalize-binding
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: Binding }
-      changes:
-        - renameTable: { oldTableName: Binding, newTableName: binding }
-
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: Binding } } ]
+      changes: [ { renameTable: { oldTableName: Binding, newTableName: binding } } ]
   - changeSet:
       id: v013-baseline-binding
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: binding } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: binding } } } ]
       changes:
         - createTable:
             tableName: binding
@@ -24,23 +17,16 @@ databaseChangeLog:
               - column: { name: peer_id, type: char(41), constraints: { unique: true } }
         - createIndex: { indexName: idx_binding_email, tableName: binding, columns: [ { name: email } ] }
 
-  # --- EmailUser ---
   - changeSet:
       id: v013-normalize-emailuser
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: EmailUser }
-      changes:
-        - renameTable: { oldTableName: EmailUser, newTableName: emailuser }
-
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: EmailUser } } ]
+      changes: [ { renameTable: { oldTableName: EmailUser, newTableName: emailuser } } ]
   - changeSet:
       id: v013-baseline-emailuser
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: emailuser } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: emailuser } } } ]
       changes:
         - createTable:
             tableName: emailuser
@@ -52,13 +38,10 @@ databaseChangeLog:
               - column: { name: is_active, type: boolean, constraints: { nullable: false } }
               - column: { name: ctime, type: bigint }
 
-  # --- Group (Reserved, stays quoted) ---
   - changeSet:
       id: v013-baseline-group
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: "Group" } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: "Group" } } } ]
       changes:
         - createTable:
             tableName: "Group"
@@ -68,23 +51,16 @@ databaseChangeLog:
               - column: { name: creator_name, type: varchar(255) }
               - column: { name: timestamp, type: bigint }
 
-  # --- GroupUser ---
   - changeSet:
       id: v013-normalize-groupuser
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: GroupUser }
-      changes:
-        - renameTable: { oldTableName: GroupUser, newTableName: groupuser }
-
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: GroupUser } } ]
+      changes: [ { renameTable: { oldTableName: GroupUser, newTableName: groupuser } } ]
   - changeSet:
       id: v013-baseline-groupuser
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: groupuser } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: groupuser } } } ]
       changes:
         - createTable:
             tableName: groupuser
@@ -95,23 +71,16 @@ databaseChangeLog:
         - addUniqueConstraint: { columnNames: "group_id, user_name", constraintName: uq_groupuser_group_user, tableName: groupuser }
         - createIndex: { indexName: idx_groupuser_user_name, tableName: groupuser, columns: [ { name: user_name } ] }
 
-  # --- OrgGroup ---
   - changeSet:
       id: v013-normalize-orggroup
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: OrgGroup }
-      changes:
-        - renameTable: { oldTableName: OrgGroup, newTableName: orggroup }
-
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: OrgGroup } } ]
+      changes: [ { renameTable: { oldTableName: OrgGroup, newTableName: orggroup } } ]
   - changeSet:
       id: v013-baseline-orggroup
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: orggroup } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: orggroup } } } ]
       changes:
         - createTable:
             tableName: orggroup
@@ -121,23 +90,16 @@ databaseChangeLog:
         - addUniqueConstraint: { columnNames: "org_id, group_id", constraintName: uq_orggroup_org_group, tableName: orggroup }
         - createIndex: { indexName: idx_orggroup_group_id, tableName: orggroup, columns: [ { name: group_id } ] }
 
-  # --- OrgUser ---
   - changeSet:
       id: v013-normalize-orguser
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: OrgUser }
-      changes:
-        - renameTable: { oldTableName: OrgUser, newTableName: orguser }
-
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: OrgUser } } ]
+      changes: [ { renameTable: { oldTableName: OrgUser, newTableName: orguser } } ]
   - changeSet:
       id: v013-baseline-orguser
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: orguser } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: orguser } } } ]
       changes:
         - createTable:
             tableName: orguser
@@ -148,23 +110,16 @@ databaseChangeLog:
         - addUniqueConstraint: { columnNames: "org_id, email", constraintName: uq_orguser_org_email, tableName: orguser }
         - createIndex: { indexName: idx_orguser_email, tableName: orguser, columns: [ { name: email } ] }
 
-  # --- Organization ---
   - changeSet:
       id: v013-normalize-organization
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: Organization }
-      changes:
-        - renameTable: { oldTableName: Organization, newTableName: organization }
-
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: Organization } } ]
+      changes: [ { renameTable: { oldTableName: Organization, newTableName: organization } } ]
   - changeSet:
       id: v013-baseline-organization
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: organization } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: organization } } } ]
       changes:
         - createTable:
             tableName: organization

@@ -38,11 +38,8 @@ databaseChangeLog:
       id: v130-normalize-orgfileextwhitelist
       author: seafile
       dbms: mysql,mariadb
-      preConditions:
-        - onFail: CONTINUE
-          tableExists: { tableName: orgfileextwhitelist }
-      changes:
-        - renameTable: { oldTableName: OrgFileExtWhiteList, newTableName: orgfileextwhitelist }
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: OrgFileExtWhiteList } } ]
+      changes: [ { renameTable: { oldTableName: OrgFileExtWhiteList, newTableName: orgfileextwhitelist } } ]
 
   - changeSet:
       id: v130-create-orgfileextwhitelist
