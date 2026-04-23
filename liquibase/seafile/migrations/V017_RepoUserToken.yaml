@@ -30,14 +30,7 @@ databaseChangeLog:
     failOnError: false
     preConditions:
       onFail: CONTINUE
-      or:
-      - indexExists:
+      not:
+        indexExists:
           tableName: repousertoken
-          indexName: email
-      - indexExists:
-          tableName: repousertoken
-          indexName: repousertoken_email_idx
-      - not:
-          indexExists:
-            tableName: repousertoken
-            indexName: idx_repousertoken_email
+          indexName: idx_repousertoken_email

@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-orggroup
+    id: normalize-v013-orggroup
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: OrgGroup
+        newTableName: orggroup
+- changeSet:
+    id: normalize-orggroup
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: OrgGroup
+    changes:
+    - renameTable:
+        oldTableName: orggroup
         newTableName: orggroup
 - changeSet:
     id: normalize-orggroup
@@ -87,16 +98,10 @@ databaseChangeLog:
             name: group_id
     preConditions:
       onFail: MARK_RAN
-      or:
+      and:
       - not:
           tableExists:
             tableName: orggroup
-      - indexExists:
-          tableName: orggroup
-          indexName: group_id
-      - indexExists:
-          tableName: orggroup
-          indexName: orggroup_groupid_idx
       - not:
           indexExists:
             tableName: orggroup

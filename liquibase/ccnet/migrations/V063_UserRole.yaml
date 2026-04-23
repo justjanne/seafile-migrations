@@ -38,11 +38,20 @@ databaseChangeLog:
               nullable: false
     preConditions:
       onFail: CONTINUE
-      and:
-      - columnExists:
+      not:
+        columnExists:
           tableName: userrole
           columnName: id
-      - not:
-          columnExists:
-            tableName: userrole
-            columnName: id
+- changeSet:
+    id: V063_UserRole-ai
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      columnExists:
+        tableName: userrole
+        columnName: id
+    changes:
+    - addAutoIncrement:
+        tableName: userrole
+        columnName: id
+        columnDataType: bigint

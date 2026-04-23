@@ -74,22 +74,10 @@ databaseChangeLog:
             name: email
     preConditions:
       onFail: MARK_RAN
-      or:
+      and:
       - not:
           tableExists:
             tableName: ldapusers
-      - indexExists:
-          tableName: ldapusers
-          indexName: email
-      - indexExists:
-          tableName: ldapusers
-          indexName: ldapusers_email_idx
-      - indexExists:
-          tableName: ldapusers
-          indexName: reference_id
-      - indexExists:
-          tableName: ldapusers
-          indexName: ldapusers_reference_id_idx
       - not:
           indexExists:
             tableName: ldapusers

@@ -30,3 +30,16 @@ databaseChangeLog:
       columnExists:
         tableName: ldapusers
         columnName: id
+- changeSet:
+    id: V063_LDAPUsers-ai
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      columnExists:
+        tableName: ldapusers
+        columnName: id
+    changes:
+    - addAutoIncrement:
+        tableName: ldapusers
+        columnName: id
+        columnDataType: bigint

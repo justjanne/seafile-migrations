@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-group
+    id: normalize-v013-group
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: Group
+        newTableName: group
+- changeSet:
+    id: normalize-group
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: Group
+    changes:
+    - renameTable:
+        oldTableName: group
         newTableName: group
 - changeSet:
     id: normalize-group

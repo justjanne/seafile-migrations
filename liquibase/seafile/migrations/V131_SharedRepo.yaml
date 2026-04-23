@@ -4,25 +4,7 @@ databaseChangeLog:
     author: seafile
     preConditions:
       onFail: CONTINUE
-      or:
-      - indexExists:
-          tableName: sharedrepo
-          indexName: repo_id
-      - indexExists:
-          tableName: sharedrepo
-          indexName: sharedrepo_repoid_idx
-      - indexExists:
-          tableName: sharedrepo
-          indexName: from_email
-      - indexExists:
-          tableName: sharedrepo
-          indexName: sharedrepo_from_email_idx
-      - indexExists:
-          tableName: sharedrepo
-          indexName: to_email
-      - indexExists:
-          tableName: sharedrepo
-          indexName: sharedrepo_to_email_idx
+      and:
       - not:
           indexExists:
             tableName: sharedrepo

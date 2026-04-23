@@ -47,12 +47,21 @@ databaseChangeLog:
         columnDataType: int
     preConditions:
       onFail: CONTINUE
-      and:
-      - not:
-          columnExists:
-            tableName: orgquota
-            columnName: id
-      - columnExists:
+      not:
+        columnExists:
           tableName: orgquota
-          columnName: org_id
+          columnName: id
     failOnError: false
+- changeSet:
+    id: V063_OrgQuota-ai
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      columnExists:
+        tableName: orgquota
+        columnName: org_id
+    changes:
+    - addAutoIncrement:
+        tableName: orgquota
+        columnName: org_id
+        columnDataType: int

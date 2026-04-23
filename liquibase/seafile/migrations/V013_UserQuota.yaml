@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-userquota
+    id: normalize-v013-userquota
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: UserQuota
+        newTableName: userquota
+- changeSet:
+    id: normalize-userquota
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: UserQuota
+    changes:
+    - renameTable:
+        oldTableName: userquota
         newTableName: userquota
 - changeSet:
     id: normalize-userquota

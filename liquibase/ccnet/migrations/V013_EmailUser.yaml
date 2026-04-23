@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-emailuser
+    id: normalize-v013-emailuser
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: EmailUser
+        newTableName: emailuser
+- changeSet:
+    id: normalize-emailuser
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: EmailUser
+    changes:
+    - renameTable:
+        oldTableName: emailuser
         newTableName: emailuser
 - changeSet:
     id: normalize-emailuser

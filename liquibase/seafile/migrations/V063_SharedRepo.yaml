@@ -30,3 +30,16 @@ databaseChangeLog:
       columnExists:
         tableName: sharedrepo
         columnName: id
+- changeSet:
+    id: V063_SharedRepo-ai
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      columnExists:
+        tableName: sharedrepo
+        columnName: id
+    changes:
+    - addAutoIncrement:
+        tableName: sharedrepo
+        columnName: id
+        columnDataType: BIGINT

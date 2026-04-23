@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-orguser
+    id: normalize-v013-orguser
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: OrgUser
+        newTableName: orguser
+- changeSet:
+    id: normalize-orguser
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: OrgUser
+    changes:
+    - renameTable:
+        oldTableName: orguser
         newTableName: orguser
 - changeSet:
     id: normalize-orguser
@@ -92,16 +103,10 @@ databaseChangeLog:
             name: email
     preConditions:
       onFail: MARK_RAN
-      or:
+      and:
       - not:
           tableExists:
             tableName: orguser
-      - indexExists:
-          tableName: orguser
-          indexName: email
-      - indexExists:
-          tableName: orguser
-          indexName: orguser_email_idx
       - not:
           indexExists:
             tableName: orguser

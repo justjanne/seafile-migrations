@@ -50,17 +50,11 @@ databaseChangeLog:
             name: email
     preConditions:
       onFail: CONTINUE
-      or:
+      and:
       - not:
           columnExists:
             tableName: orguser
             columnName: id
-      - indexExists:
-          tableName: orguser
-          indexName: email
-      - indexExists:
-          tableName: orguser
-          indexName: orguser_email_idx
       - not:
           indexExists:
             tableName: orguser

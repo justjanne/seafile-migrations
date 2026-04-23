@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-repogroup
+    id: normalize-v013-repogroup
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: RepoGroup
+        newTableName: repogroup
+- changeSet:
+    id: normalize-repogroup
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: RepoGroup
+    changes:
+    - renameTable:
+        oldTableName: repogroup
         newTableName: repogroup
 - changeSet:
     id: normalize-repogroup
@@ -142,22 +153,10 @@ databaseChangeLog:
             name: user_name
     preConditions:
       onFail: MARK_RAN
-      or:
+      and:
       - not:
           tableExists:
             tableName: repogroup
-      - indexExists:
-          tableName: repogroup
-          indexName: repo_id
-      - indexExists:
-          tableName: repogroup
-          indexName: repogroup_repo_id_idx
-      - indexExists:
-          tableName: repogroup
-          indexName: user_name
-      - indexExists:
-          tableName: repogroup
-          indexName: repogroup_user_name_idx
       - not:
           indexExists:
             tableName: repogroup

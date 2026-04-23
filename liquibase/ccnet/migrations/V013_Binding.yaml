@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-binding
+    id: normalize-v013-binding
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: Binding
+        newTableName: binding
+- changeSet:
+    id: normalize-binding
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: Binding
+    changes:
+    - renameTable:
+        oldTableName: binding
         newTableName: binding
 - changeSet:
     id: normalize-binding
@@ -83,13 +94,10 @@ databaseChangeLog:
             name: email
     preConditions:
       onFail: MARK_RAN
-      or:
+      and:
       - not:
           tableExists:
             tableName: binding
-      - indexExists:
-          tableName: binding
-          indexName: email
       - not:
           indexExists:
             tableName: binding

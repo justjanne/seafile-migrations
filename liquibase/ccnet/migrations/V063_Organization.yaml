@@ -30,3 +30,16 @@ databaseChangeLog:
       columnExists:
         tableName: organization
         columnName: org_id
+- changeSet:
+    id: V063_Organization-ai
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      columnExists:
+        tableName: organization
+        columnName: org_id
+    changes:
+    - addAutoIncrement:
+        tableName: organization
+        columnName: org_id
+        columnDataType: bigint

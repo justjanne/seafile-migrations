@@ -50,20 +50,7 @@ databaseChangeLog:
     failOnError: false
     preConditions:
       onFail: CONTINUE
-      or:
-      - indexExists:
+      not:
+        indexExists:
           tableName: ldapusers
-          indexName: email
-      - indexExists:
-          tableName: ldapusers
-          indexName: ldapusers_email_idx
-      - indexExists:
-          tableName: ldapusers
-          indexName: reference_id
-      - indexExists:
-          tableName: ldapusers
-          indexName: ldapusers_reference_id_idx
-      - not:
-          indexExists:
-            tableName: ldapusers
-            indexName: idx_ldapusers_email
+          indexName: idx_ldapusers_email

@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-reposize
+    id: normalize-v013-reposize
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: RepoSize
+        newTableName: reposize
+- changeSet:
+    id: normalize-reposize
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: RepoSize
+    changes:
+    - renameTable:
+        oldTableName: reposize
         newTableName: reposize
 - changeSet:
     id: normalize-reposize

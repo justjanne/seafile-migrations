@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-innerpubrepo
+    id: normalize-v013-innerpubrepo
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: InnerPubRepo
+        newTableName: innerpubrepo
+- changeSet:
+    id: normalize-innerpubrepo
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: InnerPubRepo
+    changes:
+    - renameTable:
+        oldTableName: innerpubrepo
         newTableName: innerpubrepo
 - changeSet:
     id: normalize-innerpubrepo

@@ -48,14 +48,7 @@ databaseChangeLog:
     failOnError: false
     preConditions:
       onFail: CONTINUE
-      or:
-      - indexExists:
+      not:
+        indexExists:
           tableName: orguser
-          indexName: email
-      - indexExists:
-          tableName: orguser
-          indexName: orguser_email_idx
-      - not:
-          indexExists:
-            tableName: orguser
-            indexName: idx_orguser_email
+          indexName: idx_orguser_email

@@ -34,11 +34,20 @@ databaseChangeLog:
             defaultValue: 0
     preConditions:
       onFail: CONTINUE
-      and:
-      - columnExists:
+      not:
+        columnExists:
           tableName: group
-          columnName: group_id
-      - not:
-          columnExists:
-            tableName: group
-            columnName: parent_group_id
+          columnName: parent_group_id
+- changeSet:
+    id: V063_Group-ai
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      columnExists:
+        tableName: group
+        columnName: group_id
+    changes:
+    - addAutoIncrement:
+        tableName: group
+        columnName: group_id
+        columnDataType: bigint

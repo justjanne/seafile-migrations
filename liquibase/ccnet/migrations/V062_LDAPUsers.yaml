@@ -47,23 +47,11 @@ databaseChangeLog:
             name: reference_id
     preConditions:
       onFail: CONTINUE
-      or:
+      and:
       - not:
           columnExists:
             tableName: ldapusers
             columnName: reference_id
-      - indexExists:
-          tableName: ldapusers
-          indexName: email
-      - indexExists:
-          tableName: ldapusers
-          indexName: ldapusers_email_idx
-      - indexExists:
-          tableName: ldapusers
-          indexName: reference_id
-      - indexExists:
-          tableName: ldapusers
-          indexName: ldapusers_reference_id_idx
       - not:
           indexExists:
             tableName: ldapusers

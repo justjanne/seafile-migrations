@@ -72,22 +72,26 @@ databaseChangeLog:
             name: user_name
     preConditions:
       onFail: CONTINUE
-      or:
+      and:
       - not:
           columnExists:
             tableName: groupuser
             columnName: id
-      - columnExists:
-          tableName: groupuser
-          columnName: group_id
-      - indexExists:
-          tableName: groupuser
-          indexName: user_name
-      - indexExists:
-          tableName: groupuser
-          indexName: groupuser_username_idx
       - not:
           indexExists:
             tableName: groupuser
             indexName: idx_groupuser_user_name
     failOnError: false
+- changeSet:
+    id: V063_GroupUser-ai
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      columnExists:
+        tableName: groupuser
+        columnName: group_id
+    changes:
+    - addAutoIncrement:
+        tableName: groupuser
+        columnName: group_id
+        columnDataType: bigint

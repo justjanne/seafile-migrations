@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-repousertoken
+    id: normalize-v013-repousertoken
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: RepoUserToken
+        newTableName: repousertoken
+- changeSet:
+    id: normalize-repousertoken
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: RepoUserToken
+    changes:
+    - renameTable:
+        oldTableName: repousertoken
         newTableName: repousertoken
 - changeSet:
     id: normalize-repousertoken

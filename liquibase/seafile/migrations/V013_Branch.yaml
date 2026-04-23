@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-branch
+    id: normalize-v013-branch
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: Branch
+        newTableName: branch
+- changeSet:
+    id: normalize-branch
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: Branch
+    changes:
+    - renameTable:
+        oldTableName: branch
         newTableName: branch
 - changeSet:
     id: normalize-branch

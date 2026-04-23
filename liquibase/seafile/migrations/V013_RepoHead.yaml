@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-repohead
+    id: normalize-v013-repohead
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: RepoHead
+        newTableName: repohead
+- changeSet:
+    id: normalize-repohead
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: RepoHead
+    changes:
+    - renameTable:
+        oldTableName: repohead
         newTableName: repohead
 - changeSet:
     id: normalize-repohead

@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: normalize-groupuser
+    id: normalize-v013-groupuser
     author: seafile
     preConditions:
     - onFail: CONTINUE
@@ -9,6 +9,17 @@ databaseChangeLog:
     changes:
     - renameTable:
         oldTableName: GroupUser
+        newTableName: groupuser
+- changeSet:
+    id: normalize-groupuser
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      tableExists:
+        tableName: GroupUser
+    changes:
+    - renameTable:
+        oldTableName: groupuser
         newTableName: groupuser
 - changeSet:
     id: normalize-groupuser
@@ -90,16 +101,10 @@ databaseChangeLog:
             name: user_name
     preConditions:
       onFail: MARK_RAN
-      or:
+      and:
       - not:
           tableExists:
             tableName: groupuser
-      - indexExists:
-          tableName: groupuser
-          indexName: user_name
-      - indexExists:
-          tableName: groupuser
-          indexName: groupuser_username_idx
       - not:
           indexExists:
             tableName: groupuser

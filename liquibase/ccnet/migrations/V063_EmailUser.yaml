@@ -30,3 +30,16 @@ databaseChangeLog:
       columnExists:
         tableName: emailuser
         columnName: id
+- changeSet:
+    id: V063_EmailUser-ai
+    author: seafile
+    preConditions:
+    - onFail: CONTINUE
+      columnExists:
+        tableName: emailuser
+        columnName: id
+    changes:
+    - addAutoIncrement:
+        tableName: emailuser
+        columnName: id
+        columnDataType: bigint

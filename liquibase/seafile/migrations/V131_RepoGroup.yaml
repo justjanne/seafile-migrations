@@ -4,23 +4,10 @@ databaseChangeLog:
     author: seafile
     preConditions:
       onFail: CONTINUE
-      or:
-      - indexExists:
+      not:
+        indexExists:
           tableName: repogroup
-          indexName: repo_id
-      - indexExists:
-          tableName: repogroup
-          indexName: repogroup_repo_id_idx
-      - indexExists:
-          tableName: repogroup
-          indexName: user_name
-      - indexExists:
-          tableName: repogroup
-          indexName: repogroup_user_name_idx
-      - not:
-          indexExists:
-            tableName: repogroup
-            indexName: idx_repogroup_repo_id
+          indexName: idx_repogroup_repo_id
     changes:
     - sql:
         dbms: mysql,mariadb

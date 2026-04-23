@@ -4,20 +4,10 @@ databaseChangeLog:
     author: seafile
     preConditions:
       onFail: CONTINUE
-      or:
-      - indexExists:
+      not:
+        indexExists:
           tableName: repoowner
-          indexName: owner_id
-      - indexExists:
-          tableName: repoowner
-          indexName: repoowner_owner_id_idx
-      - indexExists:
-          tableName: repoowner
-          indexName: repoowner_owner_id_uq
-      - not:
-          indexExists:
-            tableName: repoowner
-            indexName: idx_repoowner_owner_id
+          indexName: idx_repoowner_owner_id
     changes:
     - dropIndex:
         tableName: repoowner
