@@ -4,10 +4,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: userrole } }
+          not: { tableExists: { tableName: "${t_UserRole}" } }
       changes:
         - createTable:
-            tableName: userrole
+            tableName: "${t_UserRole}"
             columns:
               - column:
                   name: id

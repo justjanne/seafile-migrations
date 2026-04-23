@@ -4,10 +4,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: filelocks } }
+          not: { tableExists: { tableName: "${t_FileLocks}" } }
       changes:
         - createTable:
-            tableName: filelocks
+            tableName: "${t_FileLocks}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: repo_id, type: char(40), constraints: { nullable: false } }
@@ -17,7 +17,7 @@ databaseChangeLog:
               - column: { name: expire, type: bigint }
         - createIndex:
             indexName: idx_filelocks_repo_id
-            tableName: filelocks
+            tableName: "${t_FileLocks}"
             columns:
               - column: { name: repo_id }
 
@@ -26,10 +26,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: filelocktimestamp } }
+          not: { tableExists: { tableName: "${t_FileLockTimestamp}" } }
       changes:
         - createTable:
-            tableName: filelocktimestamp
+            tableName: "${t_FileLockTimestamp}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: repo_id, type: char(40), constraints: { unique: true } }
@@ -40,10 +40,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: foldergroupperm } }
+          not: { tableExists: { tableName: "${t_FolderGroupPerm}" } }
       changes:
         - createTable:
-            tableName: foldergroupperm
+            tableName: "${t_FolderGroupPerm}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: repo_id, type: char(36), constraints: { nullable: false } }
@@ -52,7 +52,7 @@ databaseChangeLog:
               - column: { name: group_id, type: int, constraints: { nullable: false } }
         - createIndex:
             indexName: idx_foldergroupperm_repo_id
-            tableName: foldergroupperm
+            tableName: "${t_FolderGroupPerm}"
             columns:
               - column: { name: repo_id }
 
@@ -61,10 +61,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: folderpermtimestamp } }
+          not: { tableExists: { tableName: "${t_FolderPermTimestamp}" } }
       changes:
         - createTable:
-            tableName: folderpermtimestamp
+            tableName: "${t_FolderPermTimestamp}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: repo_id, type: char(36), constraints: { unique: true } }
@@ -75,10 +75,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: folderuserperm } }
+          not: { tableExists: { tableName: "${t_FolderUserPerm}" } }
       changes:
         - createTable:
-            tableName: folderuserperm
+            tableName: "${t_FolderUserPerm}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: repo_id, type: char(36), constraints: { nullable: false } }
@@ -87,7 +87,7 @@ databaseChangeLog:
               - column: { name: user, type: varchar(255), constraints: { nullable: false } }
         - createIndex:
             indexName: idx_folderuserperm_repo_id
-            tableName: folderuserperm
+            tableName: "${t_FolderUserPerm}"
             columns:
               - column: { name: repo_id }
 
@@ -96,10 +96,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: gcid } }
+          not: { tableExists: { tableName: "${t_GCID}" } }
       changes:
         - createTable:
-            tableName: gcid
+            tableName: "${t_GCID}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: repo_id, type: char(36), constraints: { unique: true } }
@@ -110,26 +110,26 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: lastgcid } }
+          not: { tableExists: { tableName: "${t_LastGCID}" } }
       changes:
         - createTable:
-            tableName: lastgcid
+            tableName: "${t_LastGCID}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: repo_id, type: char(36) }
               - column: { name: client_id, type: varchar(128) }
               - column: { name: gc_id, type: char(36) }
-        - addUniqueConstraint: { columnNames: "repo_id, client_id", constraintName: uq_lastgcid_repo_client, tableName: lastgcid }
+        - addUniqueConstraint: { columnNames: "repo_id, client_id", constraintName: uq_lastgcid_repo_client, tableName: "${t_LastGCID}" }
 
   - changeSet:
       id: v070-create-orggrouprepo
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: orggrouprepo } }
+          not: { tableExists: { tableName: "${t_OrgGroupRepo}" } }
       changes:
         - createTable:
-            tableName: orggrouprepo
+            tableName: "${t_OrgGroupRepo}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: org_id, type: int }
@@ -137,15 +137,15 @@ databaseChangeLog:
               - column: { name: group_id, type: int }
               - column: { name: owner, type: varchar(255) }
               - column: { name: permission, type: char(15) }
-        - addUniqueConstraint: { columnNames: "org_id, group_id, repo_id", constraintName: uq_orggrouprepo_org_group_repo, tableName: orggrouprepo }
+        - addUniqueConstraint: { columnNames: "org_id, group_id, repo_id", constraintName: uq_orggrouprepo_org_group_repo, tableName: "${t_OrgGroupRepo}" }
         - createIndex:
             indexName: idx_orggrouprepo_repo_id
-            tableName: orggrouprepo
+            tableName: "${t_OrgGroupRepo}"
             columns:
               - column: { name: repo_id }
         - createIndex:
             indexName: idx_orggrouprepo_owner
-            tableName: orggrouprepo
+            tableName: "${t_OrgGroupRepo}"
             columns:
               - column: { name: owner }
 
@@ -154,41 +154,41 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: orginnerpubrepo } }
+          not: { tableExists: { tableName: "${t_OrgInnerPubRepo}" } }
       changes:
         - createTable:
-            tableName: orginnerpubrepo
+            tableName: "${t_OrgInnerPubRepo}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: org_id, type: int }
               - column: { name: repo_id, type: char(37) }
               - column: { name: permission, type: char(15) }
-        - addUniqueConstraint: { columnNames: "org_id, repo_id", constraintName: uq_orginnerpubrepo_org_repo, tableName: orginnerpubrepo }
+        - addUniqueConstraint: { columnNames: "org_id, repo_id", constraintName: uq_orginnerpubrepo_org_repo, tableName: "${t_OrgInnerPubRepo}" }
 
   - changeSet:
       id: v070-create-orgrepo
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: orgrepo } }
+          not: { tableExists: { tableName: "${t_OrgRepo}" } }
       changes:
         - createTable:
-            tableName: orgrepo
+            tableName: "${t_OrgRepo}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: org_id, type: int }
               - column: { name: repo_id, type: char(37) }
               - column: { name: user, type: varchar(255) }
-        - addUniqueConstraint: { columnNames: "org_id, repo_id", constraintName: uq_orgrepo_org_repo, tableName: orgrepo }
+        - addUniqueConstraint: { columnNames: "org_id, repo_id", constraintName: uq_orgrepo_org_repo, tableName: "${t_OrgRepo}" }
         - createIndex:
             indexName: idx_orgrepo_org_id_user
-            tableName: orgrepo
+            tableName: "${t_OrgRepo}"
             columns:
               - column: { name: org_id }
               - column: { name: user }
         - createIndex:
             indexName: idx_orgrepo_user
-            tableName: orgrepo
+            tableName: "${t_OrgRepo}"
             columns:
               - column: { name: user }
 
@@ -197,10 +197,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: orgsharedrepo } }
+          not: { tableExists: { tableName: "${t_OrgSharedRepo}" } }
       changes:
         - createTable:
-            tableName: orgsharedrepo
+            tableName: "${t_OrgSharedRepo}"
             columns:
               - column: { name: id, type: int, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: org_id, type: int }
@@ -210,23 +210,23 @@ databaseChangeLog:
               - column: { name: permission, type: char(15) }
         - createIndex:
             indexName: idx_orgsharedrepo_repo_id
-            tableName: orgsharedrepo
+            tableName: "${t_OrgSharedRepo}"
             columns:
               - column: { name: repo_id }
         - createIndex:
             indexName: idx_orgsharedrepo_org_repo
-            tableName: orgsharedrepo
+            tableName: "${t_OrgSharedRepo}"
             columns:
               - column: { name: org_id }
               - column: { name: repo_id }
         - createIndex:
             indexName: idx_orgsharedrepo_from_email
-            tableName: orgsharedrepo
+            tableName: "${t_OrgSharedRepo}"
             columns:
               - column: { name: from_email }
         - createIndex:
             indexName: idx_orgsharedrepo_to_email
-            tableName: orgsharedrepo
+            tableName: "${t_OrgSharedRepo}"
             columns:
               - column: { name: to_email }
 
@@ -235,10 +235,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { columnExists: { tableName: repoinfo, columnName: status } }
+          not: { columnExists: { tableName: "${t_RepoInfo}", columnName: status } }
       changes:
         - addColumn:
-            tableName: repoinfo
+            tableName: "${t_RepoInfo}"
             columns:
               - column: { name: status, type: int, defaultValueNumeric: 0 }
 
@@ -247,10 +247,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: repostorageid } }
+          not: { tableExists: { tableName: "${t_RepoStorageId}" } }
       changes:
         - createTable:
-            tableName: repostorageid
+            tableName: "${t_RepoStorageId}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: repo_id, type: char(40), constraints: { unique: true, nullable: false } }
@@ -261,10 +261,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: reposyncerror } }
+          not: { tableExists: { tableName: "${t_RepoSyncError}" } }
       changes:
         - createTable:
-            tableName: reposyncerror
+            tableName: "${t_RepoSyncError}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: token, type: char(41), constraints: { unique: true } }
@@ -276,10 +276,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: rolequota } }
+          not: { tableExists: { tableName: "${t_RoleQuota}" } }
       changes:
         - createTable:
-            tableName: rolequota
+            tableName: "${t_RoleQuota}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: role, type: varchar(255), constraints: { unique: true } }
@@ -289,31 +289,31 @@ databaseChangeLog:
       id: v070-update-systeminfo-id-type
       author: seafile
       changes:
-        - modifyDataType: { tableName: systeminfo, columnName: id, newDataType: int }
+        - modifyDataType: { tableName: "${t_SystemInfo}", columnName: id, newDataType: int }
 
   - changeSet:
       id: v070-update-webap-id
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { columnExists: { tableName: webap, columnName: id } }
+          not: { columnExists: { tableName: "${t_WebAP}", columnName: id } }
       changes:
-        - dropPrimaryKey: { tableName: webap }
+        - dropPrimaryKey: { tableName: "${t_WebAP}" }
         - addColumn:
-            tableName: webap
+            tableName: "${t_WebAP}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_webap_repo_id, tableName: webap }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_webap_repo_id, tableName: "${t_WebAP}" }
 
   - changeSet:
       id: v070-create-webuploadtempfiles
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: webuploadtempfiles } }
+          not: { tableExists: { tableName: "${t_WebUploadTempFiles}" } }
       changes:
         - createTable:
-            tableName: webuploadtempfiles
+            tableName: "${t_WebUploadTempFiles}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: repo_id, type: char(40), constraints: { nullable: false } }

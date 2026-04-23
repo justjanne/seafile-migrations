@@ -6,11 +6,11 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             columnExists:
-              tableName: "Group"
+              tableName: "${t_Group}"
               columnName: type
       changes:
         - addColumn:
-            tableName: "Group"
+            tableName: "${t_Group}"
             columns:
               - column:
                   name: type
@@ -21,10 +21,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: ldapusers } }
+          not: { tableExists: { tableName: "${t_LDAPUsers}" } }
       changes:
         - createTable:
-            tableName: ldapusers
+            tableName: "${t_LDAPUsers}"
             columns:
               - column:
                   name: id
@@ -58,7 +58,7 @@ databaseChangeLog:
                   type: text
         - createIndex:
             indexName: idx_ldapusers_email
-            tableName: ldapusers
+            tableName: "${t_LDAPUsers}"
             columns:
               - column:
                   name: email
@@ -68,10 +68,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: groupdnpair } }
+          not: { tableExists: { tableName: "${t_GroupDNPair}" } }
       changes:
         - createTable:
-            tableName: groupdnpair
+            tableName: "${t_GroupDNPair}"
             columns:
               - column:
                   name: group_id

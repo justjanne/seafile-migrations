@@ -4,10 +4,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: repotrash } }
+          not: { tableExists: { tableName: "${t_RepoTrash}" } }
       changes:
         - createTable:
-            tableName: repotrash
+            tableName: "${t_RepoTrash}"
             columns:
               - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }
               - column: { name: repo_name, type: varchar(255) }
@@ -17,11 +17,11 @@ databaseChangeLog:
               - column: { name: org_id, type: int }
         - createIndex:
             indexName: idx_repotrash_owner_id
-            tableName: repotrash
+            tableName: "${t_RepoTrash}"
             columns:
               - column: { name: owner_id }
         - createIndex:
             indexName: idx_repotrash_org_id
-            tableName: repotrash
+            tableName: "${t_RepoTrash}"
             columns:
               - column: { name: org_id }

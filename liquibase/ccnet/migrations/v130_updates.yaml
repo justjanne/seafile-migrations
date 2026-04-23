@@ -4,85 +4,64 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            columnExists:
-              tableName: emailuser
-              columnName: is_department_owner
+          not: { columnExists: { tableName: "${t_EmailUser}", columnName: is_department_owner } }
       changes:
         - addColumn:
-            tableName: emailuser
+            tableName: "${t_EmailUser}"
             columns:
-              - column:
-                  name: is_department_owner
-                  type: boolean
-                  defaultValueBoolean: false
-                  constraints:
-                    nullable: false
+              - column: { name: is_department_owner, type: boolean, defaultValueBoolean: false, constraints: { nullable: false } }
 
   - changeSet:
       id: v130-fix-legacy-typo-index
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          indexExists:
-            indexName: EmailUser_is_department_owenr
       changes:
+        - sql:
+            dbms: mysql,mariadb
+            sql: "DROP INDEX IF EXISTS EmailUser_is_department_owenr ON EmailUser"
         - dropIndex:
+            dbms: postgresql
             indexName: EmailUser_is_department_owenr
-            tableName: emailuser
+            tableName: "${t_EmailUser}"
+      failOnError: false
 
   - changeSet:
       id: v130-create-emailuser-indices
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { indexExists: { indexName: idx_emailuser_is_active, tableName: emailuser } }
-          not: { indexExists: { indexName: idx_emailuser_is_department_owner, tableName: emailuser } }
+        - not: { indexExists: { indexName: idx_emailuser_is_active, tableName: "${t_EmailUser}" } }
+        - not: { indexExists: { indexName: idx_emailuser_is_department_owner, tableName: "${t_EmailUser}" } }
       changes:
         - createIndex:
             indexName: idx_emailuser_is_active
-            tableName: emailuser
+            tableName: "${t_EmailUser}"
             columns:
-              - column:
-                  name: is_active
+              - column: { name: is_active }
         - createIndex:
             indexName: idx_emailuser_is_department_owner
-            tableName: emailuser
+            tableName: "${t_EmailUser}"
             columns:
-              - column:
-                  name: is_department_owner
+              - column: { name: is_department_owner }
 
   - changeSet:
       id: v130-create-orgfileextwhitelist
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: orgfileextwhitelist } }
+          not: { tableExists: { tableName: "${t_OrgFileExtWhiteList}" } }
       changes:
         - createTable:
-            tableName: orgfileextwhitelist
+            tableName: "${t_OrgFileExtWhiteList}"
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: org_id
-                  type: int
-                  constraints:
-                    unique: true
-              - column:
-                  name: white_list
-                  type: text
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: org_id, type: int, constraints: { unique: true } }
+              - column: { name: white_list, type: text }
 
   - changeSet:
       id: v130-update-group-parent-default
       author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          columnExists: { tableName: "${t_Group}", columnName: parent_group_id }
       changes:
-        - addDefaultValue:
-            tableName: "Group"
-            columnName: parent_group_id
-            defaultValueNumeric: 0
+        - addDefaultValue: { tableName: "${t_Group}", columnName: parent_group_id, defaultValueNumeric: 0 }

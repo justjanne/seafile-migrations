@@ -1,27 +1,27 @@
 databaseChangeLog:
   - changeSet:
-      id: v013-baseline-Binding
+      id: v013-baseline-binding
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: binding } }
+          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'binding'" }
       changes:
         - createTable:
-            tableName: binding
+            tableName: "${t_Binding}"
             columns:
               - column: { name: email, type: varchar(255) }
               - column: { name: peer_id, type: char(41), constraints: { unique: true } }
-        - createIndex: { indexName: idx_Binding_email, tableName: binding, columns: [ { name: email } ] }
+        - createIndex: { indexName: idx_binding_email, tableName: "${t_Binding}", columns: [ { name: email } ] }
 
   - changeSet:
-      id: v013-baseline-EmailUser
+      id: v013-baseline-emailuser
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: emailuser } }
+          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'emailuser'" }
       changes:
         - createTable:
-            tableName: emailuser
+            tableName: "${t_EmailUser}"
             columns:
               - column: { name: id, type: int, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: email, type: varchar(255), constraints: { unique: true } }
@@ -31,14 +31,14 @@ databaseChangeLog:
               - column: { name: ctime, type: bigint }
 
   - changeSet:
-      id: v013-baseline-Group
+      id: v013-baseline-group
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: "Group" } }
+          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'group'" }
       changes:
         - createTable:
-            tableName: "Group"
+            tableName: "${t_Group}"
             columns:
               - column: { name: group_id, type: int, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: group_name, type: varchar(255) }
@@ -46,61 +46,61 @@ databaseChangeLog:
               - column: { name: timestamp, type: bigint }
 
   - changeSet:
-      id: v013-baseline-GroupUser
+      id: v013-baseline-groupuser
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: groupuser } }
+          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'groupuser'" }
       changes:
         - createTable:
-            tableName: groupuser
+            tableName: "${t_GroupUser}"
             columns:
               - column: { name: group_id, type: int }
               - column: { name: user_name, type: varchar(255) }
               - column: { name: is_staff, type: smallint }
-        - addUniqueConstraint: { columnNames: "group_id, user_name", constraintName: uq_GroupUser_group_user, tableName: groupuser }
-        - createIndex: { indexName: idx_GroupUser_user_name, tableName: groupuser, columns: [ { name: user_name } ] }
+        - addUniqueConstraint: { columnNames: "group_id, user_name", constraintName: uq_groupuser_group_user, tableName: "${t_GroupUser}" }
+        - createIndex: { indexName: idx_groupuser_user_name, tableName: "${t_GroupUser}", columns: [ { name: user_name } ] }
 
   - changeSet:
-      id: v013-baseline-OrgGroup
+      id: v013-baseline-orggroup
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: orggroup } }
+          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'orggroup'" }
       changes:
         - createTable:
-            tableName: orggroup
+            tableName: "${t_OrgGroup}"
             columns:
               - column: { name: org_id, type: int }
               - column: { name: group_id, type: int }
-        - addUniqueConstraint: { columnNames: "org_id, group_id", constraintName: uq_OrgGroup_org_group, tableName: orggroup }
-        - createIndex: { indexName: idx_OrgGroup_group_id, tableName: orggroup, columns: [ { name: group_id } ] }
+        - addUniqueConstraint: { columnNames: "org_id, group_id", constraintName: uq_orggroup_org_group, tableName: "${t_OrgGroup}" }
+        - createIndex: { indexName: idx_orggroup_group_id, tableName: "${t_OrgGroup}", columns: [ { name: group_id } ] }
 
   - changeSet:
-      id: v013-baseline-OrgUser
+      id: v013-baseline-orguser
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: orguser } }
+          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'orguser'" }
       changes:
         - createTable:
-            tableName: orguser
+            tableName: "${t_OrgUser}"
             columns:
               - column: { name: org_id, type: int }
               - column: { name: email, type: varchar(255) }
               - column: { name: is_staff, type: boolean, constraints: { nullable: false } }
-        - addUniqueConstraint: { columnNames: "org_id, email", constraintName: uq_OrgUser_org_email, tableName: orguser }
-        - createIndex: { indexName: idx_OrgUser_email, tableName: orguser, columns: [ { name: email } ] }
+        - addUniqueConstraint: { columnNames: "org_id, email", constraintName: uq_orguser_org_email, tableName: "${t_OrgUser}" }
+        - createIndex: { indexName: idx_orguser_email, tableName: "${t_OrgUser}", columns: [ { name: email } ] }
 
   - changeSet:
-      id: v013-baseline-Organization
+      id: v013-baseline-organization
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: organization } }
+          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'organization'" }
       changes:
         - createTable:
-            tableName: organization
+            tableName: "${t_Organization}"
             columns:
               - column: { name: org_id, type: int, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: org_name, type: varchar(255) }

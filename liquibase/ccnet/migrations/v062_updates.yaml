@@ -6,11 +6,11 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             columnExists:
-              tableName: emailuser
+              tableName: "${t_EmailUser}"
               columnName: reference_id
       changes:
         - addColumn:
-            tableName: emailuser
+            tableName: "${t_EmailUser}"
             columns:
               - column:
                   name: reference_id
@@ -23,10 +23,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: ldapconfig } }
+          not: { tableExists: { tableName: "${t_LDAPConfig}" } }
       changes:
         - createTable:
-            tableName: ldapconfig
+            tableName: "${t_LDAPConfig}"
             columns:
               - column:
                   name: cfg_group
@@ -52,11 +52,11 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             columnExists:
-              tableName: ldapusers
+              tableName: "${t_LDAPUsers}"
               columnName: reference_id
       changes:
         - addColumn:
-            tableName: ldapusers
+            tableName: "${t_LDAPUsers}"
             columns:
               - column:
                   name: reference_id

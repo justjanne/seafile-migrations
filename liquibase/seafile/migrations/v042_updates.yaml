@@ -4,10 +4,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { columnExists: { tableName: repotrash, columnName: del_time } }
+          not: { columnExists: { tableName: "${t_RepoTrash}", columnName: del_time } }
       changes:
         - addColumn:
-            tableName: repotrash
+            tableName: "${t_RepoTrash}"
             columns:
               - column: { name: del_time, type: bigint }
 
@@ -16,10 +16,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: usersharequota } }
+          not: { tableExists: { tableName: "${t_UserShareQuota}" } }
       changes:
         - createTable:
-            tableName: usersharequota
+            tableName: "${t_UserShareQuota}"
             columns:
               - column: { name: user, type: varchar(255), constraints: { primaryKey: true, nullable: false } }
               - column: { name: quota, type: bigint }

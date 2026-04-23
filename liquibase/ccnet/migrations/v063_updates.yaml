@@ -6,11 +6,11 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             columnExists:
-              tableName: binding
+              tableName: "${t_Binding}"
               columnName: id
       changes:
         - addColumn:
-            tableName: binding
+            tableName: "${t_Binding}"
             columns:
               - column:
                   name: id
@@ -25,7 +25,7 @@ databaseChangeLog:
       author: seafile
       changes:
         - modifyDataType:
-            tableName: emailuser
+            tableName: "${t_EmailUser}"
             columnName: id
             newDataType: bigint
 
@@ -34,11 +34,11 @@ databaseChangeLog:
       author: seafile
       changes:
         - modifyDataType:
-            tableName: "Group"
+            tableName: "${t_Group}"
             columnName: group_id
             newDataType: bigint
         - addColumn:
-            tableName: "Group"
+            tableName: "${t_Group}"
             columns:
               - column:
                   name: parent_group_id
@@ -47,7 +47,7 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             columnExists:
-              tableName: "Group"
+              tableName: "${t_Group}"
               columnName: parent_group_id
 
   - changeSet:
@@ -55,10 +55,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: groupstructure } }
+          not: { tableExists: { tableName: "${t_GroupStructure}" } }
       changes:
         - createTable:
-            tableName: groupstructure
+            tableName: "${t_GroupStructure}"
             columns:
               - column:
                   name: id
@@ -83,13 +83,13 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             columnExists:
-              tableName: groupuser
+              tableName: "${t_GroupUser}"
               columnName: id
       changes:
         - dropPrimaryKey:
-            tableName: groupuser
+            tableName: "${t_GroupUser}"
         - addColumn:
-            tableName: groupuser
+            tableName: "${t_GroupUser}"
             columns:
               - column:
                   name: id
@@ -99,7 +99,7 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
         - modifyDataType:
-            tableName: groupuser
+            tableName: "${t_GroupUser}"
             columnName: group_id
             newDataType: bigint
 
@@ -110,11 +110,11 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             columnExists:
-              tableName: ldapconfig
+              tableName: "${t_LDAPConfig}"
               columnName: id
       changes:
         - addColumn:
-            tableName: ldapconfig
+            tableName: "${t_LDAPConfig}"
             columns:
               - column:
                   name: id
@@ -129,7 +129,7 @@ databaseChangeLog:
       author: seafile
       changes:
         - modifyDataType:
-            tableName: ldapusers
+            tableName: "${t_LDAPUsers}"
             columnName: id
             newDataType: bigint
 
@@ -138,7 +138,7 @@ databaseChangeLog:
       author: seafile
       changes:
         - modifyDataType:
-            tableName: organization
+            tableName: "${t_Organization}"
             columnName: org_id
             newDataType: bigint
 
@@ -149,13 +149,13 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             columnExists:
-              tableName: orggroup
+              tableName: "${t_OrgGroup}"
               columnName: id
       changes:
         - dropPrimaryKey:
-            tableName: orggroup
+            tableName: "${t_OrgGroup}"
         - addColumn:
-            tableName: orggroup
+            tableName: "${t_OrgGroup}"
             columns:
               - column:
                   name: id
@@ -172,13 +172,13 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             columnExists:
-              tableName: orguser
+              tableName: "${t_OrgUser}"
               columnName: id
       changes:
         - dropPrimaryKey:
-            tableName: orguser
+            tableName: "${t_OrgUser}"
         - addColumn:
-            tableName: orguser
+            tableName: "${t_OrgUser}"
             columns:
               - column:
                   name: id

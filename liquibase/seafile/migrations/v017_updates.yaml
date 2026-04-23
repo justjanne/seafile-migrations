@@ -4,10 +4,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: repotokenpeerinfo } }
+          not: { tableExists: { tableName: "${t_RepoTokenPeerInfo}" } }
       changes:
         - createTable:
-            tableName: repotokenpeerinfo
+            tableName: "${t_RepoTokenPeerInfo}"
             columns:
               - column: { name: token, type: char(41), constraints: { primaryKey: true, nullable: false } }
               - column: { name: peer_id, type: char(41) }
@@ -20,10 +20,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { indexExists: { indexName: idx_repousertoken_email, tableName: repousertoken } }
+          not: { indexExists: { indexName: idx_repousertoken_email, tableName: "${t_RepoUserToken}" } }
       changes:
         - createIndex:
             indexName: idx_repousertoken_email
-            tableName: repousertoken
+            tableName: "${t_RepoUserToken}"
             columns:
               - column: { name: email }

@@ -4,11 +4,11 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { indexExists: { indexName: idx_repotokenpeerinfo_peer_id, tableName: repotokenpeerinfo } }
+          not: { indexExists: { indexName: idx_repotokenpeerinfo_peer_id, tableName: "${t_RepoTokenPeerInfo}" } }
       changes:
         - createIndex:
             indexName: idx_repotokenpeerinfo_peer_id
-            tableName: repotokenpeerinfo
+            tableName: "${t_RepoTokenPeerInfo}"
             columns:
               - column: { name: peer_id }
 
@@ -17,10 +17,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { indexExists: { indexName: idx_repousertoken_token, tableName: repousertoken } }
+          not: { indexExists: { indexName: idx_repousertoken_token, tableName: "${t_RepoUserToken}" } }
       changes:
         - createIndex:
             indexName: idx_repousertoken_token
-            tableName: repousertoken
+            tableName: "${t_RepoUserToken}"
             columns:
               - column: { name: token }

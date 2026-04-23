@@ -4,9 +4,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: garbagerepos } }
+          not: { tableExists: { tableName: "${t_GarbageRepos}" } }
       changes:
         - createTable:
-            tableName: garbagerepos
+            tableName: "${t_GarbageRepos}"
             columns:
               - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }

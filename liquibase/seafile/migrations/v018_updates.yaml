@@ -4,10 +4,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: virtualrepo } }
+          not: { tableExists: { tableName: "${t_VirtualRepo}" } }
       changes:
         - createTable:
-            tableName: virtualrepo
+            tableName: "${t_VirtualRepo}"
             columns:
               - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }
               - column: { name: origin_repo, type: char(36) }
@@ -15,6 +15,6 @@ databaseChangeLog:
               - column: { name: base_commit, type: char(40) }
         - createIndex:
             indexName: idx_virtualrepo_origin_repo
-            tableName: virtualrepo
+            tableName: "${t_VirtualRepo}"
             columns:
               - column: { name: origin_repo }

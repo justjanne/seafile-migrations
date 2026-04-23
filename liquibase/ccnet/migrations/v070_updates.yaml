@@ -6,11 +6,11 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             columnExists:
-              tableName: userrole
+              tableName: "${t_UserRole}"
               columnName: is_manual_set
       changes:
         - addColumn:
-            tableName: userrole
+            tableName: "${t_UserRole}"
             columns:
               - column:
                   name: is_manual_set

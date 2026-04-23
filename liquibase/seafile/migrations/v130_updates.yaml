@@ -4,10 +4,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: orgdownloadratelimit } }
+          not: { tableExists: { tableName: "${t_OrgDownloadRateLimit}" } }
       changes:
         - createTable:
-            tableName: orgdownloadratelimit
+            tableName: "${t_OrgDownloadRateLimit}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: org_id, type: int, constraints: { unique: true } }
@@ -18,10 +18,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: orguploadratelimit } }
+          not: { tableExists: { tableName: "${t_OrgUploadRateLimit}" } }
       changes:
         - createTable:
-            tableName: orguploadratelimit
+            tableName: "${t_OrgUploadRateLimit}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: org_id, type: int, constraints: { unique: true } }
@@ -32,10 +32,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: orguserdefaultquota } }
+          not: { tableExists: { tableName: "${t_OrgUserDefaultQuota}" } }
       changes:
         - createTable:
-            tableName: orguserdefaultquota
+            tableName: "${t_OrgUserDefaultQuota}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: org_id, type: int, constraints: { unique: true } }
@@ -46,10 +46,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: roledownloadratelimit } }
+          not: { tableExists: { tableName: "${t_RoleDownloadRateLimit}" } }
       changes:
         - createTable:
-            tableName: roledownloadratelimit
+            tableName: "${t_RoleDownloadRateLimit}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: role, type: varchar(255), constraints: { unique: true } }
@@ -60,10 +60,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: roleuploadratelimit } }
+          not: { tableExists: { tableName: "${t_RoleUploadRateLimit}" } }
       changes:
         - createTable:
-            tableName: roleuploadratelimit
+            tableName: "${t_RoleUploadRateLimit}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: role, type: varchar(255), constraints: { unique: true } }
@@ -74,10 +74,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: userdownloadratelimit } }
+          not: { tableExists: { tableName: "${t_UserDownloadRateLimit}" } }
       changes:
         - createTable:
-            tableName: userdownloadratelimit
+            tableName: "${t_UserDownloadRateLimit}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: user, type: varchar(255), constraints: { unique: true } }
@@ -88,10 +88,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: useruploadratelimit } }
+          not: { tableExists: { tableName: "${t_UserUploadRateLimit}" } }
       changes:
         - createTable:
-            tableName: useruploadratelimit
+            tableName: "${t_UserUploadRateLimit}"
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: user, type: varchar(255), constraints: { unique: true } }
@@ -102,10 +102,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { indexExists: { indexName: idx_webuploadtempfiles_repo_id, tableName: webuploadtempfiles } }
+          not: { indexExists: { indexName: idx_webuploadtempfiles_repo_id, tableName: "${t_WebUploadTempFiles}" } }
       changes:
         - createIndex:
             indexName: idx_webuploadtempfiles_repo_id
-            tableName: webuploadtempfiles
+            tableName: "${t_WebUploadTempFiles}"
             columns:
               - column: { name: repo_id }

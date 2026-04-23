@@ -4,10 +4,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: repofilecount } }
+          not: { tableExists: { tableName: "${t_RepoFileCount}" } }
       changes:
         - createTable:
-            tableName: repofilecount
+            tableName: "${t_RepoFileCount}"
             columns:
               - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }
               - column: { name: file_count, type: bigint }
@@ -17,9 +17,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { columnExists: { tableName: repotokenpeerinfo, columnName: client_ver } }
+          not: { columnExists: { tableName: "${t_RepoTokenPeerInfo}", columnName: client_ver } }
       changes:
         - addColumn:
-            tableName: repotokenpeerinfo
+            tableName: "${t_RepoTokenPeerInfo}"
             columns:
               - column: { name: client_ver, type: varchar(20) }

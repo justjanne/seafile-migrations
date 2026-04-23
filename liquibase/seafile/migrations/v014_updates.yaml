@@ -4,10 +4,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: repohistorylimit } }
+          not: { tableExists: { tableName: "${t_RepoHistoryLimit}" } }
       changes:
         - createTable:
-            tableName: repohistorylimit
+            tableName: "${t_RepoHistoryLimit}"
             columns:
               - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
               - column: { name: days, type: int }
@@ -17,10 +17,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: repovalidsince } }
+          not: { tableExists: { tableName: "${t_RepoValidSince}" } }
       changes:
         - createTable:
-            tableName: repovalidsince
+            tableName: "${t_RepoValidSince}"
             columns:
               - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
               - column: { name: timestamp, type: bigint }

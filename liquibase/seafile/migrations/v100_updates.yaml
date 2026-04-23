@@ -3,4 +3,4 @@ databaseChangeLog:
       id: v100-update-repotokenpeerinfo-peer-ip
       author: seafile
       changes:
-        - modifyDataType: { tableName: repotokenpeerinfo, columnName: peer_ip, newDataType: varchar(50) }
+        - modifyDataType: { tableName: "${t_RepoTokenPeerInfo}", columnName: peer_ip, newDataType: varchar(50) }

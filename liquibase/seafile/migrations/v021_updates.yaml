@@ -4,10 +4,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: systeminfo } }
+          not: { tableExists: { tableName: "${t_SystemInfo}" } }
       changes:
         - createTable:
-            tableName: systeminfo
+            tableName: "${t_SystemInfo}"
             columns:
               - column: { name: info_key, type: varchar(256) }
               - column: { name: info_value, type: varchar(1024) }

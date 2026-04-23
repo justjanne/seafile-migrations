@@ -4,21 +4,21 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { columnExists: { tableName: sharedrepo, columnName: id } }
+          not: { columnExists: { tableName: "${t_SharedRepo}", columnName: id } }
       changes:
         - addColumn:
-            tableName: sharedrepo
+            tableName: "${t_SharedRepo}"
             columns:
               - column: { name: id, type: int, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - modifyDataType: { tableName: sharedrepo, columnName: from_email, newDataType: varchar(255) }
-        - modifyDataType: { tableName: sharedrepo, columnName: to_email, newDataType: varchar(255) }
+        - modifyDataType: { tableName: "${t_SharedRepo}", columnName: from_email, newDataType: varchar(255) }
+        - modifyDataType: { tableName: "${t_SharedRepo}", columnName: to_email, newDataType: varchar(255) }
         - createIndex:
             indexName: idx_sharedrepo_from_email
-            tableName: sharedrepo
+            tableName: "${t_SharedRepo}"
             columns:
               - column: { name: from_email }
         - createIndex:
             indexName: idx_sharedrepo_to_email
-            tableName: sharedrepo
+            tableName: "${t_SharedRepo}"
             columns:
               - column: { name: to_email }

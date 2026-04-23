@@ -4,10 +4,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: repoinfo } }
+          not: { tableExists: { tableName: "${t_RepoInfo}" } }
       changes:
         - createTable:
-            tableName: repoinfo
+            tableName: "${t_RepoInfo}"
             columns:
               - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }
               - column: { name: name, type: varchar(255), constraints: { nullable: false } }
@@ -21,10 +21,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: seafileconf } }
+          not: { tableExists: { tableName: "${t_SeafileConf}" } }
       changes:
         - createTable:
-            tableName: seafileconf
+            tableName: "${t_SeafileConf}"
             columns:
               - column: { name: cfg_group, type: varchar(255), constraints: { nullable: false } }
               - column: { name: cfg_key, type: varchar(255), constraints: { nullable: false } }

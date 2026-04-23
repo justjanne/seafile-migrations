@@ -4,14 +4,14 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { columnExists: { tableName: repoinfo, columnName: type } }
+          not: { columnExists: { tableName: "${t_RepoInfo}", columnName: type } }
       changes:
         - addColumn:
-            tableName: repoinfo
+            tableName: "${t_RepoInfo}"
             columns:
               - column: { name: type, type: varchar(10) }
         - createIndex:
             indexName: idx_repoinfo_type
-            tableName: repoinfo
+            tableName: "${t_RepoInfo}"
             columns:
               - column: { name: type }

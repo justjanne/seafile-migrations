@@ -6,20 +6,20 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             primaryKeyExists:
-              tableName: groupuser
+              tableName: "${t_GroupUser}"
       changes:
         - addNotNullConstraint:
             columnName: group_id
-            tableName: groupuser
+            tableName: "${t_GroupUser}"
             columnDataType: int
         - addNotNullConstraint:
             columnName: user_name
-            tableName: groupuser
+            tableName: "${t_GroupUser}"
             columnDataType: varchar(255)
         - addPrimaryKey:
             columnNames: group_id, user_name
             constraintName: pk_groupuser
-            tableName: groupuser
+            tableName: "${t_GroupUser}"
 
   - changeSet:
       id: v030-update-orggroup-pk
@@ -28,20 +28,20 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             primaryKeyExists:
-              tableName: orggroup
+              tableName: "${t_OrgGroup}"
       changes:
         - addNotNullConstraint:
             columnName: org_id
-            tableName: orggroup
+            tableName: "${t_OrgGroup}"
             columnDataType: int
         - addNotNullConstraint:
             columnName: group_id
-            tableName: orggroup
+            tableName: "${t_OrgGroup}"
             columnDataType: int
         - addPrimaryKey:
             columnNames: org_id, group_id
             constraintName: pk_orggroup
-            tableName: orggroup
+            tableName: "${t_OrgGroup}"
 
   - changeSet:
       id: v030-update-orguser-pk
@@ -50,17 +50,17 @@ databaseChangeLog:
         - onFail: CONTINUE
           not:
             primaryKeyExists:
-              tableName: orguser
+              tableName: "${t_OrgUser}"
       changes:
         - addNotNullConstraint:
             columnName: org_id
-            tableName: orguser
+            tableName: "${t_OrgUser}"
             columnDataType: int
         - addNotNullConstraint:
             columnName: email
-            tableName: orguser
+            tableName: "${t_OrgUser}"
             columnDataType: varchar(255)
         - addPrimaryKey:
             columnNames: org_id, email
             constraintName: pk_orguser
-            tableName: orguser
+            tableName: "${t_OrgUser}"
