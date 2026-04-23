@@ -24,6 +24,14 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: emailuser
+        newTableName: emailuser
+- changeSet:
+    id: normalize-emailuser
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: EmailUser
         newTableName: emailuser
 - changeSet:

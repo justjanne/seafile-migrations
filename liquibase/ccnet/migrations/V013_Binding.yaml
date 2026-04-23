@@ -24,6 +24,14 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: binding
+        newTableName: binding
+- changeSet:
+    id: normalize-binding
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: Binding
         newTableName: binding
 - changeSet:
@@ -50,8 +58,10 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: CREATE INDEX `idx_binding_email` ON `binding` (`email`(20))
+    - dropIndex:
+        tableName: binding
+        indexName: email
     - createIndex:
-        dbms: postgresql
         tableName: binding
         indexName: idx_binding_email
         columns:

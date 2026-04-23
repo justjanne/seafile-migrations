@@ -44,6 +44,24 @@ databaseChangeLog:
     - dropIndex:
         tableName: sharedrepo
         indexName: sharedrepo_repoid_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: repo_id
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_repoid_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: from_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_from_email_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: to_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_to_email_idx
     - createIndex:
         tableName: sharedrepo
         indexName: idx_sharedrepo_repo_id
@@ -59,6 +77,24 @@ databaseChangeLog:
     - dropIndex:
         tableName: sharedrepo
         indexName: sharedrepo_from_email_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: repo_id
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_repoid_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: from_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_from_email_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: to_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_to_email_idx
     - createIndex:
         tableName: sharedrepo
         indexName: idx_sharedrepo_from_email
@@ -68,6 +104,24 @@ databaseChangeLog:
     - dropIndex:
         tableName: sharedrepo
         indexName: to_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: to_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_to_email_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: repo_id
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_repoid_idx
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: from_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_from_email_idx
     - dropIndex:
         tableName: sharedrepo
         indexName: to_email

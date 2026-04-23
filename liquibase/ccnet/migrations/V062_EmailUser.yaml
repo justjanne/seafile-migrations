@@ -15,6 +15,24 @@ databaseChangeLog:
     - dropIndex:
         tableName: emailuser
         indexName: emailuser_reference_id_idx
+    - dropIndex:
+        tableName: emailuser
+        indexName: is_active
+    - dropIndex:
+        tableName: emailuser
+        indexName: emailuser_is_active
+    - dropIndex:
+        tableName: emailuser
+        indexName: is_department_owner
+    - dropIndex:
+        tableName: emailuser
+        indexName: emailuser_is_department_owenr
+    - dropIndex:
+        tableName: emailuser
+        indexName: reference_id
+    - dropIndex:
+        tableName: emailuser
+        indexName: emailuser_reference_id_idx
     - createIndex:
         tableName: emailuser
         indexName: idx_emailuser_reference_id

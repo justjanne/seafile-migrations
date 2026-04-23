@@ -24,6 +24,14 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: reposize
+        newTableName: reposize
+- changeSet:
+    id: normalize-reposize
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: RepoSize
         newTableName: reposize
 - changeSet:

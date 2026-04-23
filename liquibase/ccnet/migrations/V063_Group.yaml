@@ -17,6 +17,10 @@ databaseChangeLog:
         columnName: group_id
         newDataType: bigint
         dbms: postgresql
+    - addAutoIncrement:
+        tableName: group
+        columnName: group_id
+        columnDataType: bigint
     - addColumn:
         tableName: group
         columns:

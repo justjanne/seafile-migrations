@@ -17,3 +17,7 @@ databaseChangeLog:
         columnName: org_id
         newDataType: bigint
         dbms: postgresql
+    - addAutoIncrement:
+        tableName: organization
+        columnName: org_id
+        columnDataType: bigint

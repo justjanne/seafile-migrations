@@ -37,6 +37,10 @@ databaseChangeLog:
         tableName: orguserquota
         columnName: org_id
         newDataType: int
+    - addAutoIncrement:
+        tableName: orguserquota
+        columnName: org_id
+        columnDataType: int
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `orguserquota` MODIFY COLUMN `user` varchar(255)

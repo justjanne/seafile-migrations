@@ -24,6 +24,14 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: orgquota
+        newTableName: orgquota
+- changeSet:
+    id: normalize-orgquota
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: OrgQuota
         newTableName: orgquota
 - changeSet:

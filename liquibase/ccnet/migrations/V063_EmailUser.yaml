@@ -17,3 +17,7 @@ databaseChangeLog:
         columnName: id
         newDataType: bigint
         dbms: postgresql
+    - addAutoIncrement:
+        tableName: emailuser
+        columnName: id
+        columnDataType: bigint

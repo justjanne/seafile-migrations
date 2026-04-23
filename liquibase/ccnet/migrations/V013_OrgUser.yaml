@@ -24,6 +24,14 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: orguser
+        newTableName: orguser
+- changeSet:
+    id: normalize-orguser
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: OrgUser
         newTableName: orguser
 - changeSet:
@@ -47,6 +55,12 @@ databaseChangeLog:
     - addUniqueConstraint:
         columnNames: org_id, email
         tableName: orguser
+    - dropIndex:
+        tableName: orguser
+        indexName: email
+    - dropIndex:
+        tableName: orguser
+        indexName: orguser_email_idx
     - dropIndex:
         tableName: orguser
         indexName: email

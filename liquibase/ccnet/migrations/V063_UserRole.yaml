@@ -17,6 +17,10 @@ databaseChangeLog:
         columnName: id
         newDataType: bigint
         dbms: postgresql
+    - addAutoIncrement:
+        tableName: userrole
+        columnName: id
+        columnDataType: bigint
     - addColumn:
         tableName: userrole
         dbms: postgresql

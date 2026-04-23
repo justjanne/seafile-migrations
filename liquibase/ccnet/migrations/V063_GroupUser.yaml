@@ -30,6 +30,10 @@ databaseChangeLog:
         columnName: group_id
         newDataType: bigint
         dbms: postgresql
+    - addAutoIncrement:
+        tableName: groupuser
+        columnName: group_id
+        columnDataType: bigint
     - addUniqueConstraint:
         tableName: groupuser
         columnNames: group_id, user_name
@@ -38,6 +42,12 @@ databaseChangeLog:
         tableName: groupuser
         indexName: user_name
       dbms: postgresql
+    - dropIndex:
+        tableName: groupuser
+        indexName: user_name
+    - dropIndex:
+        tableName: groupuser
+        indexName: groupuser_username_idx
     - dropIndex:
         tableName: groupuser
         indexName: user_name

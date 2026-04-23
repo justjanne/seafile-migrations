@@ -24,6 +24,14 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: repoowner
+        newTableName: repoowner
+- changeSet:
+    id: normalize-repoowner
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: RepoOwner
         newTableName: repoowner
 - changeSet:
@@ -42,6 +50,15 @@ databaseChangeLog:
         - column:
             name: owner_id
             type: varchar(255)
+    - dropIndex:
+        tableName: repoowner
+        indexName: owner_id
+    - dropIndex:
+        tableName: repoowner
+        indexName: repoowner_owner_id_idx
+    - dropIndex:
+        tableName: repoowner
+        indexName: repoowner_owner_id_uq
     - dropIndex:
         tableName: repoowner
         indexName: owner_id

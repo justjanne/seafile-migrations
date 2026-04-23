@@ -17,3 +17,7 @@ databaseChangeLog:
         columnName: id
         newDataType: BIGINT
         dbms: postgresql
+    - addAutoIncrement:
+        tableName: sharedrepo
+        columnName: id
+        columnDataType: BIGINT

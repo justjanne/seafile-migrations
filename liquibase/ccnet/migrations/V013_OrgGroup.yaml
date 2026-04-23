@@ -24,6 +24,14 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: orggroup
+        newTableName: orggroup
+- changeSet:
+    id: normalize-orggroup
+    author: seafile
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: OrgGroup
         newTableName: orggroup
 - changeSet:
@@ -42,6 +50,12 @@ databaseChangeLog:
     - addUniqueConstraint:
         columnNames: org_id, group_id
         tableName: orggroup
+    - dropIndex:
+        tableName: orggroup
+        indexName: group_id
+    - dropIndex:
+        tableName: orggroup
+        indexName: orggroup_groupid_idx
     - dropIndex:
         tableName: orggroup
         indexName: group_id
