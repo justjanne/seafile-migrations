@@ -14,14 +14,11 @@ databaseChangeLog:
   - changeSet:
       id: v130-fix-legacy-typo-index
       author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          indexExists: { indexName: EmailUser_is_department_owenr, tableName: emailuser }
       changes:
-        - sql:
-            dbms: mysql,mariadb
-            sql: "DROP INDEX IF EXISTS EmailUser_is_department_owenr ON emailuser"
-        - sql:
-            dbms: postgresql
-            sql: "DROP INDEX IF EXISTS idx_emailuser_is_department_owenr"
-      failOnError: false
+        - dropIndex: { indexName: EmailUser_is_department_owenr, tableName: emailuser }
 
   - changeSet:
       id: v130-create-emailuser-indices
