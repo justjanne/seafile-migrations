@@ -1,14 +1,22 @@
 databaseChangeLog:
-  - changeSet:
-      id: V131_LDAPUsers
-      author: seafile
-      dbms: postgresql
-      changes:
-        - modifyDataType:
-            tableName: LDAPUsers
-            columnName: is_staff
-            newDataType: boolean
-        - modifyDataType:
-            tableName: LDAPUsers
-            columnName: is_active
-            newDataType: boolean
+- changeSet:
+    id: V131_LDAPUsers
+    author: seafile
+    dbms: postgresql
+    changes:
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `ldapusers` MODIFY COLUMN `is_staff` boolean
+    - modifyDataType:
+        tableName: ldapusers
+        columnName: is_staff
+        newDataType: boolean
+        dbms: postgresql
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `ldapusers` MODIFY COLUMN `is_active` boolean
+    - modifyDataType:
+        tableName: ldapusers
+        columnName: is_active
+        newDataType: boolean
+        dbms: postgresql

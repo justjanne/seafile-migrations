@@ -1,9 +1,9 @@
 databaseChangeLog:
-  - changeSet:
-      id: V131_Group
-      author: seafile
-      dbms: postgresql
-      changes:
-        - renameTable:
-            oldTableName: Group
-            newTableName: group
+- changeSet:
+    id: V131_Group
+    author: seafile
+    dbms: postgresql
+    changes:
+    - renameTable:
+        oldTableName: group
+        newTableName: group

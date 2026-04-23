@@ -1,11 +1,17 @@
 databaseChangeLog:
-  - changeSet:
-      id: V041_Group
-      author: seafile
-      changes:
-        - addColumn:
-            tableName: Group
-            columns:
-              - column:
-                  name: type
-                  type: varchar(32)
+- changeSet:
+    id: V041_Group
+    author: seafile
+    changes:
+    - addColumn:
+        tableName: group
+        columns:
+        - column:
+            name: type
+            type: varchar(32)
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: group
+          columnName: type

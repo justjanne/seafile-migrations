@@ -1,28 +1,42 @@
 databaseChangeLog:
-  - changeSet:
-      id: V013_OrgUser
-      author: seafile
-      changes:
-        - createTable:
-            tableName: OrgUser
-            columns:
-              - column:
-                  name: org_id
-                  type: int
-              - column:
-                  name: email
-                  type: varchar(255)
-              - column:
-                  name: is_staff
-                  type: boolean
-                  constraints:
-                    nullable: false
-        - addUniqueConstraint:
-            columnNames: org_id, email
-            tableName: OrgUser
-        - createIndex:
-            indexName: orguser_email_idx
-            tableName: OrgUser
-            columns:
-              - column:
-                  name: email
+- changeSet:
+    id: normalize-orguser
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: OrgUser
+        newTableName: orguser
+- changeSet:
+    id: V013_OrgUser
+    author: seafile
+    changes:
+    - createTable:
+        tableName: orguser
+        columns:
+        - column:
+            name: org_id
+            type: int
+        - column:
+            name: email
+            type: varchar(255)
+        - column:
+            name: is_staff
+            type: boolean
+            constraints:
+              nullable: false
+    - addUniqueConstraint:
+        columnNames: org_id, email
+        tableName: orguser
+    - createIndex:
+        indexName: orguser_email_idx
+        tableName: orguser
+        columns:
+        - column:
+            name: email
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: orguser

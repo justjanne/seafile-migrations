@@ -1,14 +1,24 @@
 databaseChangeLog:
-  - changeSet:
-      id: V131_OrgUser
-      author: seafile
-      dbms: postgresql
-      changes:
-        - modifyDataType:
-            tableName: OrgUser
-            columnName: is_staff
-            newDataType: boolean
-        - renameIndex:
-            tableName: OrgUser
-            oldIndexName: orguser_email_idx
-            newIndexName: idx_orguser_email
+- changeSet:
+    id: V131_OrgUser
+    author: seafile
+    dbms: postgresql
+    changes:
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `orguser` MODIFY COLUMN `is_staff` boolean
+    - modifyDataType:
+        tableName: orguser
+        columnName: is_staff
+        newDataType: boolean
+        dbms: postgresql
+    - dropIndex:
+        tableName: orguser
+        indexName: orguser_email_idx
+    - createIndex:
+        tableName: orguser
+        indexName: idx_orguser_email
+        columns:
+        - column:
+            name: email
+    failOnError: false

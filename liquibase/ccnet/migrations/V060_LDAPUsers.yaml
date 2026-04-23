@@ -1,20 +1,21 @@
 databaseChangeLog:
-  - changeSet:
-      id: V060_LDAPUsers
-      author: seafile
-      changes:
-        - dropIndex:
-            indexName: ldapusers_email_idx
-            tableName: LDAPUsers
-            dbms: postgresql
-        - dropIndex:
-            indexName: email
-            tableName: LDAPUsers
-            dbms: mysql
-        - createIndex:
-            indexName: ldapusers_email_idx
-            tableName: LDAPUsers
-            columns:
-              - column:
-                  name: email
-            unique: true
+- changeSet:
+    id: V060_LDAPUsers
+    author: seafile
+    changes:
+    - dropIndex:
+        indexName: ldapusers_email_idx
+        tableName: ldapusers
+        dbms: postgresql
+    - dropIndex:
+        indexName: email
+        tableName: ldapusers
+        dbms: mysql
+    - createIndex:
+        indexName: ldapusers_email_idx
+        tableName: ldapusers
+        columns:
+        - column:
+            name: email
+        unique: true
+    failOnError: false

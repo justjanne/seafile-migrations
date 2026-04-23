@@ -1,23 +1,28 @@
 databaseChangeLog:
-  - changeSet:
-      id: V130_RoleDownloadRateLimit
-      author: seafile
-      changes:
-        - createTable:
-            tableName: RoleDownloadRateLimit
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: role
-                  type: varchar(255)
-                  constraints:
-                    unique: true
-              - column:
-                  name: download_limit
-                  type: bigint
+- changeSet:
+    id: V130_RoleDownloadRateLimit
+    author: seafile
+    changes:
+    - createTable:
+        tableName: roledownloadratelimit
+        columns:
+        - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: role
+            type: varchar(255)
+            constraints:
+              unique: true
+        - column:
+            name: download_limit
+            type: bigint
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: roledownloadratelimit

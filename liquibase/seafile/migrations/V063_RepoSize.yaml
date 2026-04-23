@@ -1,29 +1,40 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_RepoSize
-      author: seafile
-      changes:
-        - dropPrimaryKey:
-            tableName: RepoSize
-            constraintName: RepoSize_pkey
-        - addColumn:
-            tableName: RepoSize
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    primaryKeyName: RepoSize_pkey
-        - modifyDataType:
-            tableName: RepoSize
-            columnName: repo_id
-            newDataType: CHAR(37)
-        - dropDefaultValue:
-            tableName: RepoSize
-            columnName: repo_id
-        - addUniqueConstraint:
-            tableName: RepoSize
-            columnNames: repo_id
-            constraintName: RepoSize_repo_id_uq
+- changeSet:
+    id: V063_RepoSize
+    author: seafile
+    changes:
+    - dropPrimaryKey:
+        tableName: reposize
+        constraintName: RepoSize_pkey
+    - addColumn:
+        tableName: reposize
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              primaryKeyName: RepoSize_pkey
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `reposize` MODIFY COLUMN `repo_id` CHAR(37)
+    - modifyDataType:
+        tableName: reposize
+        columnName: repo_id
+        newDataType: CHAR(37)
+        dbms: postgresql
+    - dropDefaultValue:
+        tableName: reposize
+        columnName: repo_id
+    - addUniqueConstraint:
+        tableName: reposize
+        columnNames: repo_id
+        constraintName: RepoSize_repo_id_uq
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: reposize
+          columnName: id
+    failOnError: false

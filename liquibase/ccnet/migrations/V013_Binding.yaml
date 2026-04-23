@@ -1,22 +1,36 @@
 databaseChangeLog:
-  - changeSet:
-      id: V013_Binding
-      author: seafile
-      changes:
-        - createTable:
-            tableName: Binding
-            columns:
-              - column:
-                  name: email
-                  type: varchar(255)
-              - column:
-                  name: peer_id
-                  type: char(41)
-                  constraints:
-                    unique: true
-        - createIndex:
-            indexName: idx_binding_email
-            tableName: Binding
-            columns:
-              - column:
-                  name: email
+- changeSet:
+    id: normalize-binding
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: Binding
+        newTableName: binding
+- changeSet:
+    id: V013_Binding
+    author: seafile
+    changes:
+    - createTable:
+        tableName: binding
+        columns:
+        - column:
+            name: email
+            type: varchar(255)
+        - column:
+            name: peer_id
+            type: char(41)
+            constraints:
+              unique: true
+    - createIndex:
+        indexName: idx_binding_email
+        tableName: binding
+        columns:
+        - column:
+            name: email
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: binding

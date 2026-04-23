@@ -1,35 +1,49 @@
 databaseChangeLog:
-  - changeSet:
-      id: V040_SharedRepo
-      author: seafile
-      changes:
-        - addColumn:
-            tableName: SharedRepo
-            columns:
-              - column:
-                  name: id
-                  type: int
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-        - modifyDataType:
-            tableName: SharedRepo
-            columnName: from_email
-            newDataType: varchar(255)
-        - modifyDataType:
-            tableName: SharedRepo
-            columnName: to_email
-            newDataType: varchar(255)
-        - createIndex:
-            indexName: idx_SharedRepo_from_email
-            tableName: SharedRepo
-            columns:
-              - column:
-                  name: from_email
-        - createIndex:
-            indexName: idx_SharedRepo_to_email
-            tableName: SharedRepo
-            columns:
-              - column:
-                  name: to_email
+- changeSet:
+    id: V040_SharedRepo
+    author: seafile
+    changes:
+    - addColumn:
+        tableName: sharedrepo
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `from_email` varchar(255)
+    - modifyDataType:
+        tableName: sharedrepo
+        columnName: from_email
+        newDataType: varchar(255)
+        dbms: postgresql
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `to_email` varchar(255)
+    - modifyDataType:
+        tableName: sharedrepo
+        columnName: to_email
+        newDataType: varchar(255)
+        dbms: postgresql
+    - createIndex:
+        indexName: idx_SharedRepo_from_email
+        tableName: sharedrepo
+        columns:
+        - column:
+            name: from_email
+    - createIndex:
+        indexName: idx_SharedRepo_to_email
+        tableName: sharedrepo
+        columns:
+        - column:
+            name: to_email
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: sharedrepo
+          columnName: id

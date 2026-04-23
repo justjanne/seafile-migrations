@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: v070-update-userrole-manual-set
+      author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not: { columnExists: { tableName: userrole, columnName: is_manual_set } }
+      changes:
+        - addColumn:
+            tableName: userrole
+            columns:
+              - column: { name: is_manual_set, type: int, defaultValueNumeric: 0 }

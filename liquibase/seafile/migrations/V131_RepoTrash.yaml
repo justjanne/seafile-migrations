@@ -1,17 +1,22 @@
 databaseChangeLog:
-  - changeSet:
-      id: V131_RepoTrash
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          dbms:
-            type: postgresql
-      changes:
-        - renameIndex:
-            indexName: repotrash_owner_id
-            newIndexName: idx_repotrash_owner_id
-            tableName: RepoTrash
-        - renameIndex:
-            indexName: repotrash_org_id
-            newIndexName: idx_repotrash_org_id
-            tableName: RepoTrash
+- changeSet:
+    id: V131_RepoTrash
+    author: seafile
+    preConditions:
+    - onFail: MARK_RAN
+      dbms:
+        type: postgresql
+    changes:
+    - dropIndex:
+        tableName: repotrash
+        indexName: repotrash_owner_id
+    - createIndex:
+        tableName: repotrash
+        indexName: idx_repotrash_owner_id
+        columns:
+        - column:
+            name: owner_id
+    - dropIndex:
+        tableName: repotrash
+        indexName: repotrash_org_id
+    failOnError: false

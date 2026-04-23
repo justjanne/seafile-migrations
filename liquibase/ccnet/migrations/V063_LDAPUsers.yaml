@@ -1,9 +1,13 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_LDAPUsers
-      author: seafile
-      changes:
-        - modifyDataType:
-            tableName: LDAPUsers
-            columnName: id
-            newDataType: bigint
+- changeSet:
+    id: V063_LDAPUsers
+    author: seafile
+    changes:
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `ldapusers` MODIFY COLUMN `id` bigint NOT NULL AUTO_INCREMENT
+    - modifyDataType:
+        tableName: ldapusers
+        columnName: id
+        newDataType: bigint
+        dbms: postgresql

@@ -1,17 +1,22 @@
 databaseChangeLog:
-  - changeSet:
-      id: V014_RepoValidSince
-      author: seafile
-      changes:
-        - createTable:
-            tableName: RepoValidSince
-            columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: timestamp
-                  type: bigint
+- changeSet:
+    id: V014_RepoValidSince
+    author: seafile
+    changes:
+    - createTable:
+        tableName: repovalidsince
+        columns:
+        - column:
+            name: repo_id
+            type: char(37)
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: timestamp
+            type: bigint
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: repovalidsince

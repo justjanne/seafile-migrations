@@ -1,29 +1,34 @@
 databaseChangeLog:
-  - changeSet:
-      id: V018_VirtualRepo
-      author: seafile
-      changes:
-        - createTable:
-            tableName: VirtualRepo
-            columns:
-              - column:
-                  name: repo_id
-                  type: char(36)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: origin_repo
-                  type: char(36)
-              - column:
-                  name: path
-                  type: text
-              - column:
-                  name: base_commit
-                  type: char(40)
-        - createIndex:
-            columns:
-              - column:
-                  name: origin_repo
-            indexName: virtualrepo_origin_repo_idx
-            tableName: VirtualRepo
+- changeSet:
+    id: V018_VirtualRepo
+    author: seafile
+    changes:
+    - createTable:
+        tableName: virtualrepo
+        columns:
+        - column:
+            name: repo_id
+            type: char(36)
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: origin_repo
+            type: char(36)
+        - column:
+            name: path
+            type: text
+        - column:
+            name: base_commit
+            type: char(40)
+    - createIndex:
+        columns:
+        - column:
+            name: origin_repo
+        indexName: virtualrepo_origin_repo_idx
+        tableName: virtualrepo
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: virtualrepo

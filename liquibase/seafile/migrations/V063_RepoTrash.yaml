@@ -1,28 +1,39 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_RepoTrash
-      author: seafile
-      changes:
-        - dropPrimaryKey:
-            tableName: RepoTrash
-        - addColumn:
-            tableName: RepoTrash
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-        - modifyDataType:
-            tableName: RepoTrash
-            columnName: repo_id
-            newDataType: CHAR(36)
-        - dropNotNullConstraint:
-            tableName: RepoTrash
-            columnName: repo_id
-            columnDataType: CHAR(36)
-        - addUniqueConstraint:
-            tableName: RepoTrash
-            columnNames: repo_id
-            constraintName: UK_RepoTrash_repo_id
+- changeSet:
+    id: V063_RepoTrash
+    author: seafile
+    changes:
+    - dropPrimaryKey:
+        tableName: repotrash
+    - addColumn:
+        tableName: repotrash
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `repotrash` MODIFY COLUMN `repo_id` CHAR(36)
+    - modifyDataType:
+        tableName: repotrash
+        columnName: repo_id
+        newDataType: CHAR(36)
+        dbms: postgresql
+    - dropNotNullConstraint:
+        tableName: repotrash
+        columnName: repo_id
+        columnDataType: CHAR(36)
+    - addUniqueConstraint:
+        tableName: repotrash
+        columnNames: repo_id
+        constraintName: UK_RepoTrash_repo_id
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: repotrash
+          columnName: id
+    failOnError: false

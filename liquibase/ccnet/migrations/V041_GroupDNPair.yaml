@@ -1,14 +1,19 @@
 databaseChangeLog:
-  - changeSet:
-      id: V041_GroupDNPair
-      author: seafile
-      changes:
-        - createTable:
-            tableName: GroupDNPair
-            columns:
-              - column:
-                  name: group_id
-                  type: int
-              - column:
-                  name: dn
-                  type: varchar(255)
+- changeSet:
+    id: V041_GroupDNPair
+    author: seafile
+    changes:
+    - createTable:
+        tableName: groupdnpair
+        columns:
+        - column:
+            name: group_id
+            type: int
+        - column:
+            name: dn
+            type: varchar(255)
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: groupdnpair

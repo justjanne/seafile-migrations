@@ -1,27 +1,40 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_OrgUser
-      author: seafile
-      changes:
-        - dropPrimaryKey:
-            tableName: OrgUser
-            dbms: mysql
-        - addColumn:
-            tableName: OrgUser
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-        - addUniqueConstraint:
-            tableName: OrgUser
-            columnNames: org_id, email
-            dbms: mysql
-        - renameIndex:
-            tableName: OrgUser
-            oldIndexName: orguser_email_idx
-            newIndexName: idx_orguser_email
-            dbms: postgresql
+- changeSet:
+    id: V063_OrgUser
+    author: seafile
+    changes:
+    - dropPrimaryKey:
+        tableName: orguser
+        dbms: mysql
+    - addColumn:
+        tableName: orguser
+        columns:
+        - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+    - addUniqueConstraint:
+        tableName: orguser
+        columnNames: org_id, email
+        dbms: mysql
+    - dropIndex:
+        tableName: orguser
+        indexName: orguser_email_idx
+      dbms: postgresql
+    - createIndex:
+        tableName: orguser
+        indexName: idx_orguser_email
+        columns:
+        - column:
+            name: email
+      dbms: postgresql
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: orguser
+          columnName: id
+    failOnError: false

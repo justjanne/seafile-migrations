@@ -1,15 +1,16 @@
 databaseChangeLog:
-  - changeSet:
-      id: V131_UserRole
-      author: seafile
-      dbms: postgresql
-      changes:
-        - dropUniqueConstraint:
-            tableName: UserRole
-            constraintName: userrole_email_role_key
-        - dropIndex:
-            tableName: UserRole
-            indexName: userrole_email_idx
-        - addUniqueConstraint:
-            tableName: UserRole
-            columnNames: email
+- changeSet:
+    id: V131_UserRole
+    author: seafile
+    dbms: postgresql
+    changes:
+    - dropUniqueConstraint:
+        tableName: userrole
+        constraintName: userrole_email_role_key
+    - dropIndex:
+        tableName: userrole
+        indexName: userrole_email_idx
+    - addUniqueConstraint:
+        tableName: userrole
+        columnNames: email
+    failOnError: false

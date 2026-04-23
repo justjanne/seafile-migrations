@@ -1,26 +1,40 @@
 databaseChangeLog:
-  - changeSet:
-      id: V013_GroupUser
-      author: seafile
-      changes:
-        - createTable:
-            tableName: GroupUser
-            columns:
-              - column:
-                  name: group_id
-                  type: int
-              - column:
-                  name: user_name
-                  type: varchar(255)
-              - column:
-                  name: is_staff
-                  type: boolean
-        - addUniqueConstraint:
-            columnNames: group_id, user_name
-            tableName: GroupUser
-        - createIndex:
-            indexName: groupuser_username_idx
-            tableName: GroupUser
-            columns:
-              - column:
-                  name: user_name
+- changeSet:
+    id: normalize-groupuser
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: GroupUser
+        newTableName: groupuser
+- changeSet:
+    id: V013_GroupUser
+    author: seafile
+    changes:
+    - createTable:
+        tableName: groupuser
+        columns:
+        - column:
+            name: group_id
+            type: int
+        - column:
+            name: user_name
+            type: varchar(255)
+        - column:
+            name: is_staff
+            type: boolean
+    - addUniqueConstraint:
+        columnNames: group_id, user_name
+        tableName: groupuser
+    - createIndex:
+        indexName: groupuser_username_idx
+        tableName: groupuser
+        columns:
+        - column:
+            name: user_name
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: groupuser

@@ -1,0 +1,59 @@
+databaseChangeLog:
+  - changeSet:
+      id: v041-update-group-type
+      author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not: { columnExists: { tableName: "Group", columnName: type } }
+      changes:
+        - addColumn:
+            tableName: "Group"
+            columns:
+              - column: { name: type, type: varchar(32) }
+
+  - changeSet:
+      id: v041-normalize-ldapusers
+      author: seafile
+      failOnError: false
+      dbms: mysql,mariadb
+      changes:
+        - renameTable: { oldTableName: LDAPUsers, newTableName: ldapusers }
+
+  - changeSet:
+      id: v041-create-ldapusers
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not: { tableExists: { tableName: ldapusers } }
+      changes:
+        - createTable:
+            tableName: ldapusers
+            columns:
+              - column: { name: id, type: int, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: email, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: password, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: is_staff, type: boolean, constraints: { nullable: false } }
+              - column: { name: is_active, type: boolean, constraints: { nullable: false } }
+              - column: { name: extra_attrs, type: text }
+        - createIndex: { indexName: idx_ldapusers_email, tableName: ldapusers, columns: [ { name: email } ] }
+
+  - changeSet:
+      id: v041-normalize-groupdnpair
+      author: seafile
+      failOnError: false
+      dbms: mysql,mariadb
+      changes:
+        - renameTable: { oldTableName: GroupDNPair, newTableName: groupdnpair }
+
+  - changeSet:
+      id: v041-create-groupdnpair
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not: { tableExists: { tableName: groupdnpair } }
+      changes:
+        - createTable:
+            tableName: groupdnpair
+            columns:
+              - column: { name: group_id, type: int }
+              - column: { name: dn, type: varchar(255) }

@@ -1,29 +1,40 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_RepoOwner
-      author: seafile
-      changes:
-        - dropPrimaryKey:
-            tableName: RepoOwner
-            constraintName: RepoOwner_pkey
-        - addColumn:
-            tableName: RepoOwner
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    primaryKeyName: RepoOwner_pkey
-        - modifyDataType:
-            tableName: RepoOwner
-            columnName: repo_id
-            newDataType: CHAR(37)
-        - dropDefaultValue:
-            tableName: RepoOwner
-            columnName: repo_id
-        - addUniqueConstraint:
-            tableName: RepoOwner
-            columnNames: repo_id
-            constraintName: RepoOwner_repo_id_uq
+- changeSet:
+    id: V063_RepoOwner
+    author: seafile
+    changes:
+    - dropPrimaryKey:
+        tableName: repoowner
+        constraintName: RepoOwner_pkey
+    - addColumn:
+        tableName: repoowner
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              primaryKeyName: RepoOwner_pkey
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `repoowner` MODIFY COLUMN `repo_id` CHAR(37)
+    - modifyDataType:
+        tableName: repoowner
+        columnName: repo_id
+        newDataType: CHAR(37)
+        dbms: postgresql
+    - dropDefaultValue:
+        tableName: repoowner
+        columnName: repo_id
+    - addUniqueConstraint:
+        tableName: repoowner
+        columnNames: repo_id
+        constraintName: RepoOwner_repo_id_uq
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: repoowner
+          columnName: id
+    failOnError: false

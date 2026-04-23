@@ -1,36 +1,50 @@
 databaseChangeLog:
-  - changeSet:
-      id: V013_RepoGroup
-      author: seafile
-      changes:
-        - createTable:
-            tableName: RepoGroup
-            columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-              - column:
-                  name: group_id
-                  type: int
-              - column:
-                  name: user_name
-                  type: varchar(255)
-              - column:
-                  name: permission
-                  type: char(15)
-        - addUniqueConstraint:
-            tableName: RepoGroup
-            columnNames: group_id, repo_id
-            constraintName: repogroup_group_id_repo_id_key
-        - createIndex:
-            tableName: RepoGroup
-            indexName: repogroup_repo_id_idx
-            columns:
-              - column:
-                  name: repo_id
-        - createIndex:
-            tableName: RepoGroup
-            indexName: repogroup_user_name_idx
-            columns:
-              - column:
-                  name: user_name
+- changeSet:
+    id: normalize-repogroup
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: RepoGroup
+        newTableName: repogroup
+- changeSet:
+    id: V013_RepoGroup
+    author: seafile
+    changes:
+    - createTable:
+        tableName: repogroup
+        columns:
+        - column:
+            name: repo_id
+            type: char(37)
+        - column:
+            name: group_id
+            type: int
+        - column:
+            name: user_name
+            type: varchar(255)
+        - column:
+            name: permission
+            type: char(15)
+    - addUniqueConstraint:
+        tableName: repogroup
+        columnNames: group_id, repo_id
+        constraintName: repogroup_group_id_repo_id_key
+    - createIndex:
+        tableName: repogroup
+        indexName: repogroup_repo_id_idx
+        columns:
+        - column:
+            name: repo_id
+    - createIndex:
+        tableName: repogroup
+        indexName: repogroup_user_name_idx
+        columns:
+        - column:
+            name: user_name
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: repogroup

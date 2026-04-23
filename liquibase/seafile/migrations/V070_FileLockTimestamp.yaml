@@ -1,24 +1,29 @@
 databaseChangeLog:
-  - changeSet:
-      id: v070-filelocktimestamp
-      author: seafile
-      changes:
-        - createTable:
-            tableName: FileLockTimestamp
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: repo_id
-                  type: char(40)
-                  constraints:
-                    unique: true
-              - column:
-                  name: update_time
-                  type: bigint
-                  constraints:
-                    nullable: false
+- changeSet:
+    id: v070-filelocktimestamp
+    author: seafile
+    changes:
+    - createTable:
+        tableName: filelocktimestamp
+        columns:
+        - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+        - column:
+            name: repo_id
+            type: char(40)
+            constraints:
+              unique: true
+        - column:
+            name: update_time
+            type: bigint
+            constraints:
+              nullable: false
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: filelocktimestamp

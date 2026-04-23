@@ -1,29 +1,40 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_RepoHead
-      author: seafile
-      changes:
-        - dropPrimaryKey:
-            tableName: RepoHead
-            constraintName: RepoHead_pkey
-        - addColumn:
-            tableName: RepoHead
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    primaryKeyName: RepoHead_pkey
-        - modifyDataType:
-            tableName: RepoHead
-            columnName: repo_id
-            newDataType: CHAR(37)
-        - dropDefaultValue:
-            tableName: RepoHead
-            columnName: repo_id
-        - addUniqueConstraint:
-            tableName: RepoHead
-            columnNames: repo_id
-            constraintName: RepoHead_repo_id_uq
+- changeSet:
+    id: V063_RepoHead
+    author: seafile
+    changes:
+    - dropPrimaryKey:
+        tableName: repohead
+        constraintName: RepoHead_pkey
+    - addColumn:
+        tableName: repohead
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              primaryKeyName: RepoHead_pkey
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `repohead` MODIFY COLUMN `repo_id` CHAR(37)
+    - modifyDataType:
+        tableName: repohead
+        columnName: repo_id
+        newDataType: CHAR(37)
+        dbms: postgresql
+    - dropDefaultValue:
+        tableName: repohead
+        columnName: repo_id
+    - addUniqueConstraint:
+        tableName: repohead
+        columnNames: repo_id
+        constraintName: RepoHead_repo_id_uq
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: repohead
+          columnName: id
+    failOnError: false

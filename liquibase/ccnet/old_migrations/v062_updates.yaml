@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: v062-update-emailuser-reference-id
+      author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not: { columnExists: { tableName: emailuser, columnName: reference_id } }
+      changes:
+        - addColumn:
+            tableName: emailuser
+            columns:
+              - column: { name: reference_id, type: varchar(255), constraints: { unique: true } }
+
+  - changeSet:
+      id: v062-normalize-ldapconfig
+      author: seafile
+      failOnError: false
+      dbms: mysql,mariadb
+      changes:
+        - renameTable: { oldTableName: LDAPConfig, newTableName: ldapconfig }
+
+  - changeSet:
+      id: v062-create-ldapconfig
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not: { tableExists: { tableName: ldapconfig } }
+      changes:
+        - createTable:
+            tableName: ldapconfig
+            columns:
+              - column: { name: cfg_group, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: cfg_key, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: value, type: varchar(255) }
+              - column: { name: property, type: int }
+
+  - changeSet:
+      id: v062-update-ldapusers-reference-id
+      author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          not: { columnExists: { tableName: ldapusers, columnName: reference_id } }
+      changes:
+        - addColumn:
+            tableName: ldapusers
+            columns:
+              - column: { name: reference_id, type: varchar(255), constraints: { unique: true } }

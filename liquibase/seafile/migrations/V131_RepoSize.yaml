@@ -1,13 +1,17 @@
 databaseChangeLog:
-  - changeSet:
-      id: V131_RepoSize
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          dbms:
-            type: postgresql
-      changes:
-        - modifyDataType:
-            tableName: RepoSize
-            columnName: head_id
-            newDataType: CHAR(41)
+- changeSet:
+    id: V131_RepoSize
+    author: seafile
+    preConditions:
+    - onFail: MARK_RAN
+      dbms:
+        type: postgresql
+    changes:
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `reposize` MODIFY COLUMN `head_id` CHAR(41)
+    - modifyDataType:
+        tableName: reposize
+        columnName: head_id
+        newDataType: CHAR(41)
+        dbms: postgresql

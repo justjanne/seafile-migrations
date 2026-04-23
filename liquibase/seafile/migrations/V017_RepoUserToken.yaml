@@ -1,11 +1,11 @@
 databaseChangeLog:
-  - changeSet:
-      id: V017_RepoUserToken
-      author: seafile
-      changes:
-        - createIndex:
-            columns:
-              - column:
-                  name: email
-            indexName: repousertoken_email_idx
-            tableName: RepoUserToken
+- changeSet:
+    id: V017_RepoUserToken
+    author: seafile
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: email
+        indexName: repousertoken_email_idx
+        tableName: repousertoken

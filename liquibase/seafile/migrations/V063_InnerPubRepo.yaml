@@ -1,29 +1,40 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_InnerPubRepo
-      author: seafile
-      changes:
-        - dropPrimaryKey:
-            dbms: postgresql
-            tableName: InnerPubRepo
-            constraintName: innerpubrepo_pkey
-        - dropPrimaryKey:
-            dbms: mysql
-            tableName: InnerPubRepo
-        - addColumn:
-            tableName: InnerPubRepo
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-        - addUniqueConstraint:
-            tableName: InnerPubRepo
-            columnNames: repo_id
-        - modifyDataType:
-            tableName: InnerPubRepo
-            columnName: repo_id
-            newDataType: char(37)
+- changeSet:
+    id: V063_InnerPubRepo
+    author: seafile
+    changes:
+    - dropPrimaryKey:
+        dbms: postgresql
+        tableName: innerpubrepo
+        constraintName: innerpubrepo_pkey
+    - dropPrimaryKey:
+        dbms: mysql
+        tableName: innerpubrepo
+    - addColumn:
+        tableName: innerpubrepo
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+    - addUniqueConstraint:
+        tableName: innerpubrepo
+        columnNames: repo_id
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `innerpubrepo` MODIFY COLUMN `repo_id` char(37)
+    - modifyDataType:
+        tableName: innerpubrepo
+        columnName: repo_id
+        newDataType: char(37)
+        dbms: postgresql
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: innerpubrepo
+          columnName: id
+    failOnError: false

@@ -1,28 +1,39 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_UserShareQuota
-      author: seafile
-      changes:
-        - dropPrimaryKey:
-            tableName: UserShareQuota
-        - addColumn:
-            tableName: UserShareQuota
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-        - modifyDataType:
-            tableName: UserShareQuota
-            columnName: user
-            newDataType: VARCHAR(255)
-        - dropNotNullConstraint:
-            tableName: UserShareQuota
-            columnName: user
-            columnDataType: VARCHAR(255)
-        - addUniqueConstraint:
-            tableName: UserShareQuota
-            columnNames: user
-            constraintName: UK_UserShareQuota_user
+- changeSet:
+    id: V063_UserShareQuota
+    author: seafile
+    changes:
+    - dropPrimaryKey:
+        tableName: usersharequota
+    - addColumn:
+        tableName: usersharequota
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `usersharequota` MODIFY COLUMN `user` VARCHAR(255)
+    - modifyDataType:
+        tableName: usersharequota
+        columnName: user
+        newDataType: VARCHAR(255)
+        dbms: postgresql
+    - dropNotNullConstraint:
+        tableName: usersharequota
+        columnName: user
+        columnDataType: VARCHAR(255)
+    - addUniqueConstraint:
+        tableName: usersharequota
+        columnNames: user
+        constraintName: UK_UserShareQuota_user
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: usersharequota
+          columnName: id
+    failOnError: false

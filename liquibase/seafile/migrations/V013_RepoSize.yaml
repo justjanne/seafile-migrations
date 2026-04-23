@@ -1,20 +1,34 @@
 databaseChangeLog:
-  - changeSet:
-      id: V013_RepoSize
-      author: seafile
-      changes:
-        - createTable:
-            tableName: RepoSize
-            columns:
-              - column:
-                  name: repo_id
-                  type: char(37)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: size
-                  type: bigint
-              - column:
-                  name: head_id
-                  type: char(41)
+- changeSet:
+    id: normalize-reposize
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: RepoSize
+        newTableName: reposize
+- changeSet:
+    id: V013_RepoSize
+    author: seafile
+    changes:
+    - createTable:
+        tableName: reposize
+        columns:
+        - column:
+            name: repo_id
+            type: char(37)
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: size
+            type: bigint
+        - column:
+            name: head_id
+            type: char(41)
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: reposize

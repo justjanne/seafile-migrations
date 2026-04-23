@@ -1,24 +1,29 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_GroupStructure
-      author: seafile
-      changes:
-        - createTable:
-            tableName: GroupStructure
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: group_id
-                  type: int
-                  constraints:
-                    unique: true
-                    nullable: false
-              - column:
-                  name: path
-                  type: varchar(1024)
+- changeSet:
+    id: V063_GroupStructure
+    author: seafile
+    changes:
+    - createTable:
+        tableName: groupstructure
+        columns:
+        - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: group_id
+            type: int
+            constraints:
+              unique: true
+              nullable: false
+        - column:
+            name: path
+            type: varchar(1024)
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: groupstructure

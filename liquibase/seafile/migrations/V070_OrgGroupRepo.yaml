@@ -1,45 +1,50 @@
 databaseChangeLog:
-  - changeSet:
-      id: v070-orggrouprepo
-      author: seafile
-      changes:
-        - createTable:
-            tableName: OrgGroupRepo
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: org_id
-                  type: int
-              - column:
-                  name: repo_id
-                  type: char(37)
-              - column:
-                  name: group_id
-                  type: int
-              - column:
-                  name: owner
-                  type: varchar(255)
-              - column:
-                  name: permission
-                  type: char(15)
-        - addUniqueConstraint:
-            tableName: OrgGroupRepo
-            columnNames: org_id, group_id, repo_id
-            constraintName: uk_orggrouprepo_org_group_repo
-        - createIndex:
-            tableName: OrgGroupRepo
-            indexName: idx_orggrouprepo_repo_id
-            columns:
-              - column:
-                  name: repo_id
-        - createIndex:
-            tableName: OrgGroupRepo
-            indexName: idx_orggrouprepo_owner
-            columns:
-              - column:
-                  name: owner
+- changeSet:
+    id: v070-orggrouprepo
+    author: seafile
+    changes:
+    - createTable:
+        tableName: orggrouprepo
+        columns:
+        - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+        - column:
+            name: org_id
+            type: int
+        - column:
+            name: repo_id
+            type: char(37)
+        - column:
+            name: group_id
+            type: int
+        - column:
+            name: owner
+            type: varchar(255)
+        - column:
+            name: permission
+            type: char(15)
+    - addUniqueConstraint:
+        tableName: orggrouprepo
+        columnNames: org_id, group_id, repo_id
+        constraintName: uk_orggrouprepo_org_group_repo
+    - createIndex:
+        tableName: orggrouprepo
+        indexName: idx_orggrouprepo_repo_id
+        columns:
+        - column:
+            name: repo_id
+    - createIndex:
+        tableName: orggrouprepo
+        indexName: idx_orggrouprepo_owner
+        columns:
+        - column:
+            name: owner
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: orggrouprepo

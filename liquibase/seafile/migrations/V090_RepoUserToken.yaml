@@ -1,11 +1,11 @@
 databaseChangeLog:
-  - changeSet:
-      id: V090_RepoUserToken
-      author: seafile
-      changes:
-        - createIndex:
-            tableName: RepoUserToken
-            indexName: idx_repousertoken_token
-            columns:
-              - column:
-                  name: token
+- changeSet:
+    id: V090_RepoUserToken
+    author: seafile
+    changes:
+    - createIndex:
+        tableName: repousertoken
+        indexName: idx_repousertoken_token
+        columns:
+        - column:
+            name: token

@@ -1,12 +1,18 @@
 databaseChangeLog:
-  - changeSet:
-      id: V070_RepoInfo
-      author: seafile
-      changes:
-        - addColumn:
-            tableName: RepoInfo
-            columns:
-              - column:
-                  name: status
-                  type: INT
-                  defaultValueNumeric: 0
+- changeSet:
+    id: V070_RepoInfo
+    author: seafile
+    changes:
+    - addColumn:
+        tableName: repoinfo
+        columns:
+        - column:
+            name: status
+            type: INT
+            defaultValueNumeric: 0
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: repoinfo
+          columnName: status

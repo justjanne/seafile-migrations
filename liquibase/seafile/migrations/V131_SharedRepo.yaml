@@ -1,29 +1,53 @@
 databaseChangeLog:
-  - changeSet:
-      id: V131_SharedRepo
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          dbms:
-            type: postgresql
-      changes:
-        - modifyDataType:
-            tableName: SharedRepo
-            columnName: repo_id
-            newDataType: CHAR(37)
-        - modifyDataType:
-            tableName: SharedRepo
-            columnName: permission
-            newDataType: CHAR(15)
-        - renameIndex:
-            indexName: sharedrepo_repoid_idx
-            newIndexName: idx_sharedrepo_repo_id
-            tableName: SharedRepo
-        - renameIndex:
-            indexName: sharedrepo_from_email_idx
-            newIndexName: idx_sharedrepo_from_email
-            tableName: SharedRepo
-        - renameIndex:
-            indexName: sharedrepo_to_email_idx
-            newIndexName: idx_sharedrepo_to_email
-            tableName: SharedRepo
+- changeSet:
+    id: V131_SharedRepo
+    author: seafile
+    preConditions:
+    - onFail: MARK_RAN
+      dbms:
+        type: postgresql
+    changes:
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `repo_id` CHAR(37)
+    - modifyDataType:
+        tableName: sharedrepo
+        columnName: repo_id
+        newDataType: CHAR(37)
+        dbms: postgresql
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `permission` CHAR(15)
+    - modifyDataType:
+        tableName: sharedrepo
+        columnName: permission
+        newDataType: CHAR(15)
+        dbms: postgresql
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_repoid_idx
+    - createIndex:
+        tableName: sharedrepo
+        indexName: idx_sharedrepo_repo_id
+        columns:
+        - column:
+            name: repo_id
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_from_email_idx
+    - createIndex:
+        tableName: sharedrepo
+        indexName: idx_sharedrepo_from_email
+        columns:
+        - column:
+            name: from_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_to_email_idx
+    - createIndex:
+        tableName: sharedrepo
+        indexName: idx_sharedrepo_to_email
+        columns:
+        - column:
+            name: to_email
+    failOnError: false

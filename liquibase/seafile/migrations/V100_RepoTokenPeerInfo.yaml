@@ -1,9 +1,13 @@
 databaseChangeLog:
-  - changeSet:
-      id: V100_RepoTokenPeerInfo
-      author: seafile
-      changes:
-        - modifyDataType:
-            tableName: RepoTokenPeerInfo
-            columnName: peer_ip
-            newDataType: varchar(50)
+- changeSet:
+    id: V100_RepoTokenPeerInfo
+    author: seafile
+    changes:
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `repotokenpeerinfo` MODIFY COLUMN `peer_ip` varchar(50)
+    - modifyDataType:
+        tableName: repotokenpeerinfo
+        columnName: peer_ip
+        newDataType: varchar(50)
+        dbms: postgresql

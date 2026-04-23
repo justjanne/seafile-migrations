@@ -1,23 +1,37 @@
 databaseChangeLog:
-  - changeSet:
-      id: V013_OrgGroup
-      author: seafile
-      changes:
-        - createTable:
-            tableName: OrgGroup
-            columns:
-              - column:
-                  name: org_id
-                  type: int
-              - column:
-                  name: group_id
-                  type: int
-        - addUniqueConstraint:
-            columnNames: org_id, group_id
-            tableName: OrgGroup
-        - createIndex:
-            indexName: orggroup_groupid_idx
-            tableName: OrgGroup
-            columns:
-              - column:
-                  name: group_id
+- changeSet:
+    id: normalize-orggroup
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: OrgGroup
+        newTableName: orggroup
+- changeSet:
+    id: V013_OrgGroup
+    author: seafile
+    changes:
+    - createTable:
+        tableName: orggroup
+        columns:
+        - column:
+            name: org_id
+            type: int
+        - column:
+            name: group_id
+            type: int
+    - addUniqueConstraint:
+        columnNames: org_id, group_id
+        tableName: orggroup
+    - createIndex:
+        indexName: orggroup_groupid_idx
+        tableName: orggroup
+        columns:
+        - column:
+            name: group_id
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: orggroup

@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: v090-update-repotokenpeerinfo-indices
+      author: seafile
+      preConditions: [ { onFail: CONTINUE, not: { indexExists: { indexName: idx_repotokenpeerinfo_peer_id, tableName: repotokenpeerinfo } } } ]
+      changes:
+        - createIndex: { indexName: idx_repotokenpeerinfo_peer_id, tableName: repotokenpeerinfo, columns: [ { name: peer_id } ] }
+
+  - changeSet:
+      id: v090-update-repousertoken-indices
+      author: seafile
+      preConditions: [ { onFail: CONTINUE, not: { indexExists: { indexName: idx_repousertoken_token, tableName: repousertoken } } } ]
+      changes:
+        - createIndex: { indexName: idx_repousertoken_token, tableName: repousertoken, columns: [ { name: token } ] }

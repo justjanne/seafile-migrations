@@ -1,26 +1,32 @@
 databaseChangeLog:
-  - changeSet:
-      id: V130_EmailUser
-      author: seafile
-      changes:
-        - addColumn:
-            tableName: EmailUser
-            columns:
-              - column:
-                  name: is_department_owner
-                  type: boolean
-                  defaultValue: false
-                  constraints:
-                    nullable: false
-        - createIndex:
-            indexName: idx_emailuser_is_active
-            tableName: EmailUser
-            columns:
-              - column:
-                  name: is_active
-        - createIndex:
-            indexName: idx_emailuser_is_department_owner
-            tableName: EmailUser
-            columns:
-              - column:
-                  name: is_department_owner
+- changeSet:
+    id: V130_EmailUser
+    author: seafile
+    changes:
+    - addColumn:
+        tableName: emailuser
+        columns:
+        - column:
+            name: is_department_owner
+            type: boolean
+            defaultValue: false
+            constraints:
+              nullable: false
+    - createIndex:
+        indexName: idx_emailuser_is_active
+        tableName: emailuser
+        columns:
+        - column:
+            name: is_active
+    - createIndex:
+        indexName: idx_emailuser_is_department_owner
+        tableName: emailuser
+        columns:
+        - column:
+            name: is_department_owner
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: emailuser
+          columnName: is_department_owner

@@ -1,23 +1,37 @@
 databaseChangeLog:
-  - changeSet:
-      id: V013_OrgUserQuota
-      author: seafile
-      changes:
-        - createTable:
-            tableName: OrgUserQuota
-            columns:
-              - column:
-                  name: org_id
-                  type: int
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: user
-                  type: varchar(255)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: quota
-                  type: bigint
+- changeSet:
+    id: normalize-orguserquota
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
+        oldTableName: OrgUserQuota
+        newTableName: orguserquota
+- changeSet:
+    id: V013_OrgUserQuota
+    author: seafile
+    changes:
+    - createTable:
+        tableName: orguserquota
+        columns:
+        - column:
+            name: org_id
+            type: int
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: user
+            type: varchar(255)
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: quota
+            type: bigint
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: orguserquota

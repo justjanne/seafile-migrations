@@ -1,9 +1,13 @@
 databaseChangeLog:
-  - changeSet:
-      id: V018_EmailUser
-      author: seafile
-      changes:
-        - modifyDataType:
-            tableName: EmailUser
-            columnName: passwd
-            newDataType: char(64)
+- changeSet:
+    id: V018_EmailUser
+    author: seafile
+    changes:
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `emailuser` MODIFY COLUMN `passwd` char(64)
+    - modifyDataType:
+        tableName: emailuser
+        columnName: passwd
+        newDataType: char(64)
+        dbms: postgresql

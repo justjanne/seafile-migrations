@@ -1,15 +1,21 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_GroupDNPair
-      author: seafile
-      changes:
-        - addColumn:
-            tableName: GroupDNPair
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+- changeSet:
+    id: V063_GroupDNPair
+    author: seafile
+    changes:
+    - addColumn:
+        tableName: groupdnpair
+        columns:
+        - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: groupdnpair
+          columnName: id

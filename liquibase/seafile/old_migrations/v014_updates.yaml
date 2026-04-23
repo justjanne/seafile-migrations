@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: v014-normalize-repohistorylimit
+      author: seafile
+      failOnError: false
+      dbms: mysql,mariadb
+      changes:
+        - renameTable:
+            oldTableName: RepoHistoryLimit
+            newTableName: repohistorylimit
+  - changeSet:
+      id: v014-create-repohistorylimit
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: repohistorylimit
+      changes:
+        - createTable:
+            tableName: repohistorylimit
+            columns:
+              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: days, type: int }
+
+  - changeSet:
+      id: v014-normalize-repovalidsince
+      author: seafile
+      failOnError: false
+      dbms: mysql,mariadb
+      changes:
+        - renameTable:
+            oldTableName: RepoValidSince
+            newTableName: repovalidsince
+  - changeSet:
+      id: v014-create-repovalidsince
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: repovalidsince
+      changes:
+        - createTable:
+            tableName: repovalidsince
+            columns:
+              - column: { name: repo_id, type: char(37), constraints: { primaryKey: true, nullable: false } }
+              - column: { name: timestamp, type: bigint }

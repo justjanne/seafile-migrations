@@ -1,22 +1,27 @@
 databaseChangeLog:
-  - changeSet:
-      id: v070-folderpermtimestamp
-      author: seafile
-      changes:
-        - createTable:
-            tableName: FolderPermTimestamp
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: repo_id
-                  type: char(36)
-                  constraints:
-                    unique: true
-              - column:
-                  name: timestamp
-                  type: bigint
+- changeSet:
+    id: v070-folderpermtimestamp
+    author: seafile
+    changes:
+    - createTable:
+        tableName: folderpermtimestamp
+        columns:
+        - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+        - column:
+            name: repo_id
+            type: char(36)
+            constraints:
+              unique: true
+        - column:
+            name: timestamp
+            type: bigint
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: folderpermtimestamp

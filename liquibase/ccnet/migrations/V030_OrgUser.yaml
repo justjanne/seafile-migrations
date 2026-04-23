@@ -1,17 +1,17 @@
 databaseChangeLog:
-  - changeSet:
-      id: V030_OrgUser
-      author: seafile
-      dbms: mysql
-      changes:
-        - addPrimaryKey:
-            tableName: OrgUser
-            columnNames: org_id, email
-        - addNotNullConstraint:
-            tableName: OrgUser
-            columnName: org_id
-            columnDataType: int
-        - addNotNullConstraint:
-            tableName: OrgUser
-            columnName: email
-            columnDataType: varchar(255)
+- changeSet:
+    id: V030_OrgUser
+    author: seafile
+    dbms: mysql
+    changes:
+    - addPrimaryKey:
+        tableName: orguser
+        columnNames: org_id, email
+    - addNotNullConstraint:
+        tableName: orguser
+        columnName: org_id
+        columnDataType: int
+    - addNotNullConstraint:
+        tableName: orguser
+        columnName: email
+        columnDataType: varchar(255)

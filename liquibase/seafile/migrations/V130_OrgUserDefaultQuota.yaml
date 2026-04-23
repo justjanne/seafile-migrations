@@ -1,23 +1,28 @@
 databaseChangeLog:
-  - changeSet:
-      id: V130_OrgUserDefaultQuota
-      author: seafile
-      changes:
-        - createTable:
-            tableName: OrgUserDefaultQuota
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: org_id
-                  type: int
-                  constraints:
-                    unique: true
-              - column:
-                  name: quota
-                  type: bigint
+- changeSet:
+    id: V130_OrgUserDefaultQuota
+    author: seafile
+    changes:
+    - createTable:
+        tableName: orguserdefaultquota
+        columns:
+        - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: org_id
+            type: int
+            constraints:
+              unique: true
+        - column:
+            name: quota
+            type: bigint
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: orguserdefaultquota

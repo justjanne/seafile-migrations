@@ -1,13 +1,19 @@
 databaseChangeLog:
-  - changeSet:
-      id: V131_VirtualRepo
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          dbms:
-            type: postgresql
-      changes:
-        - renameIndex:
-            indexName: virtualrepo_origin_repo_idx
-            newIndexName: idx_virtualrepo_origin_repo
-            tableName: VirtualRepo
+- changeSet:
+    id: V131_VirtualRepo
+    author: seafile
+    preConditions:
+    - onFail: MARK_RAN
+      dbms:
+        type: postgresql
+    changes:
+    - dropIndex:
+        tableName: virtualrepo
+        indexName: virtualrepo_origin_repo_idx
+    - createIndex:
+        tableName: virtualrepo
+        indexName: idx_virtualrepo_origin_repo
+        columns:
+        - column:
+            name: repo_id
+    failOnError: false

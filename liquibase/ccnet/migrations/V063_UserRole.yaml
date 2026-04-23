@@ -1,21 +1,30 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_UserRole
-      author: seafile
-      changes:
-        - modifyDataType:
-            tableName: UserRole
-            columnName: id
-            newDataType: bigint
-            dbms: mysql
-        - addColumn:
-            tableName: UserRole
-            dbms: postgresql
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+- changeSet:
+    id: V063_UserRole
+    author: seafile
+    changes:
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `userrole` MODIFY COLUMN `id` bigint NOT NULL AUTO_INCREMENT
+    - modifyDataType:
+        tableName: userrole
+        columnName: id
+        newDataType: bigint
+        dbms: postgresql
+    - addColumn:
+        tableName: userrole
+        dbms: postgresql
+        columns:
+        - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: userrole
+          columnName: id

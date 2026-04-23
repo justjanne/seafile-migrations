@@ -1,31 +1,48 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_GroupUser
-      author: seafile
-      changes:
-        - dropPrimaryKey:
-            tableName: GroupUser
-            dbms: mysql
-        - addColumn:
-            tableName: GroupUser
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-        - modifyDataType:
-            tableName: GroupUser
-            columnName: group_id
-            newDataType: bigint
-        - addUniqueConstraint:
-            tableName: GroupUser
-            columnNames: group_id, user_name
-            dbms: mysql
-        - renameIndex:
-            tableName: GroupUser
-            oldIndexName: groupuser_username_idx
-            newIndexName: idx_groupuser_user_name
-            dbms: postgresql
+- changeSet:
+    id: V063_GroupUser
+    author: seafile
+    changes:
+    - dropPrimaryKey:
+        tableName: groupuser
+        dbms: mysql
+    - addColumn:
+        tableName: groupuser
+        columns:
+        - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `groupuser` MODIFY COLUMN `group_id` bigint NOT NULL AUTO_INCREMENT
+    - modifyDataType:
+        tableName: groupuser
+        columnName: group_id
+        newDataType: bigint
+        dbms: postgresql
+    - addUniqueConstraint:
+        tableName: groupuser
+        columnNames: group_id, user_name
+        dbms: mysql
+    - dropIndex:
+        tableName: groupuser
+        indexName: groupuser_username_idx
+      dbms: postgresql
+    - createIndex:
+        tableName: groupuser
+        indexName: idx_groupuser_user_name
+        columns:
+        - column:
+            name: user_name
+      dbms: postgresql
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: groupuser
+          columnName: id
+    failOnError: false

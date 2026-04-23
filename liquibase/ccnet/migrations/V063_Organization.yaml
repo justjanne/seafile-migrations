@@ -1,9 +1,13 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_Organization
-      author: seafile
-      changes:
-        - modifyDataType:
-            tableName: Organization
-            columnName: org_id
-            newDataType: bigint
+- changeSet:
+    id: V063_Organization
+    author: seafile
+    changes:
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `organization` MODIFY COLUMN `org_id` bigint NOT NULL AUTO_INCREMENT
+    - modifyDataType:
+        tableName: organization
+        columnName: org_id
+        newDataType: bigint
+        dbms: postgresql

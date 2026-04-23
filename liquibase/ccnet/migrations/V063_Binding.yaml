@@ -1,15 +1,21 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_Binding
-      author: seafile
-      changes:
-        - addColumn:
-            tableName: Binding
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+- changeSet:
+    id: V063_Binding
+    author: seafile
+    changes:
+    - addColumn:
+        tableName: binding
+        columns:
+        - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: binding
+          columnName: id

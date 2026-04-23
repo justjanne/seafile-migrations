@@ -1,10 +1,10 @@
 databaseChangeLog:
-  - changeSet:
-      id: V131_OrgGroup
-      author: seafile
-      dbms: postgresql
-      changes:
-        - renameIndex:
-            tableName: OrgGroup
-            oldIndexName: orggroup_groupid_idx
-            newIndexName: idx_orggroup_group_id
+- changeSet:
+    id: V131_OrgGroup
+    author: seafile
+    dbms: postgresql
+    changes:
+    - dropIndex:
+        tableName: orggroup
+        indexName: orggroup_groupid_idx
+    failOnError: false

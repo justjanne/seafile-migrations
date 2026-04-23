@@ -1,24 +1,29 @@
 databaseChangeLog:
-  - changeSet:
-      id: V070_RoleQuota
-      author: seafile
-      changes:
-        - createTable:
-            tableName: RoleQuota
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: role
-                  type: VARCHAR(255)
-              - column:
-                  name: quota
-                  type: BIGINT
-        - addUniqueConstraint:
-            tableName: RoleQuota
-            columnNames: role
-            constraintName: role_unique_rolequota
+- changeSet:
+    id: V070_RoleQuota
+    author: seafile
+    changes:
+    - createTable:
+        tableName: rolequota
+        columns:
+        - column:
+            name: id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+        - column:
+            name: role
+            type: VARCHAR(255)
+        - column:
+            name: quota
+            type: BIGINT
+    - addUniqueConstraint:
+        tableName: rolequota
+        columnNames: role
+        constraintName: role_unique_rolequota
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: rolequota

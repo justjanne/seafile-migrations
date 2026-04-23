@@ -1,9 +1,13 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_EmailUser
-      author: seafile
-      changes:
-        - modifyDataType:
-            tableName: EmailUser
-            columnName: id
-            newDataType: bigint
+- changeSet:
+    id: V063_EmailUser
+    author: seafile
+    changes:
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `emailuser` MODIFY COLUMN `id` bigint NOT NULL AUTO_INCREMENT
+    - modifyDataType:
+        tableName: emailuser
+        columnName: id
+        newDataType: bigint
+        dbms: postgresql

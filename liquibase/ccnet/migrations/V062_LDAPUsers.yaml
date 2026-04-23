@@ -1,18 +1,24 @@
 databaseChangeLog:
-  - changeSet:
-      id: V062_LDAPUsers
-      author: seafile
-      changes:
-        - addColumn:
-            tableName: LDAPUsers
-            columns:
-              - column:
-                  name: reference_id
-                  type: varchar(255)
-        - createIndex:
-            indexName: ldapusers_reference_id_idx
-            tableName: LDAPUsers
-            columns:
-              - column:
-                  name: reference_id
-            unique: true
+- changeSet:
+    id: V062_LDAPUsers
+    author: seafile
+    changes:
+    - addColumn:
+        tableName: ldapusers
+        columns:
+        - column:
+            name: reference_id
+            type: varchar(255)
+    - createIndex:
+        indexName: ldapusers_reference_id_idx
+        tableName: ldapusers
+        columns:
+        - column:
+            name: reference_id
+        unique: true
+    preConditions:
+      onFail: CONTINUE
+      not:
+        columnExists:
+          tableName: ldapusers
+          columnName: reference_id

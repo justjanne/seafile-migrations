@@ -1,9 +1,13 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_SharedRepo
-      author: seafile
-      changes:
-        - modifyDataType:
-            tableName: SharedRepo
-            columnName: id
-            newDataType: BIGINT
+- changeSet:
+    id: V063_SharedRepo
+    author: seafile
+    changes:
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT
+    - modifyDataType:
+        tableName: sharedrepo
+        columnName: id
+        newDataType: BIGINT
+        dbms: postgresql
