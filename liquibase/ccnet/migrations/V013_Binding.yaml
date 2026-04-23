@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_Binding-normalize
+      author: seafile
+      preConditions:
+        - onFail: CONTINUE
+          tableExists:
+            tableName: Binding
+      changes:
+        - renameTable:
+            oldTableName: Binding
+            newTableName: binding
+  - changeSet:
+      id: V013_Binding-table
+      author: seafile
+      changes:
+        - createTable:
+            tableName: binding
+            columns:
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: peer_id
+                  type: char(41)
+                  constraints:
+                    unique: true
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: binding
+  - changeSet:
+      id: V013_Binding-index-remove
+      author: seafile
+      changes:
+        - dropIndex:
+            tableName: binding
+            indexName: email
+      preConditions:
+        onFail: MARK_RAN
+        indexExists:
+          tableName: binding
+          indexName: email
+  - changeSet:
+      id: V013_Binding-index-create
+      author: seafile
+      changes:
+        - createIndex:
+            tableName: binding
+            indexName: idx_binding_email
+            columns:
+              - column:
+                  name: email
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          indexExists:
+            tableName: binding
+            indexName: idx_binding_email
