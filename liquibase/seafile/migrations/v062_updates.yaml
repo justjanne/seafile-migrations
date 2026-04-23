@@ -1,13 +1,17 @@
 databaseChangeLog:
   - changeSet:
+      id: v062-normalize-repoinfo
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: repoinfo } } ]
+      changes: [ { renameTable: { oldTableName: RepoInfo, newTableName: repoinfo } } ]
+  - changeSet:
       id: v062-create-repoinfo
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_RepoInfo}" } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: repoinfo } } } ]
       changes:
         - createTable:
-            tableName: "${t_RepoInfo}"
+            tableName: repoinfo
             columns:
               - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }
               - column: { name: name, type: varchar(255), constraints: { nullable: false } }
@@ -17,14 +21,18 @@ databaseChangeLog:
               - column: { name: last_modifier, type: varchar(255) }
 
   - changeSet:
+      id: v062-normalize-seafileconf
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: seafileconf } } ]
+      changes: [ { renameTable: { oldTableName: SeafileConf, newTableName: seafileconf } } ]
+  - changeSet:
       id: v062-create-seafileconf
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_SeafileConf}" } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: seafileconf } } } ]
       changes:
         - createTable:
-            tableName: "${t_SeafileConf}"
+            tableName: seafileconf
             columns:
               - column: { name: cfg_group, type: varchar(255), constraints: { nullable: false } }
               - column: { name: cfg_key, type: varchar(255), constraints: { nullable: false } }

@@ -4,186 +4,121 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            columnExists:
-              tableName: "${t_Binding}"
-              columnName: id
+          not: { columnExists: { tableName: binding, columnName: id } }
       changes:
         - addColumn:
-            tableName: "${t_Binding}"
+            tableName: binding
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
 
   - changeSet:
       id: v063-update-emailuser-id-type
       author: seafile
       changes:
-        - modifyDataType:
-            tableName: "${t_EmailUser}"
-            columnName: id
-            newDataType: bigint
+        - modifyDataType: { tableName: emailuser, columnName: id, newDataType: bigint }
 
   - changeSet:
       id: v063-update-group-id-type
       author: seafile
       changes:
-        - modifyDataType:
-            tableName: "${t_Group}"
-            columnName: group_id
-            newDataType: bigint
-        - addColumn:
-            tableName: "${t_Group}"
-            columns:
-              - column:
-                  name: parent_group_id
-                  type: int
+        - modifyDataType: { tableName: "Group", columnName: group_id, newDataType: bigint }
+
+  - changeSet:
+      id: v063-update-group-parent-id
+      author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            columnExists:
-              tableName: "${t_Group}"
-              columnName: parent_group_id
+          not: { columnExists: { tableName: "Group", columnName: parent_group_id } }
+      changes:
+        - addColumn:
+            tableName: "Group"
+            columns:
+              - column: { name: parent_group_id, type: int }
+
+  - changeSet:
+      id: v063-normalize-groupstructure
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: CONTINUE
+          tableExists: { tableName: groupstructure }
+      changes:
+        - renameTable: { oldTableName: GroupStructure, newTableName: groupstructure }
 
   - changeSet:
       id: v063-create-groupstructure
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_GroupStructure}" } }
+          not: { tableExists: { tableName: groupstructure } }
       changes:
         - createTable:
-            tableName: "${t_GroupStructure}"
+            tableName: groupstructure
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: group_id
-                  type: int
-                  constraints:
-                    unique: true
-              - column:
-                  name: path
-                  type: varchar(1024)
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: group_id, type: int, constraints: { unique: true } }
+              - column: { name: path, type: varchar(1024) }
 
   - changeSet:
       id: v063-update-groupuser-id
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            columnExists:
-              tableName: "${t_GroupUser}"
-              columnName: id
+          not: { columnExists: { tableName: groupuser, columnName: id } }
       changes:
-        - dropPrimaryKey:
-            tableName: "${t_GroupUser}"
+        - dropPrimaryKey: { tableName: groupuser }
         - addColumn:
-            tableName: "${t_GroupUser}"
+            tableName: groupuser
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-        - modifyDataType:
-            tableName: "${t_GroupUser}"
-            columnName: group_id
-            newDataType: bigint
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+        - modifyDataType: { tableName: groupuser, columnName: group_id, newDataType: bigint }
 
   - changeSet:
       id: v063-update-ldapconfig-id
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            columnExists:
-              tableName: "${t_LDAPConfig}"
-              columnName: id
+          not: { columnExists: { tableName: ldapconfig, columnName: id } }
       changes:
         - addColumn:
-            tableName: "${t_LDAPConfig}"
+            tableName: ldapconfig
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
 
   - changeSet:
       id: v063-update-ldapusers-id-type
       author: seafile
       changes:
-        - modifyDataType:
-            tableName: "${t_LDAPUsers}"
-            columnName: id
-            newDataType: bigint
+        - modifyDataType: { tableName: ldapusers, columnName: id, newDataType: bigint }
 
   - changeSet:
       id: v063-update-organization-id-type
       author: seafile
       changes:
-        - modifyDataType:
-            tableName: "${t_Organization}"
-            columnName: org_id
-            newDataType: bigint
+        - modifyDataType: { tableName: organization, columnName: org_id, newDataType: bigint }
 
   - changeSet:
       id: v063-update-orggroup-id
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            columnExists:
-              tableName: "${t_OrgGroup}"
-              columnName: id
+          not: { columnExists: { tableName: orggroup, columnName: id } }
       changes:
-        - dropPrimaryKey:
-            tableName: "${t_OrgGroup}"
+        - dropPrimaryKey: { tableName: orggroup }
         - addColumn:
-            tableName: "${t_OrgGroup}"
+            tableName: orggroup
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
 
   - changeSet:
       id: v063-update-orguser-id
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            columnExists:
-              tableName: "${t_OrgUser}"
-              columnName: id
+          not: { columnExists: { tableName: orguser, columnName: id } }
       changes:
-        - dropPrimaryKey:
-            tableName: "${t_OrgUser}"
+        - dropPrimaryKey: { tableName: orguser }
         - addColumn:
-            tableName: "${t_OrgUser}"
+            tableName: orguser
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }

@@ -1,27 +1,49 @@
 databaseChangeLog:
+  # --- Binding ---
+  - changeSet:
+      id: v013-normalize-binding
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: CONTINUE
+          tableExists: { tableName: Binding }
+      changes:
+        - renameTable: { oldTableName: Binding, newTableName: binding }
+
   - changeSet:
       id: v013-baseline-binding
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'binding'" }
+          not: { tableExists: { tableName: binding } }
       changes:
         - createTable:
-            tableName: "${t_Binding}"
+            tableName: binding
             columns:
               - column: { name: email, type: varchar(255) }
               - column: { name: peer_id, type: char(41), constraints: { unique: true } }
-        - createIndex: { indexName: idx_binding_email, tableName: "${t_Binding}", columns: [ { name: email } ] }
+        - createIndex: { indexName: idx_binding_email, tableName: binding, columns: [ { name: email } ] }
+
+  # --- EmailUser ---
+  - changeSet:
+      id: v013-normalize-emailuser
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: CONTINUE
+          tableExists: { tableName: EmailUser }
+      changes:
+        - renameTable: { oldTableName: EmailUser, newTableName: emailuser }
 
   - changeSet:
       id: v013-baseline-emailuser
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'emailuser'" }
+          not: { tableExists: { tableName: emailuser } }
       changes:
         - createTable:
-            tableName: "${t_EmailUser}"
+            tableName: emailuser
             columns:
               - column: { name: id, type: int, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: email, type: varchar(255), constraints: { unique: true } }
@@ -30,77 +52,122 @@ databaseChangeLog:
               - column: { name: is_active, type: boolean, constraints: { nullable: false } }
               - column: { name: ctime, type: bigint }
 
+  # --- Group (Reserved, stays quoted) ---
   - changeSet:
       id: v013-baseline-group
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'group'" }
+          not: { tableExists: { tableName: "Group" } }
       changes:
         - createTable:
-            tableName: "${t_Group}"
+            tableName: "Group"
             columns:
               - column: { name: group_id, type: int, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: group_name, type: varchar(255) }
               - column: { name: creator_name, type: varchar(255) }
               - column: { name: timestamp, type: bigint }
 
+  # --- GroupUser ---
+  - changeSet:
+      id: v013-normalize-groupuser
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: CONTINUE
+          tableExists: { tableName: GroupUser }
+      changes:
+        - renameTable: { oldTableName: GroupUser, newTableName: groupuser }
+
   - changeSet:
       id: v013-baseline-groupuser
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'groupuser'" }
+          not: { tableExists: { tableName: groupuser } }
       changes:
         - createTable:
-            tableName: "${t_GroupUser}"
+            tableName: groupuser
             columns:
               - column: { name: group_id, type: int }
               - column: { name: user_name, type: varchar(255) }
               - column: { name: is_staff, type: smallint }
-        - addUniqueConstraint: { columnNames: "group_id, user_name", constraintName: uq_groupuser_group_user, tableName: "${t_GroupUser}" }
-        - createIndex: { indexName: idx_groupuser_user_name, tableName: "${t_GroupUser}", columns: [ { name: user_name } ] }
+        - addUniqueConstraint: { columnNames: "group_id, user_name", constraintName: uq_groupuser_group_user, tableName: groupuser }
+        - createIndex: { indexName: idx_groupuser_user_name, tableName: groupuser, columns: [ { name: user_name } ] }
+
+  # --- OrgGroup ---
+  - changeSet:
+      id: v013-normalize-orggroup
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: CONTINUE
+          tableExists: { tableName: OrgGroup }
+      changes:
+        - renameTable: { oldTableName: OrgGroup, newTableName: orggroup }
 
   - changeSet:
       id: v013-baseline-orggroup
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'orggroup'" }
+          not: { tableExists: { tableName: orggroup } }
       changes:
         - createTable:
-            tableName: "${t_OrgGroup}"
+            tableName: orggroup
             columns:
               - column: { name: org_id, type: int }
               - column: { name: group_id, type: int }
-        - addUniqueConstraint: { columnNames: "org_id, group_id", constraintName: uq_orggroup_org_group, tableName: "${t_OrgGroup}" }
-        - createIndex: { indexName: idx_orggroup_group_id, tableName: "${t_OrgGroup}", columns: [ { name: group_id } ] }
+        - addUniqueConstraint: { columnNames: "org_id, group_id", constraintName: uq_orggroup_org_group, tableName: orggroup }
+        - createIndex: { indexName: idx_orggroup_group_id, tableName: orggroup, columns: [ { name: group_id } ] }
+
+  # --- OrgUser ---
+  - changeSet:
+      id: v013-normalize-orguser
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: CONTINUE
+          tableExists: { tableName: OrgUser }
+      changes:
+        - renameTable: { oldTableName: OrgUser, newTableName: orguser }
 
   - changeSet:
       id: v013-baseline-orguser
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'orguser'" }
+          not: { tableExists: { tableName: orguser } }
       changes:
         - createTable:
-            tableName: "${t_OrgUser}"
+            tableName: orguser
             columns:
               - column: { name: org_id, type: int }
               - column: { name: email, type: varchar(255) }
               - column: { name: is_staff, type: boolean, constraints: { nullable: false } }
-        - addUniqueConstraint: { columnNames: "org_id, email", constraintName: uq_orguser_org_email, tableName: "${t_OrgUser}" }
-        - createIndex: { indexName: idx_orguser_email, tableName: "${t_OrgUser}", columns: [ { name: email } ] }
+        - addUniqueConstraint: { columnNames: "org_id, email", constraintName: uq_orguser_org_email, tableName: orguser }
+        - createIndex: { indexName: idx_orguser_email, tableName: orguser, columns: [ { name: email } ] }
+
+  # --- Organization ---
+  - changeSet:
+      id: v013-normalize-organization
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: CONTINUE
+          tableExists: { tableName: Organization }
+      changes:
+        - renameTable: { oldTableName: Organization, newTableName: organization }
 
   - changeSet:
       id: v013-baseline-organization
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          sqlCheck: { expectedResult: 0, sql: "${table_exists_query} 'organization'" }
+          not: { tableExists: { tableName: organization } }
       changes:
         - createTable:
-            tableName: "${t_Organization}"
+            tableName: organization
             columns:
               - column: { name: org_id, type: int, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: org_name, type: varchar(255) }

@@ -4,22 +4,26 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoTrash}", columnName: del_time } }
+          not: { columnExists: { tableName: repotrash, columnName: del_time } }
       changes:
         - addColumn:
-            tableName: "${t_RepoTrash}"
+            tableName: repotrash
             columns:
               - column: { name: del_time, type: bigint }
 
   - changeSet:
+      id: v042-normalize-usersharequota
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: usersharequota } } ]
+      changes: [ { renameTable: { oldTableName: UserShareQuota, newTableName: usersharequota } } ]
+  - changeSet:
       id: v042-create-usersharequota
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_UserShareQuota}" } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: usersharequota } } } ]
       changes:
         - createTable:
-            tableName: "${t_UserShareQuota}"
+            tableName: usersharequota
             columns:
               - column: { name: user, type: varchar(255), constraints: { primaryKey: true, nullable: false } }
               - column: { name: quota, type: bigint }

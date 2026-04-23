@@ -4,21 +4,15 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_SharedRepo}", columnName: id } }
+        - not: { columnExists: { tableName: sharedrepo, columnName: id } }
+        - not: { indexExists: { indexName: idx_sharedrepo_from_email, tableName: sharedrepo } }
+        - not: { indexExists: { indexName: idx_sharedrepo_to_email, tableName: sharedrepo } }
       changes:
         - addColumn:
-            tableName: "${t_SharedRepo}"
+            tableName: sharedrepo
             columns:
               - column: { name: id, type: int, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - modifyDataType: { tableName: "${t_SharedRepo}", columnName: from_email, newDataType: varchar(255) }
-        - modifyDataType: { tableName: "${t_SharedRepo}", columnName: to_email, newDataType: varchar(255) }
-        - createIndex:
-            indexName: idx_sharedrepo_from_email
-            tableName: "${t_SharedRepo}"
-            columns:
-              - column: { name: from_email }
-        - createIndex:
-            indexName: idx_sharedrepo_to_email
-            tableName: "${t_SharedRepo}"
-            columns:
-              - column: { name: to_email }
+        - modifyDataType: { tableName: sharedrepo, columnName: from_email, newDataType: varchar(255) }
+        - modifyDataType: { tableName: sharedrepo, columnName: to_email, newDataType: varchar(255) }
+        - createIndex: { indexName: idx_sharedrepo_from_email, tableName: sharedrepo, columns: [ { name: from_email } ] }
+        - createIndex: { indexName: idx_sharedrepo_to_email, tableName: sharedrepo, columns: [ { name: to_email } ] }

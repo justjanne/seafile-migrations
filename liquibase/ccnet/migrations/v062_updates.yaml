@@ -4,62 +4,46 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            columnExists:
-              tableName: "${t_EmailUser}"
-              columnName: reference_id
+          not: { columnExists: { tableName: emailuser, columnName: reference_id } }
       changes:
         - addColumn:
-            tableName: "${t_EmailUser}"
+            tableName: emailuser
             columns:
-              - column:
-                  name: reference_id
-                  type: varchar(255)
-                  constraints:
-                    unique: true
+              - column: { name: reference_id, type: varchar(255), constraints: { unique: true } }
+
+  - changeSet:
+      id: v062-normalize-ldapconfig
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: CONTINUE
+          tableExists: { tableName: ldapconfig }
+      changes:
+        - renameTable: { oldTableName: LDAPConfig, newTableName: ldapconfig }
 
   - changeSet:
       id: v062-create-ldapconfig
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_LDAPConfig}" } }
+          not: { tableExists: { tableName: ldapconfig } }
       changes:
         - createTable:
-            tableName: "${t_LDAPConfig}"
+            tableName: ldapconfig
             columns:
-              - column:
-                  name: cfg_group
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: cfg_key
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: value
-                  type: varchar(255)
-              - column:
-                  name: property
-                  type: int
+              - column: { name: cfg_group, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: cfg_key, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: value, type: varchar(255) }
+              - column: { name: property, type: int }
 
   - changeSet:
       id: v062-update-ldapusers-reference-id
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            columnExists:
-              tableName: "${t_LDAPUsers}"
-              columnName: reference_id
+          not: { columnExists: { tableName: ldapusers, columnName: reference_id } }
       changes:
         - addColumn:
-            tableName: "${t_LDAPUsers}"
+            tableName: ldapusers
             columns:
-              - column:
-                  name: reference_id
-                  type: varchar(255)
-                  constraints:
-                    unique: true
+              - column: { name: reference_id, type: varchar(255), constraints: { unique: true } }

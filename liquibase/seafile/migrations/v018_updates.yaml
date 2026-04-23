@@ -1,20 +1,20 @@
 databaseChangeLog:
   - changeSet:
+      id: v018-normalize-virtualrepo
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: virtualrepo } } ]
+      changes: [ { renameTable: { oldTableName: VirtualRepo, newTableName: virtualrepo } } ]
+  - changeSet:
       id: v018-create-virtualrepo
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_VirtualRepo}" } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: virtualrepo } } } ]
       changes:
         - createTable:
-            tableName: "${t_VirtualRepo}"
+            tableName: virtualrepo
             columns:
               - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }
               - column: { name: origin_repo, type: char(36) }
               - column: { name: path, type: text }
               - column: { name: base_commit, type: char(40) }
-        - createIndex:
-            indexName: idx_virtualrepo_origin_repo
-            tableName: "${t_VirtualRepo}"
-            columns:
-              - column: { name: origin_repo }
+        - createIndex: { indexName: idx_virtualrepo_origin_repo, tableName: virtualrepo, columns: [ { name: origin_repo } ] }

@@ -4,10 +4,10 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_EmailUser}", columnName: is_department_owner } }
+          not: { columnExists: { tableName: emailuser, columnName: is_department_owner } }
       changes:
         - addColumn:
-            tableName: "${t_EmailUser}"
+            tableName: emailuser
             columns:
               - column: { name: is_department_owner, type: boolean, defaultValueBoolean: false, constraints: { nullable: false } }
 
@@ -17,11 +17,10 @@ databaseChangeLog:
       changes:
         - sql:
             dbms: mysql,mariadb
-            sql: "DROP INDEX IF EXISTS EmailUser_is_department_owenr ON EmailUser"
-        - dropIndex:
+            sql: "DROP INDEX IF EXISTS EmailUser_is_department_owenr ON emailuser"
+        - sql:
             dbms: postgresql
-            indexName: EmailUser_is_department_owenr
-            tableName: "${t_EmailUser}"
+            sql: "DROP INDEX IF EXISTS idx_emailuser_is_department_owenr"
       failOnError: false
 
   - changeSet:
@@ -29,29 +28,31 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-        - not: { indexExists: { indexName: idx_emailuser_is_active, tableName: "${t_EmailUser}" } }
-        - not: { indexExists: { indexName: idx_emailuser_is_department_owner, tableName: "${t_EmailUser}" } }
+        - not: { indexExists: { indexName: idx_emailuser_is_active, tableName: emailuser } }
+        - not: { indexExists: { indexName: idx_emailuser_is_department_owner, tableName: emailuser } }
       changes:
-        - createIndex:
-            indexName: idx_emailuser_is_active
-            tableName: "${t_EmailUser}"
-            columns:
-              - column: { name: is_active }
-        - createIndex:
-            indexName: idx_emailuser_is_department_owner
-            tableName: "${t_EmailUser}"
-            columns:
-              - column: { name: is_department_owner }
+        - createIndex: { indexName: idx_emailuser_is_active, tableName: emailuser, columns: [ { name: is_active } ] }
+        - createIndex: { indexName: idx_emailuser_is_department_owner, tableName: emailuser, columns: [ { name: is_department_owner } ] }
+
+  - changeSet:
+      id: v130-normalize-orgfileextwhitelist
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: CONTINUE
+          tableExists: { tableName: orgfileextwhitelist }
+      changes:
+        - renameTable: { oldTableName: OrgFileExtWhiteList, newTableName: orgfileextwhitelist }
 
   - changeSet:
       id: v130-create-orgfileextwhitelist
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_OrgFileExtWhiteList}" } }
+          not: { tableExists: { tableName: orgfileextwhitelist } }
       changes:
         - createTable:
-            tableName: "${t_OrgFileExtWhiteList}"
+            tableName: orgfileextwhitelist
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
               - column: { name: org_id, type: int, constraints: { unique: true } }
@@ -62,6 +63,6 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          columnExists: { tableName: "${t_Group}", columnName: parent_group_id }
+          columnExists: { tableName: "Group", columnName: parent_group_id }
       changes:
-        - addDefaultValue: { tableName: "${t_Group}", columnName: parent_group_id, defaultValueNumeric: 0 }
+        - addDefaultValue: { tableName: "Group", columnName: parent_group_id, defaultValueNumeric: 0 }

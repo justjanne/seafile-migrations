@@ -1,13 +1,17 @@
 databaseChangeLog:
   - changeSet:
+      id: v017-normalize-repotokenpeerinfo
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: repotokenpeerinfo } } ]
+      changes: [ { renameTable: { oldTableName: RepoTokenPeerInfo, newTableName: repotokenpeerinfo } } ]
+  - changeSet:
       id: v017-create-repotokenpeerinfo
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_RepoTokenPeerInfo}" } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: repotokenpeerinfo } } } ]
       changes:
         - createTable:
-            tableName: "${t_RepoTokenPeerInfo}"
+            tableName: repotokenpeerinfo
             columns:
               - column: { name: token, type: char(41), constraints: { primaryKey: true, nullable: false } }
               - column: { name: peer_id, type: char(41) }
@@ -20,10 +24,6 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { indexExists: { indexName: idx_repousertoken_email, tableName: "${t_RepoUserToken}" } }
+          not: { indexExists: { indexName: idx_repousertoken_email, tableName: repousertoken } }
       changes:
-        - createIndex:
-            indexName: idx_repousertoken_email
-            tableName: "${t_RepoUserToken}"
-            columns:
-              - column: { name: email }
+        - createIndex: { indexName: idx_repousertoken_email, tableName: repousertoken, columns: [ { name: email } ] }

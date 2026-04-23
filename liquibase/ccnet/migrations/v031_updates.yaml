@@ -1,26 +1,24 @@
 databaseChangeLog:
   - changeSet:
+      id: v031-normalize-userrole
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: CONTINUE
+          tableExists: { tableName: userrole }
+      changes:
+        - renameTable: { oldTableName: UserRole, newTableName: userrole }
+
+  - changeSet:
       id: v031-create-userrole
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_UserRole}" } }
+          not: { tableExists: { tableName: userrole } }
       changes:
         - createTable:
-            tableName: "${t_UserRole}"
+            tableName: userrole
             columns:
-              - column:
-                  name: id
-                  type: int
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    unique: true
-              - column:
-                  name: role
-                  type: varchar(255)
+              - column: { name: id, type: int, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: email, type: varchar(255), constraints: { unique: true } }
+              - column: { name: role, type: varchar(255) }

@@ -1,13 +1,17 @@
 databaseChangeLog:
   - changeSet:
+      id: v041-normalize-repotrash
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: repotrash } } ]
+      changes: [ { renameTable: { oldTableName: RepoTrash, newTableName: repotrash } } ]
+  - changeSet:
       id: v041-create-repotrash
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_RepoTrash}" } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: repotrash } } } ]
       changes:
         - createTable:
-            tableName: "${t_RepoTrash}"
+            tableName: repotrash
             columns:
               - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }
               - column: { name: repo_name, type: varchar(255) }
@@ -15,13 +19,5 @@ databaseChangeLog:
               - column: { name: owner_id, type: varchar(255) }
               - column: { name: size, type: bigint }
               - column: { name: org_id, type: int }
-        - createIndex:
-            indexName: idx_repotrash_owner_id
-            tableName: "${t_RepoTrash}"
-            columns:
-              - column: { name: owner_id }
-        - createIndex:
-            indexName: idx_repotrash_org_id
-            tableName: "${t_RepoTrash}"
-            columns:
-              - column: { name: org_id }
+        - createIndex: { indexName: idx_repotrash_owner_id, tableName: repotrash, columns: [ { name: owner_id } ] }
+        - createIndex: { indexName: idx_repotrash_org_id, tableName: repotrash, columns: [ { name: org_id } ] }

@@ -1,13 +1,17 @@
 databaseChangeLog:
   - changeSet:
+      id: v021-normalize-systeminfo
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: systeminfo } } ]
+      changes: [ { renameTable: { oldTableName: SystemInfo, newTableName: systeminfo } } ]
+  - changeSet:
       id: v021-create-systeminfo
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_SystemInfo}" } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: systeminfo } } } ]
       changes:
         - createTable:
-            tableName: "${t_SystemInfo}"
+            tableName: systeminfo
             columns:
               - column: { name: info_key, type: varchar(256) }
               - column: { name: info_value, type: varchar(1024) }

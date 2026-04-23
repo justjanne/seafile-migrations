@@ -4,15 +4,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            columnExists:
-              tableName: "${t_UserRole}"
-              columnName: is_manual_set
+          not: { columnExists: { tableName: userrole, columnName: is_manual_set } }
       changes:
         - addColumn:
-            tableName: "${t_UserRole}"
+            tableName: userrole
             columns:
-              - column:
-                  name: is_manual_set
-                  type: int
-                  defaultValueNumeric: 0
+              - column: { name: is_manual_set, type: int, defaultValueNumeric: 0 }

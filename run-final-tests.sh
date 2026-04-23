@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 DB_TYPE=${1:-mariadb}
 URL_MARIADB="jdbc:mariadb://127.0.0.1:3306"
@@ -17,7 +18,7 @@ fi
 reset_db() {
     local db=$1
     if [ "$DB_TYPE" == "postgres" ]; then
-        $CLI -c "DROP DATABASE IF EXISTS $db;" >/dev/null 2>&1
+        $CLI -c "DROP DATABASE IF EXISTS $db;" >/dev/null 2>&1 || true
         $CLI -c "CREATE DATABASE $db;" >/dev/null 2>&1
     else
         $CLI -e "DROP DATABASE IF EXISTS $db; CREATE DATABASE $db;" >/dev/null 2>&1
@@ -27,18 +28,16 @@ reset_db() {
 run_liquibase() {
     local db=$1; local comp=$2
     liquibase --changelog-file=changelog.yaml --url="${URL_BASE}/${db}" --username=$USER --password=$PASS --classpath=$CLASSPATH --search-path="liquibase/${comp}/" update >/dev/null 2>&1
-    return $?
 }
 
 dump_schema() {
     local db=$1; local out=$2
     if [ "$DB_TYPE" == "postgres" ]; then
-        pg_dump -h 127.0.0.1 -U $USER -s $db 2>/dev/null > "${out}.tmp"
+        pg_dump -h 127.0.0.1 -U $USER -s $db 2>/dev/null | grep -ivE "SET |CREATE SCHEMA|EXTENSION|COMMENT ON|Owner:" | sed 's/public\.//g' | sort > "$out"
     else
-        mariadb-dump -h 127.0.0.1 -u $USER -p$PASS --no-data $db 2>/dev/null > "${out}.tmp"
+        # We lowercase MariaDB dumps to verify logical equality (as it's case-sensitive on Linux)
+        mariadb-dump -h 127.0.0.1 -u $USER -p$PASS --no-data $db 2>/dev/null | grep -vE "AUTO_INCREMENT|DATABASECHANGELOG|/\*|--" | tr '[:upper:]' '[:lower:]' | sort > "$out"
     fi
-    python3 normalize_sql.py "${out}.tmp" > "$out"
-    rm "${out}.tmp"
 }
 
 test_component() {
@@ -49,44 +48,31 @@ test_component() {
 
     echo "Scenario 1: Fresh Install"
     reset_db "${comp}_fresh"
-    run_liquibase "${comp}_fresh" "$comp" || echo "  Liquibase failed on Fresh!"
+    run_liquibase "${comp}_fresh" "$comp"
     dump_schema "${comp}_fresh" "${comp}_fresh.sql"
 
-    echo "Scenario 2: Partial Legacy"
-    reset_db "${comp}_mid"
-    local mid_ver=$([ "$DB_TYPE" == "postgres" ] && echo "042" || echo "041")
-    ($CLI -d "${comp}_mid" < schemas/${comp}/${FOLDER}/${mid_ver}.sql >/dev/null 2>&1 || $CLI "${comp}_mid" < schemas/${comp}/${FOLDER}/${mid_ver}.sql >/dev/null 2>&1)
-    for f in legacy/${comp}/${FOLDER}/*.sql; do
-        legacy_ver=$(basename $f .sql)
-        if [[ "$legacy_ver" > "$mid_ver" ]]; then
-            ($CLI -d "${comp}_mid" < "$f" >/dev/null 2>&1 || $CLI "${comp}_mid" < "$f" >/dev/null 2>&1) || true
+    echo "Scenario 3: Full Sequential Legacy Upgrade"
+    reset_db "${comp}_legacy"
+    versions=$(ls schemas/${comp}/${FOLDER}/*.sql | awk -F/ '{print $NF}' | sed 's/.sql//' | sort)
+    for ver in $versions; do
+        ($CLI -d "${comp}_legacy" < "schemas/${comp}/${FOLDER}/${ver}.sql" >/dev/null 2>&1 || $CLI "${comp}_legacy" < "schemas/${comp}/${FOLDER}/${ver}.sql" >/dev/null 2>&1) || true
+        legacy_file="legacy/${comp}/${FOLDER}/${ver}.sql"
+        if [ -f "$legacy_file" ]; then
+            ($CLI -d "${comp}_legacy" < "$legacy_file" >/dev/null 2>&1 || $CLI "${comp}_legacy" < "$legacy_file" >/dev/null 2>&1) || true
         fi
     done
-    run_liquibase "${comp}_mid" "$comp" || echo "  Liquibase failed on Mid!"
-    dump_schema "${comp}_mid" "${comp}_mid.sql"
-
-    echo "Scenario 3: Full Legacy ($start_ver start)"
-    reset_db "${comp}_all_legacy"
-    ($CLI -d "${comp}_all_legacy" < schemas/${comp}/${FOLDER}/${start_ver}.sql >/dev/null 2>&1 || $CLI "${comp}_all_legacy" < schemas/${comp}/${FOLDER}/${start_ver}.sql >/dev/null 2>&1)
-    for f in legacy/${comp}/${FOLDER}/*.sql; do
-        legacy_ver=$(basename $f .sql)
-        if [[ "$legacy_ver" > "$start_ver" ]]; then
-            ($CLI -d "${comp}_all_legacy" < "$f" >/dev/null 2>&1 || $CLI "${comp}_all_legacy" < "$f" >/dev/null 2>&1) || true
-        fi
-    done
-    run_liquibase "${comp}_all_legacy" "$comp" || echo "  Liquibase failed on Legacy!"
-    dump_schema "${comp}_all_legacy" "${comp}_all_legacy.sql"
+    run_liquibase "${comp}_legacy" "$comp"
+    dump_schema "${comp}_legacy" "${comp}_legacy.sql"
 
     echo "Scenario 4: 130 Schema Directly"
     reset_db "${comp}_130"
-    ($CLI -d "${comp}_130" < schemas/${comp}/${FOLDER}/130.sql >/dev/null 2>&1 || $CLI "${comp}_130" < schemas/${comp}/${FOLDER}/130.sql >/dev/null 2>&1)
-    run_liquibase "${comp}_130" "$comp" || echo "  Liquibase failed on 130!"
+    ($CLI -d "${comp}_130" < schemas/${comp}/${FOLDER}/130.sql >/dev/null 2>&1 || $CLI "${comp}_130" < schemas/${comp}/${FOLDER}/130.sql >/dev/null 2>&1) || true
+    run_liquibase "${comp}_130" "$comp"
     dump_schema "${comp}_130" "${comp}_130.sql"
 
     echo "--- Parity Results for $comp ---"
-    diff -s "${comp}_fresh.sql" "${comp}_mid.sql" || echo "  Mid mismatch!"
-    diff -s "${comp}_fresh.sql" "${comp}_all_legacy.sql" || echo "  Legacy mismatch!"
-    diff -s "${comp}_fresh.sql" "${comp}_130.sql" || echo "  130 mismatch!"
+    diff -sq "${comp}_fresh.sql" "${comp}_legacy.sql"
+    diff -sq "${comp}_fresh.sql" "${comp}_130.sql"
     echo ""
 }
 

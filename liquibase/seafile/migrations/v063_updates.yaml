@@ -1,300 +1,262 @@
 databaseChangeLog:
   - changeSet:
+      id: v063-normalize-groupstructure
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: GroupStructure } } ]
+      changes: [ { renameTable: { oldTableName: GroupStructure, newTableName: groupstructure } } ]
+  - changeSet:
       id: v063-update-branch-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_Branch}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: branch, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_Branch}" }
+        - dropPrimaryKey: { tableName: branch }
         - addColumn:
-            tableName: "${t_Branch}"
+            tableName: branch
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id, name", constraintName: uq_branch_repo_name, tableName: "${t_Branch}" }
+        - addUniqueConstraint: { columnNames: "repo_id, name", constraintName: uq_branch_repo_name, tableName: branch }
 
   - changeSet:
       id: v063-update-garbagerepos-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_GarbageRepos}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: garbagerepos, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_GarbageRepos}" }
+        - dropPrimaryKey: { tableName: garbagerepos }
         - addColumn:
-            tableName: "${t_GarbageRepos}"
+            tableName: garbagerepos
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_garbagerepos_repo_id, tableName: "${t_GarbageRepos}" }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_garbagerepos_repo_id, tableName: garbagerepos }
 
   - changeSet:
       id: v063-update-innerpubrepo-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_InnerPubRepo}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: innerpubrepo, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_InnerPubRepo}" }
+        - dropPrimaryKey: { tableName: innerpubrepo }
         - addColumn:
-            tableName: "${t_InnerPubRepo}"
+            tableName: innerpubrepo
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_innerpubrepo_repo_id, tableName: "${t_InnerPubRepo}" }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_innerpubrepo_repo_id, tableName: innerpubrepo }
 
   - changeSet:
       id: v063-update-orgquota-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_OrgQuota}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: orgquota, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_OrgQuota}" }
+        - dropPrimaryKey: { tableName: orgquota }
         - addColumn:
-            tableName: "${t_OrgQuota}"
+            tableName: orgquota
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "org_id", constraintName: uq_orgquota_org_id, tableName: "${t_OrgQuota}" }
+        - addUniqueConstraint: { columnNames: "org_id", constraintName: uq_orgquota_org_id, tableName: orgquota }
 
   - changeSet:
       id: v063-update-orguserquota-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_OrgUserQuota}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: orguserquota, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_OrgUserQuota}" }
+        - dropPrimaryKey: { tableName: orguserquota }
         - addColumn:
-            tableName: "${t_OrgUserQuota}"
+            tableName: orguserquota
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "org_id, user", constraintName: uq_orguserquota_org_user, tableName: "${t_OrgUserQuota}" }
+        - addUniqueConstraint: { columnNames: "org_id, user", constraintName: uq_orguserquota_org_user, tableName: orguserquota }
 
   - changeSet:
       id: v063-update-repo-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_Repo}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: repo, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_Repo}" }
+        - dropPrimaryKey: { tableName: repo }
         - addColumn:
-            tableName: "${t_Repo}"
+            tableName: repo
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repo_repo_id, tableName: "${t_Repo}" }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repo_repo_id, tableName: repo }
 
   - changeSet:
       id: v063-update-repofilecount-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoFileCount}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: repofilecount, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_RepoFileCount}" }
+        - dropPrimaryKey: { tableName: repofilecount }
         - addColumn:
-            tableName: "${t_RepoFileCount}"
+            tableName: repofilecount
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repofilecount_repo_id, tableName: "${t_RepoFileCount}" }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repofilecount_repo_id, tableName: repofilecount }
 
   - changeSet:
       id: v063-update-repogroup-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoGroup}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: repogroup, columnName: id } } } ]
       changes:
         - addColumn:
-            tableName: "${t_RepoGroup}"
+            tableName: repogroup
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
 
   - changeSet:
       id: v063-update-repohead-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoHead}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: repohead, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_RepoHead}" }
+        - dropPrimaryKey: { tableName: repohead }
         - addColumn:
-            tableName: "${t_RepoHead}"
+            tableName: repohead
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repohead_repo_id, tableName: "${t_RepoHead}" }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repohead_repo_id, tableName: repohead }
 
   - changeSet:
       id: v063-update-repohistorylimit-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoHistoryLimit}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: repohistorylimit, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_RepoHistoryLimit}" }
+        - dropPrimaryKey: { tableName: repohistorylimit }
         - addColumn:
-            tableName: "${t_RepoHistoryLimit}"
+            tableName: repohistorylimit
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repohistorylimit_repo_id, tableName: "${t_RepoHistoryLimit}" }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repohistorylimit_repo_id, tableName: repohistorylimit }
 
   - changeSet:
       id: v063-update-repoinfo-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoInfo}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: repoinfo, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_RepoInfo}" }
+        - dropPrimaryKey: { tableName: repoinfo }
         - addColumn:
-            tableName: "${t_RepoInfo}"
+            tableName: repoinfo
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repoinfo_repo_id, tableName: "${t_RepoInfo}" }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repoinfo_repo_id, tableName: repoinfo }
 
   - changeSet:
       id: v063-update-repoowner-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoOwner}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: repoowner, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_RepoOwner}" }
+        - dropPrimaryKey: { tableName: repoowner }
         - addColumn:
-            tableName: "${t_RepoOwner}"
+            tableName: repoowner
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repoowner_repo_id, tableName: "${t_RepoOwner}" }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repoowner_repo_id, tableName: repoowner }
 
   - changeSet:
       id: v063-update-reposize-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoSize}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: reposize, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_RepoSize}" }
+        - dropPrimaryKey: { tableName: reposize }
         - addColumn:
-            tableName: "${t_RepoSize}"
+            tableName: reposize
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_reposize_repo_id, tableName: "${t_RepoSize}" }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_reposize_repo_id, tableName: reposize }
 
   - changeSet:
       id: v063-update-repotokenpeerinfo-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoTokenPeerInfo}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: repotokenpeerinfo, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_RepoTokenPeerInfo}" }
+        - dropPrimaryKey: { tableName: repotokenpeerinfo }
         - addColumn:
-            tableName: "${t_RepoTokenPeerInfo}"
+            tableName: repotokenpeerinfo
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "token", constraintName: uq_repotokenpeerinfo_token, tableName: "${t_RepoTokenPeerInfo}" }
+        - addUniqueConstraint: { columnNames: "token", constraintName: uq_repotokenpeerinfo_token, tableName: repotokenpeerinfo }
 
   - changeSet:
       id: v063-update-repotrash-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoTrash}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: repotrash, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_RepoTrash}" }
+        - dropPrimaryKey: { tableName: repotrash }
         - addColumn:
-            tableName: "${t_RepoTrash}"
+            tableName: repotrash
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repotrash_repo_id, tableName: "${t_RepoTrash}" }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repotrash_repo_id, tableName: repotrash }
 
   - changeSet:
       id: v063-update-repousertoken-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoUserToken}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: repousertoken, columnName: id } } } ]
       changes:
         - addColumn:
-            tableName: "${t_RepoUserToken}"
+            tableName: repousertoken
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
 
   - changeSet:
       id: v063-update-repovalidsince-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoValidSince}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: repovalidsince, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_RepoValidSince}" }
+        - dropPrimaryKey: { tableName: repovalidsince }
         - addColumn:
-            tableName: "${t_RepoValidSince}"
+            tableName: repovalidsince
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repovalidsince_repo_id, tableName: "${t_RepoValidSince}" }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_repovalidsince_repo_id, tableName: repovalidsince }
 
   - changeSet:
       id: v063-update-seafileconf-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_SeafileConf}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: seafileconf, columnName: id } } } ]
       changes:
         - addColumn:
-            tableName: "${t_SeafileConf}"
+            tableName: seafileconf
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
 
   - changeSet:
       id: v063-update-systeminfo-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_SystemInfo}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: systeminfo, columnName: id } } } ]
       changes:
         - addColumn:
-            tableName: "${t_SystemInfo}"
+            tableName: systeminfo
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
 
   - changeSet:
       id: v063-update-userquota-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_UserQuota}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: userquota, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_UserQuota}" }
+        - dropPrimaryKey: { tableName: userquota }
         - addColumn:
-            tableName: "${t_UserQuota}"
+            tableName: userquota
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "user", constraintName: uq_userquota_user, tableName: "${t_UserQuota}" }
+        - addUniqueConstraint: { columnNames: "user", constraintName: uq_userquota_user, tableName: userquota }
 
   - changeSet:
       id: v063-update-usersharequota-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_UserShareQuota}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: usersharequota, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_UserShareQuota}" }
+        - dropPrimaryKey: { tableName: usersharequota }
         - addColumn:
-            tableName: "${t_UserShareQuota}"
+            tableName: usersharequota
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "user", constraintName: uq_usersharequota_user, tableName: "${t_UserShareQuota}" }
+        - addUniqueConstraint: { columnNames: "user", constraintName: uq_usersharequota_user, tableName: usersharequota }
 
   - changeSet:
       id: v063-update-virtualrepo-id
       author: seafile
-      preConditions:
-        - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_VirtualRepo}", columnName: id } }
+      preConditions: [ { onFail: CONTINUE, not: { columnExists: { tableName: virtualrepo, columnName: id } } } ]
       changes:
-        - dropPrimaryKey: { tableName: "${t_VirtualRepo}" }
+        - dropPrimaryKey: { tableName: virtualrepo }
         - addColumn:
-            tableName: "${t_VirtualRepo}"
+            tableName: virtualrepo
             columns:
               - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
-        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_virtualrepo_repo_id, tableName: "${t_VirtualRepo}" }
+        - addUniqueConstraint: { columnNames: "repo_id", constraintName: uq_virtualrepo_repo_id, tableName: virtualrepo }

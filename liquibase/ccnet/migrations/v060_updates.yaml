@@ -4,9 +4,7 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          sqlCheck:
-            expectedResult: 1
-            sql: "${index_exists_query} 'idx_ldapusers_email'"
+          indexExists: { indexName: idx_ldapusers_email, tableName: ldapusers }
       changes:
-        - dropIndex: { indexName: idx_ldapusers_email, tableName: "${t_LDAPUsers}" }
-        - addUniqueConstraint: { columnNames: email, constraintName: uq_ldapusers_email, tableName: "${t_LDAPUsers}" }
+        - dropIndex: { indexName: idx_ldapusers_email, tableName: ldapusers }
+        - addUniqueConstraint: { columnNames: email, constraintName: uq_ldapusers_email, tableName: ldapusers }

@@ -1,12 +1,16 @@
 databaseChangeLog:
   - changeSet:
+      id: v030-normalize-garbagerepos
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: garbagerepos } } ]
+      changes: [ { renameTable: { oldTableName: GarbageRepos, newTableName: garbagerepos } } ]
+  - changeSet:
       id: v030-create-garbagerepos
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_GarbageRepos}" } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: garbagerepos } } } ]
       changes:
         - createTable:
-            tableName: "${t_GarbageRepos}"
+            tableName: garbagerepos
             columns:
               - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }

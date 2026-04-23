@@ -4,78 +4,60 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not:
-            columnExists:
-              tableName: "${t_Group}"
-              columnName: type
+          not: { columnExists: { tableName: "Group", columnName: type } }
       changes:
         - addColumn:
-            tableName: "${t_Group}"
+            tableName: "Group"
             columns:
-              - column:
-                  name: type
-                  type: varchar(32)
+              - column: { name: type, type: varchar(32) }
+
+  - changeSet:
+      id: v041-normalize-ldapusers
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: CONTINUE
+          tableExists: { tableName: ldapusers }
+      changes:
+        - renameTable: { oldTableName: LDAPUsers, newTableName: ldapusers }
 
   - changeSet:
       id: v041-create-ldapusers
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_LDAPUsers}" } }
+          not: { tableExists: { tableName: ldapusers } }
       changes:
         - createTable:
-            tableName: "${t_LDAPUsers}"
+            tableName: ldapusers
             columns:
-              - column:
-                  name: id
-                  type: int
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: password
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: is_staff
-                  type: boolean
-                  constraints:
-                    nullable: false
-              - column:
-                  name: is_active
-                  type: boolean
-                  constraints:
-                    nullable: false
-              - column:
-                  name: extra_attrs
-                  type: text
-        - createIndex:
-            indexName: idx_ldapusers_email
-            tableName: "${t_LDAPUsers}"
-            columns:
-              - column:
-                  name: email
+              - column: { name: id, type: int, autoIncrement: true, constraints: { primaryKey: true, nullable: false } }
+              - column: { name: email, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: password, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: is_staff, type: boolean, constraints: { nullable: false } }
+              - column: { name: is_active, type: boolean, constraints: { nullable: false } }
+              - column: { name: extra_attrs, type: text }
+        - createIndex: { indexName: idx_ldapusers_email, tableName: ldapusers, columns: [ { name: email } ] }
+
+  - changeSet:
+      id: v041-normalize-groupdnpair
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: CONTINUE
+          tableExists: { tableName: groupdnpair }
+      changes:
+        - renameTable: { oldTableName: GroupDNPair, newTableName: groupdnpair }
 
   - changeSet:
       id: v041-create-groupdnpair
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_GroupDNPair}" } }
+          not: { tableExists: { tableName: groupdnpair } }
       changes:
         - createTable:
-            tableName: "${t_GroupDNPair}"
+            tableName: groupdnpair
             columns:
-              - column:
-                  name: group_id
-                  type: int
-              - column:
-                  name: dn
-                  type: varchar(255)
+              - column: { name: group_id, type: int }
+              - column: { name: dn, type: varchar(255) }

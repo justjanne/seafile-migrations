@@ -4,6 +4,6 @@ databaseChangeLog:
       author: seafile
       changes:
         - modifyDataType:
-            tableName: "${t_EmailUser}"
+            tableName: emailuser
             columnName: passwd
             newDataType: char(64)

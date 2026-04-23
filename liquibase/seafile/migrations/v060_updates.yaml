@@ -1,13 +1,17 @@
 databaseChangeLog:
   - changeSet:
+      id: v060-normalize-repofilecount
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions: [ { onFail: CONTINUE, tableExists: { tableName: repofilecount } } ]
+      changes: [ { renameTable: { oldTableName: RepoFileCount, newTableName: repofilecount } } ]
+  - changeSet:
       id: v060-create-repofilecount
       author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not: { tableExists: { tableName: "${t_RepoFileCount}" } }
+      preConditions: [ { onFail: MARK_RAN, not: { tableExists: { tableName: repofilecount } } } ]
       changes:
         - createTable:
-            tableName: "${t_RepoFileCount}"
+            tableName: repofilecount
             columns:
               - column: { name: repo_id, type: char(36), constraints: { primaryKey: true, nullable: false } }
               - column: { name: file_count, type: bigint }
@@ -17,9 +21,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: CONTINUE
-          not: { columnExists: { tableName: "${t_RepoTokenPeerInfo}", columnName: client_ver } }
+          not: { columnExists: { tableName: repotokenpeerinfo, columnName: client_ver } }
       changes:
         - addColumn:
-            tableName: "${t_RepoTokenPeerInfo}"
+            tableName: repotokenpeerinfo
             columns:
               - column: { name: client_ver, type: varchar(20) }
