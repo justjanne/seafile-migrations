@@ -1,3 +1,0 @@
-ALTER TABLE `SystemInfo` 
-  ADD COLUMN `id` bigint NOT NULL AUTO_INCREMENT FIRST,
-  ADD PRIMARY KEY (`id`);

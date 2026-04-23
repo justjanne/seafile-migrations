@@ -1,1 +1,0 @@
-ALTER TABLE `UserRole` MODIFY `id` bigint NOT NULL AUTO_INCREMENT;

@@ -1,6 +1,0 @@
-ALTER TABLE `RepoTokenPeerInfo` 
-  DROP PRIMARY KEY,
-  ADD COLUMN `id` bigint NOT NULL AUTO_INCREMENT FIRST,
-  ADD PRIMARY KEY (`id`),
-  MODIFY `token` char(41) DEFAULT NULL,
-  ADD UNIQUE KEY `token` (`token`);

@@ -1,1 +1,0 @@
-alter index virtualrepo_origin_repo_idx rename to idx_virtualrepo_origin_repo;
