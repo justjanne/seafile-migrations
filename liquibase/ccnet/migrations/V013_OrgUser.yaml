@@ -15,6 +15,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: orguser
+        newTableName: orguser
+- changeSet:
+    id: normalize-orguser
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: OrgUser
         newTableName: orguser
 - changeSet:
@@ -38,9 +47,15 @@ databaseChangeLog:
     - addUniqueConstraint:
         columnNames: org_id, email
         tableName: orguser
-    - createIndex:
-        indexName: email
+    - dropIndex:
         tableName: orguser
+        indexName: email
+    - dropIndex:
+        tableName: orguser
+        indexName: orguser_email_idx
+    - createIndex:
+        tableName: orguser
+        indexName: idx_orguser_email
         columns:
         - column:
             name: email
@@ -49,3 +64,4 @@ databaseChangeLog:
       not:
         tableExists:
           tableName: orguser
+    failOnError: false

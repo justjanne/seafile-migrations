@@ -36,9 +36,15 @@ databaseChangeLog:
         - column:
             name: extra_attrs
             type: text
-    - createIndex:
-        indexName: email
+    - dropIndex:
         tableName: ldapusers
+        indexName: email
+    - dropIndex:
+        tableName: ldapusers
+        indexName: ldapusers_email_idx
+    - createIndex:
+        tableName: ldapusers
+        indexName: idx_ldapusers_email
         columns:
         - column:
             name: email
@@ -47,3 +53,4 @@ databaseChangeLog:
       not:
         tableExists:
           tableName: ldapusers
+    failOnError: false

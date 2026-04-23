@@ -9,6 +9,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `organization` MODIFY COLUMN `org_id` bigint NOT NULL AUTO_INCREMENT
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `organization` MODIFY COLUMN `org_id` bigint NOT NULL AUTO_INCREMENT
     - modifyDataType:
         tableName: organization
         columnName: org_id

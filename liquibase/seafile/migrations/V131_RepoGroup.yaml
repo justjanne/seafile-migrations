@@ -13,11 +13,17 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `repogroup` MODIFY COLUMN `repo_id` CHAR(37)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `repogroup` MODIFY COLUMN `repo_id` CHAR(37)
     - modifyDataType:
         tableName: repogroup
         columnName: repo_id
         newDataType: CHAR(37)
         dbms: postgresql
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `repogroup` MODIFY COLUMN `permission` CHAR(15)
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `repogroup` MODIFY COLUMN `permission` CHAR(15)
@@ -32,9 +38,15 @@ databaseChangeLog:
     - dropIndex:
         tableName: repogroup
         indexName: repogroup_repoid_idx
-    - createIndex:
+    - dropIndex:
         tableName: repogroup
         indexName: repo_id
+    - dropIndex:
+        tableName: repogroup
+        indexName: repogroup_repo_id_idx
+    - createIndex:
+        tableName: repogroup
+        indexName: idx_repogroup_repo_id
         columns:
         - column:
             name: repo_id

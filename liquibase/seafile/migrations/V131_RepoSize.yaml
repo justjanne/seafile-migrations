@@ -13,6 +13,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `reposize` MODIFY COLUMN `head_id` CHAR(41)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `reposize` MODIFY COLUMN `head_id` CHAR(41)
     - modifyDataType:
         tableName: reposize
         columnName: head_id

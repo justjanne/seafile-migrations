@@ -10,9 +10,12 @@ databaseChangeLog:
     - dropIndex:
         tableName: repotrash
         indexName: repotrash_owner_id
-    - createIndex:
+    - dropIndex:
         tableName: repotrash
         indexName: owner_id
+    - createIndex:
+        tableName: repotrash
+        indexName: idx_repotrash_owner_id
         columns:
         - column:
             name: owner_id

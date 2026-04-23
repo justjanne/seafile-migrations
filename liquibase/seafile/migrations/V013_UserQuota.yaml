@@ -15,6 +15,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: userquota
+        newTableName: userquota
+- changeSet:
+    id: normalize-userquota
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: UserQuota
         newTableName: userquota
 - changeSet:

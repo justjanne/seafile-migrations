@@ -9,6 +9,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `repotokenpeerinfo` MODIFY COLUMN `peer_id` char(41)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `repotokenpeerinfo` MODIFY COLUMN `peer_id` char(41)
     - modifyDataType:
         tableName: repotokenpeerinfo
         columnName: peer_id

@@ -21,14 +21,18 @@ databaseChangeLog:
         - column:
             name: base_commit
             type: char(40)
+    - dropIndex:
+        tableName: virtualrepo
+        indexName: origin_repo
     - createIndex:
+        tableName: virtualrepo
+        indexName: idx_virtualrepo_origin_repo
         columns:
         - column:
             name: origin_repo
-        indexName: virtualrepo_origin_repo_idx
-        tableName: virtualrepo
     preConditions:
       onFail: MARK_RAN
       not:
         tableExists:
           tableName: virtualrepo
+    failOnError: false

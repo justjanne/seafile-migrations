@@ -29,6 +29,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `orgquota` MODIFY COLUMN `org_id` int NOT NULL AUTO_INCREMENT
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `orgquota` MODIFY COLUMN `org_id` int NOT NULL AUTO_INCREMENT
     - modifyDataType:
         dbms: postgresql
         tableName: orgquota

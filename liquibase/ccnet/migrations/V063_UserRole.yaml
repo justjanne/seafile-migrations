@@ -9,6 +9,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `userrole` MODIFY COLUMN `id` bigint NOT NULL AUTO_INCREMENT
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `userrole` MODIFY COLUMN `id` bigint NOT NULL AUTO_INCREMENT
     - modifyDataType:
         tableName: userrole
         columnName: id

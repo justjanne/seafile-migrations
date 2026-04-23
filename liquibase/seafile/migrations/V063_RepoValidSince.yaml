@@ -20,6 +20,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `repovalidsince` MODIFY COLUMN `repo_id` CHAR(37)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `repovalidsince` MODIFY COLUMN `repo_id` CHAR(37)
     - modifyDataType:
         tableName: repovalidsince
         columnName: repo_id

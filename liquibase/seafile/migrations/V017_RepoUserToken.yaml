@@ -3,9 +3,16 @@ databaseChangeLog:
     id: V017_RepoUserToken
     author: seafile
     changes:
+    - dropIndex:
+        tableName: repousertoken
+        indexName: email
+    - dropIndex:
+        tableName: repousertoken
+        indexName: repousertoken_email_idx
     - createIndex:
+        tableName: repousertoken
+        indexName: idx_repousertoken_email
         columns:
         - column:
             name: email
-        indexName: email
-        tableName: repousertoken
+    failOnError: false

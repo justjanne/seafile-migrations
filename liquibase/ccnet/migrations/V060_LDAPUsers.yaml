@@ -11,11 +11,16 @@ databaseChangeLog:
         indexName: email
         tableName: ldapusers
         dbms: mysql
-    - createIndex:
-        indexName: email
+    - dropIndex:
         tableName: ldapusers
+        indexName: email
+    - dropIndex:
+        tableName: ldapusers
+        indexName: ldapusers_email_idx
+    - createIndex:
+        tableName: ldapusers
+        indexName: idx_ldapusers_email
         columns:
         - column:
             name: email
-        unique: true
     failOnError: false

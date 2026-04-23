@@ -29,6 +29,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `branch` MODIFY COLUMN `name` varchar(10)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `branch` MODIFY COLUMN `name` varchar(10)
     - modifyDataType:
         dbms: postgresql
         tableName: branch
@@ -40,11 +43,17 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `branch` MODIFY COLUMN `repo_id` char(41)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `branch` MODIFY COLUMN `repo_id` char(41)
     - modifyDataType:
         tableName: branch
         columnName: repo_id
         newDataType: char(41)
         dbms: postgresql
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `branch` MODIFY COLUMN `commit_id` char(41)
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `branch` MODIFY COLUMN `commit_id` char(41)

@@ -19,6 +19,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `from_email` varchar(255)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `from_email` varchar(255)
     - modifyDataType:
         tableName: sharedrepo
         columnName: from_email
@@ -30,20 +33,35 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `to_email` varchar(255)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `sharedrepo` MODIFY COLUMN `to_email` varchar(255)
     - modifyDataType:
         tableName: sharedrepo
         columnName: to_email
         newDataType: varchar(255)
         dbms: postgresql
-    - createIndex:
-        indexName: idx_SharedRepo_from_email
+    - dropIndex:
         tableName: sharedrepo
+        indexName: from_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_from_email_idx
+    - createIndex:
+        tableName: sharedrepo
+        indexName: idx_sharedrepo_from_email
         columns:
         - column:
             name: from_email
-    - createIndex:
-        indexName: idx_SharedRepo_to_email
+    - dropIndex:
         tableName: sharedrepo
+        indexName: to_email
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_to_email_idx
+    - createIndex:
+        tableName: sharedrepo
+        indexName: idx_sharedrepo_to_email
         columns:
         - column:
             name: to_email
@@ -53,3 +71,4 @@ databaseChangeLog:
         columnExists:
           tableName: sharedrepo
           columnName: id
+    failOnError: false

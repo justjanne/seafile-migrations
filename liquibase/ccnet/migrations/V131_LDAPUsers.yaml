@@ -10,11 +10,17 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `ldapusers` MODIFY COLUMN `is_staff` boolean
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `ldapusers` MODIFY COLUMN `is_staff` boolean
     - modifyDataType:
         tableName: ldapusers
         columnName: is_staff
         newDataType: boolean
         dbms: postgresql
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `ldapusers` MODIFY COLUMN `is_active` boolean
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `ldapusers` MODIFY COLUMN `is_active` boolean

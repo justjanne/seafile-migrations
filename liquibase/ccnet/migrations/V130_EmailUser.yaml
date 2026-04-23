@@ -12,15 +12,27 @@ databaseChangeLog:
             defaultValue: false
             constraints:
               nullable: false
-    - createIndex:
-        indexName: is_active
+    - dropIndex:
         tableName: emailuser
+        indexName: is_active
+    - dropIndex:
+        tableName: emailuser
+        indexName: emailuser_is_active
+    - createIndex:
+        tableName: emailuser
+        indexName: idx_emailuser_is_active
         columns:
         - column:
             name: is_active
-    - createIndex:
-        indexName: is_department_owner
+    - dropIndex:
         tableName: emailuser
+        indexName: is_department_owner
+    - dropIndex:
+        tableName: emailuser
+        indexName: emailuser_is_department_owenr
+    - createIndex:
+        tableName: emailuser
+        indexName: idx_emailuser_is_department_owner
         columns:
         - column:
             name: is_department_owner
@@ -30,3 +42,4 @@ databaseChangeLog:
         columnExists:
           tableName: emailuser
           columnName: is_department_owner
+    failOnError: false

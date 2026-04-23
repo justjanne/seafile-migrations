@@ -15,6 +15,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: orggroup
+        newTableName: orggroup
+- changeSet:
+    id: normalize-orggroup
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: OrgGroup
         newTableName: orggroup
 - changeSet:
@@ -33,9 +42,15 @@ databaseChangeLog:
     - addUniqueConstraint:
         columnNames: org_id, group_id
         tableName: orggroup
-    - createIndex:
-        indexName: group_id
+    - dropIndex:
         tableName: orggroup
+        indexName: group_id
+    - dropIndex:
+        tableName: orggroup
+        indexName: orggroup_groupid_idx
+    - createIndex:
+        tableName: orggroup
+        indexName: idx_orggroup_group_id
         columns:
         - column:
             name: group_id
@@ -44,3 +59,4 @@ databaseChangeLog:
       not:
         tableExists:
           tableName: orggroup
+    failOnError: false

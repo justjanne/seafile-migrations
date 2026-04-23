@@ -15,6 +15,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: repoowner
+        newTableName: repoowner
+- changeSet:
+    id: normalize-repoowner
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: RepoOwner
         newTableName: repoowner
 - changeSet:
@@ -33,9 +42,18 @@ databaseChangeLog:
         - column:
             name: owner_id
             type: varchar(255)
-    - createIndex:
+    - dropIndex:
         tableName: repoowner
         indexName: owner_id
+    - dropIndex:
+        tableName: repoowner
+        indexName: repoowner_owner_id_idx
+    - dropIndex:
+        tableName: repoowner
+        indexName: repoowner_owner_id_uq
+    - createIndex:
+        tableName: repoowner
+        indexName: idx_repoowner_owner_id
         columns:
         - column:
             name: owner_id
@@ -44,3 +62,4 @@ databaseChangeLog:
       not:
         tableExists:
           tableName: repoowner
+    failOnError: false

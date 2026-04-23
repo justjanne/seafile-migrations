@@ -20,6 +20,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `usersharequota` MODIFY COLUMN `user` VARCHAR(255)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `usersharequota` MODIFY COLUMN `user` VARCHAR(255)
     - modifyDataType:
         tableName: usersharequota
         columnName: user

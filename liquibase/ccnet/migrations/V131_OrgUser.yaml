@@ -10,6 +10,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `orguser` MODIFY COLUMN `is_staff` boolean
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `orguser` MODIFY COLUMN `is_staff` boolean
     - modifyDataType:
         tableName: orguser
         columnName: is_staff
@@ -18,9 +21,15 @@ databaseChangeLog:
     - dropIndex:
         tableName: orguser
         indexName: email
-    - createIndex:
+    - dropIndex:
         tableName: orguser
         indexName: email
+    - dropIndex:
+        tableName: orguser
+        indexName: orguser_email_idx
+    - createIndex:
+        tableName: orguser
+        indexName: idx_orguser_email
         columns:
         - column:
             name: email

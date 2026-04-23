@@ -29,11 +29,17 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `orguserquota` MODIFY COLUMN `org_id` int NOT NULL AUTO_INCREMENT
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `orguserquota` MODIFY COLUMN `org_id` int NOT NULL AUTO_INCREMENT
     - modifyDataType:
         dbms: postgresql
         tableName: orguserquota
         columnName: org_id
         newDataType: int
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `orguserquota` MODIFY COLUMN `user` varchar(255)
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `orguserquota` MODIFY COLUMN `user` varchar(255)

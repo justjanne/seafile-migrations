@@ -29,6 +29,9 @@ databaseChangeLog:
     - sql:
         dbms: mysql,mariadb
         sql: ALTER TABLE `garbagerepos` MODIFY COLUMN `repo_id` char(36)
+    - sql:
+        dbms: mysql,mariadb
+        sql: ALTER TABLE `garbagerepos` MODIFY COLUMN `repo_id` char(36)
     - modifyDataType:
         dbms: postgresql
         tableName: garbagerepos

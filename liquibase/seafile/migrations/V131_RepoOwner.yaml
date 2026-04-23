@@ -10,9 +10,18 @@ databaseChangeLog:
     - dropIndex:
         tableName: repoowner
         indexName: repoowner_owner_idx
-    - createIndex:
+    - dropIndex:
         tableName: repoowner
         indexName: owner_id
+    - dropIndex:
+        tableName: repoowner
+        indexName: repoowner_owner_id_idx
+    - dropIndex:
+        tableName: repoowner
+        indexName: repoowner_owner_id_uq
+    - createIndex:
+        tableName: repoowner
+        indexName: idx_repoowner_owner_id
         columns:
         - column:
             name: owner_id

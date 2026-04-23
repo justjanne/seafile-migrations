@@ -15,6 +15,15 @@ databaseChangeLog:
     failOnError: false
     changes:
     - renameTable:
+        oldTableName: sharedrepo
+        newTableName: sharedrepo
+- changeSet:
+    id: normalize-sharedrepo
+    author: seafile
+    dbms: mysql,mariadb
+    failOnError: false
+    changes:
+    - renameTable:
         oldTableName: SharedRepo
         newTableName: sharedrepo
 - changeSet:
@@ -36,9 +45,15 @@ databaseChangeLog:
         - column:
             name: permission
             type: char(15)
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: repo_id
+    - dropIndex:
+        tableName: sharedrepo
+        indexName: sharedrepo_repoid_idx
     - createIndex:
         tableName: sharedrepo
-        indexName: sharedrepo_repo_id_idx
+        indexName: idx_sharedrepo_repo_id
         columns:
         - column:
             name: repo_id
@@ -47,3 +62,4 @@ databaseChangeLog:
       not:
         tableExists:
           tableName: sharedrepo
+    failOnError: false

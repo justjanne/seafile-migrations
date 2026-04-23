@@ -9,16 +9,22 @@ databaseChangeLog:
         - column:
             name: reference_id
             type: varchar(255)
-    - createIndex:
-        indexName: reference_id
+    - dropIndex:
         tableName: emailuser
+        indexName: reference_id
+    - dropIndex:
+        tableName: emailuser
+        indexName: emailuser_reference_id_idx
+    - createIndex:
+        tableName: emailuser
+        indexName: idx_emailuser_reference_id
         columns:
         - column:
             name: reference_id
-        unique: true
     preConditions:
       onFail: CONTINUE
       not:
         columnExists:
           tableName: emailuser
           columnName: reference_id
+    failOnError: false
