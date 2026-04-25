@@ -4,7 +4,7 @@ databaseChangeLog:
       author: seafile
       changes:
         - modifyDataType:
-            tableName: EmailUser
+            tableName: emailuser
             columnName: is_active
             newDataType: boolean
   - changeSet:
@@ -12,6 +12,6 @@ databaseChangeLog:
       author: seafile
       changes:
         - modifyDataType:
-            tableName: EmailUser
+            tableName: emailuser
             columnName: is_staff
             newDataType: boolean

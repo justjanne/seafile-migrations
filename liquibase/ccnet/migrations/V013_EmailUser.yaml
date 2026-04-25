@@ -2,25 +2,21 @@ databaseChangeLog:
   - changeSet:
       id: V013_EmailUser_normalize
       author: seafile
+      failOnError: false
       preConditions:
-        - onFail: MARK_RAN
-          tableExists:
-            tableName: emailuser
+        - tableExists:
+            tableName: EmailUser
       changes:
         - renameTable:
-            oldTableName: emailuser
-            newTableName: EmailUser
+            oldTableName: EmailUser
+            newTableName: emailuser
   - changeSet:
       id: V013_EmailUser-table
       author: seafile
-      preConditions:
-        onFail: MARK_RAN
-        not:
-          tableExists:
-            tableName: EmailUser
       changes:
         - createTable:
-            tableName: EmailUser
+            tableName: emailuser
+            ifNotExists: true
             columns:
               - column:
                   name: id

@@ -22,5 +22,3 @@ for table in databasechangelog databasechangeloglock; do
 done
 liquibase --url="jdbc:postgresql://127.0.0.1:5432/$1" --username="postgres" --password="password" --search-path="$1" snapshot --output-file=../test/$1-pgsql-migrated.json
 sed -i -E '/^ *order: [0-9]+$/d' ../test/$1-pgsql-migrated.json
-sed -i 's/EmailUser/emailuser/g' ../test/$1-pgsql-migrated.json
-sed -i 's/Binding/binding/g' ../test/$1-pgsql-migrated.json
