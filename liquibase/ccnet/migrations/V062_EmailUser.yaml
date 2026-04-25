@@ -2,27 +2,21 @@ databaseChangeLog:
   - changeSet:
       id: V062_EmailUser_reference_id
       author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          columnExists:
+            tableName: EmailUser
+            columnName: reference_id
       changes:
         - addColumn:
-            tableName: emailuser
+            tableName: EmailUser
             columns:
               - column:
                   name: reference_id
                   type: varchar(255)
   - changeSet:
       id: V062_EmailUser_normalize_reference_id_1
-      author: seafile
-      preConditions:
-        onFail: MARK_RAN
-        indexExists:
-          tableName: emailuser
-          indexName: reference_id
-      changes:
-        - dropIndex:
-            tableName: emailuser
-            indexName: reference_id
-  - changeSet:
-      id: V062_EmailUser_normalize_reference_id_2
       author: seafile
       preConditions:
         onFail: MARK_RAN
@@ -34,29 +28,65 @@ databaseChangeLog:
             tableName: emailuser
             constraintName: reference_id
   - changeSet:
-      id: V062_EmailUser_normalize_reference_id_3
+      id: V062_EmailUser_normalize_reference_id_2
       author: seafile
       preConditions:
         onFail: MARK_RAN
         indexExists:
-          tableName: emailuser
-          indexName: emailuser_reference_id_idx
+          tableName: EmailUser
+          indexName: reference_id
       changes:
         - dropIndex:
-            tableName: emailuser
-            indexName: emailuser_reference_id_idx
+            tableName: EmailUser
+            indexName: reference_id
+  - changeSet:
+      id: V062_EmailUser_normalize_reference_id_3
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        uniqueConstraintExists:
+          tableName: EmailUser
+          constraintName: emailuser_reference_id_idx
+      changes:
+        - dropUniqueConstraint:
+            tableName: EmailUser
+            constraintName: emailuser_reference_id_idx
   - changeSet:
       id: V062_EmailUser_normalize_reference_id_4
       author: seafile
       preConditions:
         onFail: MARK_RAN
+        indexExists:
+          tableName: EmailUser
+          indexName: emailuser_reference_id_idx
+      changes:
+        - dropIndex:
+            tableName: EmailUser
+            indexName: emailuser_reference_id_idx
+  - changeSet:
+      id: V062_EmailUser_normalize_reference_id_5
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
         uniqueConstraintExists:
-          tableName: emailuser
-          constraintName: emailuser_reference_id_idx
+          tableName: EmailUser
+          constraintName: emailuser_reference_id_key
       changes:
         - dropUniqueConstraint:
-            tableName: emailuser
-            constraintName: emailuser_reference_id_idx
+            tableName: EmailUser
+            constraintName: emailuser_reference_id_key
+  - changeSet:
+      id: V062_EmailUser_normalize_reference_id_6
+      author: seafile
+      preConditions:
+        onFail: MARK_RAN
+        indexExists:
+          tableName: EmailUser
+          indexName: emailuser_reference_id_key
+      changes:
+        - dropIndex:
+            tableName: EmailUser
+            indexName: emailuser_reference_id_key
   - changeSet:
       id: V062_EmailUser_index_reference_id
       author: seafile
@@ -64,11 +94,11 @@ databaseChangeLog:
         onFail: MARK_RAN
         not:
           indexExists:
-            tableName: emailuser
+            tableName: EmailUser
             indexName: idx_emailuser_reference_id
       changes:
         - addUniqueConstraint:
-            tableName: emailuser
+            tableName: EmailUser
             constraintName: idx_emailuser_reference_id
             columnNames: reference_id
 

@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_EmailUser_normalize_is_active
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: EmailUser
+            columnName: is_active
+            newDataType: boolean
+  - changeSet:
+      id: V130_EmailUser_normalize_is_staff
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: EmailUser
+            columnName: is_staff
+            newDataType: boolean

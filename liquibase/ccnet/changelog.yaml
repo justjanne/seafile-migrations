@@ -1,4 +1,4 @@
 databaseChangeLog:
-  - objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+  - objectQuotingStrategy: QUOTE_ALL_OBJECTS
   - includeAll:
       path: "migrations/"

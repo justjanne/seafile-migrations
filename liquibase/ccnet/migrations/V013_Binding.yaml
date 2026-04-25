@@ -1,26 +1,26 @@
 databaseChangeLog:
   - changeSet:
-      id: V013_Binding-normalize
+      id: V013_Binding_normalize
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           tableExists:
-            tableName: Binding
+            tableName: binding
       changes:
         - renameTable:
-            oldTableName: Binding
-            newTableName: binding
+            oldTableName: binding
+            newTableName: Binding
   - changeSet:
-      id: V013_Binding-table
+      id: V013_Binding_table
       author: seafile
       preConditions:
-        onFail: MARK_RAN
-        not:
-          tableExists:
-            tableName: binding
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: Binding
       changes:
         - createTable:
-            tableName: binding
+            tableName: Binding
             columns:
               - column:
                   name: email
@@ -34,26 +34,26 @@ databaseChangeLog:
       id: V013_Binding_normalize_email
       author: seafile
       preConditions:
-        onFail: MARK_RAN
-        indexExists:
-          tableName: binding
-          indexName: email
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: Binding
+            indexName: email
       changes:
         - dropIndex:
-            tableName: binding
+            tableName: Binding
             indexName: email
   - changeSet:
       id: V013_Binding_index_email
       author: seafile
       preConditions:
-        onFail: MARK_RAN
-        not:
-          indexExists:
-            tableName: binding
-            indexName: idx_binding_email
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: Binding
+                indexName: idx_binding_email
       changes:
         - createIndex:
-            tableName: binding
+            tableName: Binding
             indexName: idx_binding_email
             columns:
               - column:

@@ -1,15 +1,15 @@
 databaseChangeLog:
   - changeSet:
-      id: V013_EmailUser-normalize
+      id: V013_EmailUser_normalize
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           tableExists:
-            tableName: EmailUser
+            tableName: emailuser
       changes:
         - renameTable:
-            oldTableName: EmailUser
-            newTableName: emailuser
+            oldTableName: emailuser
+            newTableName: EmailUser
   - changeSet:
       id: V013_EmailUser-table
       author: seafile
@@ -17,10 +17,10 @@ databaseChangeLog:
         onFail: MARK_RAN
         not:
           tableExists:
-            tableName: emailuser
+            tableName: EmailUser
       changes:
         - createTable:
-            tableName: emailuser
+            tableName: EmailUser
             columns:
               - column:
                   name: id

@@ -1,21 +1,63 @@
 databaseChangeLog:
-- changeSet:
-    id: V063_Binding
-    author: seafile
-    changes:
-    - addColumn:
-        tableName: binding
-        columns:
-        - column:
-            name: id
-            type: bigint
-            autoIncrement: true
-            constraints:
-              primaryKey: true
-              nullable: false
-    preConditions:
-      onFail: MARK_RAN
-      not:
-        columnExists:
-          tableName: binding
-          columnName: id
+  - changeSet:
+      id: V063_Binding_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: Binding
+            columnName: id
+      changes:
+        - modifyDataType:
+            tableName: Binding
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_Binding_autoincrement_id
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: Binding
+            columnName: id
+      changes:
+        - addAutoIncrement:
+            tableName: Binding
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_Binding
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: Binding
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: Binding
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+  - changeSet:
+      id: V013_Binding_normalize_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: Binding
+            primaryKeyName: binding_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: Binding
+        - addPrimaryKey:
+            tableName: Binding
+            columnNames: id
+            constraintName: binding_pkey

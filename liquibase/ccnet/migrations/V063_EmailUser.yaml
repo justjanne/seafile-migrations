@@ -4,7 +4,7 @@ databaseChangeLog:
       author: seafile
       changes:
         - modifyDataType:
-            tableName: emailuser
+            tableName: EmailUser
             columnName: id
             newDataType: bigserial
   - changeSet:
@@ -13,6 +13,6 @@ databaseChangeLog:
       dbms: mysql,mariadb
       changes:
         - addAutoIncrement:
-            tableName: emailuser
+            tableName: EmailUser
             columnName: id
-            columnDataType: bigserial
+            columnDataType: bigint
