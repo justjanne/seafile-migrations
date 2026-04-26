@@ -8,3 +8,5 @@ set -euo pipefail
 ./pgsql-clean.sh ccnet
 ./pgsql-legacy.sh ccnet
 ./pgsql-migrated.sh ccnet
+
+./results.sh ccnet > ../test/results.txt
