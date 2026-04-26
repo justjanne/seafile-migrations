@@ -1,16 +1,20 @@
 #!/usr/bin/env bash
+set -euo pipefail
+
+OUTPUT_FILE=../test/$1-pgsql-migrated.json
 
 # cleanup
+echo > $OUTPUT_FILE
 psql postgres://postgres:password@localhost/postgres -c "DROP DATABASE IF EXISTS $1"
 
 # prepare
 psql postgres://postgres:password@localhost/postgres -c "CREATE DATABASE $1"
-psql postgres://postgres:password@localhost/ccnet --file=../schemas/$1/pgsql/018.sql
+psql postgres://postgres:password@localhost/ccnet --file=../schemas/$1/pgsql/018.sql || true
 for i in $(ls ../legacy/$1/pgsql/*.sql | sort); do
-  psql postgres://postgres:password@localhost/ccnet --file=$i
+  psql postgres://postgres:password@localhost/ccnet --file=$i || true
 done
 for table in Group groupdnpair groupstructure GroupStructure groupuser ldapconfig LDAPConfig ldapusers organization orgfileextwhitelist orggroup orguser userrole; do
-  psql postgres://postgres:password@localhost/$1 -c "drop table if exists \"$table\""
+  psql postgres://postgres:password@localhost/$1 -c "drop table if exists \"$table\"" || true
 done
 
 # migrate
@@ -18,7 +22,6 @@ liquibase --url="jdbc:postgresql://127.0.0.1:5432/$1" --username="postgres" --pa
 
 # snapshot
 for table in databasechangelog databasechangeloglock; do
-  psql postgres://postgres:password@localhost/$1 -c "drop table if exists \"$table\""
+  psql postgres://postgres:password@localhost/$1 -c "drop table if exists \"$table\"" || true
 done
-liquibase --url="jdbc:postgresql://127.0.0.1:5432/$1" --username="postgres" --password="password" --search-path="$1" snapshot --output-file=../test/$1-pgsql-migrated.json
-sed -i -E '/^ *order: [0-9]+$/d' ../test/$1-pgsql-migrated.json
+liquibase --url="jdbc:postgresql://127.0.0.1:5432/$1" --username="postgres" --password="password" --search-path="$1" snapshot --output-file=$OUTPUT_FILE
