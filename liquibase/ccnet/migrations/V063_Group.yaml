@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_Group_normalize_reference_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: group
+            columnName: parent_group_id
+      changes:
+        - addDefaultValue:
+            tableName: group
+            columnName: parent_group_id
+            columnDataType: int
+            defaultValue: '0'
+  - changeSet:
+      id: V063_Group_reference_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: group
+                columnName: parent_group_id
+      changes:
+        - addColumn:
+            tableName: group
+            columns:
+              - column:
+                  name: parent_group_id
+                  type: int

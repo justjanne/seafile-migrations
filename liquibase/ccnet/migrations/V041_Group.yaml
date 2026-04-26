@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: V041_Group_reference_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: group
+                columnName: type
+      changes:
+        - addColumn:
+            tableName: group
+            columns:
+              - column:
+                  name: type
+                  type: varchar(32)
