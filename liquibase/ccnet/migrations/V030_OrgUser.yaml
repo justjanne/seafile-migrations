@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: V030_OrgUser_not_null
+      author: seafile
+      changes:
+        - addNotNullConstraint:
+            tableName: orguser
+            columnName: org_id
+            columnDataType: int
+        - addNotNullConstraint:
+            tableName: orguser
+            columnName: email
+            columnDataType: varchar(255)
+  - changeSet:
+      id: V030_OrgUser_pk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: orguser
+      changes:
+        - dropUniqueConstraint:
+            tableName: orguser
+            constraintName: idx_orguser_org_id_email
+        - addPrimaryKey:
+            tableName: orguser
+            columnNames: org_id, email
+            constraintName: orguser_pkey

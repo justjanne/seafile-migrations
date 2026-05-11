@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_OrgUser_normalize_is_staff
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: orguser
+            columnName: is_staff
+            newDataType: boolean

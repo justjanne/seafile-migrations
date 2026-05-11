@@ -1,0 +1,85 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_OrgUser_normalize
+      author: seafile
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: OrgUser
+      changes:
+        - renameTable:
+            oldTableName: OrgUser
+            newTableName: orguser
+  - changeSet:
+      id: V013_OrgUser_table
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: orguser
+            columns:
+              - column:
+                  name: org_id
+                  type: int
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: is_staff
+                  type: boolean
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V013_OrgUser_normalize_org_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orguser
+            indexName: org_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: orguser
+            constraintName: org_id
+  - changeSet:
+      id: V013_OrgUser_index_org_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orguser
+                indexName: idx_orguser_org_id_email
+      changes:
+        - addUniqueConstraint:
+            tableName: orguser
+            columnNames: org_id, email
+            constraintName: idx_orguser_org_id_email
+  - changeSet:
+      id: V013_OrgUser_normalize_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orguser
+            indexName: email
+      changes:
+        - dropIndex:
+            tableName: orguser
+            indexName: email
+  - changeSet:
+      id: V013_OrgUser_index_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orguser
+                indexName: idx_orguser_email
+      changes:
+        - createIndex:
+            tableName: orguser
+            indexName: idx_orguser_email
+            columns:
+              - column:
+                  name: email
