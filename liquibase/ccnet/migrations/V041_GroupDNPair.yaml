@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: V041_GroupDNPair_normalize
+      author: seafile
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: GroupDNPair
+      changes:
+        - renameTable:
+            oldTableName: GroupDNPair
+            newTableName: groupdnpair
+  - changeSet:
+      id: V041_GroupDNPair_table
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: groupdnpair
+            columns:
+              - column:
+                  name: group_id
+                  type: int
+              - column:
+                  name: dn
+                  type: varchar(255)
+  - changeSet:
+      id: V041_GroupDNPair_normalize_dn
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: groupdnpair
+            indexName: dn
+      changes:
+        - dropUniqueConstraint:
+            tableName: groupdnpair
+            constraintName: dn
+  - changeSet:
+      id: V041_GroupDNPair_index_dn
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: groupdnpair
+                indexName: idx_groupdnpair_dn
+      changes:
+        - addUniqueConstraint:
+            tableName: groupdnpair
+            columnNames: dn
+            constraintName: idx_groupdnpair_dn
+  - changeSet:
+      id: V041_GroupDNPair_normalize_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: groupdnpair
+            indexName: group_id
+      changes:
+        - dropIndex:
+            tableName: groupdnpair
+            indexName: group_id
+  - changeSet:
+      id: V041_GroupDNPair_index_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: groupdnpair
+                indexName: idx_groupdnpair_group_id
+      changes:
+        - createIndex:
+            tableName: groupdnpair
+            indexName: idx_groupdnpair_group_id
+            columns:
+              - column:
+                  name: group_id

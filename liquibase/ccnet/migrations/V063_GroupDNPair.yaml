@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_GroupDNPair_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: groupdnpair
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: groupdnpair
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: groupdnpair_pkey
