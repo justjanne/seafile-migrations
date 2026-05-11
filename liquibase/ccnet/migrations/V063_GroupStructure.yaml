@@ -32,6 +32,35 @@ databaseChangeLog:
                   name: path
                   type: varchar(1024)
   - changeSet:
+      id: V063_GroupStructure_id
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: groupstructure
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_GroupStructure_autoincrement_id
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: groupstructure
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_GroupStructure_normalize_group_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: groupstructure
+            indexName: groupstructure_group_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: groupstructure
+            constraintName: groupstructure_group_id_key
+  - changeSet:
       id: V063_GroupStructure_normalize_group_id
       author: seafile
       preConditions:
@@ -64,7 +93,7 @@ databaseChangeLog:
         - onFail: MARK_RAN
           primaryKeyExists:
             tableName: groupstructure
-            primaryKeyName: groupstructure_group_id_key
+            primaryKeyName: groupstructure_id_pkey
       changes:
         - dropPrimaryKey:
             tableName: groupstructure
