@@ -1,0 +1,89 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_GroupUser
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: groupuser
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: groupuser
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+  - changeSet:
+      id: V063_GroupUser_id
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: groupuser
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_GroupUser_autoincrement_id
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: groupuser
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_GroupUser_normalize_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: groupuser
+            primaryKeyName: groupuser_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: groupuser
+        - addPrimaryKey:
+            tableName: groupuser
+            columnNames: id
+            constraintName: groupuser_pkey
+
+  - changeSet:
+      id: V063_GroupUser_normalize_group_id
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: groupuser
+            columnName: group_id
+            newDataType: bigint
+  - changeSet:
+      id: V063_GroupUser_normalize_group_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: groupuser
+            indexName: groupuser_group_id_user_name_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: groupuser
+            constraintName: groupuser_group_id_user_name_key
+  - changeSet:
+      id: V063_GroupUser_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: groupuser
+                indexName: idx_groupuser_group_id
+      changes:
+        - addUniqueConstraint:
+            tableName: groupuser
+            columnNames: 'group_id,user_name'
+            constraintName: idx_groupuser_group_id

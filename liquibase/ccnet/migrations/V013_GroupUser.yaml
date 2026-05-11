@@ -1,0 +1,82 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_GroupUser_normalize
+      author: seafile
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: GroupUser
+      changes:
+        - renameTable:
+            oldTableName: GroupUser
+            newTableName: groupuser
+  - changeSet:
+      id: V013_GroupUser_table
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: groupuser
+            columns:
+              - column:
+                  name: group_id
+                  type: int
+              - column:
+                  name: user_name
+                  type: varchar(255)
+              - column:
+                  name: is_staff
+                  type: tinyint
+  - changeSet:
+      id: V013_GroupUser_normalize_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: groupuser
+            indexName: group_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: groupuser
+            constraintName: group_id
+  - changeSet:
+      id: V013_GroupUser_index_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: groupuser
+                indexName: idx_groupuser_group_id
+      changes:
+        - addUniqueConstraint:
+            tableName: groupuser
+            constraintName: idx_groupuser_group_id
+            columnNames: 'group_id,user_name'
+  - changeSet:
+      id: V013_GroupUser_normalize_user_name
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: groupuser
+            indexName: user_name
+      changes:
+        - dropIndex:
+            tableName: groupuser
+            indexName: user_name
+  - changeSet:
+      id: V013_GroupUser_index_user_name
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: groupuser
+                indexName: idx_groupuser_user_name
+      changes:
+        - createIndex:
+            tableName: groupuser
+            indexName: idx_groupuser_user_name
+            column:
+              name: user_name
