@@ -28,12 +28,24 @@ databaseChangeLog:
               - column:
                   name: group_name
                   type: varchar(255)
-                  defaultValue: 'null'
               - column:
                   name: creator_name
                   type: varchar(255)
-                  defaultValue: 'null'
               - column:
                   name: timestamp
                   type: bigint
-                  defaultValue: 'null'
+  - changeSet:
+      id: V013_Group_normalize_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: group
+            primaryKeyName: group_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: group
+        - addPrimaryKey:
+            tableName: group
+            columnNames: group_id
+            constraintName: group_pkey
