@@ -38,20 +38,20 @@
  -- GroupDNPair: table
  CREATE TABLE `GroupDNPair` (
 +  `id` bigint NOT NULL AUTO_INCREMENT,
-+  `group_id` int DEFAULT NULL,
+   `group_id` int DEFAULT NULL,
+-  `dn` varchar(255) DEFAULT NULL
 +  `dn` varchar(255) DEFAULT NULL,
 +  PRIMARY KEY (`id`)
-+) ENGINE=InnoDB;
+ ) ENGINE=InnoDB;
 
 +-- GroupStructure: table
 +CREATE TABLE `GroupStructure` (
 +  `id` bigint NOT NULL AUTO_INCREMENT,
-   `group_id` int DEFAULT NULL,
--  `dn` varchar(255) DEFAULT NULL
++  `group_id` int DEFAULT NULL,
 +  `path` varchar(1024) DEFAULT NULL,
 +  PRIMARY KEY (`id`),
 +  UNIQUE KEY `group_id` (`group_id`)
- ) ENGINE=InnoDB;
++) ENGINE=InnoDB;
  
  -- GroupUser: table
  CREATE TABLE `GroupUser` (
