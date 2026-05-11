@@ -1,0 +1,62 @@
++-- OrgDownloadRateLimit: table
++CREATE TABLE `OrgDownloadRateLimit` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `org_id` int DEFAULT NULL,
++  `download_limit` bigint DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `org_id` (`org_id`)
++) ENGINE=InnoDB;
+
++-- OrgUploadRateLimit: table
++CREATE TABLE `OrgUploadRateLimit` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `org_id` int DEFAULT NULL,
++  `upload_limit` bigint DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `org_id` (`org_id`)
++) ENGINE=InnoDB;
+
++-- OrgUserDefaultQuota: table
++CREATE TABLE `OrgUserDefaultQuota` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `org_id` int DEFAULT NULL,
++  `quota` bigint DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `org_id` (`org_id`)
++) ENGINE=InnoDB;
+
++-- RoleDownloadRateLimit: table
++CREATE TABLE `RoleDownloadRateLimit` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `role` varchar(255) DEFAULT NULL,
++  `download_limit` bigint DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `role` (`role`)
++) ENGINE=InnoDB;
+
++-- RoleUploadRateLimit: table
++CREATE TABLE `RoleUploadRateLimit` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `role` varchar(255) DEFAULT NULL,
++  `upload_limit` bigint DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `role` (`role`)
++) ENGINE=InnoDB;
+
++-- UserDownloadRateLimit: table
++CREATE TABLE `UserDownloadRateLimit` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `user` varchar(255) DEFAULT NULL,
++  `download_limit` bigint DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `user` (`user`)
++) ENGINE=InnoDB;
+
++-- UserUploadRateLimit: table
++CREATE TABLE `UserUploadRateLimit` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `user` varchar(255) DEFAULT NULL,
++  `upload_limit` bigint DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `user` (`user`)
++) ENGINE=InnoDB;

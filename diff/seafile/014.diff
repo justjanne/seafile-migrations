@@ -1,0 +1,13 @@
++-- RepoHistoryLimit: table
++CREATE TABLE `RepoHistoryLimit` (
++  `repo_id` char(37) NOT NULL,
++  `days` int DEFAULT NULL,
++  PRIMARY KEY (`repo_id`)
++) ENGINE=InnoDB;
+
++-- RepoValidSince: table
++CREATE TABLE `RepoValidSince` (
++  `repo_id` char(37) NOT NULL,
++  `timestamp` bigint DEFAULT NULL,
++  PRIMARY KEY (`repo_id`)
++) ENGINE=InnoDB;

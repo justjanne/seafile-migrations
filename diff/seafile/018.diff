@@ -1,0 +1,28 @@
++-- RepoTokenPeerInfo: table
++CREATE TABLE `RepoTokenPeerInfo` (
++  `token` char(41) NOT NULL,
++  `peer_id` char(41) DEFAULT NULL,
++  `peer_ip` varchar(41) DEFAULT NULL,
++  `peer_name` varchar(255) DEFAULT NULL,
++  `sync_time` bigint DEFAULT NULL,
++  PRIMARY KEY (`token`)
++) ENGINE=InnoDB;
+
+ -- RepoUserToken: table
+ CREATE TABLE `RepoUserToken` (
+   `repo_id` char(37) DEFAULT NULL,
+   `email` varchar(255) DEFAULT NULL,
+   `token` char(41) DEFAULT NULL,
+   UNIQUE KEY `repo_id` (`repo_id`,`token`),
++  KEY `email` (`email`)
+ ) ENGINE=InnoDB;
+
++-- VirtualRepo: table
++CREATE TABLE `VirtualRepo` (
++  `repo_id` char(36) NOT NULL,
++  `origin_repo` char(36) DEFAULT NULL,
++  `path` text,
++  `base_commit` char(40) DEFAULT NULL,
++  PRIMARY KEY (`repo_id`),
++  KEY `origin_repo` (`origin_repo`)
++) ENGINE=InnoDB;

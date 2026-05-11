@@ -1,0 +1,183 @@
++-- FileLockTimestamp: table
++CREATE TABLE `FileLockTimestamp` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `repo_id` char(40) DEFAULT NULL,
++  `update_time` bigint NOT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `repo_id` (`repo_id`)
++) ENGINE=InnoDB;
+
++-- FileLocks: table
++CREATE TABLE `FileLocks` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `repo_id` char(40) NOT NULL,
++  `path` text NOT NULL,
++  `user_name` varchar(255) NOT NULL,
++  `lock_time` bigint DEFAULT NULL,
++  `expire` bigint DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  KEY `repo_id` (`repo_id`)
++) ENGINE=InnoDB;
+
++-- FolderGroupPerm: table
++CREATE TABLE `FolderGroupPerm` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `repo_id` char(36) NOT NULL,
++  `path` text NOT NULL,
++  `permission` char(15) DEFAULT NULL,
++  `group_id` int NOT NULL,
++  PRIMARY KEY (`id`),
++  KEY `repo_id` (`repo_id`)
++) ENGINE=InnoDB;
+
++-- FolderPermTimestamp: table
++CREATE TABLE `FolderPermTimestamp` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `repo_id` char(36) DEFAULT NULL,
++  `timestamp` bigint DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `repo_id` (`repo_id`)
++) ENGINE=InnoDB;
+
++-- FolderUserPerm: table
++CREATE TABLE `FolderUserPerm` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `repo_id` char(36) NOT NULL,
++  `path` text NOT NULL,
++  `permission` char(15) DEFAULT NULL,
++  `user` varchar(255) NOT NULL,
++  PRIMARY KEY (`id`),
++  KEY `repo_id` (`repo_id`)
++) ENGINE=InnoDB;
+
++-- GCID: table
++CREATE TABLE `GCID` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `repo_id` char(36) DEFAULT NULL,
++  `gc_id` char(36) DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `repo_id` (`repo_id`)
++) ENGINE=InnoDB;
+
++-- LastGCID: table
++CREATE TABLE `LastGCID` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `repo_id` char(36) DEFAULT NULL,
++  `client_id` varchar(128) DEFAULT NULL,
++  `gc_id` char(36) DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `repo_id` (`repo_id`,`client_id`)
++) ENGINE=InnoDB;
+
++-- OrgGroupRepo: table
++CREATE TABLE `OrgGroupRepo` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `org_id` int DEFAULT NULL,
++  `repo_id` char(37) DEFAULT NULL,
++  `group_id` int DEFAULT NULL,
++  `owner` varchar(255) DEFAULT NULL,
++  `permission` char(15) DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `org_id` (`org_id`,`group_id`,`repo_id`),
++  KEY `repo_id` (`repo_id`),
++  KEY `owner` (`owner`)
++) ENGINE=InnoDB;
+
++-- OrgInnerPubRepo: table
++CREATE TABLE `OrgInnerPubRepo` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `org_id` int DEFAULT NULL,
++  `repo_id` char(37) DEFAULT NULL,
++  `permission` char(15) DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `org_id` (`org_id`,`repo_id`)
++) ENGINE=InnoDB;
+
++-- OrgRepo: table
++CREATE TABLE `OrgRepo` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `org_id` int DEFAULT NULL,
++  `repo_id` char(37) DEFAULT NULL,
++  `user` varchar(255) DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `org_id` (`org_id`,`repo_id`),
++  UNIQUE KEY `repo_id` (`repo_id`),
++  KEY `org_id_2` (`org_id`,`user`),
++  KEY `user` (`user`)
++) ENGINE=InnoDB;
+
++-- OrgSharedRepo: table
++CREATE TABLE `OrgSharedRepo` (
++  `id` int NOT NULL AUTO_INCREMENT,
++  `org_id` int DEFAULT NULL,
++  `repo_id` char(37) DEFAULT NULL,
++  `from_email` varchar(255) DEFAULT NULL,
++  `to_email` varchar(255) DEFAULT NULL,
++  `permission` char(15) DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  KEY `repo_id` (`repo_id`),
++  KEY `org_id` (`org_id`,`repo_id`),
++  KEY `from_email` (`from_email`),
++  KEY `to_email` (`to_email`)
++) ENGINE=InnoDB;
+
+ -- RepoInfo: table
+ CREATE TABLE `RepoInfo` (
+   `id` bigint NOT NULL AUTO_INCREMENT,
+   `repo_id` char(36) DEFAULT NULL,
+   `name` varchar(255) NOT NULL,
+   `update_time` bigint DEFAULT NULL,
+   `version` int DEFAULT NULL,
+   `is_encrypted` int DEFAULT NULL,
+   `last_modifier` varchar(255) DEFAULT NULL,
++  `status` int DEFAULT '0',
+   PRIMARY KEY (`id`),
+   UNIQUE KEY `repo_id` (`repo_id`)
+ ) ENGINE=InnoDB;
+
++-- RepoStorageId: table
++CREATE TABLE `RepoStorageId` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `repo_id` char(40) NOT NULL,
++  `storage_id` varchar(255) NOT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `repo_id` (`repo_id`)
++) ENGINE=InnoDB;
+
++-- RepoSyncError: table
++CREATE TABLE `RepoSyncError` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `token` char(41) DEFAULT NULL,
++  `error_time` bigint unsigned DEFAULT NULL,
++  `error_con` varchar(1024) DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `token` (`token`)
++) ENGINE=InnoDB;
+
++-- RoleQuota: table
++CREATE TABLE `RoleQuota` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `role` varchar(255) DEFAULT NULL,
++  `quota` bigint DEFAULT NULL,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `role` (`role`)
++) ENGINE=InnoDB;
+
+
+ -- SystemInfo: table
+ CREATE TABLE `SystemInfo` (
+-  `id` bigint NOT NULL AUTO_INCREMENT,
++  `id` int NOT NULL AUTO_INCREMENT,
+   `info_key` varchar(256) DEFAULT NULL,
+   `info_value` varchar(1024) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+ ) ENGINE=InnoDB;
+
++-- WebUploadTempFiles: table
++CREATE TABLE `WebUploadTempFiles` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `repo_id` char(40) NOT NULL,
++  `file_path` text NOT NULL,
++  `tmp_file_path` text NOT NULL,
++  PRIMARY KEY (`id`)
++) ENGINE=InnoDB;
