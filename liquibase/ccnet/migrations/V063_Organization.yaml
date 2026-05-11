@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_Organization_org_id
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: organization
+            columnName: org_id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_Organization_autoincrement_org_id
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: organization
+            columnName: org_id
+            columnDataType: bigint

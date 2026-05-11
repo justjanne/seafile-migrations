@@ -1,0 +1,92 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_Organization_normalize
+      author: seafile
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: Organization
+      changes:
+        - renameTable:
+            oldTableName: Organization
+            newTableName: organization
+  - changeSet:
+      id: V013_Organization_table
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: organization
+            columns:
+              - column:
+                  name: org_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_name
+                  type: varchar(255)
+              - column:
+                  name: url_prefix
+                  type: varchar(255)
+              - column:
+                  name: creator
+                  type: varchar(255)
+              - column:
+                  name: ctime
+                  type: bigint
+  - changeSet:
+      id: V013_Organization_normalize_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: organization
+            primaryKeyName: organization_pkey_SENTINEL
+      changes:
+        - dropPrimaryKey:
+            tableName: organization
+        - addPrimaryKey:
+            tableName: organization
+            columnNames: org_id
+            constraintName: organization_pkey
+  - changeSet:
+      id: V013_Organization_normalize_url_prefix
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: organization
+            indexName: url_prefix
+      changes:
+        - dropUniqueConstraint:
+            tableName: organization
+            constraintName: url_prefix
+  - changeSet:
+      id: V013_Organization_normalize_url_prefix_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: organization
+            indexName: organization_url_prefix_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: organization
+            constraintName: organization_url_prefix_key
+  - changeSet:
+      id: V013_Organization_index_url_prefix
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: organization
+                indexName: idx_organization_url_prefix
+      changes:
+        - addUniqueConstraint:
+            tableName: organization
+            columnNames: url_prefix
+            constraintName: idx_organization_url_prefix
