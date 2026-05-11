@@ -1,0 +1,26 @@
+ -- EmailUser: table
+ CREATE TABLE `EmailUser` (
+   `id` bigint NOT NULL AUTO_INCREMENT,
+   `email` varchar(255) DEFAULT NULL,
+   `passwd` varchar(256) DEFAULT NULL,
+   `is_staff` boolean NOT NULL,
+   `is_active` boolean NOT NULL,
++  `is_department_owner` boolean NOT NULL DEFAULT '0',
+   `ctime` bigint DEFAULT NULL,
+   `reference_id` varchar(255) DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY `email` (`email`),
+-  UNIQUE KEY `reference_id` (`reference_id`)
++  UNIQUE KEY `reference_id` (`reference_id`),
++  KEY `is_active` (`is_active`),
++  KEY `is_department_owner` (`is_department_owner`)
+ ) ENGINE=InnoDB;
+
++-- OrgFileExtWhiteList: table
++CREATE TABLE `OrgFileExtWhiteList` (
++  `id` bigint NOT NULL AUTO_INCREMENT,
++  `org_id` int DEFAULT NULL,
++  `white_list` text,
++  PRIMARY KEY (`id`),
++  UNIQUE KEY `org_id` (`org_id`)
++) ENGINE=InnoDB;

@@ -1,0 +1,29 @@
+ -- Group: table
+ CREATE TABLE `Group` (
+   `group_id` int NOT NULL AUTO_INCREMENT,
+   `group_name` varchar(255) DEFAULT NULL,
+   `creator_name` varchar(255) DEFAULT NULL,
+   `timestamp` bigint DEFAULT NULL,
++  `type` varchar(32) DEFAULT NULL,
+   PRIMARY KEY (`group_id`)
+ ) ENGINE=InnoDB;
+ 
++-- GroupDNPair: table
++CREATE TABLE `GroupDNPair` (
++  `group_id` int DEFAULT NULL,
++  `dn` varchar(255) DEFAULT NULL
++) ENGINE=InnoDB;
++
+
++-- LDAPUsers: table
++CREATE TABLE `LDAPUsers` (
++  `id` int NOT NULL AUTO_INCREMENT,
++  `email` varchar(255) NOT NULL,
++  `password` varchar(255) NOT NULL,
++  `is_staff` boolean NOT NULL,
++  `is_active` boolean NOT NULL,
++  `extra_attrs` text,
++  PRIMARY KEY (`id`),
++  KEY `email` (`email`)
++) ENGINE=InnoDB;
++

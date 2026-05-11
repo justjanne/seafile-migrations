@@ -1,0 +1,35 @@
+ -- GroupUser: table
+ CREATE TABLE `GroupUser` (
+-  `group_id` int DEFAULT NULL,
+-  `user_name` varchar(255) DEFAULT NULL,
++  `group_id` int NOT NULL,
++  `user_name` varchar(255) NOT NULL,
+   `is_staff` tinyint DEFAULT NULL,
+-  UNIQUE KEY `group_id` (`group_id`,`user_name`),
++  PRIMARY KEY (`group_id`,`user_name`),
+   KEY `user_name` (`user_name`)
+ ) ENGINE=InnoDB;
+ 
+ -- OrgGroup: table
+ CREATE TABLE `OrgGroup` (
+-  `org_id` int DEFAULT NULL,
+-  `group_id` int DEFAULT NULL,
+-  UNIQUE KEY `org_id` (`org_id`,`group_id`),
++  `org_id` int NOT NULL,
++  `group_id` int NOT NULL,
++  PRIMARY KEY (`org_id`,`group_id`),
+   KEY `group_id` (`group_id`)
+ ) ENGINE=InnoDB;
+ 
+ -- OrgUser: table
+ CREATE TABLE `OrgUser` (
+-  `org_id` int DEFAULT NULL,
+-  `email` varchar(255) DEFAULT NULL,
++  `org_id` int NOT NULL,
++  `email` varchar(255) NOT NULL,
+   `is_staff` boolean NOT NULL,
+-  UNIQUE KEY `org_id` (`org_id`,`email`),
++  PRIMARY KEY (`org_id`,`email`),
+   KEY `email` (`email`)
+ ) ENGINE=InnoDB;
+ 
