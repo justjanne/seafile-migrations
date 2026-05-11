@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_OrgGroup_normalize
+      author: seafile
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: OrgGroup
+      changes:
+        - renameTable:
+            oldTableName: OrgGroup
+            newTableName: orggroup
+  - changeSet:
+      id: V013_OrgGroup_table
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: orggroup
+            columns:
+              - column:
+                  name: org_id
+                  type: int
+              - column:
+                  name: group_id
+                  type: int
+  - changeSet:
+      id: V013_OrgGroup_normalize_org_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orggroup
+            indexName: org_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: orggroup
+            constraintName: org_id
+  - changeSet:
+      id: V013_OrgGroup_index_org_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orggroup
+                indexName: idx_orggroup_org_id_group_id
+      changes:
+        - addUniqueConstraint:
+            tableName: orggroup
+            columnNames: org_id, group_id
+            constraintName: idx_orggroup_org_id_group_id
+  - changeSet:
+      id: V013_OrgGroup_normalize_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orggroup
+            indexName: group_id
+      changes:
+        - dropIndex:
+            tableName: orggroup
+            indexName: group_id
+  - changeSet:
+      id: V013_OrgGroup_index_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orggroup
+                indexName: idx_orggroup_group_id
+      changes:
+        - createIndex:
+            tableName: orggroup
+            indexName: idx_orggroup_group_id
+            columns:
+              - column:
+                  name: group_id

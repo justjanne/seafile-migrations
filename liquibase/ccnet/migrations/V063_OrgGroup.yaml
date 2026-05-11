@@ -1,0 +1,123 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_OrgGroup_normalize_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: orggroup
+                columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: orggroup
+  - changeSet:
+      id: V063_OrgGroup_normalize_compound_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orggroup
+            indexName: orggroup_pkey
+            columnName: org_id, group_id
+      changes:
+        - dropPrimaryKey:
+            tableName: orggroup
+  - changeSet:
+      id: V063_OrgGroup_normalize_id_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orggroup
+            indexName: OrgGroup_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: orggroup
+            constraintName: OrgGroup_id_pkey
+  - changeSet:
+      id: V063_OrgGroup
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: orggroup
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: orggroup
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: orggroup_pkey
+  - changeSet:
+      id: V063_OrgGroup_id
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: orggroup
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V013_Group_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: orggroup
+      changes:
+        - addPrimaryKey:
+            tableName: orggroup
+            columnNames: id
+            constraintName: orggroup_pkey
+  - changeSet:
+      id: V063_OrgGroup_autoincrement_id
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: orggroup
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_OrgGroup_normalize_group_id
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: orggroup
+            columnName: group_id
+            newDataType: bigint
+  - changeSet:
+      id: V063_OrgGroup_normalize_group_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orggroup
+            indexName: orggroup_org_id_group_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: orggroup
+            constraintName: orggroup_org_id_group_id_key
+  - changeSet:
+      id: V063_OrgGroup_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orggroup
+                indexName: idx_orggroup_group_id
+      changes:
+        - addUniqueConstraint:
+            tableName: orggroup
+            columnNames: org_id, group_id
+            constraintName: idx_orggroup_group_id

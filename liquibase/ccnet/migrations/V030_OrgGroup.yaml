@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: V030_OrgGroup_not_null
+      author: seafile
+      changes:
+        - addNotNullConstraint:
+            tableName: orggroup
+            columnName: org_id
+            columnDataType: int
+        - addNotNullConstraint:
+            tableName: orggroup
+            columnName: group_id
+            columnDataType: int
+  - changeSet:
+      id: V030_OrgGroup_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orggroup
+            indexName: idx_orggroup_org_id_group_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: orggroup
+            constraintName: idx_orggroup_org_id_group_id
+  - changeSet:
+      id: V030_OrgGroup_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: orggroup
+      changes:
+        - addPrimaryKey:
+            tableName: orggroup
+            columnNames: org_id, group_id
+            constraintName: orggroup_pkey
