@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_LDAPConfig_normalize
+      author: seafile
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: LDAPConfig
+      changes:
+        - renameTable:
+            oldTableName: LDAPConfig
+            newTableName: ldapconfig
+  - changeSet:
+      id: V062_LDAPConfig_table
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: ldapconfig
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: cfg_group
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cfg_key
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: varchar(255)
+              - column:
+                  name: property
+                  type: int
+  - changeSet:
+      id: V062_LDAPConfig_normalize_id_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: ldapconfig
+            indexName: LDAPConfig_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: ldapconfig
+            constraintName: LDAPConfig_id_pkey
+  - changeSet:
+      id: V062_LDAPConfig_id_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+          - primaryKeyExists:
+              tableName: ldapconfig
+      changes:
+        - addPrimaryKey:
+            tableName: ldapconfig
+            constraintName: ldapconfig_pkey
+            columnNames: id
