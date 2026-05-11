@@ -1,5 +1,20 @@
 databaseChangeLog:
   - changeSet:
+      id: V013_Binding_normalize_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: binding
+            primaryKeyName: binding_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: binding
+        - addPrimaryKey:
+            tableName: binding
+            columnNames: id
+            constraintName: binding_pkey
+  - changeSet:
       id: V063_Binding
       author: seafile
       preConditions:
@@ -37,18 +52,3 @@ databaseChangeLog:
             tableName: binding
             columnName: id
             columnDataType: bigint
-  - changeSet:
-      id: V013_Binding_normalize_pkey
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          primaryKeyExists:
-            tableName: binding
-            primaryKeyName: binding_id_pkey
-      changes:
-        - dropPrimaryKey:
-            tableName: binding
-        - addPrimaryKey:
-            tableName: binding
-            columnNames: id
-            constraintName: binding_pkey
