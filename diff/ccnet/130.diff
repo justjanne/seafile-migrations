@@ -10,8 +10,7 @@
    `reference_id` varchar(255) DEFAULT NULL,
    PRIMARY KEY (`id`),
    UNIQUE KEY `email` (`email`),
--  UNIQUE KEY `reference_id` (`reference_id`)
-+  UNIQUE KEY `reference_id` (`reference_id`),
+   UNIQUE KEY `reference_id` (`reference_id`),
 +  KEY `is_active` (`is_active`),
 +  KEY `is_department_owner` (`is_department_owner`)
  ) ENGINE=InnoDB;

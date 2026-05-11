@@ -8,8 +8,7 @@
    `ctime` bigint DEFAULT NULL,
 +  `reference_id` varchar(255) DEFAULT NULL,
    PRIMARY KEY (`id`),
--  UNIQUE KEY `email` (`email`)
-+  UNIQUE KEY `email` (`email`),
+   UNIQUE KEY `email` (`email`),
 +  UNIQUE KEY `reference_id` (`reference_id`)
  ) ENGINE=InnoDB;
 
@@ -31,7 +30,6 @@
    `extra_attrs` text,
 +  `reference_id` varchar(255) DEFAULT NULL,
    PRIMARY KEY (`id`),
--  UNIQUE KEY `email` (`email`)
-+  UNIQUE KEY `email` (`email`),
+   UNIQUE KEY `email` (`email`),
 +  UNIQUE KEY `reference_id` (`reference_id`)
  ) ENGINE=InnoDB;
