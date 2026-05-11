@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: V070_UserRole_is_manual_set
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: userrole
+                columnName: is_manual_set
+      changes:
+        - addColumn:
+            tableName: userrole
+            columns:
+              - column:
+                  name: is_manual_set
+                  type: int
+                  defaultValue: 0
