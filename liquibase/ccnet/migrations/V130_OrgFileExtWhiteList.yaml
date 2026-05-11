@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_OrgFileExtWhiteList_normalize
+      author: seafile
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: OrgFileExtWhiteList
+      changes:
+        - renameTable:
+            oldTableName: OrgFileExtWhiteList
+            newTableName: orgfileextwhitelist
+  - changeSet:
+      id: V130_OrgFileExtWhiteList_table
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: orgfileextwhitelist
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+              - column:
+                  name: white_list
+                  type: text
+  - changeSet:
+      id: V130_OrgFileExtWhiteList_normalize_org_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orgfileextwhitelist
+            indexName: org_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: orgfileextwhitelist
+            constraintName: org_id
+  - changeSet:
+      id: V130_OrgFileExtWhiteList_normalize_org_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orgfileextwhitelist
+            indexName: orgfileextwhitelist_org_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: orgfileextwhitelist
+            constraintName: orgfileextwhitelist_org_id_key
+  - changeSet:
+      id: V130_OrgFileExtWhiteList_index_org_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orgfileextwhitelist
+                indexName: idx_orgfileextwhitelist_org_id
+      changes:
+        - addUniqueConstraint:
+            tableName: orgfileextwhitelist
+            columnNames: org_id
+            constraintName: idx_orgfileextwhitelist_org_id
