@@ -1,0 +1,90 @@
+databaseChangeLog:
+databaseChangeLog:
+  - changeSet:
+      id: V041_LDAPUsers_table
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: ldapusers
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_staff
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: extra_attrs
+                  type: text
+  - changeSet:
+      id: V041_LDAPUsers_normalize_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: ldapusers
+            indexName: email
+      changes:
+        - dropUniqueConstraint:
+            tableName: ldapusers
+            constraintName: email
+  - changeSet:
+      id: V041_LDAPUsers_email_notnull
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: ldapusers
+            indexName: email
+      changes:
+        - dropUniqueConstraint:
+            tableName: ldapusers
+            constraintName: email
+  - changeSet:
+      id: V041_LDAPUsers_normalize_email_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: ldapusers
+            indexName: ldapusers_email_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: ldapusers
+            constraintName: ldapusers_email_key
+  - changeSet:
+      id: V041_LDAPUsers_index_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: ldapusers
+                indexName: idx_ldapusers_email
+      changes:
+        - addUniqueConstraint:
+            tableName: ldapusers
+            columnNames: email
+            constraintName: idx_ldapusers_email

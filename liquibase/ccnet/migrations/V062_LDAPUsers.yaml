@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_LDAPUsers_reference_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: ldapusers
+                columnName: reference_id
+      changes:
+        - addColumn:
+            tableName: ldapusers
+            columns:
+              - column:
+                  name: reference_id
+                  type: varchar(255)
+  - changeSet:
+      id: V062_LDAPUsers_index_reference_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: ldapusers
+                indexName: idx_ldapusers_reference_id
+      changes:
+        - addUniqueConstraint:
+            tableName: ldapusers
+            columnNames: reference_id
+            constraintName: idx_ldapusers_reference_id
+
+  - changeSet:
+      id: V062_LDAPUsers_reference_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: ldapusers
+                indexName: ldapusers_reference_id_key
+      changes:
+        - addUniqueConstraint:
+            tableName: ldapusers
+            columnNames: reference_id
+            constraintName: ldapusers_reference_id_key

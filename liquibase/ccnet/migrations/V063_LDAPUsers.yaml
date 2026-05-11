@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_LDAPUsers_id
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: ldapusers
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_LDAPUsers_autoincrement_id
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: ldapusers
+            columnName: id
+            columnDataType: bigint
