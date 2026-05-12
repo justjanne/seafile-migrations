@@ -1,0 +1,72 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_add_id_to_repogroup
+      author: seafile
+      comment: "Regular Migration: Structural PK change - add bigint id column as primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repogroup
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: repogroup
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repogroup_pkey
+  - changeSet:
+      id: V063_change_id_type_in_repogroup
+      author: seafile
+      comment: "Regular Migration: Ensure id column is bigint/bigserial."
+      changes:
+        - modifyDataType:
+            tableName: repogroup
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_repogroup_pkey
+      author: seafile
+      comment: "Regular Migration: Ensure id column is the primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: repogroup
+      changes:
+        - addPrimaryKey:
+            tableName: repogroup
+            columnNames: id
+            constraintName: repogroup_pkey
+  - changeSet:
+      id: V063_normalize_repogroup_id_autoincrement
+      author: seafile
+      comment: "Regular Migration: Add auto-increment to id for MySQL/MariaDB."
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: repogroup
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_add_unique_constraint_to_repogroup_group_id_repo_id
+      author: seafile
+      comment: "Regular Migration: Add unique constraint on old key columns."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repogroup
+                indexName: idx_repogroup_group_id_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: repogroup
+            columnNames: group_id, repo_id
+            constraintName: idx_repogroup_group_id_repo_id

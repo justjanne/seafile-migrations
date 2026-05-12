@@ -1,0 +1,122 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_RepoGroup_to_repogroup
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RepoGroup
+      changes:
+        - renameTable:
+            oldTableName: RepoGroup
+            newTableName: repogroup
+  - changeSet:
+      id: V013_create_repogroup
+      author: seafile
+      comment: Regular Migration - Create table repogroup
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repogroup
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+              - column:
+                  name: group_id
+                  type: int
+              - column:
+                  name: user_name
+                  type: varchar(255)
+              - column:
+                  name: permission
+                  type: char(15)
+  - changeSet:
+      id: V013_drop_unique_constraint_from_repogroup_group_id
+      author: seafile
+      comment: Legacy/Normalization - Drop legacy unique constraint name
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repogroup
+            indexName: group_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: repogroup
+            constraintName: group_id
+  - changeSet:
+      id: V013_add_unique_constraint_to_repogroup_group_id_repo_id
+      author: seafile
+      comment: Regular Migration - Create unique constraint with standardized name
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repogroup
+                indexName: idx_repogroup_group_id
+      changes:
+        - addUniqueConstraint:
+            tableName: repogroup
+            constraintName: idx_repogroup_group_id
+            columnNames: group_id, repo_id
+  - changeSet:
+      id: V013_drop_index_from_repogroup_repo_id
+      author: seafile
+      comment: Legacy/Normalization - Drop legacy index name
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repogroup
+            indexName: repo_id
+      changes:
+        - dropIndex:
+            tableName: repogroup
+            indexName: repo_id
+  - changeSet:
+      id: V013_add_index_to_repogroup_repo_id
+      author: seafile
+      comment: Regular Migration - Create index with standardized name
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repogroup
+                indexName: idx_repogroup_repo_id
+      changes:
+        - createIndex:
+            tableName: repogroup
+            indexName: idx_repogroup_repo_id
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V013_drop_index_from_repogroup_user_name
+      author: seafile
+      comment: Legacy/Normalization - Drop legacy index name
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repogroup
+            indexName: user_name
+      changes:
+        - dropIndex:
+            tableName: repogroup
+            indexName: user_name
+  - changeSet:
+      id: V013_add_index_to_repogroup_user_name
+      author: seafile
+      comment: Regular Migration - Create index with standardized name
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repogroup
+                indexName: idx_repogroup_user_name
+      changes:
+        - createIndex:
+            tableName: repogroup
+            indexName: idx_repogroup_user_name
+            columns:
+              - column:
+                  name: user_name
