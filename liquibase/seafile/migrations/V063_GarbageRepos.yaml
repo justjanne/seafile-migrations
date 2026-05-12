@@ -1,0 +1,125 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_drop_primary_key_from_garbagerepos
+      author: seafile
+      comment: "Legacy/Normalization: Prepare for structural PK change by dropping old PK."
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: garbagerepos
+          not:
+            - columnExists:
+                tableName: garbagerepos
+                columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: garbagerepos
+  - changeSet:
+      id: V063_normalize_garbagerepos_compound_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old compound primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: garbagerepos
+            indexName: garbagerepos_pkey
+            columnNames: repo_id
+      changes:
+        - dropPrimaryKey:
+            tableName: garbagerepos
+  - changeSet:
+      id: V063_normalize_garbagerepos_id_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old named primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: garbagerepos
+            indexName: GarbageRepos_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: garbagerepos
+            constraintName: GarbageRepos_id_pkey
+  - changeSet:
+      id: V063_add_id_to_garbagerepos
+      author: seafile
+      comment: "Regular Migration: Structural PK change - add bigint id column as primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: garbagerepos
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: garbagerepos
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: garbagerepos_pkey
+  - changeSet:
+      id: V063_change_id_type_in_garbagerepos
+      author: seafile
+      comment: "Regular Migration: Ensure id column is bigint/bigserial."
+      changes:
+        - modifyDataType:
+            tableName: garbagerepos
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_garbagerepos_pkey
+      author: seafile
+      comment: "Regular Migration: Ensure id column is the primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: garbagerepos
+      changes:
+        - addPrimaryKey:
+            tableName: garbagerepos
+            columnNames: id
+            constraintName: garbagerepos_pkey
+  - changeSet:
+      id: V063_normalize_garbagerepos_id_autoincrement
+      author: seafile
+      comment: "Regular Migration: Add auto-increment to id for MySQL/MariaDB."
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: garbagerepos
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_normalize_garbagerepos_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: garbagerepos
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: garbagerepos
+            constraintName: repo_id
+  - changeSet:
+      id: V063_add_unique_constraint_to_garbagerepos_repo_id
+      author: seafile
+      comment: "Regular Migration: Add unique constraint on old key columns."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: garbagerepos
+                indexName: idx_garbagerepos_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: garbagerepos
+            columnNames: repo_id
+            constraintName: idx_garbagerepos_repo_id

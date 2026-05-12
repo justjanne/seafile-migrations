@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: V030_rename_GarbageRepos_to_garbagerepos
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: GarbageRepos
+      changes:
+        - renameTable:
+            oldTableName: GarbageRepos
+            newTableName: garbagerepos
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: garbagerepos
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: garbagerepos
+            columnName: repo_id
+            columnDataType: char(36)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: garbagerepos
+            columnName: repo_id
+  - changeSet:
+      id: V030_create_garbagerepos
+      author: seafile
+      comment: Regular Migration - Create table garbagerepos
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: garbagerepos
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: garbagerepos_pkey
