@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_WebAP_to_webap
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: WebAP
+      changes:
+        - renameTable:
+            oldTableName: WebAP
+            newTableName: webap
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: webap
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: webap
+            columnName: repo_id
+            columnDataType: char(37)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: webap
+            columnName: repo_id
+  - changeSet:
+      id: V013_create_webap
+      author: seafile
+      comment: Regular Migration - Create table webap
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: webap
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: webap_pkey
+              - column:
+                  name: access_property
+                  type: char(10)

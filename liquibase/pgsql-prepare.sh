@@ -2,7 +2,7 @@
 set -euo pipefail
 
 for table in \
-               WebAP FileLockTimestamp FolderGroupPerm FolderPermTimestamp FolderUserPerm \
+               FileLockTimestamp FolderGroupPerm FolderPermTimestamp FolderUserPerm \
                GarbageRepos GCID LastGCID OrgDownloadRateLimit OrgGroupRepo OrgInnerPubRepo OrgRepo OrgSharedRepo \
                OrgUploadRateLimit OrgUserDefaultQuota RepoFileCount RepoHistoryLimit RepoInfo RepoStorageId \
                RepoSyncError RepoTokenPeerInfo RepoTrash RepoValidSince RoleDownloadRateLimit RoleQuota \
