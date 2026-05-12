@@ -1,0 +1,79 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_RepoOwner_to_repoowner
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RepoOwner
+      changes:
+        - renameTable:
+            oldTableName: RepoOwner
+            newTableName: repoowner
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repoowner
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: repoowner
+            columnName: repo_id
+            columnDataType: char(37)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: repoowner
+            columnName: repo_id
+  - changeSet:
+      id: V013_create_repoowner
+      author: seafile
+      comment: Regular Migration - Create table repoowner
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repoowner
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repoowner_pkey
+              - column:
+                  name: owner_id
+                  type: varchar(255)
+  - changeSet:
+      id: V013_drop_index_from_repoowner_owner_id
+      author: seafile
+      comment: Legacy/Normalization - Drop legacy index name
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repoowner
+            indexName: owner_id
+      changes:
+        - dropIndex:
+            tableName: repoowner
+            indexName: owner_id
+  - changeSet:
+      id: V013_add_index_to_repoowner_owner_id
+      author: seafile
+      comment: Regular Migration - Create index with standardized name
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repoowner
+                indexName: idx_repoowner_owner_id
+      changes:
+        - createIndex:
+            tableName: repoowner
+            indexName: idx_repoowner_owner_id
+            columns:
+              - column:
+                  name: owner_id
