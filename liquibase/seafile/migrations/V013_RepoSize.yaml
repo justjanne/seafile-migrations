@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_RepoSize_to_reposize
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RepoSize
+      changes:
+        - renameTable:
+            oldTableName: RepoSize
+            newTableName: reposize
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: reposize
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: reposize
+            columnName: repo_id
+            columnDataType: char(37)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: reposize
+            columnName: repo_id
+  - changeSet:
+      id: V013_normalize_size
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: reposize
+            columnName: size
+      changes:
+        - modifyDataType:
+            tableName: reposize
+            columnName: size
+            newDataType: bigint
+  - changeSet:
+      id: V013_create_reposize
+      author: seafile
+      comment: Regular Migration - Create table reposize
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: reposize
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: reposize_pkey
+              - column:
+                  name: size
+                  type: bigint
+              - column:
+                  name: head_id
+                  type: char(41)

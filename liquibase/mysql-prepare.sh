@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-for table in InnerPubRepo OrgQuota OrgUserQuota RepoSize RepoUserToken \
+for table in InnerPubRepo OrgQuota OrgUserQuota RepoUserToken \
                SharedRepo UserQuota WebAP FileLockTimestamp FolderGroupPerm FolderPermTimestamp FolderUserPerm \
                GarbageRepos GCID LastGCID OrgDownloadRateLimit OrgGroupRepo OrgInnerPubRepo OrgRepo OrgSharedRepo \
                OrgUploadRateLimit OrgUserDefaultQuota RepoFileCount RepoHistoryLimit RepoInfo RepoStorageId \
