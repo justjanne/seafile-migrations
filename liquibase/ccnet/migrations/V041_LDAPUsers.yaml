@@ -51,18 +51,6 @@ databaseChangeLog:
             tableName: ldapusers
             constraintName: email
   - changeSet:
-      id: V041_LDAPUsers_email_notnull
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: ldapusers
-            indexName: email
-      changes:
-        - dropUniqueConstraint:
-            tableName: ldapusers
-            constraintName: email
-  - changeSet:
       id: V041_LDAPUsers_normalize_email_key
       author: seafile
       preConditions:
