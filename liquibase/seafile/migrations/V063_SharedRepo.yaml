@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_change_id_type_in_sharedrepo
+      author: seafile
+      comment: "Regular Migration: Upgrade id column to bigint. [Regular Migration]"
+      changes:
+        - modifyDataType:
+            tableName: sharedrepo
+            columnName: id
+            newDataType: bigint
+  - changeSet:
+      id: V063_normalize_sharedrepo_id_autoincrement
+      author: seafile
+      comment: "Regular Migration: Add auto-increment to id for MySQL/MariaDB. [Regular Migration]"
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: sharedrepo
+            columnName: id
+            columnDataType: bigint

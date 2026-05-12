@@ -1,0 +1,102 @@
+databaseChangeLog:
+  - changeSet:
+      id: V040_add_id_to_sharedrepo
+      author: seafile
+      comment: 'Regular Migration: Add id column to sharedrepo table.'
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: sharedrepo
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: sharedrepo
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: sharedrepo_pkey
+                    nullable: false
+
+  - changeSet:
+      id: V040_modify_sharedrepo_from_email
+      author: seafile
+      comment: 'Regular Migration: Modify from_email length in sharedrepo table.'
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: sharedrepo
+            columnName: from_email
+      changes:
+        - modifyDataType:
+            tableName: sharedrepo
+            columnName: from_email
+            newDataType: varchar(255)
+
+  - changeSet:
+      id: V040_modify_sharedrepo_to_email
+      author: seafile
+      comment: 'Regular Migration: Modify to_email length in sharedrepo table.'
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: sharedrepo
+            columnName: to_email
+      changes:
+        - modifyDataType:
+            tableName: sharedrepo
+            columnName: to_email
+            newDataType: varchar(255)
+  - changeSet:
+      id: V063_normalize_sharedrepo_from_email_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: sharedrepo
+            indexName: from_email
+      changes:
+        - dropIndex:
+            tableName: sharedrepo
+            indexName: from_email
+
+  - changeSet:
+      id: V040_add_index_to_sharedrepo_from_email
+      author: seafile
+      comment: 'Regular Migration: Add index on from_email in sharedrepo table.'
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: sharedrepo
+                indexName: idx_sharedrepo_from_email
+      changes:
+        - createIndex:
+            tableName: sharedrepo
+            indexName: idx_sharedrepo_from_email
+            columns:
+              - column:
+                  name: from_email
+
+  - changeSet:
+      id: V040_add_index_to_sharedrepo_to_email
+      author: seafile
+      comment: 'Regular Migration: Add index on to_email in sharedrepo table.'
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: sharedrepo
+                indexName: idx_sharedrepo_to_email
+      changes:
+        - createIndex:
+            tableName: sharedrepo
+            indexName: idx_sharedrepo_to_email
+            columns:
+              - column:
+                  name: to_email
