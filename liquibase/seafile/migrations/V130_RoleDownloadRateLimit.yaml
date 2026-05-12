@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_rename_RoleDownloadRateLimit_to_roledownloadratelimit
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RoleDownloadRateLimit
+      changes:
+        - renameTable:
+            oldTableName: RoleDownloadRateLimit
+            newTableName: roledownloadratelimit
+  - changeSet:
+      id: V130_create_roledownloadratelimit
+      author: seafile
+      comment: Regular Migration - Create table roledownloadratelimit
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: roledownloadratelimit
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: roledownloadratelimit
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: roledownloadratelimit_pkey
+              - column:
+                  name: role
+                  type: varchar(255)
+              - column:
+                  name: download_limit
+                  type: bigint
+  - changeSet:
+      id: V130_normalize_roledownloadratelimit_role_idx
+      author: seafile
+      comment: Legacy/Normalization - Normalize constraint name from role back to idx_roledownloadratelimit_role
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: roledownloadratelimit
+            indexName: role
+      changes:
+        - dropUniqueConstraint:
+            tableName: roledownloadratelimit
+            constraintName: role
+  - changeSet:
+      id: V130_add_unique_to_roledownloadratelimit_role
+      author: seafile
+      comment: Regular Migration - Add unique constraint to roledownloadratelimit role
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: roledownloadratelimit
+                indexName: idx_roledownloadratelimit_role
+      changes:
+        - addUniqueConstraint:
+            tableName: roledownloadratelimit
+            columnNames: role
+            constraintName: idx_roledownloadratelimit_role

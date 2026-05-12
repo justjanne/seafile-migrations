@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_rename_RoleUploadRateLimit_to_roleuploadratelimit
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RoleUploadRateLimit
+      changes:
+        - renameTable:
+            oldTableName: RoleUploadRateLimit
+            newTableName: roleuploadratelimit
+  - changeSet:
+      id: V130_create_roleuploadratelimit
+      author: seafile
+      comment: Regular Migration - Create table roleuploadratelimit
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: roleuploadratelimit
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: roleuploadratelimit
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: roleuploadratelimit_pkey
+              - column:
+                  name: role
+                  type: varchar(255)
+              - column:
+                  name: upload_limit
+                  type: bigint
+  - changeSet:
+      id: V130_normalize_roleuploadratelimit_role_idx
+      author: seafile
+      comment: Legacy/Normalization - Normalize constraint name from role back to idx_roleuploadratelimit_role
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: roleuploadratelimit
+            indexName: role
+      changes:
+        - dropUniqueConstraint:
+            tableName: roleuploadratelimit
+            constraintName: role
+  - changeSet:
+      id: V130_add_unique_to_roleuploadratelimit_role
+      author: seafile
+      comment: Regular Migration - Add unique constraint to roleuploadratelimit role
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: roleuploadratelimit
+                indexName: idx_roleuploadratelimit_role
+      changes:
+        - addUniqueConstraint:
+            tableName: roleuploadratelimit
+            columnNames: role
+            constraintName: idx_roleuploadratelimit_role

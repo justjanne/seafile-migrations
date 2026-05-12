@@ -1,0 +1,69 @@
+databaseChangeLog:
+  - changeSet:
+      id: V070_rename_RepoStorageId_to_repostorageid
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RepoStorageId
+      changes:
+        - renameTable:
+            oldTableName: RepoStorageId
+            newTableName: repostorageid
+  - changeSet:
+      id: V070_create_repostorageid
+      author: seafile
+      comment: Regular Migration - Create table repostorageid
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repostorageid
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: repostorageid_pkey
+              - column:
+                  name: repo_id
+                  type: char(40)
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: idx_repostorageid_repo_id
+              - column:
+                  name: storage_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V070_normalize_repostorageid_repo_id_idx
+      author: seafile
+      comment: Legacy/Normalization - Normalize constraint name from repo_id back to idx_repostorageid_repo_id
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repostorageid
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: repostorageid
+            constraintName: repo_id
+  - changeSet:
+      id: V063_add_unique_constraint_to_repostorageid_repo_id
+      author: seafile
+      comment: "Regular Migration: Add unique constraint on old key columns."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repostorageid
+                indexName: idx_repostorageid_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: repostorageid
+            columnNames: repo_id
+            constraintName: idx_repostorageid_repo_id

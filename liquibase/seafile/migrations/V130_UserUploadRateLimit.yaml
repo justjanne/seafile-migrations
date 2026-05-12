@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_rename_UserUploadRateLimit_to_useruploadratelimit
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: UserUploadRateLimit
+      changes:
+        - renameTable:
+            oldTableName: UserUploadRateLimit
+            newTableName: useruploadratelimit
+  - changeSet:
+      id: V130_create_useruploadratelimit
+      author: seafile
+      comment: Regular Migration - Create table useruploadratelimit
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: useruploadratelimit
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: useruploadratelimit
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: useruploadratelimit_pkey
+              - column:
+                  name: user
+                  type: varchar(255)
+              - column:
+                  name: upload_limit
+                  type: bigint
+  - changeSet:
+      id: V130_normalize_useruploadratelimit_user_idx
+      author: seafile
+      comment: Legacy/Normalization - Normalize constraint name from user back to idx_useruploadratelimit_user
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: useruploadratelimit
+            indexName: user
+      changes:
+        - dropUniqueConstraint:
+            tableName: useruploadratelimit
+            constraintName: user
+  - changeSet:
+      id: V130_add_unique_to_useruploadratelimit_user
+      author: seafile
+      comment: Regular Migration - Add unique constraint to useruploadratelimit user
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: useruploadratelimit
+                indexName: idx_useruploadratelimit_user
+      changes:
+        - addUniqueConstraint:
+            tableName: useruploadratelimit
+            columnNames: user
+            constraintName: idx_useruploadratelimit_user

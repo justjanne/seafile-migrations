@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_rename_OrgDownloadRateLimit_to_orgdownloadratelimit
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: OrgDownloadRateLimit
+      changes:
+        - renameTable:
+            oldTableName: OrgDownloadRateLimit
+            newTableName: orgdownloadratelimit
+  - changeSet:
+      id: V130_create_orgdownloadratelimit
+      author: seafile
+      comment: Regular Migration - Create table orgdownloadratelimit
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: orgdownloadratelimit
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: orgdownloadratelimit
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: orgdownloadratelimit_pkey
+              - column:
+                  name: org_id
+                  type: int
+              - column:
+                  name: download_limit
+                  type: bigint
+  - changeSet:
+      id: V130_normalize_orgdownloadratelimit_org_id_idx
+      author: seafile
+      comment: Legacy/Normalization - Normalize constraint name from org_id back to idx_orgdownloadratelimit_org_id
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orgdownloadratelimit
+            indexName: org_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: orgdownloadratelimit
+            constraintName: org_id
+  - changeSet:
+      id: V130_add_unique_to_orgdownloadratelimit_org_id
+      author: seafile
+      comment: Regular Migration - Add unique constraint to orgdownloadratelimit org_id
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orgdownloadratelimit
+                indexName: idx_orgdownloadratelimit_org_id
+      changes:
+        - addUniqueConstraint:
+            tableName: orgdownloadratelimit
+            columnNames: org_id
+            constraintName: idx_orgdownloadratelimit_org_id

@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_rename_UserDownloadRateLimit_to_userdownloadratelimit
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: UserDownloadRateLimit
+      changes:
+        - renameTable:
+            oldTableName: UserDownloadRateLimit
+            newTableName: userdownloadratelimit
+  - changeSet:
+      id: V130_create_userdownloadratelimit
+      author: seafile
+      comment: Regular Migration - Create table userdownloadratelimit
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: userdownloadratelimit
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: userdownloadratelimit
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: userdownloadratelimit_pkey
+              - column:
+                  name: user
+                  type: varchar(255)
+              - column:
+                  name: download_limit
+                  type: bigint
+  - changeSet:
+      id: V130_normalize_userdownloadratelimit_user_idx
+      author: seafile
+      comment: Legacy/Normalization - Normalize constraint name from user back to idx_userdownloadratelimit_user
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: userdownloadratelimit
+            indexName: user
+      changes:
+        - dropUniqueConstraint:
+            tableName: userdownloadratelimit
+            constraintName: user
+  - changeSet:
+      id: V130_add_unique_to_userdownloadratelimit_user
+      author: seafile
+      comment: Regular Migration - Add unique constraint to userdownloadratelimit user
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: userdownloadratelimit
+                indexName: idx_userdownloadratelimit_user
+      changes:
+        - addUniqueConstraint:
+            tableName: userdownloadratelimit
+            columnNames: user
+            constraintName: idx_userdownloadratelimit_user

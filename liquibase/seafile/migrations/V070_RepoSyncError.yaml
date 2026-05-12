@@ -1,0 +1,79 @@
+databaseChangeLog:
+  - changeSet:
+      id: V070_rename_RepoSyncError_to_reposyncerror
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RepoSyncError
+      changes:
+        - renameTable:
+            oldTableName: RepoSyncError
+            newTableName: reposyncerror
+  - changeSet:
+      id: V013_normalize_error_time
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: reposyncerror
+            columnName: error_time
+      changes:
+        - modifyDataType:
+            tableName: reposyncerror
+            columnName: error_time
+            newDataType: bigint
+  - changeSet:
+      id: V070_create_reposyncerror
+      author: seafile
+      comment: Regular Migration - Create table reposyncerror
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: reposyncerror
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: reposyncerror_pkey
+              - column:
+                  name: token
+                  type: char(41)
+              - column:
+                  name: error_time
+                  type: bigint
+              - column:
+                  name: error_con
+                  type: varchar(1024)
+  - changeSet:
+      id: V070_normalize_reposyncerror_token_idx
+      author: seafile
+      comment: Legacy/Normalization - Normalize constraint name from token back to idx_reposyncerror_token
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: reposyncerror
+            indexName: token
+      changes:
+        - dropUniqueConstraint:
+            tableName: reposyncerror
+            constraintName: token
+  - changeSet:
+      id: V063_add_unique_constraint_to_reposyncerror_token_name
+      author: seafile
+      comment: "Regular Migration: Add unique constraint on old key columns."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: reposyncerror
+                indexName: idx_reposyncerror_token_name
+      changes:
+        - addUniqueConstraint:
+            tableName: reposyncerror
+            columnNames: token
+            constraintName: idx_reposyncerror_token_name

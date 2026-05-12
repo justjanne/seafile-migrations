@@ -1,0 +1,128 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_OrgRepo_to_orgrepo
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: OrgRepo
+      changes:
+        - renameTable:
+            oldTableName: OrgRepo
+            newTableName: orgrepo
+  - changeSet:
+      id: V070_create_orgrepo
+      author: seafile
+      comment: Regular Migration - Create table orgrepo
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: orgrepo
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: orgrepo_pkey
+              - column:
+                  name: org_id
+                  type: int
+              - column:
+                  name: repo_id
+                  type: char(37)
+              - column:
+                  name: user
+                  type: varchar(255)
+  - changeSet:
+      id: V063_normalize_orgrepo_org_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orgrepo
+            indexName: org_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: orgrepo
+            constraintName: org_id
+  - changeSet:
+      id: V070_add_unique_constraint_to_orgrepo_org_id_repo_id
+      author: seafile
+      comment: Regular Migration - Add unique constraint to orgrepo org_id, repo_id
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orgrepo
+                indexName: idx_orgrepo_org_id_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: orgrepo
+            columnNames: org_id, repo_id
+            constraintName: idx_orgrepo_org_id_repo_id
+  - changeSet:
+      id: V063_normalize_orgrepo_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orgrepo
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: orgrepo
+            constraintName: repo_id
+  - changeSet:
+      id: V070_add_unique_constraint_to_orgrepo_repo_id
+      author: seafile
+      comment: Regular Migration - Add unique constraint to orgrepo repo_id
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orgrepo
+                indexName: idx_orgrepo_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: orgrepo
+            columnNames: repo_id
+            constraintName: idx_orgrepo_repo_id
+  - changeSet:
+      id: V070_add_index_to_orgrepo_org_id_user
+      author: seafile
+      comment: Regular Migration - Add index to orgrepo org_id, user
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orgrepo
+                indexName: idx_orgrepo_org_id_user
+      changes:
+        - createIndex:
+            indexName: idx_orgrepo_org_id_user
+            tableName: orgrepo
+            columns:
+              - column:
+                  name: org_id
+              - column:
+                  name: user
+  - changeSet:
+      id: V070_add_index_to_orgrepo_user
+      author: seafile
+      comment: Regular Migration - Add index to orgrepo user
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orgrepo
+                indexName: idx_orgrepo_user
+      changes:
+        - createIndex:
+            indexName: idx_orgrepo_user
+            tableName: orgrepo
+            columns:
+              - column:
+                  name: user
