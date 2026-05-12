@@ -10,7 +10,6 @@ psql postgres://postgres:password@localhost/postgres -c "DROP DATABASE IF EXISTS
 # prepare
 psql postgres://postgres:password@localhost/postgres -c "CREATE DATABASE $1"
 psql postgres://postgres:password@localhost/ccnet --file=../schemas/$1/pgsql/131.sql || true
-./pgsql-prepare.sh $1
 
 # migrate
 liquibase --url="jdbc:postgresql://127.0.0.1:5432/$1" --username="postgres" --password="password" --search-path="$1" update --changelog-file=changelog.yaml

@@ -13,7 +13,6 @@ mariadb -h 127.0.0.1 -u root -ppassword $1 < ../schemas/$1/mysql/018.sql || true
 for i in $(ls ../legacy/$1/mysql/*.sql | sort); do
   mariadb -h 127.0.0.1 -u root -ppassword $1 < $i || true
 done
-./mysql-prepare.sh $1
 
 # migrate
 liquibase --url="jdbc:mariadb://127.0.0.1:3306/$1" --username="root" --password="password" --search-path="$1" update --changelog-file=changelog.yaml

@@ -9,7 +9,6 @@ mariadb -h 127.0.0.1 -u root -ppassword -e "DROP DATABASE IF EXISTS $1;"
 
 # prepare
 mariadb -h 127.0.0.1 -u root -ppassword -e "CREATE DATABASE $1;"
-./mysql-prepare.sh $1
 
 # migrate
 liquibase --url="jdbc:mariadb://127.0.0.1:3306/$1" --username="root" --password="password" --search-path="$1" update --changelog-file=changelog.yaml
