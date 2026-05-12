@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id: V070_create_orggrouprepo
+      author: seafile
+      comment: Regular Migration - Create table orggrouprepo
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: orggrouprepo
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: orggrouprepo_pkey
+              - column:
+                  name: org_id
+                  type: int
+              - column:
+                  name: repo_id
+                  type: char(37)
+              - column:
+                  name: group_id
+                  type: int
+              - column:
+                  name: owner
+                  type: varchar(255)
+              - column:
+                  name: permission
+                  type: char(15)
+  - changeSet:
+      id: V070_add_unique_constraint_to_orggrouprepo_compound
+      author: seafile
+      comment: Regular Migration - Add unique constraint to orggrouprepo org_id, group_id, repo_id
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orggrouprepo
+                indexName: idx_orggrouprepo_org_id_group_id_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: orggrouprepo
+            columnNames: org_id, group_id, repo_id
+            constraintName: idx_orggrouprepo_org_id_group_id_repo_id
+  - changeSet:
+      id: V070_add_index_to_orggrouprepo_repo_id
+      author: seafile
+      comment: Regular Migration - Add index to orggrouprepo repo_id
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orggrouprepo
+                indexName: idx_orggrouprepo_repo_id
+      changes:
+        - createIndex:
+            indexName: idx_orggrouprepo_repo_id
+            tableName: orggrouprepo
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V070_add_index_to_orggrouprepo_owner
+      author: seafile
+      comment: Regular Migration - Add index to orggrouprepo owner
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orggrouprepo
+                indexName: idx_orggrouprepo_owner
+      changes:
+        - createIndex:
+            indexName: idx_orggrouprepo_owner
+            tableName: orggrouprepo
+            columns:
+              - column:
+                  name: owner
