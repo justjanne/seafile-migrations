@@ -1,0 +1,84 @@
+databaseChangeLog:
+  - changeSet:
+      id: V018_rename_VirtualRepo_to_virtualrepo
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: VirtualRepo
+      changes:
+        - renameTable:
+            oldTableName: VirtualRepo
+            newTableName: virtualrepo
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: virtualrepo
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: virtualrepo
+            columnName: repo_id
+            columnDataType: char(36)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: virtualrepo
+            columnName: repo_id
+  - changeSet:
+      id: V018_create_virtualrepo
+      author: seafile
+      comment: Regular Migration - Create table virtualrepo
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: virtualrepo
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: virtualrepo_pkey
+              - column:
+                  name: origin_repo
+                  type: char(36)
+              - column:
+                  name: path
+                  type: text
+              - column:
+                  name: base_commit
+                  type: char(40)
+  - changeSet:
+      id: V018_normalize_virtualrepo_origin_repo_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: virtualrepo
+            indexName: origin_repo
+      changes:
+        - dropUniqueConstraint:
+            tableName: virtualrepo
+            constraintName: origin_repo
+  - changeSet:
+      id: V018_add_index_to_virtualrepo_origin_repo
+      author: seafile
+      comment: Regular Migration - Create index with standardized name
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: virtualrepo
+                indexName: idx_virtualrepo_origin_repo
+      changes:
+        - createIndex:
+            indexName: idx_virtualrepo_origin_repo
+            tableName: virtualrepo
+            columns:
+              - column:
+                  name: origin_repo

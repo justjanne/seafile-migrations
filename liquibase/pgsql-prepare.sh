@@ -7,6 +7,6 @@ for table in \
                OrgUploadRateLimit OrgUserDefaultQuota RepoFileCount RepoInfo RepoStorageId \
                RepoSyncError RepoTrash RoleDownloadRateLimit RoleQuota \
                RoleUploadRateLimit SeafileConf SystemInfo UserShareQuota UserDownloadRateLimit UserUploadRateLimit \
-               VirtualRepo WebUploadTempFiles FileLocks; do
+               WebUploadTempFiles FileLocks; do
   psql postgres://postgres:password@localhost/$1 -c "drop table if exists \"$table\"" || true
 done

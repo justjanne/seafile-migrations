@@ -7,6 +7,6 @@ for table in \
                OrgUploadRateLimit OrgUserDefaultQuota RepoFileCount RepoInfo RepoStorageId \
                RepoSyncError RepoTrash RoleDownloadRateLimit RoleQuota \
                RoleUploadRateLimit SeafileConf SystemInfo UserShareQuota UserDownloadRateLimit UserUploadRateLimit \
-               VirtualRepo WebUploadTempFiles FileLocks; do
+               WebUploadTempFiles FileLocks; do
   mariadb -h 127.0.0.1 -u root -ppassword $1 -e "drop table if exists \`$table\`" || true
 done
