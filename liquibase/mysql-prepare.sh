@@ -6,7 +6,7 @@ for table in \
                GCID LastGCID OrgDownloadRateLimit OrgGroupRepo OrgInnerPubRepo OrgRepo OrgSharedRepo \
                OrgUploadRateLimit OrgUserDefaultQuota RepoFileCount RepoInfo RepoStorageId \
                RepoSyncError RoleDownloadRateLimit RoleQuota \
-               RoleUploadRateLimit SeafileConf UserShareQuota UserDownloadRateLimit UserUploadRateLimit \
+               RoleUploadRateLimit SeafileConf UserDownloadRateLimit UserUploadRateLimit \
                WebUploadTempFiles FileLocks; do
   mariadb -h 127.0.0.1 -u root -ppassword $1 -e "drop table if exists \`$table\`" || true
 done

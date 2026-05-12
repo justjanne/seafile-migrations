@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: V042_rename_UserShareQuota_to_usersharequota
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: UserShareQuota
+      changes:
+        - renameTable:
+            oldTableName: UserShareQuota
+            newTableName: usersharequota
+  - changeSet:
+      id: V013_normalize_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: usersharequota
+            columnName: user
+      changes:
+        - addNotNullConstraint:
+            tableName: usersharequota
+            columnName: user
+            columnDataType: varchar(255)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: usersharequota
+            columnName: user
+  - changeSet:
+      id: V042_create_usersharequota
+      author: seafile
+      comment: Regular Migration - Create table usersharequota
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: usersharequota
+            columns:
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: usersharequota_pkey
+              - column:
+                  name: quota
+                  type: bigint
