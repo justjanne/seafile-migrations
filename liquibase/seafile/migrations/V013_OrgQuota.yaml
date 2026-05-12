@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_OrgQuota_to_orgquota
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: OrgQuota
+      changes:
+        - renameTable:
+            oldTableName: OrgQuota
+            newTableName: orgquota
+  - changeSet:
+      id: V013_normalize_org_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: orgquota
+            columnName: org_id
+      changes:
+        - addNotNullConstraint:
+            tableName: orgquota
+            columnName: org_id
+            columnDataType: int
+            defaultNullValue: 0
+        - dropDefaultValue:
+            tableName: orgquota
+            columnName: org_id
+  - changeSet:
+      id: V013_create_orgquota
+      author: seafile
+      comment: Regular Migration - Create table orgquota
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: orgquota
+            columns:
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: orgquota_pkey
+              - column:
+                  name: quota
+                  type: bigint
