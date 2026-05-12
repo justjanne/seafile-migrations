@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_LastGCID_to_lastgcid
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: LastGCID
+      changes:
+        - renameTable:
+            oldTableName: LastGCID
+            newTableName: lastgcid
+  - changeSet:
+      id: V070_create_lastgcid
+      author: seafile
+      comment: Regular Migration - Create table lastgcid
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: lastgcid
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: lastgcid_pkey
+              - column:
+                  name: repo_id
+                  type: char(36)
+              - column:
+                  name: client_id
+                  type: varchar(128)
+              - column:
+                  name: gc_id
+                  type: char(36)
+  - changeSet:
+      id: V063_normalize_lastgcid_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: lastgcid
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: lastgcid
+            constraintName: repo_id
+  - changeSet:
+      id: V070_add_unique_constraint_to_lastgcid_repo_id_client_id
+      author: seafile
+      comment: Regular Migration - Add unique constraint to lastgcid repo_id, client_id
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: lastgcid
+                indexName: idx_lastgcid_repo_id_client_id
+      changes:
+        - addUniqueConstraint:
+            tableName: lastgcid
+            columnNames: repo_id, client_id
+            constraintName: idx_lastgcid_repo_id_client_id
