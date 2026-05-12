@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_UserQuota_to_userquota
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: UserQuota
+      changes:
+        - renameTable:
+            oldTableName: UserQuota
+            newTableName: userquota
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: userquota
+            columnName: user
+      changes:
+        - addNotNullConstraint:
+            tableName: userquota
+            columnName: user
+            columnDataType: varchar(255)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: userquota
+            columnName: user
+  - changeSet:
+      id: V013_create_userquota
+      author: seafile
+      comment: Regular Migration - Create table userquota
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: userquota
+            columns:
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: userquota_pkey
+              - column:
+                  name: quota
+                  type: bigint
