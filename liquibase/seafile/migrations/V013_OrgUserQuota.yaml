@@ -1,0 +1,72 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_OrgUserQuota_to_orguserquota
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: OrgUserQuota
+      changes:
+        - renameTable:
+            oldTableName: OrgUserQuota
+            newTableName: orguserquota
+  - changeSet:
+      id: V013_normalize_org_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: orguserquota
+            columnName: org_id
+      changes:
+        - addNotNullConstraint:
+            tableName: orguserquota
+            columnName: org_id
+            columnDataType: int
+            defaultNullValue: 0
+        - dropDefaultValue:
+            tableName: orguserquota
+            columnName: org_id
+  - changeSet:
+      id: V013_normalize_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: orguserquota
+            columnName: user
+      changes:
+        - addNotNullConstraint:
+            tableName: orguserquota
+            columnName: user
+            columnDataType: varchar(255)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: orguserquota
+            columnName: user
+  - changeSet:
+      id: V013_create_orguserquota
+      author: seafile
+      comment: Regular Migration - Create table orguserquota
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: orguserquota
+            columns:
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quota
+                  type: bigint
+            primaryKey:
+              columnNames: org_id, user
+              constraintName: orguserquota_pkey

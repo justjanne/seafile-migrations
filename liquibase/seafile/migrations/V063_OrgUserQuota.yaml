@@ -1,0 +1,125 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_drop_primary_key_from_orguserquota
+      author: seafile
+      comment: "Legacy/Normalization: Prepare for structural PK change by dropping old PK."
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: orguserquota
+          not:
+            - columnExists:
+                tableName: orguserquota
+                columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: orguserquota
+  - changeSet:
+      id: V063_normalize_orguserquota_compound_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old compound primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orguserquota
+            indexName: orguserquota_pkey
+            columnNames: org_id, user
+      changes:
+        - dropPrimaryKey:
+            tableName: orguserquota
+  - changeSet:
+      id: V063_normalize_orguserquota_id_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old named primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orguserquota
+            indexName: OrgUserQuota_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: orguserquota
+            constraintName: OrgUserQuota_id_pkey
+  - changeSet:
+      id: V063_add_id_to_orguserquota
+      author: seafile
+      comment: "Regular Migration: Structural PK change - add bigint id column as primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: orguserquota
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: orguserquota
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: orguserquota_pkey
+  - changeSet:
+      id: V063_change_id_type_in_orguserquota
+      author: seafile
+      comment: "Regular Migration: Ensure id column is bigint/bigserial."
+      changes:
+        - modifyDataType:
+            tableName: orguserquota
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_orguserquota_pkey
+      author: seafile
+      comment: "Regular Migration: Ensure id column is the primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: orguserquota
+      changes:
+        - addPrimaryKey:
+            tableName: orguserquota
+            columnNames: id
+            constraintName: orguserquota_pkey
+  - changeSet:
+      id: V063_normalize_orguserquota_id_autoincrement
+      author: seafile
+      comment: "Regular Migration: Add auto-increment to id for MySQL/MariaDB."
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: orguserquota
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_normalize_orgquota_org_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orguserquota
+            indexName: org_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: orguserquota
+            constraintName: org_id
+  - changeSet:
+      id: V063_add_unique_constraint_to_orguserquota_org_id_user
+      author: seafile
+      comment: "Regular Migration: Add unique constraint on old key columns."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orguserquota
+                indexName: idx_orguserquota_org_id_user
+      changes:
+        - addUniqueConstraint:
+            tableName: orguserquota
+            columnNames: org_id, user
+            constraintName: idx_orguserquota_org_id_user
