@@ -5,7 +5,7 @@ for table in \
                FileLockTimestamp FolderGroupPerm FolderPermTimestamp FolderUserPerm \
                GCID LastGCID OrgDownloadRateLimit OrgGroupRepo OrgInnerPubRepo OrgRepo OrgSharedRepo \
                OrgUploadRateLimit OrgUserDefaultQuota RepoFileCount RepoInfo RepoStorageId \
-               RepoSyncError RepoTrash RoleDownloadRateLimit RoleQuota \
+               RepoSyncError RoleDownloadRateLimit RoleQuota \
                RoleUploadRateLimit SeafileConf UserShareQuota UserDownloadRateLimit UserUploadRateLimit \
                WebUploadTempFiles FileLocks; do
   psql postgres://postgres:password@localhost/$1 -c "drop table if exists \"$table\"" || true

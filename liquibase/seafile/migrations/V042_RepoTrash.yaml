@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: V042_add_del_time_to_repotrash
+      author: seafile
+      comment: Regular Migration - Add del_time column to repotrash table
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repotrash
+                columnName: del_time
+      changes:
+        - addColumn:
+            tableName: repotrash
+            ifNotExists: true
+            columns:
+              - column:
+                  name: del_time
+                  type: bigint

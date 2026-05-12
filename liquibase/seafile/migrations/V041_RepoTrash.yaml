@@ -1,0 +1,121 @@
+databaseChangeLog:
+  - changeSet:
+      id: V041_rename_RepoTrash_to_repotrash
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RepoTrash
+      changes:
+        - renameTable:
+            oldTableName: RepoTrash
+            newTableName: repotrash
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repotrash
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: repotrash
+            columnName: repo_id
+            columnDataType: char(36)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: repotrash
+            columnName: repo_id
+  - changeSet:
+      id: V041_create_repotrash
+      author: seafile
+      comment: Regular Migration - Create table repotrash
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repotrash
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repotrash_pkey
+              - column:
+                  name: repo_name
+                  type: varchar(255)
+              - column:
+                  name: head_id
+                  type: char(40)
+              - column:
+                  name: owner_id
+                  type: varchar(255)
+              - column:
+                  name: size
+                  type: bigint
+              - column:
+                  name: org_id
+                  type: int
+  - changeSet:
+      id: V041_drop_index_from_repotrash_owner_id
+      author: seafile
+      comment: Legacy/Normalization - Drop legacy index name
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotrash
+            indexName: owner_id
+      changes:
+        - dropIndex:
+            tableName: repotrash
+            indexName: owner_id
+  - changeSet:
+      id: V041_add_index_to_repotrash_owner_id
+      author: seafile
+      comment: Regular Migration - Create index with standardized name
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repotrash
+                indexName: idx_repotrash_owner_id
+      changes:
+        - createIndex:
+            tableName: repotrash
+            indexName: idx_repotrash_owner_id
+            columns:
+              - column:
+                  name: owner_id
+  - changeSet:
+      id: V041_drop_index_from_repotrash_org_id
+      author: seafile
+      comment: Legacy/Normalization - Drop legacy index name
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotrash
+            indexName: org_id
+      changes:
+        - dropIndex:
+            tableName: repotrash
+            indexName: org_id
+  - changeSet:
+      id: V041_add_index_to_repotrash_org_id
+      author: seafile
+      comment: Regular Migration - Create index with standardized name
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repotrash
+                indexName: idx_repotrash_org_id
+      changes:
+        - createIndex:
+            tableName: repotrash
+            indexName: idx_repotrash_org_id
+            columns:
+              - column:
+                  name: org_id
