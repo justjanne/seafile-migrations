@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_Repo_to_repo
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: Repo
+      changes:
+        - renameTable:
+            oldTableName: Repo
+            newTableName: repo
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repo
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: repo
+            columnName: repo_id
+            columnDataType: char(37)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: repo
+            columnName: repo_id
+  - changeSet:
+      id: V013_create_repo
+      author: seafile
+      comment: Regular Migration - Create table repo
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repo
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repo_pkey
