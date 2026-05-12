@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V013_OrgUser_normalize
+      id: V013_rename_OrgUser_to_orguser
       author: seafile
       failOnError: false
       preConditions:
@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: OrgUser
             newTableName: orguser
   - changeSet:
-      id: V013_OrgUser_table
+      id: V013_create_orguser
       author: seafile
       changes:
         - createTable:
@@ -30,7 +30,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
   - changeSet:
-      id: V013_OrgUser_normalize_org_id
+      id: V013_normalize_orguser_org_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -42,7 +42,7 @@ databaseChangeLog:
             tableName: orguser
             constraintName: org_id
   - changeSet:
-      id: V013_OrgUser_index_org_id
+      id: V013_add_unique_constraint_to_orguser_org_id_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -56,7 +56,7 @@ databaseChangeLog:
             columnNames: org_id, email
             constraintName: idx_orguser_org_id_email
   - changeSet:
-      id: V013_OrgUser_normalize_email
+      id: V013_normalize_orguser_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -68,7 +68,7 @@ databaseChangeLog:
             tableName: orguser
             indexName: email
   - changeSet:
-      id: V013_OrgUser_index_email
+      id: V013_add_index_to_orguser_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN

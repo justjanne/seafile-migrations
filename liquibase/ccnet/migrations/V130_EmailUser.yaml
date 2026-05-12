@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V130_EmailUser_normalize_is_department_owner
+      id: V130_normalize_emailuser_is_department_owner
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -12,7 +12,7 @@ databaseChangeLog:
             tableName: emailuser
             indexName: EmailUser_is_department_owenr
   - changeSet:
-      id: V130_EmailUser_is_department_owner
+      id: V130_add_is_department_owner_to_emailuser
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -31,7 +31,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
   - changeSet:
-      id: V130_EmailUser_normalize_is_active_1
+      id: V130_normalize_emailuser_is_active_1
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -43,7 +43,7 @@ databaseChangeLog:
             tableName: emailuser
             indexName: EmailUser_is_active
   - changeSet:
-      id: V130_EmailUser_normalize_is_active_2
+      id: V130_normalize_emailuser_is_active_2
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -55,7 +55,7 @@ databaseChangeLog:
             tableName: emailuser
             indexName: is_active
   - changeSet:
-      id: V130_EmailUser_index_is_active
+      id: V130_add_index_to_emailuser_is_active
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -71,7 +71,7 @@ databaseChangeLog:
               - column:
                   name: is_active
   - changeSet:
-      id: V130_EmailUser_normalize_reference_id
+      id: V130_normalize_emailuser_reference_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -83,7 +83,7 @@ databaseChangeLog:
             tableName: emailuser
             indexName: reference_id
   - changeSet:
-      id: V130_EmailUser_index_reference_id
+      id: V130_add_index_to_emailuser_reference_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -100,7 +100,7 @@ databaseChangeLog:
               - column:
                   name: reference_id
   - changeSet:
-      id: V130_EmailUser_index_is_department_owner
+      id: V130_add_index_to_emailuser_is_department_owner
       author: seafile
       preConditions:
         - onFail: MARK_RAN

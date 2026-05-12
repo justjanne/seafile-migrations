@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V031_UserRole_normalize
+      id: V031_rename_UserRole_to_userrole
       author: seafile
       failOnError: false
       preConditions:
@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: UserRole
             newTableName: userrole
   - changeSet:
-      id: V031_UserRole_table
+      id: V031_create_userrole
       author: seafile
       changes:
         - createTable:
@@ -32,7 +32,7 @@ databaseChangeLog:
                   name: role
                   type: varchar(255)
   - changeSet:
-      id: V031_UserRole_normalize_email
+      id: V031_normalize_userrole_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -44,7 +44,7 @@ databaseChangeLog:
             tableName: userrole
             constraintName: email
   - changeSet:
-      id: V031_UserRole_normalize_email_key
+      id: V031_normalize_userrole_email_key
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -56,7 +56,7 @@ databaseChangeLog:
             tableName: userrole
             constraintName: userrole_email_key
   - changeSet:
-      id: V031_UserRole_index_email
+      id: V031_add_unique_constraint_to_userrole_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN

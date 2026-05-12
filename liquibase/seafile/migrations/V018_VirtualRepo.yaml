@@ -52,7 +52,7 @@ databaseChangeLog:
                   name: base_commit
                   type: char(40)
   - changeSet:
-      id: V018_normalize_virtualrepo_origin_repo_idx
+      id: V018_normalize_virtualrepo_origin_repo
       author: seafile
       preConditions:
         - onFail: MARK_RAN

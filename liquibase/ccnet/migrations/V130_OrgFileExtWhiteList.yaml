@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V130_OrgFileExtWhiteList_normalize
+      id: V130_rename_OrgFileExtWhiteList_to_orgfileextwhitelist
       author: seafile
       failOnError: false
       preConditions:
@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: OrgFileExtWhiteList
             newTableName: orgfileextwhitelist
   - changeSet:
-      id: V130_OrgFileExtWhiteList_table
+      id: V130_create_orgfileextwhitelist
       author: seafile
       changes:
         - createTable:
@@ -32,7 +32,7 @@ databaseChangeLog:
                   name: white_list
                   type: text
   - changeSet:
-      id: V130_OrgFileExtWhiteList_normalize_org_id
+      id: V130_normalize_orgfileextwhitelist_org_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -44,7 +44,7 @@ databaseChangeLog:
             tableName: orgfileextwhitelist
             constraintName: org_id
   - changeSet:
-      id: V130_OrgFileExtWhiteList_normalize_org_id_key
+      id: V130_normalize_orgfileextwhitelist_org_id_key
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -56,7 +56,7 @@ databaseChangeLog:
             tableName: orgfileextwhitelist
             constraintName: orgfileextwhitelist_org_id_key
   - changeSet:
-      id: V130_OrgFileExtWhiteList_index_org_id
+      id: V130_add_unique_constraint_to_orgfileextwhitelist_org_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_Organization_org_id
+      id: V063_change_org_id_type_in_organization
       author: seafile
       changes:
         - modifyDataType:
@@ -8,7 +8,7 @@ databaseChangeLog:
             columnName: org_id
             newDataType: bigserial
   - changeSet:
-      id: V063_Organization_autoincrement_org_id
+      id: V063_normalize_organization_org_id_autoincrement
       author: seafile
       dbms: mysql,mariadb
       changes:

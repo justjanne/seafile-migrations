@@ -38,7 +38,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
   - changeSet:
-      id: V070_normalize_repostorageid_drop_old_idx
+      id: V070_normalize_repostorageid_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -50,7 +50,7 @@ databaseChangeLog:
             tableName: repostorageid
             constraintName: repo_id
   - changeSet:
-      id: V070_add_index_to_repostorageid_repo_id
+      id: V070_add_unique_constraint_to_repostorageid_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

@@ -35,7 +35,7 @@ databaseChangeLog:
                   name: permission
                   type: char(15)
   - changeSet:
-      id: V070_normalize_orginnerpubrepo_drop_old_idx
+      id: V070_normalize_orginnerpubrepo_org_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -47,7 +47,7 @@ databaseChangeLog:
             tableName: orginnerpubrepo
             constraintName: org_id
   - changeSet:
-      id: V070_add_index_to_orginnerpubrepo_org_id_repo_id
+      id: V070_add_unique_constraint_to_orginnerpubrepo_org_id_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

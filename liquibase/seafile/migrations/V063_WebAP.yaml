@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_normalize_webap_drop_old_pkey
+      id: V063_normalize_webap_pkey_drop
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -14,7 +14,7 @@ databaseChangeLog:
         - dropPrimaryKey:
             tableName: webap
   - changeSet:
-      id: V063_normalize_webap_drop_compound_pkey
+      id: V063_normalize_webap_compound_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -26,7 +26,7 @@ databaseChangeLog:
         - dropPrimaryKey:
             tableName: webap
   - changeSet:
-      id: V063_normalize_webap_drop_named_id_pkey
+      id: V063_normalize_webap_id_pkey_old
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -68,7 +68,7 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_normalize_webap_ensure_pkey
+      id: V063_normalize_webap_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -90,7 +90,7 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
-      id: V063_normalize_webap_drop_old_idx
+      id: V063_normalize_webap_repo_id_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -102,7 +102,7 @@ databaseChangeLog:
             tableName: webap
             constraintName: repo_id
   - changeSet:
-      id: V063_add_index_to_webap_repo_id
+      id: V063_add_unique_constraint_to_webap_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

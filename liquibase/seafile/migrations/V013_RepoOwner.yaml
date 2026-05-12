@@ -46,7 +46,7 @@ databaseChangeLog:
                   name: owner_id
                   type: varchar(255)
   - changeSet:
-      id: V013_drop_index_from_repoowner_owner_id
+      id: V013_normalize_repoowner_owner_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

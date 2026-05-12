@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V018_normalize_repousertoken_email_idx
+      id: V018_normalize_repousertoken_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V013_Group_normalize
+      id: V013_rename_Group_to_group
       author: seafile
       failOnError: false
       preConditions:
@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: Group
             newTableName: group
   - changeSet:
-      id: V013_Group_table
+      id: V013_create_group
       author: seafile
       changes:
         - createTable:
@@ -35,7 +35,7 @@ databaseChangeLog:
                   name: timestamp
                   type: bigint
   - changeSet:
-      id: V013_Group_normalize_pkey
+      id: V013_normalize_group_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN

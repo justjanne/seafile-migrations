@@ -31,7 +31,7 @@ databaseChangeLog:
                   name: permission
                   type: char(15)
   - changeSet:
-      id: V013_drop_index_from_sharedrepo_repo_id
+      id: V013_normalize_sharedrepo_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

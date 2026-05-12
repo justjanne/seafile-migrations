@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V041_GroupDNPair_normalize
+      id: V041_rename_GroupDNPair_to_groupdnpair
       author: seafile
       failOnError: false
       preConditions:
@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: GroupDNPair
             newTableName: groupdnpair
   - changeSet:
-      id: V041_GroupDNPair_table
+      id: V041_create_groupdnpair
       author: seafile
       changes:
         - createTable:
@@ -25,7 +25,7 @@ databaseChangeLog:
                   name: dn
                   type: varchar(255)
   - changeSet:
-      id: V041_GroupDNPair_normalize_dn
+      id: V041_normalize_groupdnpair_dn
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -37,7 +37,7 @@ databaseChangeLog:
             tableName: groupdnpair
             constraintName: dn
   - changeSet:
-      id: V041_GroupDNPair_index_dn
+      id: V041_add_unique_constraint_to_groupdnpair_dn
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -51,7 +51,7 @@ databaseChangeLog:
             columnNames: dn
             constraintName: idx_groupdnpair_dn
   - changeSet:
-      id: V041_GroupDNPair_normalize_group_id
+      id: V041_normalize_groupdnpair_group_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -63,7 +63,7 @@ databaseChangeLog:
             tableName: groupdnpair
             indexName: group_id
   - changeSet:
-      id: V041_GroupDNPair_index_group_id
+      id: V041_add_index_to_groupdnpair_group_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

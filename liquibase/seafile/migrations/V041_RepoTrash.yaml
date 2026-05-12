@@ -58,7 +58,7 @@ databaseChangeLog:
                   name: org_id
                   type: int
   - changeSet:
-      id: V041_drop_index_from_repotrash_owner_id
+      id: V041_normalize_repotrash_owner_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -86,7 +86,7 @@ databaseChangeLog:
               - column:
                   name: owner_id
   - changeSet:
-      id: V041_drop_index_from_repotrash_org_id
+      id: V041_normalize_repotrash_org_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

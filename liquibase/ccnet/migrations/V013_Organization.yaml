@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V013_Organization_normalize
+      id: V013_rename_Organization_to_organization
       author: seafile
       failOnError: false
       preConditions:
@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: Organization
             newTableName: organization
   - changeSet:
-      id: V013_Organization_table
+      id: V013_create_organization
       author: seafile
       changes:
         - createTable:
@@ -38,7 +38,7 @@ databaseChangeLog:
                   name: ctime
                   type: bigint
   - changeSet:
-      id: V013_Organization_normalize_pkey
+      id: V013_normalize_organization_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -53,7 +53,7 @@ databaseChangeLog:
             columnNames: org_id
             constraintName: organization_pkey
   - changeSet:
-      id: V013_Organization_normalize_url_prefix
+      id: V013_normalize_organization_url_prefix
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -65,7 +65,7 @@ databaseChangeLog:
             tableName: organization
             constraintName: url_prefix
   - changeSet:
-      id: V013_Organization_normalize_url_prefix_key
+      id: V013_normalize_organization_url_prefix_key
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -77,7 +77,7 @@ databaseChangeLog:
             tableName: organization
             constraintName: organization_url_prefix_key
   - changeSet:
-      id: V013_Organization_index_url_prefix
+      id: V013_add_index_to_organization_url_prefix
       author: seafile
       preConditions:
         - onFail: MARK_RAN

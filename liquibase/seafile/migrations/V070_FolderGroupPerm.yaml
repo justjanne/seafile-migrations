@@ -44,7 +44,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
   - changeSet:
-      id: V070_normalize_foldergroupperm_drop_old_idx
+      id: V070_normalize_foldergroupperm_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

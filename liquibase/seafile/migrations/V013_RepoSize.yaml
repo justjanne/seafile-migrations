@@ -28,7 +28,7 @@ databaseChangeLog:
             tableName: reposize
             columnName: repo_id
   - changeSet:
-      id: V013_normalize_reposize_size
+      id: V013_change_size_type_in_reposize
       author: seafile
       preConditions:
         - onFail: MARK_RAN

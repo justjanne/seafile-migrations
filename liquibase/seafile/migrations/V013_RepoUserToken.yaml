@@ -28,7 +28,7 @@ databaseChangeLog:
                   name: token
                   type: char(41)
   - changeSet:
-      id: V013_drop_unique_constraint_from_repousertoken_repo_id
+      id: V013_normalize_repousertoken_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -40,7 +40,7 @@ databaseChangeLog:
             tableName: repousertoken
             constraintName: repo_id
   - changeSet:
-      id: V013_add_index_to_repousertoken_repo_id_token
+      id: V013_add_unique_constraint_to_repousertoken_repo_id_token
       author: seafile
       preConditions:
         - onFail: MARK_RAN

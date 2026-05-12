@@ -1,7 +1,7 @@
 databaseChangeLog:
 databaseChangeLog:
   - changeSet:
-      id: V041_LDAPUsers_table
+      id: V041_create_ldapusers
       author: seafile
       changes:
         - createTable:
@@ -39,7 +39,7 @@ databaseChangeLog:
                   name: extra_attrs
                   type: text
   - changeSet:
-      id: V041_LDAPUsers_normalize_email
+      id: V041_normalize_ldapusers_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -51,7 +51,7 @@ databaseChangeLog:
             tableName: ldapusers
             constraintName: email
   - changeSet:
-      id: V041_LDAPUsers_normalize_email_key
+      id: V041_normalize_ldapusers_email_key
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -63,7 +63,7 @@ databaseChangeLog:
             tableName: ldapusers
             constraintName: ldapusers_email_key
   - changeSet:
-      id: V041_LDAPUsers_index_email
+      id: V041_add_unique_constraint_to_ldapusers_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN

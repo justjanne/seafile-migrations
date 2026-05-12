@@ -35,7 +35,7 @@ databaseChangeLog:
                   name: user
                   type: varchar(255)
   - changeSet:
-      id: V070_normalize_orgrepo_drop_old_org_id_idx
+      id: V070_normalize_orgrepo_org_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -47,7 +47,7 @@ databaseChangeLog:
             tableName: orgrepo
             constraintName: org_id
   - changeSet:
-      id: V070_add_index_to_orgrepo_org_id_repo_id
+      id: V070_add_unique_constraint_to_orgrepo_org_id_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -61,7 +61,7 @@ databaseChangeLog:
             columnNames: org_id, repo_id
             constraintName: idx_orgrepo_org_id_repo_id
   - changeSet:
-      id: V070_normalize_orgrepo_drop_old_repo_id_idx
+      id: V070_normalize_orgrepo_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -73,7 +73,7 @@ databaseChangeLog:
             tableName: orgrepo
             constraintName: repo_id
   - changeSet:
-      id: V070_add_index_to_orgrepo_repo_id
+      id: V070_add_unique_constraint_to_orgrepo_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

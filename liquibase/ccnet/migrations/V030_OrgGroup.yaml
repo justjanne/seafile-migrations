@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V030_OrgGroup_not_null
+      id: V030_normalize_orggroup_not_null
       author: seafile
       changes:
         - addNotNullConstraint:
@@ -12,7 +12,7 @@ databaseChangeLog:
             columnName: group_id
             columnDataType: int
   - changeSet:
-      id: V030_OrgGroup_group_id
+      id: V030_normalize_orggroup_drop_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -24,7 +24,7 @@ databaseChangeLog:
             tableName: orggroup
             constraintName: idx_orggroup_org_id_group_id
   - changeSet:
-      id: V030_OrgGroup_pkey
+      id: V030_normalize_orggroup_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN

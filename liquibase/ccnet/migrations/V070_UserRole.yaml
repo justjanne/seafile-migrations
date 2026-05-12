@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V070_UserRole_is_manual_set
+      id: V070_add_is_manual_set_to_userrole
       author: seafile
       preConditions:
         - onFail: MARK_RAN

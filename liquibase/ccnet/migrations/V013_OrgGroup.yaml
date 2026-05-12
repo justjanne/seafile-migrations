@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V013_OrgGroup_normalize
+      id: V013_rename_OrgGroup_to_orggroup
       author: seafile
       failOnError: false
       preConditions:
@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: OrgGroup
             newTableName: orggroup
   - changeSet:
-      id: V013_OrgGroup_table
+      id: V013_create_orggroup
       author: seafile
       changes:
         - createTable:
@@ -25,7 +25,7 @@ databaseChangeLog:
                   name: group_id
                   type: int
   - changeSet:
-      id: V013_OrgGroup_normalize_org_id
+      id: V013_normalize_orggroup_org_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -37,7 +37,7 @@ databaseChangeLog:
             tableName: orggroup
             constraintName: org_id
   - changeSet:
-      id: V013_OrgGroup_index_org_id
+      id: V013_add_unique_constraint_to_orggroup_org_id_group_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -51,7 +51,7 @@ databaseChangeLog:
             columnNames: org_id, group_id
             constraintName: idx_orggroup_org_id_group_id
   - changeSet:
-      id: V013_OrgGroup_normalize_group_id
+      id: V013_normalize_orggroup_group_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -63,7 +63,7 @@ databaseChangeLog:
             tableName: orggroup
             indexName: group_id
   - changeSet:
-      id: V013_OrgGroup_index_group_id
+      id: V013_add_index_to_orggroup_group_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

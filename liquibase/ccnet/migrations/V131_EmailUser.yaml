@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V130_EmailUser_normalize_is_active
+      id: V131_change_is_active_type_in_emailuser
       author: seafile
       changes:
         - modifyDataType:
@@ -8,7 +8,7 @@ databaseChangeLog:
             columnName: is_active
             newDataType: boolean
   - changeSet:
-      id: V130_EmailUser_normalize_is_staff
+      id: V131_change_is_staff_type_in_emailuser
       author: seafile
       changes:
         - modifyDataType:

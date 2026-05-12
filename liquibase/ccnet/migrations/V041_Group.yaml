@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V041_Group_reference_id
+      id: V041_add_type_to_group
       author: seafile
       preConditions:
         - onFail: MARK_RAN

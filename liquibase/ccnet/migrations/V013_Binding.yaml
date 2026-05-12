@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V013_Binding_normalize
+      id: V013_rename_Binding_to_binding
       author: seafile
       failOnError: false
       preConditions:
@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: Binding
             newTableName: binding
   - changeSet:
-      id: V013_Binding_table
+      id: V013_create_binding
       author: seafile
       changes:
         - createTable:
@@ -27,7 +27,7 @@ databaseChangeLog:
                   constraints:
                     unique: true
   - changeSet:
-      id: V013_Binding_normalize_email
+      id: V013_normalize_binding_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -39,7 +39,7 @@ databaseChangeLog:
             tableName: binding
             indexName: email
   - changeSet:
-      id: V013_Binding_index_email
+      id: V013_add_index_to_binding_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN

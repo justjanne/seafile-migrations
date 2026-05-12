@@ -31,7 +31,7 @@ databaseChangeLog:
                   name: permission
                   type: char(15)
   - changeSet:
-      id: V013_drop_unique_constraint_from_repogroup_group_id
+      id: V013_normalize_repogroup_group_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -43,7 +43,7 @@ databaseChangeLog:
             tableName: repogroup
             constraintName: group_id
   - changeSet:
-      id: V013_add_index_to_repogroup_group_id_repo_id
+      id: V013_add_unique_constraint_to_repogroup_group_id_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -57,7 +57,7 @@ databaseChangeLog:
             constraintName: idx_repogroup_group_id
             columnNames: group_id, repo_id
   - changeSet:
-      id: V013_drop_index_from_repogroup_repo_id
+      id: V013_normalize_repogroup_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -85,7 +85,7 @@ databaseChangeLog:
               - column:
                   name: repo_id
   - changeSet:
-      id: V013_drop_index_from_repogroup_user_name
+      id: V013_normalize_repogroup_user_name
       author: seafile
       preConditions:
         - onFail: MARK_RAN

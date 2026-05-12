@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V013_Binding_normalize_pkey
+      id: V063_normalize_binding_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -15,7 +15,7 @@ databaseChangeLog:
             columnNames: id
             constraintName: binding_pkey
   - changeSet:
-      id: V063_Binding
+      id: V063_add_id_to_binding
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -36,7 +36,7 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
   - changeSet:
-      id: V063_Binding_id
+      id: V063_change_id_type_in_binding
       author: seafile
       changes:
         - modifyDataType:
@@ -44,7 +44,7 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_Binding_autoincrement_id
+      id: V063_normalize_binding_id_autoincrement
       author: seafile
       dbms: mysql,mariadb
       changes:

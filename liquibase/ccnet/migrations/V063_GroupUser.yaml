@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_GroupUser
+      id: V063_add_id_to_groupuser
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -21,7 +21,7 @@ databaseChangeLog:
                     nullable: false
                     primaryKey: true
   - changeSet:
-      id: V063_GroupUser_id
+      id: V063_change_id_type_in_groupuser
       author: seafile
       changes:
         - modifyDataType:
@@ -29,7 +29,7 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_GroupUser_autoincrement_id
+      id: V063_normalize_groupuser_id_autoincrement
       author: seafile
       dbms: mysql,mariadb
       changes:
@@ -38,7 +38,7 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
-      id: V063_GroupUser_normalize_pkey
+      id: V063_normalize_groupuser_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -54,7 +54,7 @@ databaseChangeLog:
             constraintName: groupuser_pkey
 
   - changeSet:
-      id: V063_GroupUser_normalize_group_id
+      id: V063_change_group_id_type_in_groupuser
       author: seafile
       changes:
         - modifyDataType:
@@ -62,7 +62,7 @@ databaseChangeLog:
             columnName: group_id
             newDataType: bigint
   - changeSet:
-      id: V063_GroupUser_normalize_group_id_idx
+      id: V063_normalize_groupuser_group_id_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -74,7 +74,7 @@ databaseChangeLog:
             tableName: groupuser
             constraintName: groupuser_group_id_user_name_key
   - changeSet:
-      id: V063_GroupUser_group_id
+      id: V063_add_unique_constraint_to_groupuser_group_id_user_name
       author: seafile
       preConditions:
         - onFail: MARK_RAN

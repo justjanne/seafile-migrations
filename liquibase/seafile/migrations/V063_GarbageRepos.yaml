@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_drop_primary_key_from_garbagerepos
+      id: V063_normalize_garbagerepos_pkey_drop
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -26,7 +26,7 @@ databaseChangeLog:
         - dropPrimaryKey:
             tableName: garbagerepos
   - changeSet:
-      id: V063_normalize_garbagerepos_id_pkey
+      id: V063_normalize_garbagerepos_id_pkey_old
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -102,7 +102,7 @@ databaseChangeLog:
             tableName: garbagerepos
             constraintName: repo_id
   - changeSet:
-      id: V063_add_unique_to_garbagerepos_repo_id
+      id: V063_add_unique_constraint_to_garbagerepos_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

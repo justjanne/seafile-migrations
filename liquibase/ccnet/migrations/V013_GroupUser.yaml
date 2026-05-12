@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V013_GroupUser_normalize
+      id: V013_rename_GroupUser_to_groupuser
       author: seafile
       failOnError: false
       preConditions:
@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: GroupUser
             newTableName: groupuser
   - changeSet:
-      id: V013_GroupUser_table
+      id: V013_create_groupuser
       author: seafile
       changes:
         - createTable:
@@ -28,7 +28,7 @@ databaseChangeLog:
                   name: is_staff
                   type: tinyint
   - changeSet:
-      id: V013_GroupUser_normalize_group_id
+      id: V013_normalize_groupuser_group_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -40,7 +40,7 @@ databaseChangeLog:
             tableName: groupuser
             constraintName: group_id
   - changeSet:
-      id: V013_GroupUser_index_group_id
+      id: V013_add_unique_constraint_to_groupuser_group_id_user_name
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -54,7 +54,7 @@ databaseChangeLog:
             constraintName: idx_groupuser_group_id
             columnNames: 'group_id,user_name'
   - changeSet:
-      id: V013_GroupUser_normalize_user_name
+      id: V013_normalize_groupuser_user_name
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -66,7 +66,7 @@ databaseChangeLog:
             tableName: groupuser
             indexName: user_name
   - changeSet:
-      id: V013_GroupUser_index_user_name
+      id: V013_add_index_to_groupuser_user_name
       author: seafile
       preConditions:
         - onFail: MARK_RAN

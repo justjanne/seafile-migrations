@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_GroupStructure_normalize
+      id: V063_rename_GroupStructure_to_groupstructure
       author: seafile
       failOnError: false
       preConditions:
@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: GroupStructure
             newTableName: groupstructure
   - changeSet:
-      id: V063_GroupStructure_table
+      id: V063_create_groupstructure
       author: seafile
       changes:
         - createTable:
@@ -32,7 +32,7 @@ databaseChangeLog:
                   name: path
                   type: varchar(1024)
   - changeSet:
-      id: V063_GroupStructure_id
+      id: V063_change_id_type_in_groupstructure
       author: seafile
       changes:
         - modifyDataType:
@@ -40,7 +40,7 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_GroupStructure_autoincrement_id
+      id: V063_normalize_groupstructure_id_autoincrement
       author: seafile
       dbms: mysql,mariadb
       changes:
@@ -49,7 +49,7 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
-      id: V063_GroupStructure_normalize_group_id_key
+      id: V063_normalize_groupstructure_group_id_key
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -61,7 +61,7 @@ databaseChangeLog:
             tableName: groupstructure
             constraintName: groupstructure_group_id_key
   - changeSet:
-      id: V063_GroupStructure_normalize_group_id
+      id: V063_normalize_groupstructure_group_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -73,7 +73,7 @@ databaseChangeLog:
             tableName: groupstructure
             constraintName: group_id
   - changeSet:
-      id: V063_GroupStructure_index_group_id
+      id: V063_add_unique_constraint_to_groupstructure_group_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -87,7 +87,7 @@ databaseChangeLog:
             constraintName: idx_groupstructure_group_id
             columnNames: group_id
   - changeSet:
-      id: V063_GroupStructure_normalize_pkey
+      id: V063_normalize_groupstructure_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN

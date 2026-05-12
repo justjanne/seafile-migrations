@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_LDAPConfig_id
+      id: V063_change_id_type_in_ldapconfig
       author: seafile
       changes:
         - modifyDataType:
@@ -8,7 +8,7 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_LDAPConfig_autoincrement_id
+      id: V063_normalize_ldapconfig_id_autoincrement
       author: seafile
       dbms: mysql,mariadb
       changes:

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V062_EmailUser_reference_id
+      id: V062_add_reference_id_to_emailuser
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -16,7 +16,7 @@ databaseChangeLog:
                   name: reference_id
                   type: varchar(255)
   - changeSet:
-      id: V062_EmailUser_normalize_reference_id
+      id: V062_normalize_emailuser_reference_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -28,7 +28,7 @@ databaseChangeLog:
             tableName: emailuser
             constraintName: emailuser_reference_id_key
   - changeSet:
-      id: V062_EmailUser_index_reference_id
+      id: V062_add_unique_constraint_to_emailuser_reference_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

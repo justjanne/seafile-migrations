@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_drop_primary_key_from_repohistorylimit
+      id: V063_normalize_repohistorylimit_pkey_drop
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -26,7 +26,7 @@ databaseChangeLog:
         - dropPrimaryKey:
             tableName: repohistorylimit
   - changeSet:
-      id: V063_normalize_repohistorylimit_id_pkey
+      id: V063_normalize_repohistorylimit_id_pkey_old
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -102,7 +102,7 @@ databaseChangeLog:
             tableName: repohistorylimit
             constraintName: repo_id
   - changeSet:
-      id: V063_add_unique_to_repohistorylimit_repo_id
+      id: V063_add_unique_constraint_to_repohistorylimit_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V062_LDAPUsers_reference_id
+      id: V062_add_reference_id_to_ldapusers
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -16,7 +16,7 @@ databaseChangeLog:
                   name: reference_id
                   type: varchar(255)
   - changeSet:
-      id: V062_LDAPUsers_index_reference_id
+      id: V062_add_unique_constraint_to_ldapusers_reference_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -31,7 +31,7 @@ databaseChangeLog:
             constraintName: idx_ldapusers_reference_id
 
   - changeSet:
-      id: V062_LDAPUsers_reference_id_key
+      id: V062_normalize_ldapusers_reference_id_key
       author: seafile
       preConditions:
         - onFail: MARK_RAN

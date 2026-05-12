@@ -30,7 +30,7 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_normalize_seafileconf_ensure_pkey
+      id: V063_normalize_seafileconf_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN

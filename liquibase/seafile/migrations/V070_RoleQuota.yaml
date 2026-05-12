@@ -32,7 +32,7 @@ databaseChangeLog:
                   name: quota
                   type: bigint
   - changeSet:
-      id: V070_normalize_rolequota_drop_old_idx
+      id: V070_normalize_rolequota_role
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -44,7 +44,7 @@ databaseChangeLog:
             tableName: rolequota
             constraintName: role
   - changeSet:
-      id: V070_add_index_to_rolequota_role
+      id: V070_add_unique_constraint_to_rolequota_role
       author: seafile
       preConditions:
         - onFail: MARK_RAN

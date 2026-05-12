@@ -12,7 +12,7 @@ databaseChangeLog:
             oldTableName: RepoFileCount
             newTableName: repofilecount
   - changeSet:
-      id: V060_normalize_repofilecount_file_count
+      id: V060_change_file_count_type_in_repofilecount
       author: seafile
       preConditions:
         - onFail: MARK_RAN

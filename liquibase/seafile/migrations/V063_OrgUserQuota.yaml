@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_drop_primary_key_from_orguserquota
+      id: V063_normalize_orguserquota_pkey_drop
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -26,7 +26,7 @@ databaseChangeLog:
         - dropPrimaryKey:
             tableName: orguserquota
   - changeSet:
-      id: V063_normalize_orguserquota_id_pkey
+      id: V063_normalize_orguserquota_id_pkey_old
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -102,7 +102,7 @@ databaseChangeLog:
             tableName: orguserquota
             constraintName: org_id
   - changeSet:
-      id: V063_add_unique_to_orguserquota_org_id_user
+      id: V063_add_unique_constraint_to_orguserquota_org_id_user
       author: seafile
       preConditions:
         - onFail: MARK_RAN

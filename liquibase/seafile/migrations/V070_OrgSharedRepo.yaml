@@ -75,7 +75,7 @@ databaseChangeLog:
               - column:
                   name: repo_id
   - changeSet:
-      id: V070_normalize_orgsharedrepo_drop_old_from_email_idx
+      id: V070_normalize_orgsharedrepo_from_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -103,7 +103,7 @@ databaseChangeLog:
               - column:
                   name: from_email
   - changeSet:
-      id: V070_normalize_orgsharedrepo_drop_old_to_email_idx
+      id: V070_normalize_orgsharedrepo_to_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_OrgUser_normalize_pkey
+      id: V063_normalize_orguser_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -12,7 +12,7 @@ databaseChangeLog:
         - dropPrimaryKey:
             tableName: orguser
   - changeSet:
-      id: V063_OrgUser_normalize_compound_pkey
+      id: V063_normalize_orguser_compound_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -24,7 +24,7 @@ databaseChangeLog:
         - dropPrimaryKey:
             tableName: orguser
   - changeSet:
-      id: V063_OrgUser_normalize_id_pkey
+      id: V063_normalize_orguser_id_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -36,7 +36,7 @@ databaseChangeLog:
             tableName: orguser
             constraintName: OrgUser_id_pkey
   - changeSet:
-      id: V063_OrgUser
+      id: V063_add_id_to_orguser
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -58,7 +58,7 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: orguser_pkey
   - changeSet:
-      id: V063_OrgUser_id
+      id: V063_change_id_type_in_orguser
       author: seafile
       changes:
         - modifyDataType:
@@ -66,7 +66,7 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V013_Group_pkey
+      id: V063_normalize_orguser_pkey_standard
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -79,7 +79,7 @@ databaseChangeLog:
             columnNames: id
             constraintName: orguser_pkey
   - changeSet:
-      id: V063_OrgUser_autoincrement_id
+      id: V063_normalize_orguser_id_autoincrement
       author: seafile
       dbms: mysql,mariadb
       changes:
@@ -88,7 +88,7 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
-      id: V063_OrgUser_normalize_email
+      id: V063_change_email_type_in_orguser
       author: seafile
       changes:
         - modifyDataType:
@@ -96,7 +96,7 @@ databaseChangeLog:
             columnName: email
             newDataType: bigint
   - changeSet:
-      id: V063_OrgUser_normalize_email_idx
+      id: V063_normalize_orguser_email_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -108,7 +108,7 @@ databaseChangeLog:
             tableName: orguser
             constraintName: idx_orguser_org_id_email
   - changeSet:
-      id: V063_OrgUser_normalize_email_key
+      id: V063_normalize_orguser_email_key
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -120,7 +120,7 @@ databaseChangeLog:
             tableName: orguser
             constraintName: orguser_org_id_email_key
   - changeSet:
-      id: V063_OrgUser_email
+      id: V063_add_unique_constraint_to_orguser_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN

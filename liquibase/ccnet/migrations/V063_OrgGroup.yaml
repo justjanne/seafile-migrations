@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_OrgGroup_normalize_pkey
+      id: V063_normalize_orggroup_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -12,7 +12,7 @@ databaseChangeLog:
         - dropPrimaryKey:
             tableName: orggroup
   - changeSet:
-      id: V063_OrgGroup_normalize_compound_pkey
+      id: V063_normalize_orggroup_compound_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -24,7 +24,7 @@ databaseChangeLog:
         - dropPrimaryKey:
             tableName: orggroup
   - changeSet:
-      id: V063_OrgGroup_normalize_id_pkey
+      id: V063_normalize_orggroup_id_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -36,7 +36,7 @@ databaseChangeLog:
             tableName: orggroup
             constraintName: OrgGroup_id_pkey
   - changeSet:
-      id: V063_OrgGroup
+      id: V063_add_id_to_orggroup
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -58,7 +58,7 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: orggroup_pkey
   - changeSet:
-      id: V063_OrgGroup_id
+      id: V063_change_id_type_in_orggroup
       author: seafile
       changes:
         - modifyDataType:
@@ -66,7 +66,7 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V013_Group_pkey
+      id: V063_normalize_orggroup_pkey_standard
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -79,7 +79,7 @@ databaseChangeLog:
             columnNames: id
             constraintName: orggroup_pkey
   - changeSet:
-      id: V063_OrgGroup_autoincrement_id
+      id: V063_normalize_orggroup_id_autoincrement
       author: seafile
       dbms: mysql,mariadb
       changes:
@@ -88,7 +88,7 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
-      id: V063_OrgGroup_normalize_group_id
+      id: V063_change_group_id_type_in_orggroup
       author: seafile
       changes:
         - modifyDataType:
@@ -96,7 +96,7 @@ databaseChangeLog:
             columnName: group_id
             newDataType: bigint
   - changeSet:
-      id: V063_OrgGroup_normalize_group_id_idx
+      id: V063_normalize_orggroup_group_id_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -108,7 +108,7 @@ databaseChangeLog:
             tableName: orggroup
             constraintName: orggroup_org_id_group_id_key
   - changeSet:
-      id: V063_OrgGroup_group_id
+      id: V063_add_unique_constraint_to_orggroup_org_id_group_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V130_OrgUser_normalize_is_staff
+      id: V131_change_is_staff_type_in_orguser
       author: seafile
       changes:
         - modifyDataType:

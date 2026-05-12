@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V062_LDAPConfig_normalize
+      id: V062_rename_LDAPConfig_to_ldapconfig
       author: seafile
       failOnError: false
       preConditions:
@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: LDAPConfig
             newTableName: ldapconfig
   - changeSet:
-      id: V062_LDAPConfig_table
+      id: V062_create_ldapconfig
       author: seafile
       changes:
         - createTable:
@@ -42,7 +42,7 @@ databaseChangeLog:
                   name: property
                   type: int
   - changeSet:
-      id: V062_LDAPConfig_normalize_id_pkey
+      id: V062_normalize_ldapconfig_id_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -54,7 +54,7 @@ databaseChangeLog:
             tableName: ldapconfig
             constraintName: LDAPConfig_id_pkey
   - changeSet:
-      id: V062_LDAPConfig_id_pkey
+      id: V062_add_primary_key_to_ldapconfig
       author: seafile
       preConditions:
         - onFail: MARK_RAN

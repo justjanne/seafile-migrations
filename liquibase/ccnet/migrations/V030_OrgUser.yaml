@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V030_OrgUser_not_null
+      id: V030_normalize_orguser_not_null
       author: seafile
       changes:
         - addNotNullConstraint:
@@ -12,7 +12,7 @@ databaseChangeLog:
             columnName: email
             columnDataType: varchar(255)
   - changeSet:
-      id: V030_OrgUser_pk
+      id: V030_normalize_orguser_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN

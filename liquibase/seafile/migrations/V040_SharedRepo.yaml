@@ -23,7 +23,7 @@ databaseChangeLog:
                     nullable: false
 
   - changeSet:
-      id: V040_modify_sharedrepo_from_email
+      id: V040_change_from_email_type_in_sharedrepo
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -37,7 +37,7 @@ databaseChangeLog:
             newDataType: varchar(255)
 
   - changeSet:
-      id: V040_modify_sharedrepo_to_email
+      id: V040_change_to_email_type_in_sharedrepo
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -50,7 +50,7 @@ databaseChangeLog:
             columnName: to_email
             newDataType: varchar(255)
   - changeSet:
-      id: V040_normalize_sharedrepo_from_email_idx
+      id: V040_normalize_sharedrepo_from_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN

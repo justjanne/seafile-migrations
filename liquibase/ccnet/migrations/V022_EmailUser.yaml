@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V022_EmailUser
+      id: V022_change_passwd_type_in_emailuser
       author: seafile
       changes:
         - modifyDataType:

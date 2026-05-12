@@ -37,7 +37,7 @@ databaseChangeLog:
                   name: quota
                   type: bigint
   - changeSet:
-      id: V130_normalize_orguserdefaultquota_drop_old_idx
+      id: V130_normalize_orguserdefaultquota_org_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -49,7 +49,7 @@ databaseChangeLog:
             tableName: orguserdefaultquota
             constraintName: org_id
   - changeSet:
-      id: V130_add_index_to_orguserdefaultquota_org_id
+      id: V130_add_unique_constraint_to_orguserdefaultquota_org_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

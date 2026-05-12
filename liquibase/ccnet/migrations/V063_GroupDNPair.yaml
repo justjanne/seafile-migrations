@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_GroupDNPair_id
+      id: V063_add_id_to_groupdnpair
       author: seafile
       preConditions:
         - onFail: MARK_RAN

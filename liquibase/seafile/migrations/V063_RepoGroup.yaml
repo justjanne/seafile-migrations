@@ -52,7 +52,7 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
-      id: V063_add_unique_to_repogroup_group_id_repo_id
+      id: V063_add_unique_constraint_to_repogroup_group_id_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

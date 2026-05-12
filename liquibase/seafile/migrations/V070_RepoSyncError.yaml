@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: RepoSyncError
             newTableName: reposyncerror
   - changeSet:
-      id: V070_normalize_reposyncerror_error_time_type
+      id: V070_change_error_time_type_in_reposyncerror
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -48,7 +48,7 @@ databaseChangeLog:
                   name: error_con
                   type: varchar(1024)
   - changeSet:
-      id: V070_normalize_reposyncerror_drop_old_idx
+      id: V070_normalize_reposyncerror_token
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -60,7 +60,7 @@ databaseChangeLog:
             tableName: reposyncerror
             constraintName: token
   - changeSet:
-      id: V070_add_index_to_reposyncerror_token
+      id: V070_add_unique_constraint_to_reposyncerror_token_name
       author: seafile
       preConditions:
         - onFail: MARK_RAN
