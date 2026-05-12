@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_rename_Repo_to_repo
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -31,7 +30,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_create_repo
       author: seafile
-      comment: Regular Migration - Create table repo
       changes:
         - createTable:
             ifNotExists: true

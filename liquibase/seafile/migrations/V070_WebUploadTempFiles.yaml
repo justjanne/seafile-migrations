@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_rename_WebUploadTempFiles_to_webuploadtempfiles
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -14,7 +13,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_create_webuploadtempfiles
       author: seafile
-      comment: Regular Migration - Create table webuploadtempfiles
       changes:
         - createTable:
             ifNotExists: true

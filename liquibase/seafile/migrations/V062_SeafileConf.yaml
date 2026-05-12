@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V062_rename_SeafileConf_to_seafileconf
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - onFail: MARK_RAN
@@ -16,7 +15,6 @@ databaseChangeLog:
   - changeSet:
       id: V062_create_seafileconf
       author: seafile
-      comment: Regular Migration - Create table seafileconf
       changes:
         - createTable:
             ifNotExists: true

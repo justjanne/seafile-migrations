@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_add_status_to_repoinfo
       author: seafile
-      comment: Regular Migration - Add status column to repoinfo
       preConditions:
         - onFail: MARK_RAN
           not:

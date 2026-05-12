@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V040_add_id_to_sharedrepo
       author: seafile
-      comment: 'Regular Migration: Add id column to sharedrepo table.'
       preConditions:
         - onFail: MARK_RAN
           not:
@@ -26,7 +25,6 @@ databaseChangeLog:
   - changeSet:
       id: V040_modify_sharedrepo_from_email
       author: seafile
-      comment: 'Regular Migration: Modify from_email length in sharedrepo table.'
       preConditions:
         - onFail: MARK_RAN
           columnExists:
@@ -41,7 +39,6 @@ databaseChangeLog:
   - changeSet:
       id: V040_modify_sharedrepo_to_email
       author: seafile
-      comment: 'Regular Migration: Modify to_email length in sharedrepo table.'
       preConditions:
         - onFail: MARK_RAN
           columnExists:
@@ -68,7 +65,6 @@ databaseChangeLog:
   - changeSet:
       id: V040_add_index_to_sharedrepo_from_email
       author: seafile
-      comment: 'Regular Migration: Add index on from_email in sharedrepo table.'
       preConditions:
         - onFail: MARK_RAN
           not:
@@ -86,7 +82,6 @@ databaseChangeLog:
   - changeSet:
       id: V040_add_index_to_sharedrepo_to_email
       author: seafile
-      comment: 'Regular Migration: Add index on to_email in sharedrepo table.'
       preConditions:
         - onFail: MARK_RAN
           not:

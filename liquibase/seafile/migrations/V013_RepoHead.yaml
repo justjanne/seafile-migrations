@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_rename_RepoHead_to_repohead
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -31,7 +30,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_create_repohead
       author: seafile
-      comment: Regular Migration - Create table repohead
       changes:
         - createTable:
             ifNotExists: true

@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_create_gcid
       author: seafile
-      comment: Regular Migration - Create table gcid
       changes:
         - createTable:
             ifNotExists: true

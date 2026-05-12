@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_rename_SharedRepo_to_sharedrepo
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -14,7 +13,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_create_sharedrepo
       author: seafile
-      comment: Regular Migration - Create table sharedrepo
       changes:
         - createTable:
             ifNotExists: true
@@ -35,7 +33,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_drop_index_from_sharedrepo_repo_id
       author: seafile
-      comment: Legacy/Normalization - Drop legacy index name
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -48,7 +45,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_add_index_to_sharedrepo_repo_id
       author: seafile
-      comment: Regular Migration - Create index with standardized name
       preConditions:
         - onFail: MARK_RAN
           not:

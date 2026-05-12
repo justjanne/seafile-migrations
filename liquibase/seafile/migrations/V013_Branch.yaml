@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_rename_Branch_to_branch
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -48,7 +47,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_create_branch
       author: seafile
-      comment: Regular Migration - Create table branch
       changes:
         - createTable:
             ifNotExists: true

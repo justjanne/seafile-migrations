@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V041_rename_RepoTrash_to_repotrash
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -31,7 +30,6 @@ databaseChangeLog:
   - changeSet:
       id: V041_create_repotrash
       author: seafile
-      comment: Regular Migration - Create table repotrash
       changes:
         - createTable:
             ifNotExists: true
@@ -62,7 +60,6 @@ databaseChangeLog:
   - changeSet:
       id: V041_drop_index_from_repotrash_owner_id
       author: seafile
-      comment: Legacy/Normalization - Drop legacy index name
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -75,7 +72,6 @@ databaseChangeLog:
   - changeSet:
       id: V041_add_index_to_repotrash_owner_id
       author: seafile
-      comment: Regular Migration - Create index with standardized name
       preConditions:
         - onFail: MARK_RAN
           not:
@@ -92,7 +88,6 @@ databaseChangeLog:
   - changeSet:
       id: V041_drop_index_from_repotrash_org_id
       author: seafile
-      comment: Legacy/Normalization - Drop legacy index name
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -105,7 +100,6 @@ databaseChangeLog:
   - changeSet:
       id: V041_add_index_to_repotrash_org_id
       author: seafile
-      comment: Regular Migration - Create index with standardized name
       preConditions:
         - onFail: MARK_RAN
           not:

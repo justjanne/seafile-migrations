@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V062_rename_RepoInfo_to_repoinfo
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - onFail: MARK_RAN
@@ -32,7 +31,6 @@ databaseChangeLog:
   - changeSet:
       id: V062_create_repoinfo
       author: seafile
-      comment: Regular Migration - Create table repoinfo
       changes:
         - createTable:
             ifNotExists: true

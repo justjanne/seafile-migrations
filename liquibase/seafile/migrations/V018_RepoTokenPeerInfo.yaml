@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V018_rename_RepoTokenPeerInfo_to_repotokenpeerinfo
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -31,7 +30,6 @@ databaseChangeLog:
   - changeSet:
       id: V018_create_repotokenpeerinfo
       author: seafile
-      comment: Regular Migration - Create table repotokenpeerinfo
       changes:
         - createTable:
             ifNotExists: true

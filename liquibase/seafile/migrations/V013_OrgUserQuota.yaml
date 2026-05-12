@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_rename_OrgUserQuota_to_orguserquota
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -48,7 +47,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_create_orguserquota
       author: seafile
-      comment: Regular Migration - Create table orguserquota
       changes:
         - createTable:
             ifNotExists: true

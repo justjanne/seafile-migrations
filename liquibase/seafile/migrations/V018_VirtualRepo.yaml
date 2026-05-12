@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V018_rename_VirtualRepo_to_virtualrepo
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -31,7 +30,6 @@ databaseChangeLog:
   - changeSet:
       id: V018_create_virtualrepo
       author: seafile
-      comment: Regular Migration - Create table virtualrepo
       changes:
         - createTable:
             ifNotExists: true
@@ -68,7 +66,6 @@ databaseChangeLog:
   - changeSet:
       id: V018_add_index_to_virtualrepo_origin_repo
       author: seafile
-      comment: Regular Migration - Create index with standardized name
       preConditions:
         - onFail: MARK_RAN
           not:

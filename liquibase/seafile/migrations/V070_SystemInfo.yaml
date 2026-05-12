@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_change_id_type_in_systeminfo
       author: seafile
-      comment: Regular Migration - Change id type to int for systeminfo
       changes:
         - modifyDataType:
             tableName: systeminfo
@@ -11,7 +10,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_normalize_systeminfo_id_autoincrement
       author: seafile
-      comment: Regular Migration - Preserve auto-increment property for id column on MySQL/MariaDB
       dbms: mysql,mariadb
       changes:
         - addAutoIncrement:

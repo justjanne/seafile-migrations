@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V060_add_client_ver_to_repotokenpeerinfo
       author: seafile
-      comment: Regular Migration - Add client_ver column to repotokenpeerinfo table
       preConditions:
         - onFail: MARK_RAN
           not:

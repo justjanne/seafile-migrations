@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_rename_RepoUserToken_to_repousertoken
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -14,7 +13,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_create_repousertoken
       author: seafile
-      comment: Regular Migration - Create table repousertoken
       changes:
         - createTable:
             ifNotExists: true
@@ -32,7 +30,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_drop_unique_constraint_from_repousertoken_repo_id
       author: seafile
-      comment: Legacy/Normalization - Drop legacy unique constraint name
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -45,7 +42,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_add_unique_constraint_to_repousertoken_repo_id_token
       author: seafile
-      comment: Regular Migration - Create unique constraint with standardized name
       preConditions:
         - onFail: MARK_RAN
           not:

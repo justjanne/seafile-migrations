@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V130_rename_OrgUploadRateLimit_to_orguploadratelimit
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -14,7 +13,6 @@ databaseChangeLog:
   - changeSet:
       id: V130_create_orguploadratelimit
       author: seafile
-      comment: Regular Migration - Create table orguploadratelimit
       preConditions:
         - onFail: MARK_RAN
           not:
@@ -41,7 +39,6 @@ databaseChangeLog:
   - changeSet:
       id: V130_normalize_orguploadratelimit_org_id_idx
       author: seafile
-      comment: Legacy/Normalization - Normalize constraint name from org_id back to idx_orguploadratelimit_org_id
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -54,7 +51,6 @@ databaseChangeLog:
   - changeSet:
       id: V130_add_unique_to_orguploadratelimit_org_id
       author: seafile
-      comment: Regular Migration - Add unique constraint to orguploadratelimit org_id
       preConditions:
         - onFail: MARK_RAN
           not:

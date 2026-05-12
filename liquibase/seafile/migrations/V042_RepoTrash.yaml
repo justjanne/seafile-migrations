@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V042_add_del_time_to_repotrash
       author: seafile
-      comment: Regular Migration - Add del_time column to repotrash table
       preConditions:
         - onFail: MARK_RAN
           not:

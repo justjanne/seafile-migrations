@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V042_rename_UserShareQuota_to_usersharequota
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -31,7 +30,6 @@ databaseChangeLog:
   - changeSet:
       id: V042_create_usersharequota
       author: seafile
-      comment: Regular Migration - Create table usersharequota
       changes:
         - createTable:
             ifNotExists: true

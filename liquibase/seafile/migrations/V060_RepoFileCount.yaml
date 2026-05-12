@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V060_rename_RepoFileCount_to_repofilecount
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - onFail: MARK_RAN
@@ -45,7 +44,6 @@ databaseChangeLog:
   - changeSet:
       id: V060_create_repofilecount
       author: seafile
-      comment: Regular Migration - Create table repofilecount
       changes:
         - createTable:
             ifNotExists: true

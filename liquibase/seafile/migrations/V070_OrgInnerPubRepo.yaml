@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_rename_OrgInnerPubRepo_to_orginnerpubrepo
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -14,7 +13,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_create_orginnerpubrepo
       author: seafile
-      comment: Regular Migration - Create table orginnerpubrepo
       changes:
         - createTable:
             ifNotExists: true
@@ -51,7 +49,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_add_unique_constraint_to_orginnerpubrepo_org_id_repo_id
       author: seafile
-      comment: Regular Migration - Add unique constraint to orginnerpubrepo org_id, repo_id
       preConditions:
         - onFail: MARK_RAN
           not:

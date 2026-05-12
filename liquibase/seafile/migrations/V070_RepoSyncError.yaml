@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_rename_RepoSyncError_to_reposyncerror
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -27,7 +26,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_create_reposyncerror
       author: seafile
-      comment: Regular Migration - Create table reposyncerror
       changes:
         - createTable:
             ifNotExists: true
@@ -52,7 +50,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_normalize_reposyncerror_token_idx
       author: seafile
-      comment: Legacy/Normalization - Normalize constraint name from token back to idx_reposyncerror_token
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -65,7 +62,6 @@ databaseChangeLog:
   - changeSet:
       id: V063_add_unique_constraint_to_reposyncerror_token_name
       author: seafile
-      comment: "Regular Migration: Add unique constraint on old key columns."
       preConditions:
         - onFail: MARK_RAN
           not:

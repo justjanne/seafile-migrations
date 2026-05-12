@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_rename_LastGCID_to_lastgcid
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -14,7 +13,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_create_lastgcid
       author: seafile
-      comment: Regular Migration - Create table lastgcid
       changes:
         - createTable:
             ifNotExists: true
@@ -51,7 +49,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_add_unique_constraint_to_lastgcid_repo_id_client_id
       author: seafile
-      comment: Regular Migration - Add unique constraint to lastgcid repo_id, client_id
       preConditions:
         - onFail: MARK_RAN
           not:

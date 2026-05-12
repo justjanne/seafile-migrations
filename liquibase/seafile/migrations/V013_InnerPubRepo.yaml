@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_rename_InnerPubRepo_to_innerpubrepo
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -31,7 +30,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_create_innerpubrepo
       author: seafile
-      comment: Regular Migration - Create table innerpubrepo
       changes:
         - createTable:
             ifNotExists: true

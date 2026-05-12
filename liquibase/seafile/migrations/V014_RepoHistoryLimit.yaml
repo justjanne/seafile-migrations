@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V014_rename_RepoHistoryLimit_to_repohistorylimit
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -31,7 +30,6 @@ databaseChangeLog:
   - changeSet:
       id: V014_create_repohistorylimit
       author: seafile
-      comment: Regular Migration - Create table repohistorylimit
       changes:
         - createTable:
             ifNotExists: true

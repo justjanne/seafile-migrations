@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_rename_RoleQuota_to_rolequota
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -14,7 +13,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_create_rolequota
       author: seafile
-      comment: Regular Migration - Create table rolequota
       changes:
         - createTable:
             ifNotExists: true
@@ -36,7 +34,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_normalize_rolequota_role_idx
       author: seafile
-      comment: Legacy/Normalization - Normalize constraint name from role back to idx_rolequota_role
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -49,7 +46,6 @@ databaseChangeLog:
   - changeSet:
       id: V063_add_unique_constraint_to_rolequota_role
       author: seafile
-      comment: "Regular Migration: Add unique constraint on old key columns."
       preConditions:
         - onFail: MARK_RAN
           not:

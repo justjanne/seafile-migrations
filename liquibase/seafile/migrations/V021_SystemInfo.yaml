@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V021_rename_SystemInfo_to_systeminfo
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -14,7 +13,6 @@ databaseChangeLog:
   - changeSet:
       id: V021_create_systeminfo
       author: seafile
-      comment: Regular Migration - Create table systeminfo
       changes:
         - createTable:
             ifNotExists: true

@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_rename_OrgSharedRepo_to_orgsharedrepo
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -14,7 +13,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_create_orgsharedrepo
       author: seafile
-      comment: Regular Migration - Create table orgsharedrepo
       changes:
         - createTable:
             ifNotExists: true
@@ -45,7 +43,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_add_index_to_orgsharedrepo_repo_id
       author: seafile
-      comment: Regular Migration - Add index to orgsharedrepo repo_id
       preConditions:
         - onFail: MARK_RAN
           not:
@@ -62,7 +59,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_add_index_to_orgsharedrepo_org_id_repo_id
       author: seafile
-      comment: Regular Migration - Add index to orgsharedrepo org_id, repo_id
       preConditions:
         - onFail: MARK_RAN
           not:
@@ -81,7 +77,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_normalize_orgsharedrepo_from_email_idx
       author: seafile
-      comment: Legacy/Normalization - Normalize constraint name from from_email back to idx_orgsharedrepo_from_email
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -94,7 +89,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_add_index_to_orgsharedrepo_from_email
       author: seafile
-      comment: Regular Migration - Add index to orgsharedrepo from_email
       preConditions:
         - onFail: MARK_RAN
           not:
@@ -111,7 +105,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_normalize_orgsharedrepo_to_email_idx
       author: seafile
-      comment: Legacy/Normalization - Normalize index name from to_email back to idx_orgsharedrepo_to_email
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -124,7 +117,6 @@ databaseChangeLog:
   - changeSet:
       id: V070_add_index_to_orgsharedrepo_to_email
       author: seafile
-      comment: Regular Migration - Add index to orgsharedrepo to_email
       preConditions:
         - onFail: MARK_RAN
           not:

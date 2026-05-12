@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_rename_RepoGroup_to_repogroup
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -14,7 +13,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_create_repogroup
       author: seafile
-      comment: Regular Migration - Create table repogroup
       changes:
         - createTable:
             ifNotExists: true
@@ -35,7 +33,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_drop_unique_constraint_from_repogroup_group_id
       author: seafile
-      comment: Legacy/Normalization - Drop legacy unique constraint name
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -48,7 +45,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_add_unique_constraint_to_repogroup_group_id_repo_id
       author: seafile
-      comment: Regular Migration - Create unique constraint with standardized name
       preConditions:
         - onFail: MARK_RAN
           not:
@@ -63,7 +59,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_drop_index_from_repogroup_repo_id
       author: seafile
-      comment: Legacy/Normalization - Drop legacy index name
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -76,7 +71,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_add_index_to_repogroup_repo_id
       author: seafile
-      comment: Regular Migration - Create index with standardized name
       preConditions:
         - onFail: MARK_RAN
           not:
@@ -93,7 +87,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_drop_index_from_repogroup_user_name
       author: seafile
-      comment: Legacy/Normalization - Drop legacy index name
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -106,7 +99,6 @@ databaseChangeLog:
   - changeSet:
       id: V013_add_index_to_repogroup_user_name
       author: seafile
-      comment: Regular Migration - Create index with standardized name
       preConditions:
         - onFail: MARK_RAN
           not:

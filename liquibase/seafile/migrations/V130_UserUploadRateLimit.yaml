@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V130_rename_UserUploadRateLimit_to_useruploadratelimit
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -14,7 +13,6 @@ databaseChangeLog:
   - changeSet:
       id: V130_create_useruploadratelimit
       author: seafile
-      comment: Regular Migration - Create table useruploadratelimit
       preConditions:
         - onFail: MARK_RAN
           not:
@@ -41,7 +39,6 @@ databaseChangeLog:
   - changeSet:
       id: V130_normalize_useruploadratelimit_user_idx
       author: seafile
-      comment: Legacy/Normalization - Normalize constraint name from user back to idx_useruploadratelimit_user
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -54,7 +51,6 @@ databaseChangeLog:
   - changeSet:
       id: V130_add_unique_to_useruploadratelimit_user
       author: seafile
-      comment: Regular Migration - Add unique constraint to useruploadratelimit user
       preConditions:
         - onFail: MARK_RAN
           not:

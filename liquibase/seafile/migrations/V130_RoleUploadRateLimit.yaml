@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V130_rename_RoleUploadRateLimit_to_roleuploadratelimit
       author: seafile
-      comment: Legacy/Normalization - Normalize table name to lowercase
       failOnError: false
       preConditions:
         - tableExists:
@@ -14,7 +13,6 @@ databaseChangeLog:
   - changeSet:
       id: V130_create_roleuploadratelimit
       author: seafile
-      comment: Regular Migration - Create table roleuploadratelimit
       preConditions:
         - onFail: MARK_RAN
           not:
@@ -41,7 +39,6 @@ databaseChangeLog:
   - changeSet:
       id: V130_normalize_roleuploadratelimit_role_idx
       author: seafile
-      comment: Legacy/Normalization - Normalize constraint name from role back to idx_roleuploadratelimit_role
       preConditions:
         - onFail: MARK_RAN
           indexExists:
@@ -54,7 +51,6 @@ databaseChangeLog:
   - changeSet:
       id: V130_add_unique_to_roleuploadratelimit_role
       author: seafile
-      comment: Regular Migration - Add unique constraint to roleuploadratelimit role
       preConditions:
         - onFail: MARK_RAN
           not:

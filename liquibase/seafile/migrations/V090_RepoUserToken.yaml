@@ -2,7 +2,6 @@ databaseChangeLog:
   - changeSet:
       id: V090_add_index_to_repousertoken_token
       author: seafile
-      comment: Regular Migration - Add index to repousertoken token
       preConditions:
         - onFail: MARK_RAN
           not:
