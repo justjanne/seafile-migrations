@@ -6,7 +6,7 @@ for table in \
                GCID LastGCID OrgDownloadRateLimit OrgGroupRepo OrgInnerPubRepo OrgRepo OrgSharedRepo \
                OrgUploadRateLimit OrgUserDefaultQuota RepoStorageId \
                RepoSyncError RoleDownloadRateLimit RoleQuota \
-               RoleUploadRateLimit SeafileConf UserDownloadRateLimit UserUploadRateLimit \
+               RoleUploadRateLimit UserDownloadRateLimit UserUploadRateLimit \
                WebUploadTempFiles FileLocks; do
   psql postgres://postgres:password@localhost/$1 -c "drop table if exists \"$table\"" || true
 done

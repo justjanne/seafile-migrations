@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_rename_SeafileConf_to_seafileconf
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: SeafileConf
+      changes:
+        - renameTable:
+            oldTableName: SeafileConf
+            newTableName: seafileconf
+
+  - changeSet:
+      id: V062_create_seafileconf
+      author: seafile
+      comment: Regular Migration - Create table seafileconf
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: seafileconf
+            columns:
+              - column:
+                  name: cfg_group
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cfg_key
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: varchar(255)
+              - column:
+                  name: property
+                  type: int
