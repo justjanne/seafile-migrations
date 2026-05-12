@@ -4,8 +4,7 @@ databaseChangeLog:
       author: seafile
       failOnError: false
       preConditions:
-        - onFail: MARK_RAN
-          tableExists:
+        - tableExists:
             tableName: SeafileConf
       changes:
         - renameTable:

@@ -13,6 +13,11 @@ databaseChangeLog:
   - changeSet:
       id: V063_create_groupstructure
       author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: groupstructure
       changes:
         - createTable:
             ifNotExists: true
