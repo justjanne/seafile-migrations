@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_RepoHead_to_repohead
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RepoHead
+      changes:
+        - renameTable:
+            oldTableName: RepoHead
+            newTableName: repohead
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repohead
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: repohead
+            columnName: repo_id
+            columnDataType: char(37)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: repohead
+            columnName: repo_id
+  - changeSet:
+      id: V013_create_repohead
+      author: seafile
+      comment: Regular Migration - Create table repohead
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repohead
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repohead_pkey
+              - column:
+                  name: branch_name
+                  type: varchar(10)

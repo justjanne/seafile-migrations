@@ -1,0 +1,125 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_drop_primary_key_from_repohead
+      author: seafile
+      comment: "Legacy/Normalization: Prepare for structural PK change by dropping old PK."
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: repohead
+          not:
+            - columnExists:
+                tableName: repohead
+                columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: repohead
+  - changeSet:
+      id: V063_normalize_repohead_compound_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old compound primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repohead
+            indexName: repohead_pkey
+            columnNames: repo_id
+      changes:
+        - dropPrimaryKey:
+            tableName: repohead
+  - changeSet:
+      id: V063_normalize_repohead_id_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old named primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repohead
+            indexName: RepoHead_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repohead
+            constraintName: RepoHead_id_pkey
+  - changeSet:
+      id: V063_add_id_to_repohead
+      author: seafile
+      comment: "Regular Migration: Structural PK change - add bigint id column as primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repohead
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: repohead
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repohead_pkey
+  - changeSet:
+      id: V063_change_id_type_in_repohead
+      author: seafile
+      comment: "Regular Migration: Ensure id column is bigint/bigserial."
+      changes:
+        - modifyDataType:
+            tableName: repohead
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_repohead_pkey
+      author: seafile
+      comment: "Regular Migration: Ensure id column is the primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: repohead
+      changes:
+        - addPrimaryKey:
+            tableName: repohead
+            columnNames: id
+            constraintName: repohead_pkey
+  - changeSet:
+      id: V063_normalize_repohead_id_autoincrement
+      author: seafile
+      comment: "Regular Migration: Add auto-increment to id for MySQL/MariaDB."
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: repohead
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_normalize_repohead_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repohead
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: repohead
+            constraintName: repo_id
+  - changeSet:
+      id: V063_add_unique_constraint_to_repohead_repo_id
+      author: seafile
+      comment: "Regular Migration: Add unique constraint on old key columns."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repohead
+                indexName: idx_repohead_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: repohead
+            columnNames: repo_id
+            constraintName: idx_repohead_repo_id
