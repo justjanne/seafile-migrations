@@ -1,0 +1,125 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_drop_primary_key_from_repofilecount
+      author: seafile
+      comment: "Legacy/Normalization: Prepare for structural PK change by dropping old PK."
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: repofilecount
+          not:
+            - columnExists:
+                tableName: repofilecount
+                columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: repofilecount
+  - changeSet:
+      id: V063_normalize_repofilecount_compound_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old compound primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repofilecount
+            indexName: repofilecount_pkey
+            columnNames: repo_id
+      changes:
+        - dropPrimaryKey:
+            tableName: repofilecount
+  - changeSet:
+      id: V063_normalize_repofilecount_id_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old named primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repofilecount
+            indexName: RepoFileCount_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repofilecount
+            constraintName: RepoFileCount_id_pkey
+  - changeSet:
+      id: V063_add_id_to_repofilecount
+      author: seafile
+      comment: "Regular Migration: Structural PK change - add bigint id column as primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repofilecount
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: repofilecount
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repofilecount_pkey
+  - changeSet:
+      id: V063_change_id_type_in_repofilecount
+      author: seafile
+      comment: "Regular Migration: Ensure id column is bigint/bigserial."
+      changes:
+        - modifyDataType:
+            tableName: repofilecount
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_repofilecount_pkey
+      author: seafile
+      comment: "Regular Migration: Ensure id column is the primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: repofilecount
+      changes:
+        - addPrimaryKey:
+            tableName: repofilecount
+            columnNames: id
+            constraintName: repofilecount_pkey
+  - changeSet:
+      id: V063_normalize_repofilecount_id_autoincrement
+      author: seafile
+      comment: "Regular Migration: Add auto-increment to id for MySQL/MariaDB."
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: repofilecount
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_normalize_repofilecount_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repofilecount
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: repofilecount
+            constraintName: repo_id
+  - changeSet:
+      id: V063_add_unique_constraint_to_repofilecount_repo_id
+      author: seafile
+      comment: "Regular Migration: Add unique constraint on old key columns."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repofilecount
+                indexName: idx_repofilecount_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: repofilecount
+            columnNames: repo_id
+            constraintName: idx_repofilecount_repo_id

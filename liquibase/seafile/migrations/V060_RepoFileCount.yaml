@@ -1,0 +1,63 @@
+databaseChangeLog:
+  - changeSet:
+      id: V060_rename_RepoFileCount_to_repofilecount
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: RepoFileCount
+      changes:
+        - renameTable:
+            oldTableName: RepoFileCount
+            newTableName: repofilecount
+  - changeSet:
+      id: V013_normalize_file_count
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repofilecount
+            columnName: file_count
+      changes:
+        - modifyDataType:
+            tableName: repofilecount
+            columnName: file_count
+            newDataType: bigint
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repofilecount
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: repofilecount
+            columnName: repo_id
+            columnDataType: char(36)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: repofilecount
+            columnName: repo_id
+  - changeSet:
+      id: V060_create_repofilecount
+      author: seafile
+      comment: Regular Migration - Create table repofilecount
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repofilecount
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repofilecount_pkey
+              - column:
+                  name: file_count
+                  type: bigint
