@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: V070_add_status_to_repoinfo
+      author: seafile
+      comment: Regular Migration - Add status column to repoinfo
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repoinfo
+                columnName: status
+      changes:
+        - addColumn:
+            tableName: repoinfo
+            columns:
+              - column:
+                  name: status
+                  type: int
+                  defaultValue: 0

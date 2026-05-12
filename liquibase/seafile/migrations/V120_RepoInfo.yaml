@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: V120_add_type_to_repoinfo
+      author: seafile
+      comment: Regular Migration - Add type column to repoinfo
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repoinfo
+                columnName: type
+      changes:
+        - addColumn:
+            tableName: repoinfo
+            columns:
+              - column:
+                  name: type
+                  type: varchar(10)
+
+  - changeSet:
+      id: V120_add_index_to_repoinfo_type
+      author: seafile
+      comment: Regular Migration - Add index to type column in repoinfo
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repoinfo
+                indexName: idx_repoinfo_type
+      changes:
+        - createIndex:
+            indexName: idx_repoinfo_type
+            tableName: repoinfo
+            columns:
+              - column:
+                  name: type
