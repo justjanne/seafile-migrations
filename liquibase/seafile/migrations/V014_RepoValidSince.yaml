@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: V014_rename_RepoValidSince_to_repovalidsince
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RepoValidSince
+      changes:
+        - renameTable:
+            oldTableName: RepoValidSince
+            newTableName: repovalidsince
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repovalidsince
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: repovalidsince
+            columnName: repo_id
+            columnDataType: char(37)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: repovalidsince
+            columnName: repo_id
+  - changeSet:
+      id: V014_create_repovalidsince
+      author: seafile
+      comment: Regular Migration - Create table repovalidsince
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repovalidsince
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repovalidsince_pkey
+              - column:
+                  name: timestamp
+                  type: bigint
