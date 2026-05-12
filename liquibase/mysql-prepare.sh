@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-for table in RepoUserToken \
+for table in \
                WebAP FileLockTimestamp FolderGroupPerm FolderPermTimestamp FolderUserPerm \
                GarbageRepos GCID LastGCID OrgDownloadRateLimit OrgGroupRepo OrgInnerPubRepo OrgRepo OrgSharedRepo \
                OrgUploadRateLimit OrgUserDefaultQuota RepoFileCount RepoHistoryLimit RepoInfo RepoStorageId \

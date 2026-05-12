@@ -1,0 +1,59 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_RepoUserToken_to_repousertoken
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RepoUserToken
+      changes:
+        - renameTable:
+            oldTableName: RepoUserToken
+            newTableName: repousertoken
+  - changeSet:
+      id: V013_create_repousertoken
+      author: seafile
+      comment: Regular Migration - Create table repousertoken
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repousertoken
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: token
+                  type: char(41)
+  - changeSet:
+      id: V013_drop_unique_constraint_from_repousertoken_repo_id
+      author: seafile
+      comment: Legacy/Normalization - Drop legacy unique constraint name
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repousertoken
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: repousertoken
+            constraintName: repo_id
+  - changeSet:
+      id: V013_add_unique_constraint_to_repousertoken_repo_id_token
+      author: seafile
+      comment: Regular Migration - Create unique constraint with standardized name
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repousertoken
+                indexName: idx_repousertoken_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: repousertoken
+            constraintName: idx_repousertoken_repo_id
+            columnNames: repo_id, token

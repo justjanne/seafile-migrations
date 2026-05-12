@@ -1,0 +1,72 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_add_id_to_repousertoken
+      author: seafile
+      comment: "Regular Migration: Structural PK change - add bigint id column as primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repousertoken
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: repousertoken
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repousertoken_pkey
+  - changeSet:
+      id: V063_change_id_type_in_repousertoken
+      author: seafile
+      comment: "Regular Migration: Ensure id column is bigint/bigserial."
+      changes:
+        - modifyDataType:
+            tableName: repousertoken
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_repousertoken_pkey
+      author: seafile
+      comment: "Regular Migration: Ensure id column is the primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: repousertoken
+      changes:
+        - addPrimaryKey:
+            tableName: repousertoken
+            columnNames: id
+            constraintName: repousertoken_pkey
+  - changeSet:
+      id: V063_normalize_repousertoken_id_autoincrement
+      author: seafile
+      comment: "Regular Migration: Add auto-increment to id for MySQL/MariaDB."
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: repousertoken
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_add_unique_constraint_to_repousertoken_repo_id_token
+      author: seafile
+      comment: "Regular Migration: Add unique constraint on old key columns."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repousertoken
+                indexName: idx_repousertoken_repo_id_token
+      changes:
+        - addUniqueConstraint:
+            tableName: repousertoken
+            columnNames: repo_id, token
+            constraintName: idx_repousertoken_repo_id_token
