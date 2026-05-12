@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: V070_create_gcid
+      author: seafile
+      comment: Regular Migration - Create table gcid
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: gcid
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: gcid_pkey
+              - column:
+                  name: repo_id
+                  type: char(36)
+                  constraints:
+                    unique: true
+                    uniqueConstraintName: idx_gcid_repo_id
+              - column:
+                  name: gc_id
+                  type: char(36)
