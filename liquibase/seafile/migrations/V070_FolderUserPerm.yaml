@@ -1,0 +1,76 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_FolderUserPerm_to_folderuserperm
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: FolderUserPerm
+      changes:
+        - renameTable:
+            oldTableName: FolderUserPerm
+            newTableName: folderuserperm
+  - changeSet:
+      id: V070_create_folderuserperm
+      author: seafile
+      comment: Regular Migration - Create table folderuserperm
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: folderuserperm
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: folderuserperm_pkey
+              - column:
+                  name: repo_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission
+                  type: char(15)
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V063_normalize_folderuserpermp_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: folderuserperm
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: folderuserperm
+            constraintName: repo_id
+  - changeSet:
+      id: V070_add_index_to_folderuserperm_repo_id
+      author: seafile
+      comment: Regular Migration - Add index to folderuserperm repo_id
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: folderuserperm
+                indexName: idx_folderuserperm_repo_id
+      changes:
+        - createIndex:
+            indexName: idx_folderuserperm_repo_id
+            tableName: folderuserperm
+            columns:
+              - column:
+                  name: repo_id
