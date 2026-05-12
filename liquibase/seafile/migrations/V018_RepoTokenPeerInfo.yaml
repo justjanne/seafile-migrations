@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: V018_rename_RepoTokenPeerInfo_to_repotokenpeerinfo
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RepoTokenPeerInfo
+      changes:
+        - renameTable:
+            oldTableName: RepoTokenPeerInfo
+            newTableName: repotokenpeerinfo
+  - changeSet:
+      id: V013_normalize_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repotokenpeerinfo
+            columnName: token
+      changes:
+        - addNotNullConstraint:
+            tableName: repotokenpeerinfo
+            columnName: token
+            columnDataType: char(41)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: repotokenpeerinfo
+            columnName: token
+  - changeSet:
+      id: V018_create_repotokenpeerinfo
+      author: seafile
+      comment: Regular Migration - Create table repotokenpeerinfo
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repotokenpeerinfo
+            columns:
+              - column:
+                  name: token
+                  type: char(41)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repotokenpeerinfo_pkey
+              - column:
+                  name: peer_id
+                  type: char(41)
+              - column:
+                  name: peer_ip
+                  type: varchar(41)
+              - column:
+                  name: peer_name
+                  type: varchar(255)
+              - column:
+                  name: sync_time
+                  type: bigint

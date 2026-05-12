@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: V060_add_client_ver_to_repotokenpeerinfo
+      author: seafile
+      comment: Regular Migration - Add client_ver column to repotokenpeerinfo table
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repotokenpeerinfo
+                columnName: client_ver
+      changes:
+        - addColumn:
+            tableName: repotokenpeerinfo
+            ifNotExists: true
+            columns:
+              - column:
+                  name: client_ver
+                  type: varchar(20)

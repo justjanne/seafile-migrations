@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: V090_normalize_repotokenpeerinfo_peer_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotokenpeerinfo
+            indexName: RepoTokenPeerInfo_peer_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: repotokenpeerinfo
+            constraintName: RepoTokenPeerInfo_peer_id
+  - changeSet:
+      id: V090_add_index_to_repotokenpeerinfo_peer_id
+      author: seafile
+      comment: Regular Migration - Add index to repotokenpeerinfo peer_id
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repotokenpeerinfo
+                indexName: idx_repotokenpeerinfo_peer_id
+      changes:
+        - createIndex:
+            indexName: idx_repotokenpeerinfo_peer_id
+            tableName: repotokenpeerinfo
+            columns:
+              - column:
+                  name: peer_id

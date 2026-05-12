@@ -1,0 +1,125 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_drop_primary_key_from_repotokenpeerinfo
+      author: seafile
+      comment: "Legacy/Normalization: Prepare for structural PK change by dropping old PK."
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: repotokenpeerinfo
+          not:
+            - columnExists:
+                tableName: repotokenpeerinfo
+                columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: repotokenpeerinfo
+  - changeSet:
+      id: V063_normalize_repotokenpeerinfo_compound_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old compound primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotokenpeerinfo
+            indexName: repotokenpeerinfo_pkey
+            columnNames: token
+      changes:
+        - dropPrimaryKey:
+            tableName: repotokenpeerinfo
+  - changeSet:
+      id: V063_normalize_repotokenpeerinfo_id_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old named primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotokenpeerinfo
+            indexName: RepoTokenPeerInfo_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repotokenpeerinfo
+            constraintName: RepoTokenPeerInfo_id_pkey
+  - changeSet:
+      id: V063_add_id_to_repotokenpeerinfo
+      author: seafile
+      comment: "Regular Migration: Structural PK change - add bigint id column as primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repotokenpeerinfo
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: repotokenpeerinfo
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repotokenpeerinfo_pkey
+  - changeSet:
+      id: V063_change_id_type_in_repotokenpeerinfo
+      author: seafile
+      comment: "Regular Migration: Ensure id column is bigint/bigserial."
+      changes:
+        - modifyDataType:
+            tableName: repotokenpeerinfo
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_repotokenpeerinfo_pkey
+      author: seafile
+      comment: "Regular Migration: Ensure id column is the primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: repotokenpeerinfo
+      changes:
+        - addPrimaryKey:
+            tableName: repotokenpeerinfo
+            columnNames: id
+            constraintName: repotokenpeerinfo_pkey
+  - changeSet:
+      id: V063_normalize_repotokenpeerinfo_id_autoincrement
+      author: seafile
+      comment: "Regular Migration: Add auto-increment to id for MySQL/MariaDB."
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: repotokenpeerinfo
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_normalize_repotokenpeerinfo_token_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotokenpeerinfo
+            indexName: token
+      changes:
+        - dropUniqueConstraint:
+            tableName: repotokenpeerinfo
+            constraintName: token
+  - changeSet:
+      id: V063_add_unique_constraint_to_repotokenpeerinfo_token
+      author: seafile
+      comment: "Regular Migration: Add unique constraint on old key columns."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repotokenpeerinfo
+                indexName: idx_repotokenpeerinfo_token
+      changes:
+        - addUniqueConstraint:
+            tableName: repotokenpeerinfo
+            columnNames: token
+            constraintName: idx_repotokenpeerinfo_token

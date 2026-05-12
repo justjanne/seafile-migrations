@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: V100_change_peer_ip_type_in_repotokenpeerinfo
+      author: seafile
+      comment: Regular Migration - Change peer_ip type to varchar(50) in repotokenpeerinfo
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repotokenpeerinfo
+            columnName: peer_ip
+      changes:
+        - modifyDataType:
+            tableName: repotokenpeerinfo
+            columnName: peer_ip
+            newDataType: varchar(50)
