@@ -3,7 +3,7 @@ set -euo pipefail
 
 for table in \
                \
-               OrgDownloadRateLimit OrgInnerPubRepo OrgRepo OrgSharedRepo \
+               OrgDownloadRateLimit OrgRepo OrgSharedRepo \
                OrgUploadRateLimit OrgUserDefaultQuota RepoStorageId \
                RepoSyncError RoleDownloadRateLimit RoleQuota \
                RoleUploadRateLimit UserDownloadRateLimit UserUploadRateLimit \

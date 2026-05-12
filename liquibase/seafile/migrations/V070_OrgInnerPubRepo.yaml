@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_OrgInnerPubRepo_to_orginnerpubrepo
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: OrgInnerPubRepo
+      changes:
+        - renameTable:
+            oldTableName: OrgInnerPubRepo
+            newTableName: orginnerpubrepo
+  - changeSet:
+      id: V070_create_orginnerpubrepo
+      author: seafile
+      comment: Regular Migration - Create table orginnerpubrepo
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: orginnerpubrepo
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: orginnerpubrepo_pkey
+              - column:
+                  name: org_id
+                  type: int
+              - column:
+                  name: repo_id
+                  type: char(37)
+              - column:
+                  name: permission
+                  type: char(15)
+  - changeSet:
+      id: V063_normalize_orginnerpubrepo_org_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orginnerpubrepo
+            indexName: org_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: orginnerpubrepo
+            constraintName: org_id
+  - changeSet:
+      id: V070_add_unique_constraint_to_orginnerpubrepo_org_id_repo_id
+      author: seafile
+      comment: Regular Migration - Add unique constraint to orginnerpubrepo org_id, repo_id
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: orginnerpubrepo
+                indexName: idx_orginnerpubrepo_org_id_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: orginnerpubrepo
+            columnNames: org_id, repo_id
+            constraintName: idx_orginnerpubrepo_org_id_repo_id
