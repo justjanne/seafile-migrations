@@ -1,0 +1,125 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_drop_primary_key_from_innerpubrepo
+      author: seafile
+      comment: "Legacy/Normalization: Prepare for structural PK change by dropping old PK."
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: innerpubrepo
+          not:
+            - columnExists:
+                tableName: innerpubrepo
+                columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: innerpubrepo
+  - changeSet:
+      id: V063_normalize_innerpubrepo_compound_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old compound primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: innerpubrepo
+            indexName: innerpubrepo_pkey
+            columnNames: repo_id
+      changes:
+        - dropPrimaryKey:
+            tableName: innerpubrepo
+  - changeSet:
+      id: V063_normalize_innerpubrepo_id_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old named primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: innerpubrepo
+            indexName: InnerPubRepo_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: innerpubrepo
+            constraintName: InnerPubRepo_id_pkey
+  - changeSet:
+      id: V063_add_id_to_innerpubrepo
+      author: seafile
+      comment: "Regular Migration: Structural PK change - add bigint id column as primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: innerpubrepo
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: innerpubrepo
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: innerpubrepo_pkey
+  - changeSet:
+      id: V063_change_id_type_in_innerpubrepo
+      author: seafile
+      comment: "Regular Migration: Ensure id column is bigint/bigserial."
+      changes:
+        - modifyDataType:
+            tableName: innerpubrepo
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_innerpubrepo_pkey
+      author: seafile
+      comment: "Regular Migration: Ensure id column is the primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: innerpubrepo
+      changes:
+        - addPrimaryKey:
+            tableName: innerpubrepo
+            columnNames: id
+            constraintName: innerpubrepo_pkey
+  - changeSet:
+      id: V063_normalize_innerpubrepo_id_autoincrement
+      author: seafile
+      comment: "Regular Migration: Add auto-increment to id for MySQL/MariaDB."
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: innerpubrepo
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_normalize_innerpubrepo_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: innerpubrepo
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: innerpubrepo
+            constraintName: repo_id
+  - changeSet:
+      id: V063_add_unique_constraint_to_innerpubrepo_repo_id
+      author: seafile
+      comment: "Regular Migration: Add unique constraint on old key columns."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: innerpubrepo
+                indexName: idx_innerpubrepo_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: innerpubrepo
+            columnNames: repo_id
+            constraintName: idx_innerpubrepo_repo_id

@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_InnerPubRepo_to_innerpubrepo
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: InnerPubRepo
+      changes:
+        - renameTable:
+            oldTableName: InnerPubRepo
+            newTableName: innerpubrepo
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: innerpubrepo
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: innerpubrepo
+            columnName: repo_id
+            columnDataType: char(37)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: innerpubrepo
+            columnName: repo_id
+  - changeSet:
+      id: V013_create_innerpubrepo
+      author: seafile
+      comment: Regular Migration - Create table innerpubrepo
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: innerpubrepo
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: innerpubrepo_pkey
+              - column:
+                  name: permission
+                  type: char(15)
