@@ -2,7 +2,7 @@
 set -euo pipefail
 
 for table in \
-               FolderPermTimestamp FolderUserPerm \
+               FolderUserPerm \
                OrgDownloadRateLimit OrgGroupRepo OrgInnerPubRepo OrgRepo OrgSharedRepo \
                OrgUploadRateLimit OrgUserDefaultQuota RepoStorageId \
                RepoSyncError RoleDownloadRateLimit RoleQuota \

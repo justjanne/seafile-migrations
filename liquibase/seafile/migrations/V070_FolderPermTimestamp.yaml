@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_FolderPermTimestamp_to_folderpermtimestamp
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: FolderPermTimestamp
+      changes:
+        - renameTable:
+            oldTableName: FolderPermTimestamp
+            newTableName: folderpermtimestamp
+  - changeSet:
+      id: V070_create_folderpermtimestamp
+      author: seafile
+      comment: Regular Migration - Create table folderpermtimestamp
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: folderpermtimestamp
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: folderpermtimestamp_pkey
+              - column:
+                  name: repo_id
+                  type: char(36)
+              - column:
+                  name: timestamp
+                  type: bigint
+  - changeSet:
+      id: V063_normalize_folderpermtimestamp_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: folderpermtimestamp
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: folderpermtimestamp
+            constraintName: repo_id
+  - changeSet:
+      id: V063_add_unique_constraint_to_folderpermtimestamp_repo_id_name
+      author: seafile
+      comment: "Regular Migration: Add unique constraint on old key columns."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName:
+                indexName: idx_folderpermtimestamp_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: folderpermtimestamp
+            columnNames: repo_id
+            constraintName: idx_folderpermtimestamp_repo_id
