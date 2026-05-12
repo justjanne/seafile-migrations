@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: RepoHistoryLimit
             newTableName: repohistorylimit
   - changeSet:
-      id: V013_normalize_repo_id
+      id: V014_normalize_repohistorylimit_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

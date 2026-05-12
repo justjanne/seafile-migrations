@@ -30,7 +30,7 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_normalize_repousertoken_pkey
+      id: V063_normalize_repousertoken_ensure_pkey
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -52,7 +52,7 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
-      id: V063_add_unique_constraint_to_repousertoken_repo_id_token
+      id: V063_add_index_to_repousertoken_repo_id_token
       author: seafile
       preConditions:
         - onFail: MARK_RAN

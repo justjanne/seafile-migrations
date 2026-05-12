@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: WebAP
             newTableName: webap
   - changeSet:
-      id: V013_normalize_repo_id
+      id: V013_normalize_webap_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

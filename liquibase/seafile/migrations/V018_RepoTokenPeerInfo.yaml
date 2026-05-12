@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: RepoTokenPeerInfo
             newTableName: repotokenpeerinfo
   - changeSet:
-      id: V013_normalize_token
+      id: V018_normalize_repotokenpeerinfo_token
       author: seafile
       preConditions:
         - onFail: MARK_RAN

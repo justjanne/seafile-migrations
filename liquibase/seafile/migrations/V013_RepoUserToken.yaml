@@ -40,7 +40,7 @@ databaseChangeLog:
             tableName: repousertoken
             constraintName: repo_id
   - changeSet:
-      id: V013_add_unique_constraint_to_repousertoken_repo_id_token
+      id: V013_add_index_to_repousertoken_repo_id_token
       author: seafile
       preConditions:
         - onFail: MARK_RAN

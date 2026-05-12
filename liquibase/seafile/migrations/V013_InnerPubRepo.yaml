@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: InnerPubRepo
             newTableName: innerpubrepo
   - changeSet:
-      id: V013_normalize_repo_id
+      id: V013_normalize_innerpubrepo_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

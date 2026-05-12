@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V013_rename_FolderUserPerm_to_folderuserperm
+      id: V070_rename_FolderUserPerm_to_folderuserperm
       author: seafile
       failOnError: false
       preConditions:
@@ -44,7 +44,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
   - changeSet:
-      id: V063_normalize_folderuserpermp_repo_id_idx
+      id: V070_normalize_folderuserperm_drop_old_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN

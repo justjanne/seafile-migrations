@@ -30,7 +30,7 @@ databaseChangeLog:
                   name: permission
                   type: char(15)
   - changeSet:
-      id: V070_add_unique_constraint_to_orggrouprepo_compound
+      id: V070_add_index_to_orggrouprepo_org_id_group_id_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

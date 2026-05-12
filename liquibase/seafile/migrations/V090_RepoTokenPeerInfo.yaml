@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V090_normalize_repotokenpeerinfo_peer_id_idx
+      id: V090_normalize_repotokenpeerinfo_drop_old_peer_id_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN

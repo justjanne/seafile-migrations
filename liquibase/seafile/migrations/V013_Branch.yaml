@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: Branch
             newTableName: branch
   - changeSet:
-      id: V013_normalize_name
+      id: V013_normalize_branch_name
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -28,7 +28,7 @@ databaseChangeLog:
             tableName: branch
             columnName: name
   - changeSet:
-      id: V013_normalize_repo_id
+      id: V013_normalize_branch_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

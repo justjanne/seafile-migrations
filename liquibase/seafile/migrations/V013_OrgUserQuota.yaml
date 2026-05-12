@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: OrgUserQuota
             newTableName: orguserquota
   - changeSet:
-      id: V013_normalize_org_id
+      id: V013_normalize_orguserquota_org_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -28,7 +28,7 @@ databaseChangeLog:
             tableName: orguserquota
             columnName: org_id
   - changeSet:
-      id: V013_normalize_user
+      id: V013_normalize_orguserquota_user
       author: seafile
       preConditions:
         - onFail: MARK_RAN

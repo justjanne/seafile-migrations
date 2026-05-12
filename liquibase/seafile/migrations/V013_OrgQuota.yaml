@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: OrgQuota
             newTableName: orgquota
   - changeSet:
-      id: V013_normalize_org_id
+      id: V013_normalize_orgquota_org_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

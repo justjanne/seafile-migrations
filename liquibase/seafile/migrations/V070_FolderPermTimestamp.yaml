@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V013_rename_FolderPermTimestamp_to_folderpermtimestamp
+      id: V070_rename_FolderPermTimestamp_to_folderpermtimestamp
       author: seafile
       failOnError: false
       preConditions:
@@ -32,7 +32,7 @@ databaseChangeLog:
                   name: timestamp
                   type: bigint
   - changeSet:
-      id: V063_normalize_folderpermtimestamp_repo_id_idx
+      id: V070_normalize_folderpermtimestamp_drop_old_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -44,13 +44,13 @@ databaseChangeLog:
             tableName: folderpermtimestamp
             constraintName: repo_id
   - changeSet:
-      id: V063_add_unique_constraint_to_folderpermtimestamp_repo_id_name
+      id: V070_add_index_to_folderpermtimestamp_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           not:
             - indexExists:
-                tableName:
+                tableName: folderpermtimestamp
                 indexName: idx_folderpermtimestamp_repo_id
       changes:
         - addUniqueConstraint:

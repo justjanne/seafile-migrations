@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: GarbageRepos
             newTableName: garbagerepos
   - changeSet:
-      id: V013_normalize_repo_id
+      id: V030_normalize_garbagerepos_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

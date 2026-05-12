@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V013_rename_LastGCID_to_lastgcid
+      id: V070_rename_LastGCID_to_lastgcid
       author: seafile
       failOnError: false
       preConditions:
@@ -35,7 +35,7 @@ databaseChangeLog:
                   name: gc_id
                   type: char(36)
   - changeSet:
-      id: V063_normalize_lastgcid_repo_id_idx
+      id: V070_normalize_lastgcid_drop_old_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -47,7 +47,7 @@ databaseChangeLog:
             tableName: lastgcid
             constraintName: repo_id
   - changeSet:
-      id: V070_add_unique_constraint_to_lastgcid_repo_id_client_id
+      id: V070_add_index_to_lastgcid_repo_id_client_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

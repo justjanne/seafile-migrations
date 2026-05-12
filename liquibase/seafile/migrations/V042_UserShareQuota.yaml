@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: UserShareQuota
             newTableName: usersharequota
   - changeSet:
-      id: V013_normalize_user
+      id: V042_normalize_usersharequota_user
       author: seafile
       preConditions:
         - onFail: MARK_RAN

@@ -50,7 +50,7 @@ databaseChangeLog:
             columnName: to_email
             newDataType: varchar(255)
   - changeSet:
-      id: V063_normalize_sharedrepo_from_email_idx
+      id: V040_normalize_sharedrepo_from_email_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN

@@ -12,7 +12,7 @@ databaseChangeLog:
             oldTableName: RepoInfo
             newTableName: repoinfo
   - changeSet:
-      id: V013_normalize_repo_id
+      id: V062_normalize_repoinfo_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

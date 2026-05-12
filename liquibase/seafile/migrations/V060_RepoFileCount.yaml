@@ -12,7 +12,7 @@ databaseChangeLog:
             oldTableName: RepoFileCount
             newTableName: repofilecount
   - changeSet:
-      id: V013_normalize_file_count
+      id: V060_normalize_repofilecount_file_count
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -25,7 +25,7 @@ databaseChangeLog:
             columnName: file_count
             newDataType: bigint
   - changeSet:
-      id: V013_normalize_repo_id
+      id: V060_normalize_repofilecount_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

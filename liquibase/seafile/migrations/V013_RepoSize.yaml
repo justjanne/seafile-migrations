@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: RepoSize
             newTableName: reposize
   - changeSet:
-      id: V013_normalize_repo_id
+      id: V013_normalize_reposize_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -28,7 +28,7 @@ databaseChangeLog:
             tableName: reposize
             columnName: repo_id
   - changeSet:
-      id: V013_normalize_size
+      id: V013_normalize_reposize_size
       author: seafile
       preConditions:
         - onFail: MARK_RAN

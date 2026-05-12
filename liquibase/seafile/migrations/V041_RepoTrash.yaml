@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: RepoTrash
             newTableName: repotrash
   - changeSet:
-      id: V013_normalize_repo_id
+      id: V041_normalize_repotrash_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

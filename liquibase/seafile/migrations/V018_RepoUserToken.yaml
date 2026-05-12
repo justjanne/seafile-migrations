@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: V018_normalize_branch_repousertoken_email_idx
+      id: V018_normalize_repousertoken_email_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -12,7 +12,7 @@ databaseChangeLog:
             tableName: repousertoken
             constraintName: repousertoken_email
   - changeSet:
-      id: add_index_to_repousertoken_email
+      id: V018_add_index_to_repousertoken_email
       author: seafile
       preConditions:
         - onFail: MARK_RAN

@@ -102,7 +102,7 @@ databaseChangeLog:
             tableName: orgquota
             constraintName: org_id
   - changeSet:
-      id: V063_add_unique_constraint_to_orgquota_org_id
+      id: V063_add_unique_to_orgquota_org_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

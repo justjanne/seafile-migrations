@@ -43,7 +43,7 @@ databaseChangeLog:
             tableName: repogroup
             constraintName: group_id
   - changeSet:
-      id: V013_add_unique_constraint_to_repogroup_group_id_repo_id
+      id: V013_add_index_to_repogroup_group_id_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

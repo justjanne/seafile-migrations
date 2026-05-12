@@ -11,7 +11,7 @@ databaseChangeLog:
             oldTableName: RepoValidSince
             newTableName: repovalidsince
   - changeSet:
-      id: V013_normalize_repo_id
+      id: V014_normalize_repovalidsince_repo_id
       author: seafile
       preConditions:
         - onFail: MARK_RAN

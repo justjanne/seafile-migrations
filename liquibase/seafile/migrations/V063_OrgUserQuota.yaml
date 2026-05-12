@@ -90,7 +90,7 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
-      id: V063_normalize_orgquota_org_id_idx
+      id: V063_normalize_orguserquota_org_id_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -102,7 +102,7 @@ databaseChangeLog:
             tableName: orguserquota
             constraintName: org_id
   - changeSet:
-      id: V063_add_unique_constraint_to_orguserquota_org_id_user
+      id: V063_add_unique_to_orguserquota_org_id_user
       author: seafile
       preConditions:
         - onFail: MARK_RAN
