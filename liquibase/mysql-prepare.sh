@@ -4,7 +4,7 @@ set -euo pipefail
 for table in \
                FileLockTimestamp FolderGroupPerm FolderPermTimestamp FolderUserPerm \
                GarbageRepos GCID LastGCID OrgDownloadRateLimit OrgGroupRepo OrgInnerPubRepo OrgRepo OrgSharedRepo \
-               OrgUploadRateLimit OrgUserDefaultQuota RepoFileCount RepoHistoryLimit RepoInfo RepoStorageId \
+               OrgUploadRateLimit OrgUserDefaultQuota RepoFileCount RepoInfo RepoStorageId \
                RepoSyncError RepoTokenPeerInfo RepoTrash RepoValidSince RoleDownloadRateLimit RoleQuota \
                RoleUploadRateLimit SeafileConf SystemInfo UserShareQuota UserDownloadRateLimit UserUploadRateLimit \
                VirtualRepo WebUploadTempFiles FileLocks; do

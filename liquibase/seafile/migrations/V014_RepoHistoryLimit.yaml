@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: V014_rename_RepoHistoryLimit_to_repohistorylimit
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: RepoHistoryLimit
+      changes:
+        - renameTable:
+            oldTableName: RepoHistoryLimit
+            newTableName: repohistorylimit
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repohistorylimit
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: repohistorylimit
+            columnName: repo_id
+            columnDataType: char(37)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: repohistorylimit
+            columnName: repo_id
+  - changeSet:
+      id: V014_create_repohistorylimit
+      author: seafile
+      comment: Regular Migration - Create table repohistorylimit
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repohistorylimit
+            columns:
+              - column:
+                  name: repo_id
+                  type: char(37)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repohistorylimit_pkey
+              - column:
+                  name: days
+                  type: int
