@@ -1,0 +1,72 @@
+databaseChangeLog:
+  - changeSet:
+      id: V013_rename_Branch_to_branch
+      author: seafile
+      comment: Legacy/Normalization - Normalize table name to lowercase
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: Branch
+      changes:
+        - renameTable:
+            oldTableName: Branch
+            newTableName: branch
+  - changeSet:
+      id: V013_normalize_name
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: branch
+            columnName: name
+      changes:
+        - addNotNullConstraint:
+            tableName: branch
+            columnName: name
+            columnDataType: varchar(10)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: branch
+            columnName: name
+  - changeSet:
+      id: V013_normalize_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: branch
+            columnName: repo_id
+      changes:
+        - addNotNullConstraint:
+            tableName: branch
+            columnName: repo_id
+            columnDataType: char(41)
+            defaultNullValue: ""
+        - dropDefaultValue:
+            tableName: branch
+            columnName: repo_id
+  - changeSet:
+      id: V013_create_branch
+      author: seafile
+      comment: Regular Migration - Create table branch
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: branch
+            columns:
+              - column:
+                  name: name
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: char(41)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: commit_id
+                  type: char(41)
+            primaryKey:
+              columnNames: repo_id, name
+              constraintName: branch_pkey

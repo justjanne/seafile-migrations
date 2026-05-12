@@ -1,0 +1,125 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_drop_primary_key_from_branch
+      author: seafile
+      comment: "Legacy/Normalization: Prepare for structural PK change by dropping old PK."
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: branch
+          not:
+            - columnExists:
+                tableName: branch
+                columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: branch
+  - changeSet:
+      id: V063_normalize_branch_compound_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old compound primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: branch
+            indexName: branch_pkey
+            columnNames: repo_id, name
+      changes:
+        - dropPrimaryKey:
+            tableName: branch
+  - changeSet:
+      id: V063_normalize_branch_id_pkey
+      author: seafile
+      comment: "Legacy/Normalization: Drop old named primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: branch
+            indexName: Branch_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: branch
+            constraintName: Branch_id_pkey
+  - changeSet:
+      id: V063_add_id_to_branch
+      author: seafile
+      comment: "Regular Migration: Structural PK change - add bigint id column as primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: branch
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: branch
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: branch_pkey
+  - changeSet:
+      id: V063_change_id_type_in_branch
+      author: seafile
+      comment: "Regular Migration: Ensure id column is bigint/bigserial."
+      changes:
+        - modifyDataType:
+            tableName: branch
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_branch_pkey
+      author: seafile
+      comment: "Regular Migration: Ensure id column is the primary key."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: branch
+      changes:
+        - addPrimaryKey:
+            tableName: branch
+            columnNames: id
+            constraintName: branch_pkey
+  - changeSet:
+      id: V063_normalize_branch_id_autoincrement
+      author: seafile
+      comment: "Regular Migration: Add auto-increment to id for MySQL/MariaDB."
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: branch
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
+      id: V063_normalize_branch_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: branch
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: branch
+            constraintName: repo_id
+  - changeSet:
+      id: V063_add_unique_constraint_to_branch_repo_id_name
+      author: seafile
+      comment: "Regular Migration: Add unique constraint on old key columns."
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: branch
+                indexName: idx_branch_repo_id_name
+      changes:
+        - addUniqueConstraint:
+            tableName: branch
+            columnNames: repo_id, name
+            constraintName: idx_branch_repo_id_name
