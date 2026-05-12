@@ -46,9 +46,9 @@ databaseChangeLog:
       author: seafile
       preConditions:
         - onFail: MARK_RAN
-          indexExists:
+          primaryKeyExists:
             tableName: ldapconfig
-            indexName: LDAPConfig_id_pkey
+            primaryKeyName: LDAPConfig_id_pkey
       changes:
         - dropPrimaryKey:
             tableName: ldapconfig

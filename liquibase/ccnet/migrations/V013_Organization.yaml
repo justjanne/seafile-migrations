@@ -44,7 +44,7 @@ databaseChangeLog:
         - onFail: MARK_RAN
           primaryKeyExists:
             tableName: organization
-            primaryKeyName: organization_pkey_SENTINEL
+            primaryKeyName: organization_pkey
       changes:
         - dropPrimaryKey:
             tableName: organization
