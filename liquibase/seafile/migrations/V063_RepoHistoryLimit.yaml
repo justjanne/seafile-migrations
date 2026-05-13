@@ -1,5 +1,95 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,RepoHistoryLimit,id)}}
+  - changeSet:
+      id: V063_normalize_repohistorylimit_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: repohistorylimit
+            - not:
+                - columnExists:
+                    tableName: repohistorylimit
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: repohistorylimit
+  - changeSet:
+      id: V063_normalize_RepoHistoryLimit_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repohistorylimit
+            indexName: RepoHistoryLimit_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repohistorylimit
+            constraintName: RepoHistoryLimit_pkey
+  - changeSet:
+      id: V063_normalize_RepoHistoryLimit_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: repohistorylimit
+            primaryKeyName: RepoHistoryLimit_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repohistorylimit
+            constraintName: RepoHistoryLimit_id_pkey
+  - changeSet:
+      id: V063_add_id_to_repohistorylimit
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repohistorylimit
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: repohistorylimit
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repohistorylimit_pkey
+  - changeSet:
+      id: V063_change_id_type_in_repohistorylimit
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: repohistorylimit
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_repohistorylimit_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: repohistorylimit
+      changes:
+        - addPrimaryKey:
+            tableName: repohistorylimit
+            columnNames: id
+            constraintName: repohistorylimit_pkey
+  - changeSet:
+      id: V063_normalize_repohistorylimit_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: repohistorylimit
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_normalize_repohistorylimit_repo_id_idx
       author: seafile

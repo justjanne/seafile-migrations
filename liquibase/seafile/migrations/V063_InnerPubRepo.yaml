@@ -1,5 +1,95 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,InnerPubRepo,id)}}
+  - changeSet:
+      id: V063_normalize_innerpubrepo_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: innerpubrepo
+            - not:
+                - columnExists:
+                    tableName: innerpubrepo
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: innerpubrepo
+  - changeSet:
+      id: V063_normalize_InnerPubRepo_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: innerpubrepo
+            indexName: InnerPubRepo_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: innerpubrepo
+            constraintName: InnerPubRepo_pkey
+  - changeSet:
+      id: V063_normalize_InnerPubRepo_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: innerpubrepo
+            primaryKeyName: InnerPubRepo_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: innerpubrepo
+            constraintName: InnerPubRepo_id_pkey
+  - changeSet:
+      id: V063_add_id_to_innerpubrepo
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: innerpubrepo
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: innerpubrepo
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: innerpubrepo_pkey
+  - changeSet:
+      id: V063_change_id_type_in_innerpubrepo
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: innerpubrepo
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_innerpubrepo_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: innerpubrepo
+      changes:
+        - addPrimaryKey:
+            tableName: innerpubrepo
+            columnNames: id
+            constraintName: innerpubrepo_pkey
+  - changeSet:
+      id: V063_normalize_innerpubrepo_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: innerpubrepo
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_normalize_innerpubrepo_repo_id_idx
       author: seafile

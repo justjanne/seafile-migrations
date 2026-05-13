@@ -1,2 +1,92 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,SeafileConf,id)}}
+  - changeSet:
+      id: V063_normalize_seafileconf_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: seafileconf
+            - not:
+                - columnExists:
+                    tableName: seafileconf
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: seafileconf
+  - changeSet:
+      id: V063_normalize_SeafileConf_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: seafileconf
+            indexName: SeafileConf_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: seafileconf
+            constraintName: SeafileConf_pkey
+  - changeSet:
+      id: V063_normalize_SeafileConf_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: seafileconf
+            primaryKeyName: SeafileConf_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: seafileconf
+            constraintName: SeafileConf_id_pkey
+  - changeSet:
+      id: V063_add_id_to_seafileconf
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: seafileconf
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: seafileconf
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: seafileconf_pkey
+  - changeSet:
+      id: V063_change_id_type_in_seafileconf
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: seafileconf
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_seafileconf_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: seafileconf
+      changes:
+        - addPrimaryKey:
+            tableName: seafileconf
+            columnNames: id
+            constraintName: seafileconf_pkey
+  - changeSet:
+      id: V063_normalize_seafileconf_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: seafileconf
+            columnName: id
+            columnDataType: bigint

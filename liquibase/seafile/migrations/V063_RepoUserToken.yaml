@@ -1,5 +1,95 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,RepoUserToken,id)}}
+  - changeSet:
+      id: V063_normalize_repousertoken_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: repousertoken
+            - not:
+                - columnExists:
+                    tableName: repousertoken
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: repousertoken
+  - changeSet:
+      id: V063_normalize_RepoUserToken_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repousertoken
+            indexName: RepoUserToken_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repousertoken
+            constraintName: RepoUserToken_pkey
+  - changeSet:
+      id: V063_normalize_RepoUserToken_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: repousertoken
+            primaryKeyName: RepoUserToken_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repousertoken
+            constraintName: RepoUserToken_id_pkey
+  - changeSet:
+      id: V063_add_id_to_repousertoken
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repousertoken
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: repousertoken
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repousertoken_pkey
+  - changeSet:
+      id: V063_change_id_type_in_repousertoken
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: repousertoken
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_repousertoken_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: repousertoken
+      changes:
+        - addPrimaryKey:
+            tableName: repousertoken
+            columnNames: id
+            constraintName: repousertoken_pkey
+  - changeSet:
+      id: V063_normalize_repousertoken_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: repousertoken
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_normalize_repousertoken_repo_id_type
       author: seafile

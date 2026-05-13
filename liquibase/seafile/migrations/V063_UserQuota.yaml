@@ -1,5 +1,95 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,UserQuota,id)}}
+  - changeSet:
+      id: V063_normalize_userquota_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: userquota
+            - not:
+                - columnExists:
+                    tableName: userquota
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: userquota
+  - changeSet:
+      id: V063_normalize_UserQuota_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: userquota
+            indexName: UserQuota_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: userquota
+            constraintName: UserQuota_pkey
+  - changeSet:
+      id: V063_normalize_UserQuota_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: userquota
+            primaryKeyName: UserQuota_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: userquota
+            constraintName: UserQuota_id_pkey
+  - changeSet:
+      id: V063_add_id_to_userquota
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: userquota
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: userquota
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: userquota_pkey
+  - changeSet:
+      id: V063_change_id_type_in_userquota
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: userquota
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_userquota_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: userquota
+      changes:
+        - addPrimaryKey:
+            tableName: userquota
+            columnNames: id
+            constraintName: userquota_pkey
+  - changeSet:
+      id: V063_normalize_userquota_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: userquota
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_normalize_userquota_user_idx
       author: seafile

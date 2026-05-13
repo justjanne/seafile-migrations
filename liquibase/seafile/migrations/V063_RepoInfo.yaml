@@ -1,5 +1,95 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,RepoInfo,id)}}
+  - changeSet:
+      id: V063_normalize_repoinfo_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: repoinfo
+            - not:
+                - columnExists:
+                    tableName: repoinfo
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: repoinfo
+  - changeSet:
+      id: V063_normalize_RepoInfo_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repoinfo
+            indexName: RepoInfo_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repoinfo
+            constraintName: RepoInfo_pkey
+  - changeSet:
+      id: V063_normalize_RepoInfo_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: repoinfo
+            primaryKeyName: RepoInfo_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repoinfo
+            constraintName: RepoInfo_id_pkey
+  - changeSet:
+      id: V063_add_id_to_repoinfo
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repoinfo
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: repoinfo
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repoinfo_pkey
+  - changeSet:
+      id: V063_change_id_type_in_repoinfo
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: repoinfo
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_repoinfo_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: repoinfo
+      changes:
+        - addPrimaryKey:
+            tableName: repoinfo
+            columnNames: id
+            constraintName: repoinfo_pkey
+  - changeSet:
+      id: V063_normalize_repoinfo_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: repoinfo
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_normalize_repoinfo_repo_id_idx
       author: seafile

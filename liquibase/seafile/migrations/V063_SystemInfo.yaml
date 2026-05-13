@@ -1,2 +1,92 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,SystemInfo,id)}}
+  - changeSet:
+      id: V063_normalize_systeminfo_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: systeminfo
+            - not:
+                - columnExists:
+                    tableName: systeminfo
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: systeminfo
+  - changeSet:
+      id: V063_normalize_SystemInfo_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: systeminfo
+            indexName: SystemInfo_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: systeminfo
+            constraintName: SystemInfo_pkey
+  - changeSet:
+      id: V063_normalize_SystemInfo_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: systeminfo
+            primaryKeyName: SystemInfo_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: systeminfo
+            constraintName: SystemInfo_id_pkey
+  - changeSet:
+      id: V063_add_id_to_systeminfo
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: systeminfo
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: systeminfo
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: systeminfo_pkey
+  - changeSet:
+      id: V063_change_id_type_in_systeminfo
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: systeminfo
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_systeminfo_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: systeminfo
+      changes:
+        - addPrimaryKey:
+            tableName: systeminfo
+            columnNames: id
+            constraintName: systeminfo_pkey
+  - changeSet:
+      id: V063_normalize_systeminfo_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: systeminfo
+            columnName: id
+            columnDataType: bigint

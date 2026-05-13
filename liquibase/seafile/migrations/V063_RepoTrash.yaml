@@ -1,5 +1,95 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,RepoTrash,id)}}
+  - changeSet:
+      id: V063_normalize_repotrash_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: repotrash
+            - not:
+                - columnExists:
+                    tableName: repotrash
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: repotrash
+  - changeSet:
+      id: V063_normalize_RepoTrash_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotrash
+            indexName: RepoTrash_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repotrash
+            constraintName: RepoTrash_pkey
+  - changeSet:
+      id: V063_normalize_RepoTrash_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: repotrash
+            primaryKeyName: RepoTrash_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repotrash
+            constraintName: RepoTrash_id_pkey
+  - changeSet:
+      id: V063_add_id_to_repotrash
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repotrash
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: repotrash
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repotrash_pkey
+  - changeSet:
+      id: V063_change_id_type_in_repotrash
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: repotrash
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_repotrash_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: repotrash
+      changes:
+        - addPrimaryKey:
+            tableName: repotrash
+            columnNames: id
+            constraintName: repotrash_pkey
+  - changeSet:
+      id: V063_normalize_repotrash_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: repotrash
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_normalize_repotrash_repo_id_type
       author: seafile

@@ -1,5 +1,95 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,Branch,id)}}
+  - changeSet:
+      id: V063_normalize_branch_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: branch
+            - not:
+                - columnExists:
+                    tableName: branch
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: branch
+  - changeSet:
+      id: V063_normalize_Branch_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: branch
+            indexName: Branch_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: branch
+            constraintName: Branch_pkey
+  - changeSet:
+      id: V063_normalize_Branch_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: branch
+            primaryKeyName: Branch_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: branch
+            constraintName: Branch_id_pkey
+  - changeSet:
+      id: V063_add_id_to_branch
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: branch
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: branch
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: branch_pkey
+  - changeSet:
+      id: V063_change_id_type_in_branch
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: branch
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_branch_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: branch
+      changes:
+        - addPrimaryKey:
+            tableName: branch
+            columnNames: id
+            constraintName: branch_pkey
+  - changeSet:
+      id: V063_normalize_branch_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: branch
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_normalize_branch_repo_id_idx
       author: seafile

@@ -1,5 +1,95 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,RepoTokenPeerInfo,id)}}
+  - changeSet:
+      id: V063_normalize_repotokenpeerinfo_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: repotokenpeerinfo
+            - not:
+                - columnExists:
+                    tableName: repotokenpeerinfo
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: repotokenpeerinfo
+  - changeSet:
+      id: V063_normalize_RepoTokenPeerInfo_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotokenpeerinfo
+            indexName: RepoTokenPeerInfo_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repotokenpeerinfo
+            constraintName: RepoTokenPeerInfo_pkey
+  - changeSet:
+      id: V063_normalize_RepoTokenPeerInfo_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: repotokenpeerinfo
+            primaryKeyName: RepoTokenPeerInfo_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repotokenpeerinfo
+            constraintName: RepoTokenPeerInfo_id_pkey
+  - changeSet:
+      id: V063_add_id_to_repotokenpeerinfo
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repotokenpeerinfo
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: repotokenpeerinfo
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: repotokenpeerinfo_pkey
+  - changeSet:
+      id: V063_change_id_type_in_repotokenpeerinfo
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: repotokenpeerinfo
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_repotokenpeerinfo_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: repotokenpeerinfo
+      changes:
+        - addPrimaryKey:
+            tableName: repotokenpeerinfo
+            columnNames: id
+            constraintName: repotokenpeerinfo_pkey
+  - changeSet:
+      id: V063_normalize_repotokenpeerinfo_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: repotokenpeerinfo
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_normalize_repotokenpeerinfo_token_type
       author: seafile

@@ -1,5 +1,95 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,OrgQuota,id)}}
+  - changeSet:
+      id: V063_normalize_orgquota_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: orgquota
+            - not:
+                - columnExists:
+                    tableName: orgquota
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: orgquota
+  - changeSet:
+      id: V063_normalize_OrgQuota_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orgquota
+            indexName: OrgQuota_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: orgquota
+            constraintName: OrgQuota_pkey
+  - changeSet:
+      id: V063_normalize_OrgQuota_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: orgquota
+            primaryKeyName: OrgQuota_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: orgquota
+            constraintName: OrgQuota_id_pkey
+  - changeSet:
+      id: V063_add_id_to_orgquota
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: orgquota
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: orgquota
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: orgquota_pkey
+  - changeSet:
+      id: V063_change_id_type_in_orgquota
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: orgquota
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_orgquota_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: orgquota
+      changes:
+        - addPrimaryKey:
+            tableName: orgquota
+            columnNames: id
+            constraintName: orgquota_pkey
+  - changeSet:
+      id: V063_normalize_orgquota_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: orgquota
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_normalize_orgquota_org_id_idx
       author: seafile

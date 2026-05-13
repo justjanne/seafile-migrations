@@ -1,5 +1,95 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,GarbageRepos,id)}}
+  - changeSet:
+      id: V063_normalize_garbagerepos_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: garbagerepos
+            - not:
+                - columnExists:
+                    tableName: garbagerepos
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: garbagerepos
+  - changeSet:
+      id: V063_normalize_GarbageRepos_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: garbagerepos
+            indexName: GarbageRepos_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: garbagerepos
+            constraintName: GarbageRepos_pkey
+  - changeSet:
+      id: V063_normalize_GarbageRepos_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: garbagerepos
+            primaryKeyName: GarbageRepos_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: garbagerepos
+            constraintName: GarbageRepos_id_pkey
+  - changeSet:
+      id: V063_add_id_to_garbagerepos
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: garbagerepos
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: garbagerepos
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: garbagerepos_pkey
+  - changeSet:
+      id: V063_change_id_type_in_garbagerepos
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: garbagerepos
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_garbagerepos_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: garbagerepos
+      changes:
+        - addPrimaryKey:
+            tableName: garbagerepos
+            columnNames: id
+            constraintName: garbagerepos_pkey
+  - changeSet:
+      id: V063_normalize_garbagerepos_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: garbagerepos
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_normalize_garbagerepos_repo_id_idx
       author: seafile
