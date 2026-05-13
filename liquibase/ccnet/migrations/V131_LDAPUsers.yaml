@@ -1,25 +1,25 @@
 databaseChangeLog:
   - changeSet:
-      id: V131_change_is_active_type_in_emailuser
+      id: V131_change_is_active_type_in_ldapusers
       author: seafile
       changes:
         - modifyDataType:
-            tableName: emailuser
+            tableName: ldapusers
             columnName: is_active
             newDataType: int
         - modifyDataType:
-            tableName: emailuser
+            tableName: ldapusers
             columnName: is_active
             newDataType: boolean
   - changeSet:
-      id: V131_change_is_staff_type_in_emailuser
+      id: V131_change_is_staff_type_in_ldapusers
       author: seafile
       changes:
         - modifyDataType:
-            tableName: emailuser
+            tableName: ldapusers
             columnName: is_staff
             newDataType: int
         - modifyDataType:
-            tableName: emailuser
+            tableName: ldapusers
             columnName: is_staff
             newDataType: boolean

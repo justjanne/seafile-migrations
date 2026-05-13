@@ -6,4 +6,8 @@ databaseChangeLog:
         - modifyDataType:
             tableName: orguser
             columnName: is_staff
+            newDataType: int
+        - modifyDataType:
+            tableName: orguser
+            columnName: is_staff
             newDataType: boolean
