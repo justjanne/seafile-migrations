@@ -115,6 +115,18 @@ databaseChangeLog:
             tableName: garbagerepos
             constraintName: garbagerepos_repo_id_key
   - changeSet:
+      id: V063_normalize_garbagerepos_repoid_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: garbagerepos
+            indexName: garbagerepos_repoid_idx
+      changes:
+        - dropIndex:
+            tableName: garbagerepos
+            indexName: garbagerepos_repoid_idx
+  - changeSet:
       id: V063_add_unique_constraint_to_garbagerepos_repo_id
       author: seafile
       preConditions:

@@ -25,6 +25,18 @@ databaseChangeLog:
             columnName: peer_id
             newDataType: varchar(41)
   - changeSet:
+      id: V090_normalize_repotokenpeerinfo_peerid_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotokenpeerinfo
+            indexName: repotokenpeerinfo_peerid_idx
+      changes:
+        - dropIndex:
+            tableName: repotokenpeerinfo
+            indexName: repotokenpeerinfo_peerid_idx
+  - changeSet:
       id: V090_add_index_to_repotokenpeerinfo_peer_id
       author: seafile
       preConditions:

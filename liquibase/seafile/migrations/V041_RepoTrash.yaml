@@ -96,6 +96,18 @@ databaseChangeLog:
             tableName: repotrash
             indexName: owner_id
   - changeSet:
+      id: V041_normalize_repotrash_owner_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotrash
+            indexName: repotrash_owner_id
+      changes:
+        - dropIndex:
+            tableName: repotrash
+            indexName: repotrash_owner_id
+  - changeSet:
       id: V041_add_index_to_repotrash_owner_id
       author: seafile
       preConditions:

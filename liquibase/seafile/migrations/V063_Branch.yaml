@@ -115,6 +115,18 @@ databaseChangeLog:
             tableName: branch
             constraintName: branch_repo_id_name_key
   - changeSet:
+      id: V063_normalize_branch_repoidname_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: branch
+            indexName: branch_repoidname_idx
+      changes:
+        - dropIndex:
+            tableName: branch
+            indexName: branch_repoidname_idx
+  - changeSet:
       id: V063_add_unique_constraint_to_branch_repo_id_name
       author: seafile
       preConditions:
