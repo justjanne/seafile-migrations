@@ -27,7 +27,7 @@ databaseChangeLog:
                     primaryKeyName: repostorageid_pkey
               - column:
                   name: repo_id
-                  type: char(40)
+                  type: varchar(41)
                   constraints:
                     nullable: false
                     unique: true

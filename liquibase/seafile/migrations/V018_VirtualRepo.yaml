@@ -22,7 +22,7 @@ databaseChangeLog:
         - addNotNullConstraint:
             tableName: virtualrepo
             columnName: repo_id
-            columnDataType: char(36)
+            columnDataType: varchar(41)
             defaultNullValue: ""
         - dropDefaultValue:
             tableName: virtualrepo
@@ -37,20 +37,20 @@ databaseChangeLog:
             columns:
               - column:
                   name: repo_id
-                  type: char(36)
+                  type: varchar(41)
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: virtualrepo_pkey
               - column:
                   name: origin_repo
-                  type: char(36)
+                  type: varchar(41)
               - column:
                   name: path
                   type: text
               - column:
                   name: base_commit
-                  type: char(40)
+                  type: varchar(41)
   - changeSet:
       id: V018_normalize_virtualrepo_origin_repo
       author: seafile

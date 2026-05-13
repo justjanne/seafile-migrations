@@ -22,7 +22,7 @@ databaseChangeLog:
         - addNotNullConstraint:
             tableName: repoowner
             columnName: repo_id
-            columnDataType: char(37)
+            columnDataType: varchar(41)
             defaultNullValue: ""
         - dropDefaultValue:
             tableName: repoowner
@@ -37,7 +37,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: repo_id
-                  type: char(37)
+                  type: varchar(41)
                   constraints:
                     nullable: false
                     primaryKey: true

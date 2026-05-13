@@ -27,7 +27,7 @@ databaseChangeLog:
                     primaryKeyName: filelocktimestamp_pkey
               - column:
                   name: repo_id
-                  type: char(40)
+                  type: varchar(41)
               - column:
                   name: update_time
                   type: bigint

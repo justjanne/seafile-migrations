@@ -39,7 +39,7 @@ databaseChangeLog:
         - addNotNullConstraint:
             tableName: branch
             columnName: repo_id
-            columnDataType: char(41)
+            columnDataType: varchar(41)
             defaultNullValue: ""
         - dropDefaultValue:
             tableName: branch
@@ -59,12 +59,12 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: repo_id
-                  type: char(41)
+                  type: varchar(41)
                   constraints:
                     nullable: false
               - column:
                   name: commit_id
-                  type: char(41)
+                  type: varchar(41)
             primaryKey:
               columnNames: repo_id, name
               constraintName: branch_pkey

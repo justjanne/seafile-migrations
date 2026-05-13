@@ -27,13 +27,13 @@ databaseChangeLog:
                     primaryKeyName: lastgcid_pkey
               - column:
                   name: repo_id
-                  type: char(36)
+                  type: varchar(41)
               - column:
                   name: client_id
                   type: varchar(128)
               - column:
                   name: gc_id
-                  type: char(36)
+                  type: varchar(41)
   - changeSet:
       id: V070_normalize_lastgcid_repo_id
       author: seafile

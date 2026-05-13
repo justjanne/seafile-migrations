@@ -30,7 +30,7 @@ databaseChangeLog:
                   type: int
               - column:
                   name: repo_id
-                  type: char(37)
+                  type: varchar(41)
               - column:
                   name: from_email
                   type: varchar(255)
@@ -39,7 +39,7 @@ databaseChangeLog:
                   type: varchar(255)
               - column:
                   name: permission
-                  type: char(15)
+                  type: varchar(15)
   - changeSet:
       id: V070_add_index_to_orgsharedrepo_repo_id
       author: seafile

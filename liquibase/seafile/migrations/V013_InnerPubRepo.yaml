@@ -22,7 +22,7 @@ databaseChangeLog:
         - addNotNullConstraint:
             tableName: innerpubrepo
             columnName: repo_id
-            columnDataType: char(37)
+            columnDataType: varchar(41)
             defaultNullValue: ""
         - dropDefaultValue:
             tableName: innerpubrepo
@@ -37,11 +37,11 @@ databaseChangeLog:
             columns:
               - column:
                   name: repo_id
-                  type: char(37)
+                  type: varchar(41)
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: innerpubrepo_pkey
               - column:
                   name: permission
-                  type: char(15)
+                  type: varchar(15)

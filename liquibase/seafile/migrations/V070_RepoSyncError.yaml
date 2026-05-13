@@ -40,7 +40,7 @@ databaseChangeLog:
                     primaryKeyName: reposyncerror_pkey
               - column:
                   name: token
-                  type: char(41)
+                  type: varchar(41)
               - column:
                   name: error_time
                   type: bigint

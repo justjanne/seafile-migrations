@@ -16,10 +16,10 @@ databaseChangeLog:
                     primaryKeyName: gcid_pkey
               - column:
                   name: repo_id
-                  type: char(36)
+                  type: varchar(41)
                   constraints:
                     unique: true
                     uniqueConstraintName: idx_gcid_repo_id
               - column:
                   name: gc_id
-                  type: char(36)
+                  type: varchar(41)

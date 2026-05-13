@@ -27,7 +27,7 @@ databaseChangeLog:
                     primaryKeyName: foldergroupperm_pkey
               - column:
                   name: repo_id
-                  type: char(36)
+                  type: varchar(41)
                   constraints:
                     nullable: false
               - column:
@@ -37,7 +37,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: permission
-                  type: char(15)
+                  type: varchar(15)
               - column:
                   name: group_id
                   type: int

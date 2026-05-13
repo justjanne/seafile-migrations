@@ -23,7 +23,7 @@ databaseChangeLog:
                   type: varchar(255)
               - column:
                   name: peer_id
-                  type: char(41)
+                  type: varchar(41)
                   constraints:
                     unique: true
   - changeSet:

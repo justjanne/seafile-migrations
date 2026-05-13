@@ -27,7 +27,7 @@ databaseChangeLog:
                     primaryKeyName: folderpermtimestamp_pkey
               - column:
                   name: repo_id
-                  type: char(36)
+                  type: varchar(41)
               - column:
                   name: timestamp
                   type: bigint

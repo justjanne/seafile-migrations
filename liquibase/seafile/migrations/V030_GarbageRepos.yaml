@@ -22,7 +22,7 @@ databaseChangeLog:
         - addNotNullConstraint:
             tableName: garbagerepos
             columnName: repo_id
-            columnDataType: char(36)
+            columnDataType: varchar(41)
             defaultNullValue: ""
         - dropDefaultValue:
             tableName: garbagerepos
@@ -37,7 +37,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: repo_id
-                  type: char(36)
+                  type: varchar(41)
                   constraints:
                     nullable: false
                     primaryKey: true

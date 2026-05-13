@@ -20,7 +20,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: repo_id
-                  type: char(37)
+                  type: varchar(41)
               - column:
                   name: group_id
                   type: int
@@ -29,7 +29,7 @@ databaseChangeLog:
                   type: varchar(255)
               - column:
                   name: permission
-                  type: char(15)
+                  type: varchar(15)
   - changeSet:
       id: V013_normalize_repogroup_group_id
       author: seafile
