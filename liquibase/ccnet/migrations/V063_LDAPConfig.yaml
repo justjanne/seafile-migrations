@@ -39,6 +39,28 @@ databaseChangeLog:
             tableName: ldapconfig
             constraintName: LDAPConfig_id_pkey
   - changeSet:
+      id: V063_add_id_to_ldapconfig
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: ldapconfig
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: ldapconfig
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: ldapconfig_pkey
+  - changeSet:
       id: V063_change_id_type_in_ldapconfig
       author: seafile
       changes:

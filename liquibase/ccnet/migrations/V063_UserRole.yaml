@@ -39,6 +39,28 @@ databaseChangeLog:
             tableName: userrole
             constraintName: UserRole_id_pkey
   - changeSet:
+      id: V063_add_id_to_userrole
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: userrole
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: userrole
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: userrole_pkey
+  - changeSet:
       id: V063_change_id_type_in_userrole
       author: seafile
       changes:

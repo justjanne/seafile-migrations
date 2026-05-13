@@ -76,6 +76,28 @@ databaseChangeLog:
             tableName: groupstructure
             constraintName: GroupStructure_id_pkey
   - changeSet:
+      id: V063_add_id_to_groupstructure
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: groupstructure
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: groupstructure
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: groupstructure_pkey
+  - changeSet:
       id: V063_change_id_type_in_groupstructure
       author: seafile
       changes:

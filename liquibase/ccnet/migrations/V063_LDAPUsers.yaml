@@ -39,6 +39,28 @@ databaseChangeLog:
             tableName: ldapusers
             constraintName: LDAPUsers_id_pkey
   - changeSet:
+      id: V063_add_id_to_ldapusers
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: ldapusers
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: ldapusers
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: ldapusers_pkey
+  - changeSet:
       id: V063_change_id_type_in_ldapusers
       author: seafile
       changes:

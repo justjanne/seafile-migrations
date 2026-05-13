@@ -39,6 +39,28 @@ databaseChangeLog:
             tableName: organization
             constraintName: Organization_id_pkey
   - changeSet:
+      id: V063_add_org_id_to_organization
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: organization
+                columnName: org_id
+      changes:
+        - addColumn:
+            tableName: organization
+            ifNotExists: true
+            columns:
+              - column:
+                  name: org_id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: organization_pkey
+  - changeSet:
       id: V063_change_org_id_type_in_organization
       author: seafile
       changes:
