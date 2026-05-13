@@ -41,6 +41,97 @@ databaseChangeLog:
                   constraints:
                     nullable: false
   - changeSet:
+      id: V070_normalize_webuploadtempfiles_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: webuploadtempfiles
+            - not:
+                - columnExists:
+                    tableName: webuploadtempfiles
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: webuploadtempfiles
+  - changeSet:
+      id: V070_normalize_WebUploadTempFiles_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: webuploadtempfiles
+            indexName: WebUploadTempFiles_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: webuploadtempfiles
+            constraintName: WebUploadTempFiles_pkey
+  - changeSet:
+      id: V070_normalize_WebUploadTempFiles_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: webuploadtempfiles
+            primaryKeyName: WebUploadTempFiles_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: webuploadtempfiles
+            constraintName: WebUploadTempFiles_id_pkey
+  - changeSet:
+      id: V070_add_id_to_webuploadtempfiles
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: webuploadtempfiles
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: webuploadtempfiles
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: webuploadtempfiles_pkey
+  - changeSet:
+      id: V070_change_id_type_in_webuploadtempfiles
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: webuploadtempfiles
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V070_normalize_webuploadtempfiles_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: webuploadtempfiles
+      changes:
+        - addPrimaryKey:
+            tableName: webuploadtempfiles
+            columnNames: id
+            constraintName: webuploadtempfiles_pkey
+  - changeSet:
+      id: V070_normalize_webuploadtempfiles_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: webuploadtempfiles
+            columnName: id
+            columnDataType: bigint
+  - changeSet:
       id: V070_normalize_webuploadtempfiles_repo_id_type
       author: seafile
       preConditions:
