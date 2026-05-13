@@ -9,9 +9,9 @@ psql postgres://postgres:password@localhost/postgres -c "DROP DATABASE IF EXISTS
 
 # prepare
 psql postgres://postgres:password@localhost/postgres -c "CREATE DATABASE $1"
-psql postgres://postgres:password@localhost/ccnet --file=../schemas/$1/pgsql/018.sql || true
+psql postgres://postgres:password@localhost/$1 --file=../schemas/$1/pgsql/018.sql || true
 for i in $(ls ../legacy/$1/pgsql/*.sql | sort); do
-  psql postgres://postgres:password@localhost/ccnet --file=$i || true
+  psql postgres://postgres:password@localhost/$1 --file=$i || true
 done
 
 # migrate
