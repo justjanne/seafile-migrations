@@ -49,6 +49,18 @@ databaseChangeLog:
             tableName: orgdownloadratelimit
             constraintName: org_id
   - changeSet:
+      id: V130_normalize_orgdownloadratelimit_org_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orgdownloadratelimit
+            indexName: orgdownloadratelimit_org_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: orgdownloadratelimit
+            constraintName: orgdownloadratelimit_org_id_key
+  - changeSet:
       id: V130_add_unique_constraint_to_orgdownloadratelimit_org_id
       author: seafile
       preConditions:

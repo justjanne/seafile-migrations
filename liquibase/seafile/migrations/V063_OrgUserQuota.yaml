@@ -86,6 +86,18 @@ databaseChangeLog:
             tableName: orguserquota
             constraintName: org_id
   - changeSet:
+      id: V063_normalize_orguserquota_org_id_user_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orguserquota
+            indexName: orguserquota_org_id_user_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: orguserquota
+            constraintName: orguserquota_org_id_user_key
+  - changeSet:
       id: V063_add_unique_constraint_to_orguserquota_org_id_user
       author: seafile
       preConditions:

@@ -1,5 +1,16 @@
 databaseChangeLog:
   - changeSet:
+      id: V070_rename_OrgGroupRepo_to_orggrouprepo
+      author: seafile
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: OrgGroupRepo
+      changes:
+        - renameTable:
+            oldTableName: OrgGroupRepo
+            newTableName: orggrouprepo
+  - changeSet:
       id: V070_create_orggrouprepo
       author: seafile
       changes:
@@ -56,6 +67,30 @@ databaseChangeLog:
             columnName: permission
             newDataType: varchar(15)
   - changeSet:
+      id: V070_normalize_orggrouprepo_org_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orggrouprepo
+            indexName: org_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: orggrouprepo
+            constraintName: org_id
+  - changeSet:
+      id: V070_normalize_orggrouprepo_org_id_group_id_repo_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orggrouprepo
+            indexName: orggrouprepo_org_id_group_id_repo_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: orggrouprepo
+            constraintName: orggrouprepo_org_id_group_id_repo_id_key
+  - changeSet:
       id: V070_add_unique_constraint_to_orggrouprepo_org_id_group_id_repo_id
       author: seafile
       preConditions:
@@ -69,6 +104,18 @@ databaseChangeLog:
             tableName: orggrouprepo
             columnNames: org_id, group_id, repo_id
             constraintName: idx_orggrouprepo_org_id_group_id_repo_id
+  - changeSet:
+      id: V070_normalize_orggrouprepo_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orggrouprepo
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: orggrouprepo
+            constraintName: repo_id
   - changeSet:
       id: V070_add_index_to_orggrouprepo_repo_id
       author: seafile
@@ -85,6 +132,18 @@ databaseChangeLog:
             columns:
               - column:
                   name: repo_id
+  - changeSet:
+      id: V070_normalize_orggrouprepo_owner_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orggrouprepo
+            indexName: owner
+      changes:
+        - dropUniqueConstraint:
+            tableName: orggrouprepo
+            constraintName: owner
   - changeSet:
       id: V070_add_index_to_orggrouprepo_owner
       author: seafile

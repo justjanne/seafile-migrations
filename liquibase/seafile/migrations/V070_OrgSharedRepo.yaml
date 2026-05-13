@@ -20,7 +20,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: serial
+                  type: bigserial
                   autoIncrement: true
                   constraints:
                     primaryKey: true
@@ -40,6 +40,36 @@ databaseChangeLog:
               - column:
                   name: permission
                   type: varchar(15)
+  - changeSet:
+      id: V070_change_id_type_in_orgsharedrepo
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: orgsharedrepo
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V070_normalize_orgsharedrepo_pkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: orgsharedrepo
+      changes:
+        - addPrimaryKey:
+            tableName: orgsharedrepo
+            columnNames: id
+            constraintName: orgsharedrepo_pkey
+  - changeSet:
+      id: V070_normalize_orgsharedrepo_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: orgsharedrepo
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V070_normalize_orgsharedrepo_repo_id_type
       author: seafile
@@ -83,6 +113,18 @@ databaseChangeLog:
               - column:
                   name: repo_id
   - changeSet:
+      id: V070_normalize_orgsharedrepo_org_id_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orgsharedrepo
+            indexName: orgsharedrepo_org_id_repo_id_idx
+      changes:
+        - dropIndex:
+            tableName: orgsharedrepo
+            indexName: orgsharedrepo_org_id_repo_id_idx
+  - changeSet:
       id: V070_add_index_to_orgsharedrepo_org_id_repo_id
       author: seafile
       preConditions:
@@ -113,6 +155,18 @@ databaseChangeLog:
             tableName: orgsharedrepo
             indexName: from_email
   - changeSet:
+      id: V070_normalize_orgsharedrepo_from_email_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orgsharedrepo
+            indexName: orgsharedrepo_from_email_idx
+      changes:
+        - dropIndex:
+            tableName: orgsharedrepo
+            indexName: orgsharedrepo_from_email_idx
+  - changeSet:
       id: V070_add_index_to_orgsharedrepo_from_email
       author: seafile
       preConditions:
@@ -140,6 +194,18 @@ databaseChangeLog:
         - dropIndex:
             tableName: orgsharedrepo
             indexName: to_email
+  - changeSet:
+      id: V070_normalize_orgsharedrepo_to_email_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orgsharedrepo
+            indexName: orgsharedrepo_to_email_idx
+      changes:
+        - dropIndex:
+            tableName: orgsharedrepo
+            indexName: orgsharedrepo_to_email_idx
   - changeSet:
       id: V070_add_index_to_orgsharedrepo_to_email
       author: seafile

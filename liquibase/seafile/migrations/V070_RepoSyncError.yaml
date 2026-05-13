@@ -73,6 +73,18 @@ databaseChangeLog:
             tableName: reposyncerror
             constraintName: token
   - changeSet:
+      id: V070_normalize_reposyncerror_token_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: reposyncerror
+            indexName: reposyncerror_token_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: reposyncerror
+            constraintName: reposyncerror_token_key
+  - changeSet:
       id: V070_add_unique_constraint_to_reposyncerror_token_name
       author: seafile
       preConditions:

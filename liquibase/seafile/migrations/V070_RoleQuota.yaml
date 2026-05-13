@@ -44,6 +44,18 @@ databaseChangeLog:
             tableName: rolequota
             constraintName: role
   - changeSet:
+      id: V070_normalize_rolequota_role_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: rolequota
+            indexName: rolequota_role_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: rolequota
+            constraintName: rolequota_role_key
+  - changeSet:
       id: V070_add_unique_constraint_to_rolequota_role
       author: seafile
       preConditions:

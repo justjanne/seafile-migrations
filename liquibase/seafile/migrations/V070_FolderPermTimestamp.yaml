@@ -57,6 +57,18 @@ databaseChangeLog:
             tableName: folderpermtimestamp
             constraintName: repo_id
   - changeSet:
+      id: V070_normalize_folderpermtimestamp_repo_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: folderpermtimestamp
+            indexName: folderpermtimestamp_repo_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: folderpermtimestamp
+            constraintName: folderpermtimestamp_repo_id_key
+  - changeSet:
       id: V070_add_unique_constraint_to_folderpermtimestamp_repo_id
       author: seafile
       preConditions:

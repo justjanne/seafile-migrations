@@ -86,6 +86,30 @@ databaseChangeLog:
             tableName: innerpubrepo
             constraintName: repo_id
   - changeSet:
+      id: V063_normalize_innerpubrepo_repo_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: innerpubrepo
+            indexName: innerpubrepo_repo_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: innerpubrepo
+            constraintName: innerpubrepo_repo_id_key
+  - changeSet:
+      id: V063_normalize_InnerPubRepo_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: innerpubrepo
+            indexName: InnerPubRepo_repo_id
+      changes:
+        - dropIndex:
+            tableName: innerpubrepo
+            indexName: InnerPubRepo_repo_id
+  - changeSet:
       id: V063_add_unique_constraint_to_innerpubrepo_repo_id
       author: seafile
       preConditions:

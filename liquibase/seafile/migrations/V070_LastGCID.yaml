@@ -73,6 +73,18 @@ databaseChangeLog:
             tableName: lastgcid
             constraintName: repo_id
   - changeSet:
+      id: V070_normalize_lastgcid_repo_id_client_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: lastgcid
+            indexName: lastgcid_repo_id_client_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: lastgcid
+            constraintName: lastgcid_repo_id_client_id_key
+  - changeSet:
       id: V070_add_unique_constraint_to_lastgcid_repo_id_client_id
       author: seafile
       preConditions:

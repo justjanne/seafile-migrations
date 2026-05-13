@@ -102,6 +102,30 @@ databaseChangeLog:
             tableName: repohistorylimit
             constraintName: repo_id
   - changeSet:
+      id: V063_normalize_repohistorylimit_repo_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repohistorylimit
+            indexName: repohistorylimit_repo_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: repohistorylimit
+            constraintName: repohistorylimit_repo_id_key
+  - changeSet:
+      id: V063_normalize_RepoHistoryLimit_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repohistorylimit
+            indexName: RepoHistoryLimit_repo_id
+      changes:
+        - dropIndex:
+            tableName: repohistorylimit
+            indexName: RepoHistoryLimit_repo_id
+  - changeSet:
       id: V063_add_unique_constraint_to_repohistorylimit_repo_id
       author: seafile
       preConditions:

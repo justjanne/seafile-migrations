@@ -66,6 +66,18 @@ databaseChangeLog:
             tableName: repousertoken
             constraintName: repo_id
   - changeSet:
+      id: V013_normalize_repousertoken_repo_id_token_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repousertoken
+            indexName: repousertoken_repo_id_token_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: repousertoken
+            constraintName: repousertoken_repo_id_token_key
+  - changeSet:
       id: V013_add_unique_constraint_to_repousertoken_repo_id_token
       author: seafile
       preConditions:

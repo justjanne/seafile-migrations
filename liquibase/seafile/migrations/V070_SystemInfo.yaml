@@ -6,7 +6,7 @@ databaseChangeLog:
         - modifyDataType:
             tableName: systeminfo
             columnName: id
-            newDataType: serial
+            newDataType: bigserial
   - changeSet:
       id: V070_normalize_systeminfo_id_autoincrement
       author: seafile
@@ -15,4 +15,4 @@ databaseChangeLog:
         - addAutoIncrement:
             tableName: systeminfo
             columnName: id
-            columnDataType: int
+            columnDataType: bigint

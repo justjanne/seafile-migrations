@@ -17,9 +17,6 @@ databaseChangeLog:
               - column:
                   name: repo_id
                   type: varchar(41)
-                  constraints:
-                    unique: true
-                    uniqueConstraintName: idx_gcid_repo_id
               - column:
                   name: gc_id
                   type: varchar(41)
@@ -49,3 +46,29 @@ databaseChangeLog:
             tableName: gcid
             columnName: gc_id
             newDataType: varchar(41)
+  - changeSet:
+      id: V070_normalize_gcid_repo_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: gcid
+            indexName: gcid_repo_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: gcid
+            constraintName: gcid_repo_id_key
+  - changeSet:
+      id: V070_add_unique_constraint_to_gcid_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: gcid
+                indexName: idx_gcid_repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: gcid
+            columnNames: repo_id
+            constraintName: idx_gcid_repo_id

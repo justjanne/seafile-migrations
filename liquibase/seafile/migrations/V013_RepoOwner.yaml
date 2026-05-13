@@ -71,6 +71,18 @@ databaseChangeLog:
             tableName: repoowner
             indexName: owner_id
   - changeSet:
+      id: V013_normalize_RepoOwner_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repoowner
+            indexName: RepoOwner_repo_id
+      changes:
+        - dropIndex:
+            tableName: repoowner
+            indexName: RepoOwner_repo_id
+  - changeSet:
       id: V013_add_index_to_repoowner_owner_id
       author: seafile
       preConditions:

@@ -90,18 +90,6 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
-      id: V063_normalize_repovalidsince_repo_id_idx
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: repovalidsince
-            indexName: repo_id
-      changes:
-        - dropUniqueConstraint:
-            tableName: repovalidsince
-            constraintName: repo_id
-  - changeSet:
       id: V063_normalize_repovalidsince_repo_id_type
       author: seafile
       preConditions:
@@ -114,6 +102,42 @@ databaseChangeLog:
             tableName: repovalidsince
             columnName: repo_id
             newDataType: varchar(41)
+  - changeSet:
+      id: V063_normalize_repovalidsince_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repovalidsince
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: repovalidsince
+            constraintName: repo_id
+  - changeSet:
+      id: V063_normalize_repovalidsince_repo_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repovalidsince
+            indexName: repovalidsince_repo_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: repovalidsince
+            constraintName: repovalidsince_repo_id_key
+  - changeSet:
+      id: V063_normalize_RepoValidSince_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repovalidsince
+            indexName: RepoValidSince_repo_id
+      changes:
+        - dropIndex:
+            tableName: repovalidsince
+            indexName: RepoValidSince_repo_id
   - changeSet:
       id: V063_add_unique_constraint_to_repovalidsince_repo_id
       author: seafile

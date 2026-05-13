@@ -1,5 +1,17 @@
 databaseChangeLog:
   - changeSet:
+      id: V063_normalize_repogusertoken_pkey_purge_legacy
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: repousertoken
+            primaryKeyName: RepoUserToken_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repousertoken
+            constraintName: RepoUserToken_id_pkey
+  - changeSet:
       id: V063_add_id_to_repousertoken
       author: seafile
       preConditions:

@@ -90,18 +90,6 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
-      id: V063_normalize_virtualrepo_repo_id_idx
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: virtualrepo
-            indexName: repo_id
-      changes:
-        - dropUniqueConstraint:
-            tableName: virtualrepo
-            constraintName: repo_id
-  - changeSet:
       id: V063_normalize_virtualrepo_repo_id_type
       author: seafile
       preConditions:
@@ -140,6 +128,42 @@ databaseChangeLog:
             tableName: virtualrepo
             columnName: base_commit
             newDataType: varchar(41)
+  - changeSet:
+      id: V063_normalize_virtualrepo_repo_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: virtualrepo
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: virtualrepo
+            constraintName: repo_id
+  - changeSet:
+      id: V063_normalize_virtualrepo_repo_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: virtualrepo
+            indexName: virtualrepo_repo_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: virtualrepo
+            constraintName: virtualrepo_repo_id_key
+  - changeSet:
+      id: V063_normalize_VirtualRepo_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: virtualrepo
+            indexName: VirtualRepo_repo_id
+      changes:
+        - dropIndex:
+            tableName: virtualrepo
+            indexName: VirtualRepo_repo_id
   - changeSet:
       id: V063_add_unique_constraint_to_virtualrepo_repo_id
       author: seafile

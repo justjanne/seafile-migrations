@@ -69,6 +69,18 @@ databaseChangeLog:
             tableName: repogroup
             constraintName: group_id
   - changeSet:
+      id: V013_normalize_repogroup_group_id_repo_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repogroup
+            indexName: repogroup_group_id_repo_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: repogroup
+            constraintName: repogroup_group_id_repo_id_key
+  - changeSet:
       id: V013_add_unique_constraint_to_repogroup_group_id_repo_id
       author: seafile
       preConditions:
@@ -94,6 +106,18 @@ databaseChangeLog:
         - dropIndex:
             tableName: repogroup
             indexName: repo_id
+  - changeSet:
+      id: V013_normalize_repogroup_repoid_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repogroup
+            indexName: repogroup_repoid_idx
+      changes:
+        - dropIndex:
+            tableName: repogroup
+            indexName: repogroup_repoid_idx
   - changeSet:
       id: V013_add_index_to_repogroup_repo_id
       author: seafile

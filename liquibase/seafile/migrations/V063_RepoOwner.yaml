@@ -102,6 +102,30 @@ databaseChangeLog:
             tableName: repoowner
             constraintName: repo_id
   - changeSet:
+      id: V063_normalize_repoowner_repo_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repoowner
+            indexName: repoowner_repo_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: repoowner
+            constraintName: repoowner_repo_id_key
+  - changeSet:
+      id: V063_normalize_repoowner_owner_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repoowner
+            indexName: repoowner_owner_idx
+      changes:
+        - dropIndex:
+            tableName: repoowner
+            indexName: repoowner_owner_idx
+  - changeSet:
       id: V063_add_unique_constraint_to_repoowner_repo_id
       author: seafile
       preConditions:

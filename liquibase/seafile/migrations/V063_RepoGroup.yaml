@@ -1,5 +1,17 @@
 databaseChangeLog:
   - changeSet:
+      id: V063_normalize_repogroup_pkey_purge_legacy
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: repogroup
+            primaryKeyName: RepoGroup_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: repogroup
+            constraintName: RepoGroup_id_pkey
+  - changeSet:
       id: V063_add_id_to_repogroup
       author: seafile
       preConditions:

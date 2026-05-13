@@ -49,6 +49,18 @@ databaseChangeLog:
             tableName: roleuploadratelimit
             constraintName: role
   - changeSet:
+      id: V130_normalize_roleuploadratelimit_role_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: roleuploadratelimit
+            indexName: roleuploadratelimit_role_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: roleuploadratelimit
+            constraintName: roleuploadratelimit_role_key
+  - changeSet:
       id: V130_add_unique_constraint_to_roleuploadratelimit_role
       author: seafile
       preConditions:

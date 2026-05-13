@@ -61,7 +61,18 @@ databaseChangeLog:
         - dropIndex:
             tableName: sharedrepo
             indexName: from_email
-
+  - changeSet:
+      id: V040_normalize_sharedrepo_from_email_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: sharedrepo
+            indexName: sharedrepo_from_email_idx
+      changes:
+        - dropIndex:
+            tableName: sharedrepo
+            indexName: sharedrepo_from_email_idx
   - changeSet:
       id: V040_add_index_to_sharedrepo_from_email
       author: seafile

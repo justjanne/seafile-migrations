@@ -90,18 +90,6 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
-      id: V063_normalize_repotokenpeerinfo_token_idx
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: repotokenpeerinfo
-            indexName: token
-      changes:
-        - dropUniqueConstraint:
-            tableName: repotokenpeerinfo
-            constraintName: token
-  - changeSet:
       id: V063_normalize_repotokenpeerinfo_token_type
       author: seafile
       preConditions:
@@ -140,6 +128,42 @@ databaseChangeLog:
             tableName: repotokenpeerinfo
             columnName: peer_ip
             newDataType: varchar(41)
+  - changeSet:
+      id: V063_normalize_repotokenpeerinfo_token_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotokenpeerinfo
+            indexName: token
+      changes:
+        - dropUniqueConstraint:
+            tableName: repotokenpeerinfo
+            constraintName: token
+  - changeSet:
+      id: V063_normalize_repotokenpeerinfo_token_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotokenpeerinfo
+            indexName: repotokenpeerinfo_token_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: repotokenpeerinfo
+            constraintName: repotokenpeerinfo_token_key
+  - changeSet:
+      id: V063_normalize_RepoTokenPeerInfo_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: repotokenpeerinfo
+            indexName: RepoTokenPeerInfo_token
+      changes:
+        - dropIndex:
+            tableName: repotokenpeerinfo
+            indexName: RepoTokenPeerInfo_token
   - changeSet:
       id: V063_add_unique_constraint_to_repotokenpeerinfo_token
       author: seafile

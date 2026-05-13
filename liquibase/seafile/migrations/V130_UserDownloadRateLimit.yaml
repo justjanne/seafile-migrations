@@ -37,7 +37,7 @@ databaseChangeLog:
                   name: download_limit
                   type: bigint
   - changeSet:
-      id: V130_normalize_userdownloadratelimit_user
+      id: V130_normalize_userdownloadratelimit_user_idx
       author: seafile
       preConditions:
         - onFail: MARK_RAN
@@ -48,6 +48,18 @@ databaseChangeLog:
         - dropUniqueConstraint:
             tableName: userdownloadratelimit
             constraintName: user
+  - changeSet:
+      id: V130_normalize_userdownloadratelimit_user_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: userdownloadratelimit
+            indexName: userdownloadratelimit_user_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: userdownloadratelimit
+            constraintName: userdownloadratelimit_user_key
   - changeSet:
       id: V130_add_unique_constraint_to_userdownloadratelimit_user
       author: seafile
