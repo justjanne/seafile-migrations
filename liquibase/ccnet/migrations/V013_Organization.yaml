@@ -38,33 +38,6 @@ databaseChangeLog:
                   name: ctime
                   type: bigint
   - changeSet:
-      id: V013_normalize_organization_pkey_purge
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          primaryKeyExists:
-            tableName: organization
-          not:
-            primaryKeyExists:
-              tableName: organization
-              primaryKeyName: organization_pkey
-      changes:
-        - dropPrimaryKey:
-            tableName: organization
-  - changeSet:
-      id: V013_normalize_organization_pkey_rebuild
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            - primaryKeyExists:
-                tableName: organization
-      changes:
-        - addPrimaryKey:
-            tableName: organization
-            columnNames: org_id
-            constraintName: organization_pkey
-  - changeSet:
       id: V013_normalize_organization_url_prefix
       author: seafile
       preConditions:

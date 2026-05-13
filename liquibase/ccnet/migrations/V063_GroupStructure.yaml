@@ -36,23 +36,7 @@ databaseChangeLog:
               - column:
                   name: path
                   type: varchar(1024)
-  - changeSet:
-      id: V063_change_id_type_in_groupstructure
-      author: seafile
-      changes:
-        - modifyDataType:
-            tableName: groupstructure
-            columnName: id
-            newDataType: bigserial
-  - changeSet:
-      id: V063_normalize_groupstructure_id_autoincrement
-      author: seafile
-      dbms: mysql,mariadb
-      changes:
-        - addAutoIncrement:
-            tableName: groupstructure
-            columnName: id
-            columnDataType: bigint
+  - {{migration_extend_pkey(V063,GroupStructure,id)}}
   - changeSet:
       id: V063_normalize_groupstructure_group_id_key
       author: seafile
@@ -91,18 +75,3 @@ databaseChangeLog:
             tableName: groupstructure
             constraintName: idx_groupstructure_group_id
             columnNames: group_id
-  - changeSet:
-      id: V063_normalize_groupstructure_pkey
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          primaryKeyExists:
-            tableName: groupstructure
-            primaryKeyName: groupstructure_id_pkey
-      changes:
-        - dropPrimaryKey:
-            tableName: groupstructure
-        - addPrimaryKey:
-            tableName: groupstructure
-            columnNames: id
-            constraintName: groupstructure_pkey

@@ -1,0 +1,91 @@
+  - changeSet:
+      id: $1_normalize_\L$2\E_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: \L$2\E
+            - not:
+                - columnExists:
+                    tableName: \L$2\E
+                    columnName: $3
+      changes:
+        - dropPrimaryKey:
+            tableName: \L$2\E
+  - changeSet:
+      id: $1_normalize_$2_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: \L$2\E
+            indexName: $2_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: \L$2\E
+            constraintName: $2_pkey
+  - changeSet:
+      id: $1_normalize_$2_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: \L$2\E
+            primaryKeyName: $2_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: \L$2\E
+            constraintName: $2_id_pkey
+  - changeSet:
+      id: $1_add_$3_to_\L$2\E
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: \L$2\E
+                columnName: $3
+      changes:
+        - addColumn:
+            tableName: \L$2\E
+            ifNotExists: true
+            columns:
+              - column:
+                  name: $3
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: \L$2\E_pkey
+  - changeSet:
+      id: $1_change_$3_type_in_\L$2\E
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: \L$2\E
+            columnName: $3
+            newDataType: bigserial
+  - changeSet:
+      id: $1_normalize_\L$2\E_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: \L$2\E
+      changes:
+        - addPrimaryKey:
+            tableName: \L$2\E
+            columnNames: $3
+            constraintName: \L$2\E_pkey
+  - changeSet:
+      id: $1_normalize_\L$2\E_$3_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: \L$2\E
+            columnName: $3
+            columnDataType: bigint

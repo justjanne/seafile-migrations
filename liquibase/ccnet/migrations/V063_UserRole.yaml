@@ -1,18 +1,2 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_change_id_type_in_userrole
-      author: seafile
-      changes:
-        - modifyDataType:
-            tableName: userrole
-            columnName: id
-            newDataType: bigserial
-  - changeSet:
-      id: V063_normalize_userrole_id_autoincrement
-      author: seafile
-      dbms: mysql,mariadb
-      changes:
-        - addAutoIncrement:
-            tableName: userrole
-            columnName: id
-            columnDataType: bigint
+  - {{migration_extend_pkey(V063,UserRole,id)}}

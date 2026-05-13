@@ -31,6 +31,7 @@ databaseChangeLog:
               - column:
                   name: white_list
                   type: text
+  - {{migration_extend_pkey(V063,OrgFileExtWhiteList,id)}}
   - changeSet:
       id: V130_normalize_orgfileextwhitelist_org_id
       author: seafile

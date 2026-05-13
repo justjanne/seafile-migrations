@@ -24,6 +24,7 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
+                    primaryKeyName: group_pkey
                     nullable: false
               - column:
                   name: group_name
@@ -34,30 +35,3 @@ databaseChangeLog:
               - column:
                   name: timestamp
                   type: bigint
-  - changeSet:
-      id: V013_normalize_group_pkey_purge
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          primaryKeyExists:
-            tableName: group
-          not:
-            primaryKeyExists:
-              tableName: group
-              primaryKeyName: group_pkey
-      changes:
-        - dropPrimaryKey:
-            tableName: group
-  - changeSet:
-      id: V013_normalize_group_pkey_rebuild
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            - primaryKeyExists:
-                tableName: group
-      changes:
-        - addPrimaryKey:
-            tableName: group
-            columnNames: group_id
-            constraintName: group_pkey

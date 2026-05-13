@@ -1,21 +1,5 @@
 databaseChangeLog:
-  - changeSet:
-      id: V063_change_group_id_type_in_group
-      author: seafile
-      changes:
-        - modifyDataType:
-            tableName: group
-            columnName: group_id
-            newDataType: bigserial
-  - changeSet:
-      id: V063_normalize_group_id_autoincrement
-      author: seafile
-      dbms: mysql,mariadb
-      changes:
-        - addAutoIncrement:
-            tableName: group
-            columnName: group_id
-            columnDataType: bigint
+  - {{migration_extend_pkey(V063,Group,group_id)}}
   - changeSet:
       id: V063_add_parent_group_id_to_group
       author: seafile
