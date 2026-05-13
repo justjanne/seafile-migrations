@@ -1,42 +1,18 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_normalize_webap_pkey_drop
+      id: V063_normalize_webap_pkey_purge_legacy
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           primaryKeyExists:
             tableName: webap
           not:
-            - columnExists:
-                tableName: webap
-                columnName: id
+            columnExists:
+              tableName: webap
+              columnName: id
       changes:
         - dropPrimaryKey:
             tableName: webap
-  - changeSet:
-      id: V063_normalize_webap_compound_pkey
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: webap
-            indexName: webap_pkey
-            columnNames: repo_id
-      changes:
-        - dropPrimaryKey:
-            tableName: webap
-  - changeSet:
-      id: V063_normalize_webap_id_pkey_old
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: webap
-            indexName: WebAP_id_pkey
-      changes:
-        - dropPrimaryKey:
-            tableName: webap
-            constraintName: WebAP_id_pkey
   - changeSet:
       id: V063_add_id_to_webap
       author: seafile
@@ -46,6 +22,9 @@ databaseChangeLog:
             - columnExists:
                 tableName: webap
                 columnName: id
+          not:
+            - primaryKeyExists:
+                tableName: webap
       changes:
         - addColumn:
             tableName: webap
@@ -68,14 +47,19 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_normalize_webap_pkey
+      id: V063_normalize_webap_pkey_rebuild
       author: seafile
       preConditions:
         - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: webap
           not:
-            - primaryKeyExists:
-                tableName: webap
+            primaryKeyExists:
+              tableName: webap
+              primaryKeyName: webap_pkey
       changes:
+        - dropPrimaryKey:
+            tableName: webap
         - addPrimaryKey:
             tableName: webap
             columnNames: id

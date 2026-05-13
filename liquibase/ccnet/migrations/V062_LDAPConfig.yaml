@@ -42,25 +42,27 @@ databaseChangeLog:
                   name: property
                   type: int
   - changeSet:
-      id: V062_normalize_ldapconfig_id_pkey
+      id: V062_normalize_ldapconfig_id_pkey_purge
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           primaryKeyExists:
             tableName: ldapconfig
-            primaryKeyName: LDAPConfig_id_pkey
+          not:
+            primaryKeyExists:
+              tableName: ldapconfig
+              primaryKeyName: ldapconfig_pkey
       changes:
         - dropPrimaryKey:
             tableName: ldapconfig
-            constraintName: LDAPConfig_id_pkey
   - changeSet:
       id: V062_add_primary_key_to_ldapconfig
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           not:
-          - primaryKeyExists:
-              tableName: ldapconfig
+            - primaryKeyExists:
+                tableName: ldapconfig
       changes:
         - addPrimaryKey:
             tableName: ldapconfig

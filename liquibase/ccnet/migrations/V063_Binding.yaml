@@ -1,15 +1,44 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_normalize_binding_pkey
+      id: V063_normalize_binding_pkey_purge_legacy
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           primaryKeyExists:
             tableName: binding
-            primaryKeyName: binding_id_pkey
+          not:
+            columnExists:
+              tableName: binding
+              columnName: id
       changes:
         - dropPrimaryKey:
             tableName: binding
+  - changeSet:
+      id: V063_normalize_binding_pkey_purge_standard
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: binding
+          not:
+            primaryKeyExists:
+              tableName: binding
+              primaryKeyName: binding_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: binding
+  - changeSet:
+      id: V063_normalize_binding_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: binding
+          columnExists:
+            tableName: binding
+            columnName: id
+      changes:
         - addPrimaryKey:
             tableName: binding
             columnNames: id

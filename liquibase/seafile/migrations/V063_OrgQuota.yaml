@@ -1,42 +1,18 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_normalize_orgquota_pkey_drop
+      id: V063_normalize_orgquota_pkey_purge
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           primaryKeyExists:
             tableName: orgquota
           not:
-            - columnExists:
-                tableName: orgquota
-                columnName: id
+            columnExists:
+              tableName: orgquota
+              columnName: id
       changes:
         - dropPrimaryKey:
             tableName: orgquota
-  - changeSet:
-      id: V063_normalize_orgquota_compound_pkey
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: orgquota
-            indexName: orgquota_pkey
-            columnNames: org_id
-      changes:
-        - dropPrimaryKey:
-            tableName: orgquota
-  - changeSet:
-      id: V063_normalize_orgquota_id_pkey_old
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: orgquota
-            indexName: OrgQuota_id_pkey
-      changes:
-        - dropPrimaryKey:
-            tableName: orgquota
-            constraintName: OrgQuota_id_pkey
   - changeSet:
       id: V063_add_id_to_orgquota
       author: seafile
@@ -46,6 +22,9 @@ databaseChangeLog:
             - columnExists:
                 tableName: orgquota
                 columnName: id
+          not:
+            - primaryKeyExists:
+                tableName: orgquota
       changes:
         - addColumn:
             tableName: orgquota
@@ -68,14 +47,19 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_normalize_orgquota_pkey
+      id: V063_normalize_orgquota_pkey_rebuild
       author: seafile
       preConditions:
         - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: orgquota
           not:
-            - primaryKeyExists:
-                tableName: orgquota
+            primaryKeyExists:
+              tableName: orgquota
+              primaryKeyName: orgquota_pkey
       changes:
+        - dropPrimaryKey:
+            tableName: orgquota
         - addPrimaryKey:
             tableName: orgquota
             columnNames: id

@@ -35,16 +35,28 @@ databaseChangeLog:
                   name: timestamp
                   type: bigint
   - changeSet:
-      id: V013_normalize_group_pkey
+      id: V013_normalize_group_pkey_purge
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           primaryKeyExists:
             tableName: group
-            primaryKeyName: group_pkey
+          not:
+            primaryKeyExists:
+              tableName: group
+              primaryKeyName: group_pkey
       changes:
         - dropPrimaryKey:
             tableName: group
+  - changeSet:
+      id: V013_normalize_group_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: group
+      changes:
         - addPrimaryKey:
             tableName: group
             columnNames: group_id

@@ -1,42 +1,18 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_normalize_orguserquota_pkey_drop
+      id: V063_normalize_orguserquota_pkey_purge
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           primaryKeyExists:
             tableName: orguserquota
           not:
-            - columnExists:
-                tableName: orguserquota
-                columnName: id
+            columnExists:
+              tableName: orguserquota
+              columnName: id
       changes:
         - dropPrimaryKey:
             tableName: orguserquota
-  - changeSet:
-      id: V063_normalize_orguserquota_compound_pkey
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: orguserquota
-            indexName: orguserquota_pkey
-            columnNames: org_id, user
-      changes:
-        - dropPrimaryKey:
-            tableName: orguserquota
-  - changeSet:
-      id: V063_normalize_orguserquota_id_pkey_old
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: orguserquota
-            indexName: OrgUserQuota_id_pkey
-      changes:
-        - dropPrimaryKey:
-            tableName: orguserquota
-            constraintName: OrgUserQuota_id_pkey
   - changeSet:
       id: V063_add_id_to_orguserquota
       author: seafile
@@ -46,6 +22,9 @@ databaseChangeLog:
             - columnExists:
                 tableName: orguserquota
                 columnName: id
+          not:
+            - primaryKeyExists:
+                tableName: orguserquota
       changes:
         - addColumn:
             tableName: orguserquota
@@ -68,14 +47,19 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_normalize_orguserquota_pkey
+      id: V063_normalize_orguserquota_pkey_rebuild
       author: seafile
       preConditions:
         - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: orguserquota
           not:
-            - primaryKeyExists:
-                tableName: orguserquota
+            primaryKeyExists:
+              tableName: orguserquota
+              primaryKeyName: orguserquota_pkey
       changes:
+        - dropPrimaryKey:
+            tableName: orguserquota
         - addPrimaryKey:
             tableName: orguserquota
             columnNames: id

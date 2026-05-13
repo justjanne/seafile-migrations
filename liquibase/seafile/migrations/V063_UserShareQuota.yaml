@@ -1,42 +1,18 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_normalize_usersharequota_pkey_drop
+      id: V063_normalize_usersharequota_pkey_purge_legacy
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           primaryKeyExists:
             tableName: usersharequota
           not:
-            - columnExists:
-                tableName: usersharequota
-                columnName: id
+            columnExists:
+              tableName: usersharequota
+              columnName: id
       changes:
         - dropPrimaryKey:
             tableName: usersharequota
-  - changeSet:
-      id: V063_normalize_usersharequota_compound_pkey
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: usersharequota
-            indexName: usersharequota_pkey
-            columnNames: user
-      changes:
-        - dropPrimaryKey:
-            tableName: usersharequota
-  - changeSet:
-      id: V063_normalize_usersharequota_id_pkey_old
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: usersharequota
-            indexName: UserShareQuota_id_pkey
-      changes:
-        - dropPrimaryKey:
-            tableName: usersharequota
-            constraintName: UserShareQuota_id_pkey
   - changeSet:
       id: V063_add_id_to_usersharequota
       author: seafile
@@ -46,6 +22,9 @@ databaseChangeLog:
             - columnExists:
                 tableName: usersharequota
                 columnName: id
+          not:
+            - primaryKeyExists:
+                tableName: usersharequota
       changes:
         - addColumn:
             tableName: usersharequota
@@ -68,14 +47,19 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_normalize_usersharequota_pkey
+      id: V063_normalize_usersharequota_pkey_rebuild
       author: seafile
       preConditions:
         - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: usersharequota
           not:
-            - primaryKeyExists:
-                tableName: usersharequota
+            primaryKeyExists:
+              tableName: usersharequota
+              primaryKeyName: usersharequota_pkey
       changes:
+        - dropPrimaryKey:
+            tableName: usersharequota
         - addPrimaryKey:
             tableName: usersharequota
             columnNames: id

@@ -1,42 +1,18 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_normalize_innerpubrepo_pkey_drop
+      id: V063_normalize_innerpubrepo_pkey_purge
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           primaryKeyExists:
             tableName: innerpubrepo
           not:
-            - columnExists:
-                tableName: innerpubrepo
-                columnName: id
+            columnExists:
+              tableName: innerpubrepo
+              columnName: id
       changes:
         - dropPrimaryKey:
             tableName: innerpubrepo
-  - changeSet:
-      id: V063_normalize_innerpubrepo_compound_pkey
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: innerpubrepo
-            indexName: innerpubrepo_pkey
-            columnNames: repo_id
-      changes:
-        - dropPrimaryKey:
-            tableName: innerpubrepo
-  - changeSet:
-      id: V063_normalize_innerpubrepo_id_pkey_old
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: innerpubrepo
-            indexName: InnerPubRepo_id_pkey
-      changes:
-        - dropPrimaryKey:
-            tableName: innerpubrepo
-            constraintName: InnerPubRepo_id_pkey
   - changeSet:
       id: V063_add_id_to_innerpubrepo
       author: seafile
@@ -46,6 +22,9 @@ databaseChangeLog:
             - columnExists:
                 tableName: innerpubrepo
                 columnName: id
+          not:
+            - primaryKeyExists:
+                tableName: innerpubrepo
       changes:
         - addColumn:
             tableName: innerpubrepo
@@ -68,14 +47,19 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_normalize_innerpubrepo_pkey
+      id: V063_normalize_innerpubrepo_pkey_rebuild
       author: seafile
       preConditions:
         - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: innerpubrepo
           not:
-            - primaryKeyExists:
-                tableName: innerpubrepo
+            primaryKeyExists:
+              tableName: innerpubrepo
+              primaryKeyName: innerpubrepo_pkey
       changes:
+        - dropPrimaryKey:
+            tableName: innerpubrepo
         - addPrimaryKey:
             tableName: innerpubrepo
             columnNames: id

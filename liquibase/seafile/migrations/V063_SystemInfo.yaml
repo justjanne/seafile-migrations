@@ -8,6 +8,9 @@ databaseChangeLog:
             - columnExists:
                 tableName: systeminfo
                 columnName: id
+          not:
+            - primaryKeyExists:
+                tableName: systeminfo
       changes:
         - addColumn:
             tableName: systeminfo
@@ -30,13 +33,30 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_normalize_systeminfo_pkey
+      id: V063_normalize_systeminfo_pkey_purge_standard
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: systeminfo
+          not:
+            primaryKeyExists:
+              tableName: systeminfo
+              primaryKeyName: systeminfo_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: systeminfo
+  - changeSet:
+      id: V063_normalize_systeminfo_pkey_rebuild
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           not:
             - primaryKeyExists:
                 tableName: systeminfo
+          columnExists:
+            tableName: systeminfo
+            columnName: id
       changes:
         - addPrimaryKey:
             tableName: systeminfo

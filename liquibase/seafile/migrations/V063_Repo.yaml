@@ -1,42 +1,18 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_normalize_repo_pkey_drop
+      id: V063_normalize_repo_pkey_purge
       author: seafile
       preConditions:
         - onFail: MARK_RAN
           primaryKeyExists:
             tableName: repo
           not:
-            - columnExists:
-                tableName: repo
-                columnName: id
+            columnExists:
+              tableName: repo
+              columnName: id
       changes:
         - dropPrimaryKey:
             tableName: repo
-  - changeSet:
-      id: V063_normalize_repo_compound_pkey
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: repo
-            indexName: repo_pkey
-            columnNames: repo_id
-      changes:
-        - dropPrimaryKey:
-            tableName: repo
-  - changeSet:
-      id: V063_normalize_repo_id_pkey_old
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          indexExists:
-            tableName: repo
-            indexName: Repo_id_pkey
-      changes:
-        - dropPrimaryKey:
-            tableName: repo
-            constraintName: Repo_id_pkey
   - changeSet:
       id: V063_add_id_to_repo
       author: seafile
@@ -46,6 +22,9 @@ databaseChangeLog:
             - columnExists:
                 tableName: repo
                 columnName: id
+          not:
+            - primaryKeyExists:
+                tableName: repo
       changes:
         - addColumn:
             tableName: repo
@@ -68,14 +47,19 @@ databaseChangeLog:
             columnName: id
             newDataType: bigserial
   - changeSet:
-      id: V063_normalize_repo_pkey
+      id: V063_normalize_repo_pkey_rebuild
       author: seafile
       preConditions:
         - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: repo
           not:
-            - primaryKeyExists:
-                tableName: repo
+            primaryKeyExists:
+              tableName: repo
+              primaryKeyName: repo_pkey
       changes:
+        - dropPrimaryKey:
+            tableName: repo
         - addPrimaryKey:
             tableName: repo
             columnNames: id
