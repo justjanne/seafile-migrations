@@ -5,6 +5,7 @@ set -euo pipefail
 ./mysql-legacy.sh $1
 ./mysql-migrated.sh $1
 
+./pgsql-test.sh $1
 ./pgsql-clean.sh $1
 ./pgsql-legacy.sh $1
 ./pgsql-migrated.sh $1
