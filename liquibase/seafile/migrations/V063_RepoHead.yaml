@@ -115,3 +115,16 @@ databaseChangeLog:
             tableName: repohead
             columnNames: repo_id
             constraintName: idx_repohead_repo_id
+  - changeSet:
+      id: V063_normalize_repohead_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repohead
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: repohead
+            columnName: repo_id
+            newDataType: varchar(41)

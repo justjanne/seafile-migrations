@@ -86,6 +86,19 @@ databaseChangeLog:
             tableName: webap
             constraintName: repo_id
   - changeSet:
+      id: V063_normalize_webap_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: webap
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: webap
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V063_add_unique_constraint_to_webap_repo_id
       author: seafile
       preConditions:

@@ -102,6 +102,19 @@ databaseChangeLog:
             tableName: repovalidsince
             constraintName: repo_id
   - changeSet:
+      id: V063_normalize_repovalidsince_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repovalidsince
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: repovalidsince
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V063_add_unique_constraint_to_repovalidsince_repo_id
       author: seafile
       preConditions:

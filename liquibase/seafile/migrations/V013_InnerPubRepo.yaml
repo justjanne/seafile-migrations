@@ -28,6 +28,19 @@ databaseChangeLog:
             tableName: innerpubrepo
             columnName: repo_id
   - changeSet:
+      id: V013_normalize_innerpubrepo_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: innerpubrepo
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: innerpubrepo
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V013_create_innerpubrepo
       author: seafile
       changes:

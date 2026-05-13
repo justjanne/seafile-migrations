@@ -34,6 +34,19 @@ databaseChangeLog:
                   constraints:
                     nullable: false
   - changeSet:
+      id: V070_normalize_filelocktimestamp_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: filelocktimestamp
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: filelocktimestamp
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V070_normalize_filelocktimestamp_repo_id
       author: seafile
       preConditions:

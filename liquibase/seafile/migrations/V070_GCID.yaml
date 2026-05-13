@@ -23,3 +23,29 @@ databaseChangeLog:
               - column:
                   name: gc_id
                   type: varchar(41)
+  - changeSet:
+      id: V070_normalize_gcid_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: gcid
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: gcid
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
+      id: V070_normalize_gcid_gc_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: gcid
+            columnName: gc_id
+      changes:
+        - modifyDataType:
+            tableName: gcid
+            columnName: gc_id
+            newDataType: varchar(41)

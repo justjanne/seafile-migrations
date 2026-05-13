@@ -30,6 +30,19 @@ databaseChangeLog:
                   name: permission
                   type: varchar(15)
   - changeSet:
+      id: V070_normalize_orggrouprepo_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: orggrouprepo
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: orggrouprepo
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V070_add_unique_constraint_to_orggrouprepo_org_id_group_id_repo_id
       author: seafile
       preConditions:

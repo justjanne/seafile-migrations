@@ -1,5 +1,18 @@
 databaseChangeLog:
   - changeSet:
+      id: V063_normalize_sharedrepo_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: sharedrepo
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: sharedrepo
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V063_change_id_type_in_sharedrepo
       author: seafile
       changes:

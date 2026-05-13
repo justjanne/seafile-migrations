@@ -28,6 +28,32 @@ databaseChangeLog:
                   name: token
                   type: varchar(41)
   - changeSet:
+      id: V013_normalize_repousertoken_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repousertoken
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: repousertoken
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
+      id: V013_normalize_repousertoken_token_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repousertoken
+            columnName: token
+      changes:
+        - modifyDataType:
+            tableName: repousertoken
+            columnName: token
+            newDataType: varchar(41)
+  - changeSet:
       id: V013_normalize_repousertoken_repo_id
       author: seafile
       preConditions:

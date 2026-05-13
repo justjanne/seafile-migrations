@@ -28,6 +28,19 @@ databaseChangeLog:
             tableName: repovalidsince
             columnName: repo_id
   - changeSet:
+      id: V014_normalize_repovalidsince_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repovalidsince
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: repovalidsince
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V014_create_repovalidsince
       author: seafile
       changes:

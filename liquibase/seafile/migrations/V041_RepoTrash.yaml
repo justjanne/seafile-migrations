@@ -28,6 +28,32 @@ databaseChangeLog:
             tableName: repotrash
             columnName: repo_id
   - changeSet:
+      id: V041_normalize_repotrash_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repotrash
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: repotrash
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
+      id: V041_normalize_repotrash_head_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repotrash
+            columnName: head_id
+      changes:
+        - modifyDataType:
+            tableName: repotrash
+            columnName: head_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V041_create_repotrash
       author: seafile
       changes:

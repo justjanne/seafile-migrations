@@ -1,5 +1,18 @@
 databaseChangeLog:
   - changeSet:
+      id: V120_normalize_webuploadtempfiles_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: webuploadtempfiles
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: webuploadtempfiles
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V120_add_index_to_webuploadtempfiles_repo_id
       author: seafile
       preConditions:

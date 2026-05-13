@@ -45,6 +45,32 @@ databaseChangeLog:
             tableName: branch
             columnName: repo_id
   - changeSet:
+      id: V013_normalize_branch_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: branch
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: branch
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
+      id: V013_normalize_branch_commit_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: branch
+            columnName: commit_id
+      changes:
+        - modifyDataType:
+            tableName: branch
+            columnName: commit_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V013_create_branch
       author: seafile
       changes:

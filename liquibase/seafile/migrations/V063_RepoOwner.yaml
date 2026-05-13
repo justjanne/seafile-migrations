@@ -115,3 +115,16 @@ databaseChangeLog:
             tableName: repoowner
             columnNames: repo_id
             constraintName: idx_repoowner_repo_id
+  - changeSet:
+      id: V063_normalize_repoowner_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repoowner
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: repoowner
+            columnName: repo_id
+            newDataType: varchar(41)

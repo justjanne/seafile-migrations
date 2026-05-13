@@ -47,6 +47,19 @@ databaseChangeLog:
                   name: expire
                   type: bigint
   - changeSet:
+      id: V070_normalize_filelocks_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: filelocks
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: filelocks
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V070_add_index_to_filelocks_repo_id
       author: seafile
       preConditions:

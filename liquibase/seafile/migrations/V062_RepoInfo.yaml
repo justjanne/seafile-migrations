@@ -28,6 +28,19 @@ databaseChangeLog:
             tableName: repoinfo
             columnName: repo_id
   - changeSet:
+      id: V062_normalize_repoinfo_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repoinfo
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: repoinfo
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V062_create_repoinfo
       author: seafile
       changes:

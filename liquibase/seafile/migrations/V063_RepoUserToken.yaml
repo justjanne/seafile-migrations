@@ -52,6 +52,32 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
+      id: V063_normalize_repousertoken_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repousertoken
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: repousertoken
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
+      id: V063_normalize_repousertoken_token_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repousertoken
+            columnName: token
+      changes:
+        - modifyDataType:
+            tableName: repousertoken
+            columnName: token
+            newDataType: varchar(41)
+  - changeSet:
       id: V063_add_unique_constraint_to_repousertoken_repo_id_token
       author: seafile
       preConditions:

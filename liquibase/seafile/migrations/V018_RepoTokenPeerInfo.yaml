@@ -28,6 +28,45 @@ databaseChangeLog:
             tableName: repotokenpeerinfo
             columnName: token
   - changeSet:
+      id: V018_normalize_repotokenpeerinfo_token_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repotokenpeerinfo
+            columnName: token
+      changes:
+        - modifyDataType:
+            tableName: repotokenpeerinfo
+            columnName: token
+            newDataType: varchar(41)
+  - changeSet:
+      id: V018_normalize_repotokenpeerinfo_peer_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repotokenpeerinfo
+            columnName: peer_id
+      changes:
+        - modifyDataType:
+            tableName: repotokenpeerinfo
+            columnName: peer_id
+            newDataType: varchar(41)
+  - changeSet:
+      id: V018_normalize_repotokenpeerinfo_peer_ip_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repotokenpeerinfo
+            columnName: peer_ip
+      changes:
+        - modifyDataType:
+            tableName: repotokenpeerinfo
+            columnName: peer_ip
+            newDataType: varchar(41)
+  - changeSet:
       id: V018_create_repotokenpeerinfo
       author: seafile
       changes:

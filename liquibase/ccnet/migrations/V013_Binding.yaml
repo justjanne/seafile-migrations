@@ -27,6 +27,19 @@ databaseChangeLog:
                   constraints:
                     unique: true
   - changeSet:
+      id: V013_normalize_binding_peer_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: binding
+            columnName: peer_id
+      changes:
+        - modifyDataType:
+            tableName: binding
+            columnName: peer_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V013_normalize_binding_email
       author: seafile
       preConditions:

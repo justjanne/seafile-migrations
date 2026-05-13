@@ -12,6 +12,19 @@ databaseChangeLog:
             tableName: repotokenpeerinfo
             constraintName: RepoTokenPeerInfo_peer_id
   - changeSet:
+      id: V090_normalize_repotokenpeerinfo_peer_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repotokenpeerinfo
+            columnName: peer_id
+      changes:
+        - modifyDataType:
+            tableName: repotokenpeerinfo
+            columnName: peer_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V090_add_index_to_repotokenpeerinfo_peer_id
       author: seafile
       preConditions:

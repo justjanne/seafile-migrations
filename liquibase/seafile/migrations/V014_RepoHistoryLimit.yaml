@@ -28,6 +28,19 @@ databaseChangeLog:
             tableName: repohistorylimit
             columnName: repo_id
   - changeSet:
+      id: V014_normalize_repohistorylimit_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repohistorylimit
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: repohistorylimit
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V014_create_repohistorylimit
       author: seafile
       changes:

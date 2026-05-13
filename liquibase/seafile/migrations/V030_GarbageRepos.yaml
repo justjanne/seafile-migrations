@@ -28,6 +28,19 @@ databaseChangeLog:
             tableName: garbagerepos
             columnName: repo_id
   - changeSet:
+      id: V030_normalize_garbagerepos_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: garbagerepos
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: garbagerepos
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V030_create_garbagerepos
       author: seafile
       changes:

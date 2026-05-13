@@ -41,6 +41,19 @@ databaseChangeLog:
                   name: permission
                   type: varchar(15)
   - changeSet:
+      id: V070_normalize_orgsharedrepo_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: orgsharedrepo
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: orgsharedrepo
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V070_add_index_to_orgsharedrepo_repo_id
       author: seafile
       preConditions:

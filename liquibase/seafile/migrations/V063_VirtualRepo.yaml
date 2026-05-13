@@ -102,6 +102,45 @@ databaseChangeLog:
             tableName: virtualrepo
             constraintName: repo_id
   - changeSet:
+      id: V063_normalize_virtualrepo_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: virtualrepo
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: virtualrepo
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
+      id: V063_normalize_virtualrepo_origin_repo_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: virtualrepo
+            columnName: origin_repo
+      changes:
+        - modifyDataType:
+            tableName: virtualrepo
+            columnName: origin_repo
+            newDataType: varchar(41)
+  - changeSet:
+      id: V063_normalize_virtualrepo_base_commit_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: virtualrepo
+            columnName: base_commit
+      changes:
+        - modifyDataType:
+            tableName: virtualrepo
+            columnName: base_commit
+            newDataType: varchar(41)
+  - changeSet:
       id: V063_add_unique_constraint_to_virtualrepo_repo_id
       author: seafile
       preConditions:

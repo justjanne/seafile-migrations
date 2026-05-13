@@ -35,6 +35,19 @@ databaseChangeLog:
                   name: user
                   type: varchar(255)
   - changeSet:
+      id: V070_normalize_orgrepo_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: orgrepo
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: orgrepo
+            columnName: repo_id
+            newDataType: varchar(41)
+  - changeSet:
       id: V070_normalize_orgrepo_org_id
       author: seafile
       preConditions:

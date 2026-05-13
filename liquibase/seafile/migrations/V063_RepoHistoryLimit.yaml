@@ -115,3 +115,16 @@ databaseChangeLog:
             tableName: repohistorylimit
             columnNames: repo_id
             constraintName: idx_repohistorylimit_repo_id
+  - changeSet:
+      id: V063_normalize_repohistorylimit_repo_id_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repohistorylimit
+            columnName: repo_id
+      changes:
+        - modifyDataType:
+            tableName: repohistorylimit
+            columnName: repo_id
+            newDataType: varchar(41)
