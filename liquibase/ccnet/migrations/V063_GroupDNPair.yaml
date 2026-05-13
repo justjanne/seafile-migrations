@@ -1,2 +1,92 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,GroupDNPair,id)}}
+  - changeSet:
+      id: V063_normalize_groupdnpair_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: groupdnpair
+            - not:
+                - columnExists:
+                    tableName: groupdnpair
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: groupdnpair
+  - changeSet:
+      id: V063_normalize_GroupDNPair_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: groupdnpair
+            indexName: GroupDNPair_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: groupdnpair
+            constraintName: GroupDNPair_pkey
+  - changeSet:
+      id: V063_normalize_GroupDNPair_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: groupdnpair
+            primaryKeyName: GroupDNPair_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: groupdnpair
+            constraintName: GroupDNPair_id_pkey
+  - changeSet:
+      id: V063_add_id_to_groupdnpair
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: groupdnpair
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: groupdnpair
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: groupdnpair_pkey
+  - changeSet:
+      id: V063_change_id_type_in_groupdnpair
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: groupdnpair
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_groupdnpair_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: groupdnpair
+      changes:
+        - addPrimaryKey:
+            tableName: groupdnpair
+            columnNames: id
+            constraintName: groupdnpair_pkey
+  - changeSet:
+      id: V063_normalize_groupdnpair_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: groupdnpair
+            columnName: id
+            columnDataType: bigint

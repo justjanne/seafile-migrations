@@ -1,2 +1,70 @@
 databaseChangeLog:
-  - {{migration_extend_pkey(V063,UserRole,id)}}
+  - changeSet:
+      id: V063_normalize_userrole_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: userrole
+            - not:
+                - columnExists:
+                    tableName: userrole
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: userrole
+  - changeSet:
+      id: V063_normalize_UserRole_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: userrole
+            indexName: UserRole_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: userrole
+            constraintName: UserRole_pkey
+  - changeSet:
+      id: V063_normalize_UserRole_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: userrole
+            primaryKeyName: UserRole_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: userrole
+            constraintName: UserRole_id_pkey
+  - changeSet:
+      id: V063_change_id_type_in_userrole
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: userrole
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_userrole_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: userrole
+      changes:
+        - addPrimaryKey:
+            tableName: userrole
+            columnNames: id
+            constraintName: userrole_pkey
+  - changeSet:
+      id: V063_normalize_userrole_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: userrole
+            columnName: id
+            columnDataType: bigint

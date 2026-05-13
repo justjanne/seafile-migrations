@@ -1,2 +1,70 @@
 databaseChangeLog:
-  - {{migration_extend_pkey(V063,EmailUser,id)}}
+  - changeSet:
+      id: V063_normalize_emailuser_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: emailuser
+            - not:
+                - columnExists:
+                    tableName: emailuser
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: emailuser
+  - changeSet:
+      id: V063_normalize_EmailUser_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: emailuser
+            indexName: EmailUser_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: emailuser
+            constraintName: EmailUser_pkey
+  - changeSet:
+      id: V063_normalize_EmailUser_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: emailuser
+            primaryKeyName: EmailUser_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: emailuser
+            constraintName: EmailUser_id_pkey
+  - changeSet:
+      id: V063_change_id_type_in_emailuser
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: emailuser
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_emailuser_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: emailuser
+      changes:
+        - addPrimaryKey:
+            tableName: emailuser
+            columnNames: id
+            constraintName: emailuser_pkey
+  - changeSet:
+      id: V063_normalize_emailuser_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: emailuser
+            columnName: id
+            columnDataType: bigint

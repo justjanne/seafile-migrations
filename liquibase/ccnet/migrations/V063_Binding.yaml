@@ -1,2 +1,92 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,Binding,id)}}
+  - changeSet:
+      id: V063_normalize_binding_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: binding
+            - not:
+                - columnExists:
+                    tableName: binding
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: binding
+  - changeSet:
+      id: V063_normalize_Binding_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: binding
+            indexName: Binding_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: binding
+            constraintName: Binding_pkey
+  - changeSet:
+      id: V063_normalize_Binding_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: binding
+            primaryKeyName: Binding_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: binding
+            constraintName: Binding_id_pkey
+  - changeSet:
+      id: V063_add_id_to_binding
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: binding
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: binding
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: binding_pkey
+  - changeSet:
+      id: V063_change_id_type_in_binding
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: binding
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_binding_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: binding
+      changes:
+        - addPrimaryKey:
+            tableName: binding
+            columnNames: id
+            constraintName: binding_pkey
+  - changeSet:
+      id: V063_normalize_binding_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: binding
+            columnName: id
+            columnDataType: bigint

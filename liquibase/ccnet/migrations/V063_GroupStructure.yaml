@@ -36,7 +36,75 @@ databaseChangeLog:
               - column:
                   name: path
                   type: varchar(1024)
-  - {{migration_extend_pkey(V063,GroupStructure,id)}}
+  - changeSet:
+      id: V063_normalize_groupstructure_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: groupstructure
+            - not:
+                - columnExists:
+                    tableName: groupstructure
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: groupstructure
+  - changeSet:
+      id: V063_normalize_GroupStructure_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: groupstructure
+            indexName: GroupStructure_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: groupstructure
+            constraintName: GroupStructure_pkey
+  - changeSet:
+      id: V063_normalize_GroupStructure_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: groupstructure
+            primaryKeyName: GroupStructure_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: groupstructure
+            constraintName: GroupStructure_id_pkey
+  - changeSet:
+      id: V063_change_id_type_in_groupstructure
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: groupstructure
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_groupstructure_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: groupstructure
+      changes:
+        - addPrimaryKey:
+            tableName: groupstructure
+            columnNames: id
+            constraintName: groupstructure_pkey
+  - changeSet:
+      id: V063_normalize_groupstructure_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: groupstructure
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_normalize_groupstructure_group_id_key
       author: seafile

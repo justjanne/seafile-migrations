@@ -1,2 +1,70 @@
 databaseChangeLog:
-  - {{migration_extend_pkey(V063,Organization,org_id)}}
+  - changeSet:
+      id: V063_normalize_organization_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: organization
+            - not:
+                - columnExists:
+                    tableName: organization
+                    columnName: org_id
+      changes:
+        - dropPrimaryKey:
+            tableName: organization
+  - changeSet:
+      id: V063_normalize_Organization_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: organization
+            indexName: Organization_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: organization
+            constraintName: Organization_pkey
+  - changeSet:
+      id: V063_normalize_Organization_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: organization
+            primaryKeyName: Organization_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: organization
+            constraintName: Organization_id_pkey
+  - changeSet:
+      id: V063_change_org_id_type_in_organization
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: organization
+            columnName: org_id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_organization_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: organization
+      changes:
+        - addPrimaryKey:
+            tableName: organization
+            columnNames: org_id
+            constraintName: organization_pkey
+  - changeSet:
+      id: V063_normalize_organization_org_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: organization
+            columnName: org_id
+            columnDataType: bigint

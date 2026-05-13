@@ -1,5 +1,95 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,OrgUser,id)}}
+  - changeSet:
+      id: V063_normalize_orguser_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: orguser
+            - not:
+                - columnExists:
+                    tableName: orguser
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: orguser
+  - changeSet:
+      id: V063_normalize_OrgUser_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orguser
+            indexName: OrgUser_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: orguser
+            constraintName: OrgUser_pkey
+  - changeSet:
+      id: V063_normalize_OrgUser_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: orguser
+            primaryKeyName: OrgUser_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: orguser
+            constraintName: OrgUser_id_pkey
+  - changeSet:
+      id: V063_add_id_to_orguser
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: orguser
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: orguser
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: orguser_pkey
+  - changeSet:
+      id: V063_change_id_type_in_orguser
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: orguser
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_orguser_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: orguser
+      changes:
+        - addPrimaryKey:
+            tableName: orguser
+            columnNames: id
+            constraintName: orguser_pkey
+  - changeSet:
+      id: V063_normalize_orguser_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: orguser
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_change_email_type_in_orguser
       author: seafile

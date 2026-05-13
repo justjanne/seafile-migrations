@@ -1,2 +1,70 @@
 databaseChangeLog:
-  - {{migration_extend_pkey(V063,LDAPConfig,id)}}
+  - changeSet:
+      id: V063_normalize_ldapconfig_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: ldapconfig
+            - not:
+                - columnExists:
+                    tableName: ldapconfig
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: ldapconfig
+  - changeSet:
+      id: V063_normalize_LDAPConfig_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: ldapconfig
+            indexName: LDAPConfig_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: ldapconfig
+            constraintName: LDAPConfig_pkey
+  - changeSet:
+      id: V063_normalize_LDAPConfig_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: ldapconfig
+            primaryKeyName: LDAPConfig_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: ldapconfig
+            constraintName: LDAPConfig_id_pkey
+  - changeSet:
+      id: V063_change_id_type_in_ldapconfig
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: ldapconfig
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_ldapconfig_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: ldapconfig
+      changes:
+        - addPrimaryKey:
+            tableName: ldapconfig
+            columnNames: id
+            constraintName: ldapconfig_pkey
+  - changeSet:
+      id: V063_normalize_ldapconfig_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: ldapconfig
+            columnName: id
+            columnDataType: bigint

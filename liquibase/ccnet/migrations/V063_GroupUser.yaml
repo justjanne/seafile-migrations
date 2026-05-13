@@ -1,5 +1,95 @@
 databaseChangeLog:
-  - {{migration_add_pkey(V063,GroupUser,id)}}
+  - changeSet:
+      id: V063_normalize_groupuser_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: groupuser
+            - not:
+                - columnExists:
+                    tableName: groupuser
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: groupuser
+  - changeSet:
+      id: V063_normalize_GroupUser_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: groupuser
+            indexName: GroupUser_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: groupuser
+            constraintName: GroupUser_pkey
+  - changeSet:
+      id: V063_normalize_GroupUser_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: groupuser
+            primaryKeyName: GroupUser_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: groupuser
+            constraintName: GroupUser_id_pkey
+  - changeSet:
+      id: V063_add_id_to_groupuser
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: groupuser
+                columnName: id
+      changes:
+        - addColumn:
+            tableName: groupuser
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: groupuser_pkey
+  - changeSet:
+      id: V063_change_id_type_in_groupuser
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: groupuser
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_groupuser_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: groupuser
+      changes:
+        - addPrimaryKey:
+            tableName: groupuser
+            columnNames: id
+            constraintName: groupuser_pkey
+  - changeSet:
+      id: V063_normalize_groupuser_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: groupuser
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V063_change_group_id_type_in_groupuser
       author: seafile

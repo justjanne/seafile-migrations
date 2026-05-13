@@ -31,7 +31,75 @@ databaseChangeLog:
               - column:
                   name: white_list
                   type: text
-  - {{migration_extend_pkey(V063,OrgFileExtWhiteList,id)}}
+  - changeSet:
+      id: V063_normalize_orgfileextwhitelist_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: orgfileextwhitelist
+            - not:
+                - columnExists:
+                    tableName: orgfileextwhitelist
+                    columnName: id
+      changes:
+        - dropPrimaryKey:
+            tableName: orgfileextwhitelist
+  - changeSet:
+      id: V063_normalize_OrgFileExtWhiteList_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: orgfileextwhitelist
+            indexName: OrgFileExtWhiteList_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: orgfileextwhitelist
+            constraintName: OrgFileExtWhiteList_pkey
+  - changeSet:
+      id: V063_normalize_OrgFileExtWhiteList_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: orgfileextwhitelist
+            primaryKeyName: OrgFileExtWhiteList_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: orgfileextwhitelist
+            constraintName: OrgFileExtWhiteList_id_pkey
+  - changeSet:
+      id: V063_change_id_type_in_orgfileextwhitelist
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: orgfileextwhitelist
+            columnName: id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_orgfileextwhitelist_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: orgfileextwhitelist
+      changes:
+        - addPrimaryKey:
+            tableName: orgfileextwhitelist
+            columnNames: id
+            constraintName: orgfileextwhitelist_pkey
+  - changeSet:
+      id: V063_normalize_orgfileextwhitelist_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: orgfileextwhitelist
+            columnName: id
+            columnDataType: bigint
   - changeSet:
       id: V130_normalize_orgfileextwhitelist_org_id
       author: seafile

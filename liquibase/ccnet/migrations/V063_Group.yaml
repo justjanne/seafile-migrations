@@ -1,5 +1,73 @@
 databaseChangeLog:
-  - {{migration_extend_pkey(V063,Group,group_id)}}
+  - changeSet:
+      id: V063_normalize_group_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - primaryKeyExists:
+                tableName: group
+            - not:
+                - columnExists:
+                    tableName: group
+                    columnName: group_id
+      changes:
+        - dropPrimaryKey:
+            tableName: group
+  - changeSet:
+      id: V063_normalize_Group_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: group
+            indexName: Group_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: group
+            constraintName: Group_pkey
+  - changeSet:
+      id: V063_normalize_Group_id_pkey_purge
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          primaryKeyExists:
+            tableName: group
+            primaryKeyName: Group_id_pkey
+      changes:
+        - dropPrimaryKey:
+            tableName: group
+            constraintName: Group_id_pkey
+  - changeSet:
+      id: V063_change_group_id_type_in_group
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: group
+            columnName: group_id
+            newDataType: bigserial
+  - changeSet:
+      id: V063_normalize_group_pkey_rebuild
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - primaryKeyExists:
+                tableName: group
+      changes:
+        - addPrimaryKey:
+            tableName: group
+            columnNames: group_id
+            constraintName: group_pkey
+  - changeSet:
+      id: V063_normalize_group_group_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      changes:
+        - addAutoIncrement:
+            tableName: group
+            columnName: group_id
+            columnDataType: bigint
   - changeSet:
       id: V063_add_parent_group_id_to_group
       author: seafile
