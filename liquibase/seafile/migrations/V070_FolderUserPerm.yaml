@@ -57,6 +57,19 @@ databaseChangeLog:
             columnName: repo_id
             newDataType: varchar(41)
   - changeSet:
+      id: V070_normalize_folderuserperm_permission_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: folderuserperm
+            columnName: permission
+      changes:
+        - modifyDataType:
+            tableName: folderuserperm
+            columnName: permission
+            newDataType: varchar(15)
+  - changeSet:
       id: V070_normalize_folderuserperm_repo_id
       author: seafile
       preConditions:

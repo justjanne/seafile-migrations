@@ -48,6 +48,19 @@ databaseChangeLog:
             columnName: repo_id
             newDataType: varchar(41)
   - changeSet:
+      id: V070_normalize_orginnerpubrepo_permission_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: orginnerpubrepo
+            columnName: permission
+      changes:
+        - modifyDataType:
+            tableName: orginnerpubrepo
+            columnName: permission
+            newDataType: varchar(15)
+  - changeSet:
       id: V070_normalize_orginnerpubrepo_org_id
       author: seafile
       preConditions:

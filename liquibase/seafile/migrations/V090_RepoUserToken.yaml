@@ -1,5 +1,18 @@
 databaseChangeLog:
   - changeSet:
+      id: V090_normalize_repousertoken_token_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: repousertoken
+            columnName: token
+      changes:
+        - modifyDataType:
+            tableName: repousertoken
+            columnName: token
+            newDataType: varchar(41)
+  - changeSet:
       id: V090_add_index_to_repousertoken_token
       author: seafile
       preConditions:

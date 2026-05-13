@@ -48,6 +48,19 @@ databaseChangeLog:
                   name: error_con
                   type: varchar(1024)
   - changeSet:
+      id: V070_normalize_reposyncerror_token_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: reposyncerror
+            columnName: token
+      changes:
+        - modifyDataType:
+            tableName: reposyncerror
+            columnName: token
+            newDataType: varchar(41)
+  - changeSet:
       id: V070_normalize_reposyncerror_token
       author: seafile
       preConditions:

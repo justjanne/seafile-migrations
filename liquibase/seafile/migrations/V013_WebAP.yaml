@@ -41,6 +41,19 @@ databaseChangeLog:
             columnName: repo_id
             newDataType: varchar(41)
   - changeSet:
+      id: V013_normalize_webap_access_property_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: webap
+            columnName: access_property
+      changes:
+        - modifyDataType:
+            tableName: webap
+            columnName: access_property
+            newDataType: varchar(10)
+  - changeSet:
       id: V013_create_webap
       author: seafile
       changes:
