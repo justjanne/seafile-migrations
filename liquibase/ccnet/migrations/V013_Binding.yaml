@@ -52,6 +52,18 @@ databaseChangeLog:
             tableName: binding
             indexName: email
   - changeSet:
+      id: V013_normalize_binding_email_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: binding
+            indexName: binding_email_idx
+      changes:
+        - dropIndex:
+            tableName: binding
+            indexName: binding_email_idx
+  - changeSet:
       id: V013_add_index_to_binding_email
       author: seafile
       preConditions:

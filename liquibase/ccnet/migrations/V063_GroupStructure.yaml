@@ -130,6 +130,18 @@ databaseChangeLog:
             tableName: groupstructure
             constraintName: group_id
   - changeSet:
+      id: V063_normalize_groupstructure_groupid_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: groupstructure
+            indexName: groupstructure_groupid_idx
+      changes:
+        - dropIndex:
+            tableName: groupstructure
+            indexName: groupstructure_groupid_idx
+  - changeSet:
       id: V063_add_unique_constraint_to_groupstructure_group_id
       author: seafile
       preConditions:

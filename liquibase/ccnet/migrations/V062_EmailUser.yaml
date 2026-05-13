@@ -28,6 +28,18 @@ databaseChangeLog:
             tableName: emailuser
             constraintName: emailuser_reference_id_key
   - changeSet:
+      id: V062_normalize_emailuser_reference_id_idx
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: emailuser
+            indexName: emailuser_reference_id_idx
+      changes:
+        - dropIndex:
+            tableName: emailuser
+            indexName: emailuser_reference_id_idx
+  - changeSet:
       id: V062_add_unique_constraint_to_emailuser_reference_id
       author: seafile
       preConditions:
