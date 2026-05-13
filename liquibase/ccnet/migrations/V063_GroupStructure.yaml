@@ -1,42 +1,5 @@
 databaseChangeLog:
   - changeSet:
-      id: V063_rename_GroupStructure_to_groupstructure
-      author: seafile
-      failOnError: false
-      preConditions:
-        - tableExists:
-            tableName: GroupStructure
-      changes:
-        - renameTable:
-            oldTableName: GroupStructure
-            newTableName: groupstructure
-  - changeSet:
-      id: V063_create_groupstructure
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            - tableExists:
-                tableName: groupstructure
-      changes:
-        - createTable:
-            ifNotExists: true
-            tableName: groupstructure
-            columns:
-              - column:
-                  name: id
-                  type: bigserial
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: group_id
-                  type: int
-              - column:
-                  name: path
-                  type: varchar(1024)
-  - changeSet:
       id: V063_normalize_groupstructure_pkey_purge
       author: seafile
       preConditions:
