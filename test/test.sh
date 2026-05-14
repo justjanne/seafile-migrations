@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+./fetch-drivers.sh
+
 for db in ccnet seafile; do
   ./mysql-clean.sh $db
   ./mysql-legacy.sh $db
