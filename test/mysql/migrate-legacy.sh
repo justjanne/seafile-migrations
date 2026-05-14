@@ -1,14 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-./mysql-prepare.sh "$1" "migrated"
-
-mariadb -h 127.0.0.1 -u root -ppassword $1 < schemas/$1/mysql/018.sql || true
-for i in $(ls migrations/$1/mysql/*.sql | sort); do
+mariadb -h 127.0.0.1 -u root -ppassword $1 < mysql/schemas/$1/018.sql || true
+for i in $(ls mysql/migrations/$1/*.sql | sort); do
   mariadb -h 127.0.0.1 -u root -ppassword $1 < $i || true
 done
 
 liquibase --url="jdbc:mariadb://127.0.0.1:3306/$1" --username="root" --password="password" \
   update --changelog-file="$1.yaml"
-
-./mysql-snapshot.sh "$1" "migrated"
