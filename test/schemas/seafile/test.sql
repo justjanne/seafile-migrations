@@ -1,50 +1,22 @@
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
-ALTER SCHEMA public OWNER TO postgres;
-
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
-
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
-
 CREATE TABLE public.branch (
     name character varying(10) NOT NULL,
     repo_id character(40) NOT NULL,
     commit_id character(40)
 );
 
-ALTER TABLE public.branch OWNER TO seafile;
-
 CREATE TABLE public.garbagerepos (
     repo_id character(36) NOT NULL
 );
-
-ALTER TABLE public.garbagerepos OWNER TO seafile;
 
 CREATE TABLE public.innerpubrepo (
     repo_id character(36) NOT NULL,
     permission character varying(15)
 );
 
-ALTER TABLE public.innerpubrepo OWNER TO seafile;
-
 CREATE TABLE public.orgquota (
     org_id integer NOT NULL,
     quota bigint
 );
-
-ALTER TABLE public.orgquota OWNER TO seafile;
 
 CREATE TABLE public.orguserquota (
     org_id integer NOT NULL,
@@ -52,20 +24,14 @@ CREATE TABLE public.orguserquota (
     quota bigint
 );
 
-ALTER TABLE public.orguserquota OWNER TO seafile;
-
 CREATE TABLE public.repo (
     repo_id character(36) NOT NULL
 );
-
-ALTER TABLE public.repo OWNER TO seafile;
 
 CREATE TABLE public.repofilecount (
     repo_id character(36) NOT NULL,
     file_count bigint
 );
-
-ALTER TABLE public.repofilecount OWNER TO seafile;
 
 CREATE TABLE public.repogroup (
     repo_id character(36),
@@ -74,21 +40,15 @@ CREATE TABLE public.repogroup (
     permission character varying(15)
 );
 
-ALTER TABLE public.repogroup OWNER TO seafile;
-
 CREATE TABLE public.repohead (
     repo_id character(36) NOT NULL,
     branch_name character varying(10)
 );
 
-ALTER TABLE public.repohead OWNER TO seafile;
-
 CREATE TABLE public.repohistorylimit (
     repo_id character(36) NOT NULL,
     days integer
 );
-
-ALTER TABLE public.repohistorylimit OWNER TO seafile;
 
 CREATE TABLE public.repoinfo (
     repo_id character(36) NOT NULL,
@@ -100,14 +60,10 @@ CREATE TABLE public.repoinfo (
     status integer DEFAULT 0
 );
 
-ALTER TABLE public.repoinfo OWNER TO seafile;
-
 CREATE TABLE public.repoowner (
     repo_id character(36) NOT NULL,
     owner_id character varying(255)
 );
-
-ALTER TABLE public.repoowner OWNER TO seafile;
 
 CREATE TABLE public.reposize (
     repo_id character(36) NOT NULL,
@@ -115,27 +71,12 @@ CREATE TABLE public.reposize (
     head_id character(40)
 );
 
-ALTER TABLE public.reposize OWNER TO seafile;
-
 CREATE TABLE public.reposyncerror (
-    id bigint NOT NULL,
+    id bigserial NOT NULL,
     token character(41),
     error_time bigint,
     error_con character varying(1024)
 );
-
-ALTER TABLE public.reposyncerror OWNER TO seafile;
-
-CREATE SEQUENCE public.reposyncerror_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-ALTER SEQUENCE public.reposyncerror_id_seq OWNER TO seafile;
-
-ALTER SEQUENCE public.reposyncerror_id_seq OWNED BY public.reposyncerror.id;
 
 CREATE TABLE public.repotokenpeerinfo (
     token character(40) NOT NULL,
@@ -145,8 +86,6 @@ CREATE TABLE public.repotokenpeerinfo (
     sync_time bigint,
     client_ver character varying(20)
 );
-
-ALTER TABLE public.repotokenpeerinfo OWNER TO seafile;
 
 CREATE TABLE public.repotrash (
     repo_id character(36) NOT NULL,
@@ -158,22 +97,16 @@ CREATE TABLE public.repotrash (
     del_time bigint
 );
 
-ALTER TABLE public.repotrash OWNER TO seafile;
-
 CREATE TABLE public.repousertoken (
     repo_id character(36),
     email character varying(255),
     token character(40)
 );
 
-ALTER TABLE public.repousertoken OWNER TO seafile;
-
 CREATE TABLE public.repovalidsince (
     repo_id character(36) NOT NULL,
     "timestamp" bigint
 );
-
-ALTER TABLE public.repovalidsince OWNER TO seafile;
 
 CREATE TABLE public.seafileconf (
     cfg_group character varying(255) NOT NULL,
@@ -182,8 +115,6 @@ CREATE TABLE public.seafileconf (
     property integer
 );
 
-ALTER TABLE public.seafileconf OWNER TO seafile;
-
 CREATE TABLE public.sharedrepo (
     repo_id character(36),
     from_email character varying(255),
@@ -191,28 +122,20 @@ CREATE TABLE public.sharedrepo (
     permission character varying(15)
 );
 
-ALTER TABLE public.sharedrepo OWNER TO seafile;
-
 CREATE TABLE public.systeminfo (
     info_key character varying(256),
     info_value character varying(1024)
 );
-
-ALTER TABLE public.systeminfo OWNER TO seafile;
 
 CREATE TABLE public.userquota (
     "user" character varying(255) NOT NULL,
     quota bigint
 );
 
-ALTER TABLE public.userquota OWNER TO seafile;
-
 CREATE TABLE public.usersharequota (
     "user" character varying(255) NOT NULL,
     quota bigint
 );
-
-ALTER TABLE public.usersharequota OWNER TO seafile;
 
 CREATE TABLE public.virtualrepo (
     repo_id character(36) NOT NULL,
@@ -221,24 +144,16 @@ CREATE TABLE public.virtualrepo (
     base_commit character(40)
 );
 
-ALTER TABLE public.virtualrepo OWNER TO seafile;
-
 CREATE TABLE public.webap (
     repo_id character(36) NOT NULL,
     access_property character varying(10)
 );
-
-ALTER TABLE public.webap OWNER TO seafile;
 
 CREATE TABLE public.webuploadtempfiles (
     repo_id character(40) NOT NULL,
     file_path text NOT NULL,
     tmp_file_path text NOT NULL
 );
-
-ALTER TABLE public.webuploadtempfiles OWNER TO seafile;
-
-ALTER TABLE ONLY public.reposyncerror ALTER COLUMN id SET DEFAULT nextval('public.reposyncerror_id_seq'::regclass);
 
 ALTER TABLE ONLY public.branch
     ADD CONSTRAINT branch_pkey PRIMARY KEY (repo_id, name);
@@ -372,6 +287,3 @@ CREATE INDEX virtualrepo_origin_repo_idx ON public.virtualrepo USING btree (orig
 CREATE UNIQUE INDEX virtualrepo_repoid_idx ON public.virtualrepo USING btree (repo_id);
 
 CREATE UNIQUE INDEX webap_repoid_idx ON public.webap USING btree (repo_id);
-
-REVOKE USAGE ON SCHEMA public FROM PUBLIC;
-GRANT ALL ON SCHEMA public TO PUBLIC;
