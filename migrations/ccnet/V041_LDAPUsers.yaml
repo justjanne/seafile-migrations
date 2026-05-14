@@ -1,5 +1,16 @@
 databaseChangeLog:
   - changeSet:
+      id: V041_rename_LDAPUsers_to_ldapusers
+      author: seafile
+      failOnError: false
+      preConditions:
+        - tableExists:
+            tableName: LDAPUsers
+      changes:
+        - renameTable:
+            oldTableName: LDAPUsers
+            newTableName: ldapusers
+  - changeSet:
       id: V041_create_ldapusers
       author: seafile
       changes:

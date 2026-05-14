@@ -15,6 +15,32 @@ databaseChangeLog:
               - column:
                   name: reference_id
                   type: varchar(255)
+
+  - changeSet:
+      id: V062_normalize_ldapusers_reference_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+              tableName: ldapusers
+              indexName: ldapusers_reference_id_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: ldapusers
+            constraintName: ldapusers_reference_id_key
+
+  - changeSet:
+      id: V062_normalize_ldapusers_reference_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+              tableName: ldapusers
+              indexName: reference_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: ldapusers
+            constraintName: reference_id
   - changeSet:
       id: V062_add_unique_constraint_to_ldapusers_reference_id
       author: seafile
@@ -29,18 +55,3 @@ databaseChangeLog:
             tableName: ldapusers
             columnNames: reference_id
             constraintName: idx_ldapusers_reference_id
-
-  - changeSet:
-      id: V062_normalize_ldapusers_reference_id_key
-      author: seafile
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            - indexExists:
-                tableName: ldapusers
-                indexName: ldapusers_reference_id_key
-      changes:
-        - addUniqueConstraint:
-            tableName: ldapusers
-            columnNames: reference_id
-            constraintName: ldapusers_reference_id_key
