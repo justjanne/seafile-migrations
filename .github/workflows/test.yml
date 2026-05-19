@@ -2,9 +2,10 @@ name: Database Migration Tests
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ "main" ]
+    tags: [ 'v*.*.*' ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ "main" ]
 
 jobs:
   test:
@@ -42,7 +43,7 @@ jobs:
 
       - uses: liquibase/setup-liquibase@v2
         with:
-          version: '5.0.2'
+          version: '4.33.0'
           edition: 'oss'
 
       - name: Run Tests
