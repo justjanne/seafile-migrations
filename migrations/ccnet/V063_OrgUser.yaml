@@ -91,14 +91,6 @@ databaseChangeLog:
             columnName: id
             columnDataType: bigint
   - changeSet:
-      id: V063_change_email_type_in_orguser
-      author: seafile
-      changes:
-        - modifyDataType:
-            tableName: orguser
-            columnName: email
-            newDataType: bigint
-  - changeSet:
       id: V063_normalize_orguser_email_idx
       author: seafile
       preConditions:
