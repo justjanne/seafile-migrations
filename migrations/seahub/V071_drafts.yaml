@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: V071_drafts_draft_add_unique_constraint_origin_file_uuid
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: drafts_draft
+                indexName: drafts_draft_origin_file_uuid_7c003c98_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: drafts_draft
+            columnNames: origin_file_uuid
+            constraintName: drafts_draft_origin_file_uuid_7c003c98_uniq
+
+  - changeSet:
+      id: V071_drafts_draft_add_index_origin_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: drafts_draft
+                indexName: drafts_draft_origin_repo_id_8978ca2c
+      changes:
+        - createIndex:
+            tableName: drafts_draft
+            indexName: drafts_draft_origin_repo_id_8978ca2c
+            columns:
+              - column:
+                  name: origin_repo_id

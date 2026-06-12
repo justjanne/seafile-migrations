@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_options_useroptions_option_val_length
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: options_useroptions
+            columnName: option_val
+      changes:
+        - modifyDataType:
+            tableName: options_useroptions
+            columnName: option_val
+            newDataType: varchar(512)
+        - addNotNullConstraint:
+            tableName: options_useroptions
+            columnName: option_val
+            columnDataType: varchar(512)

@@ -1,0 +1,432 @@
+databaseChangeLog:
+  # share_extragroupssharepermission
+  - changeSet:
+      id: V063_drop_share_extragroupssharepermission_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_extragroupssharepermission
+            indexName: share_extragroupssharepermission_9a8c79bf
+      changes:
+        - dropIndex:
+            tableName: share_extragroupssharepermission
+            indexName: share_extragroupssharepermission_9a8c79bf
+  - changeSet:
+      id: V063_drop_share_extragroupssharepermission_group_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_extragroupssharepermission
+            indexName: share_extragroupssharepermission_0e939a4f
+      changes:
+        - dropIndex:
+            tableName: share_extragroupssharepermission
+            indexName: share_extragroupssharepermission_0e939a4f
+  - changeSet:
+      id: V063_recreate_share_extragroupssharepermission_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_extragroupssharepermission
+                indexName: share_extragroupssharepermission_repo_id_38dbaea1
+      changes:
+        - createIndex:
+            tableName: share_extragroupssharepermission
+            indexName: share_extragroupssharepermission_repo_id_38dbaea1
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V063_recreate_share_extragroupssharepermission_group_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_extragroupssharepermission
+                indexName: share_extragroupssharepermission_group_id_6ca34bb2
+      changes:
+        - createIndex:
+            tableName: share_extragroupssharepermission
+            indexName: share_extragroupssharepermission_group_id_6ca34bb2
+            columns:
+              - column:
+                  name: group_id
+
+  # share_extrasharepermission
+  - changeSet:
+      id: V063_drop_share_extrasharepermission_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_extrasharepermission
+            indexName: share_extrasharepermission_9a8c79bf
+      changes:
+        - dropIndex:
+            tableName: share_extrasharepermission
+            indexName: share_extrasharepermission_9a8c79bf
+  - changeSet:
+      id: V063_drop_share_extrasharepermission_share_to_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_extrasharepermission
+            indexName: share_extrasharepermission_e4fb1dad
+      changes:
+        - dropIndex:
+            tableName: share_extrasharepermission
+            indexName: share_extrasharepermission_e4fb1dad
+  - changeSet:
+      id: V063_recreate_share_extrasharepermission_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_extrasharepermission
+                indexName: share_extrasharepermission_repo_id_23cc10fc
+      changes:
+        - createIndex:
+            tableName: share_extrasharepermission
+            indexName: share_extrasharepermission_repo_id_23cc10fc
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V063_recreate_share_extrasharepermission_share_to_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_extrasharepermission
+                indexName: share_extrasharepermission_share_to_823c16cb
+      changes:
+        - createIndex:
+            tableName: share_extrasharepermission
+            indexName: share_extrasharepermission_share_to_823c16cb
+            columns:
+              - column:
+                  name: share_to
+
+  # share_fileshare
+  - changeSet:
+      id: V063_drop_share_fileshare_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_fileshare
+            indexName: share_fileshare_14c4b06b
+      changes:
+        - dropIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_14c4b06b
+  - changeSet:
+      id: V063_drop_share_fileshare_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_fileshare
+            indexName: share_fileshare_9a8c79bf
+      changes:
+        - dropIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_9a8c79bf
+  - changeSet:
+      id: V063_drop_share_fileshare_s_type_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_fileshare
+            indexName: share_fileshare_1abd88b5
+      changes:
+        - dropIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_1abd88b5
+  - changeSet:
+      id: V063_drop_share_fileshare_permission_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_fileshare
+            indexName: share_fileshare_4b65ca0f
+      changes:
+        - dropIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_4b65ca0f
+  - changeSet:
+      id: V063_recreate_share_fileshare_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_fileshare
+                indexName: share_fileshare_username_5cb6de75
+      changes:
+        - createIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_username_5cb6de75
+            columns:
+              - column:
+                  name: username
+  - changeSet:
+      id: V063_recreate_share_fileshare_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_fileshare
+                indexName: share_fileshare_repo_id_9b5ae27a
+      changes:
+        - createIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_repo_id_9b5ae27a
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V063_recreate_share_fileshare_s_type_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_fileshare
+                indexName: share_fileshare_s_type_724eb6c1
+      changes:
+        - createIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_s_type_724eb6c1
+            columns:
+              - column:
+                  name: s_type
+  - changeSet:
+      id: V063_recreate_share_fileshare_permission_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_fileshare
+                indexName: share_fileshare_permission_d12c353f
+      changes:
+        - createIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_permission_d12c353f
+            columns:
+              - column:
+                  name: permission
+
+  # share_orgfileshare
+  - changeSet:
+      id: V063_drop_share_orgfileshare_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: share_orgfileshare
+            foreignKeyName: share_orgfil_file_share_id_7e98815f5df832f_fk_share_fileshare_i
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: share_orgfileshare
+            constraintName: share_orgfil_file_share_id_7e98815f5df832f_fk_share_fileshare_i
+  - changeSet:
+      id: V063_recreate_share_orgfileshare_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: share_orgfileshare
+                foreignKeyName: share_orgfileshare_file_share_id_7890388b_fk_share_fileshare_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: share_orgfileshare
+            baseColumnNames: file_share_id
+            referencedTableName: share_fileshare
+            referencedColumnNames: id
+            constraintName: share_orgfileshare_file_share_id_7890388b_fk_share_fileshare_id
+  - changeSet:
+      id: V063_drop_share_orgfileshare_org_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_orgfileshare
+            indexName: share_orgfileshare_9cf869aa
+      changes:
+        - dropIndex:
+            tableName: share_orgfileshare
+            indexName: share_orgfileshare_9cf869aa
+  - changeSet:
+      id: V063_recreate_share_orgfileshare_org_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_orgfileshare
+                indexName: share_orgfileshare_org_id_8d17998c
+      changes:
+        - createIndex:
+            tableName: share_orgfileshare
+            indexName: share_orgfileshare_org_id_8d17998c
+            columns:
+              - column:
+                  name: org_id
+
+  # share_privatefiledirshare
+  - changeSet:
+      id: V063_drop_share_privatefiledirshare_from_user_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_privatefiledirshare
+            indexName: share_privatefiledirshare_f4f87abd
+      changes:
+        - dropIndex:
+            tableName: share_privatefiledirshare
+            indexName: share_privatefiledirshare_f4f87abd
+  - changeSet:
+      id: V063_drop_share_privatefiledirshare_to_user_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_privatefiledirshare
+            indexName: share_privatefiledirshare_86899d6f
+      changes:
+        - dropIndex:
+            tableName: share_privatefiledirshare
+            indexName: share_privatefiledirshare_86899d6f
+  - changeSet:
+      id: V063_drop_share_privatefiledirshare_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_privatefiledirshare
+            indexName: share_privatefiledirshare_9a8c79bf
+      changes:
+        - dropIndex:
+            tableName: share_privatefiledirshare
+            indexName: share_privatefiledirshare_9a8c79bf
+  - changeSet:
+      id: V063_recreate_share_privatefiledirshare_from_user_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_privatefiledirshare
+                indexName: share_privatefiledirshare_from_user_d568d535
+      changes:
+        - createIndex:
+            tableName: share_privatefiledirshare
+            indexName: share_privatefiledirshare_from_user_d568d535
+            columns:
+              - column:
+                  name: from_user
+  - changeSet:
+      id: V063_recreate_share_privatefiledirshare_to_user_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_privatefiledirshare
+                indexName: share_privatefiledirshare_to_user_2a92a044
+      changes:
+        - createIndex:
+            tableName: share_privatefiledirshare
+            indexName: share_privatefiledirshare_to_user_2a92a044
+            columns:
+              - column:
+                  name: to_user
+  - changeSet:
+      id: V063_recreate_share_privatefiledirshare_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_privatefiledirshare
+                indexName: share_privatefiledirshare_repo_id_97c5cb6f
+      changes:
+        - createIndex:
+            tableName: share_privatefiledirshare
+            indexName: share_privatefiledirshare_repo_id_97c5cb6f
+            columns:
+              - column:
+                  name: repo_id
+
+  # share_uploadlinkshare
+  - changeSet:
+      id: V063_drop_share_uploadlinkshare_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_uploadlinkshare
+            indexName: share_uploadlinkshare_14c4b06b
+      changes:
+        - dropIndex:
+            tableName: share_uploadlinkshare
+            indexName: share_uploadlinkshare_14c4b06b
+  - changeSet:
+      id: V063_drop_share_uploadlinkshare_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_uploadlinkshare
+            indexName: share_uploadlinkshare_9a8c79bf
+      changes:
+        - dropIndex:
+            tableName: share_uploadlinkshare
+            indexName: share_uploadlinkshare_9a8c79bf
+  - changeSet:
+      id: V063_recreate_share_uploadlinkshare_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_uploadlinkshare
+                indexName: share_uploadlinkshare_username_3203c243
+      changes:
+        - createIndex:
+            tableName: share_uploadlinkshare
+            indexName: share_uploadlinkshare_username_3203c243
+            columns:
+              - column:
+                  name: username
+  - changeSet:
+      id: V063_recreate_share_uploadlinkshare_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_uploadlinkshare
+                indexName: share_uploadlinkshare_repo_id_c519f857
+      changes:
+        - createIndex:
+            tableName: share_uploadlinkshare
+            indexName: share_uploadlinkshare_repo_id_c519f857
+            columns:
+              - column:
+                  name: repo_id

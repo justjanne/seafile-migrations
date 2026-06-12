@@ -1,0 +1,104 @@
+databaseChangeLog:
+  - changeSet:
+      id: V016_create_wiki_groupwiki
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: wiki_groupwiki
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V016_drop_wiki_groupwiki_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: wiki_groupwiki
+            indexName: group_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: wiki_groupwiki
+            constraintName: group_id
+  - changeSet:
+      id: V016_add_wiki_groupwiki_group_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: wiki_groupwiki
+                indexName: wiki_groupwiki_group_id_key
+      changes:
+        - addUniqueConstraint:
+            tableName: wiki_groupwiki
+            constraintName: wiki_groupwiki_group_id_key
+            columnNames: group_id
+
+  - changeSet:
+      id: V016_create_wiki_personalwiki
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: wiki_personalwiki
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V016_drop_wiki_personalwiki_username
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: wiki_personalwiki
+            indexName: username
+      changes:
+        - dropUniqueConstraint:
+            tableName: wiki_personalwiki
+            constraintName: username
+  - changeSet:
+      id: V016_add_wiki_personalwiki_wiki_personalwiki_username_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: wiki_personalwiki
+                indexName: wiki_personalwiki_username_key
+      changes:
+        - addUniqueConstraint:
+            tableName: wiki_personalwiki
+            constraintName: wiki_personalwiki_username_key
+            columnNames: username

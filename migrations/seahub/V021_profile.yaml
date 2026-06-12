@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: V021_create_profile_detailedprofile
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: profile_detailedprofile
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: department
+                  type: varchar(512)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: telephone
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V021_add_index_to_profile_detailedprofile_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_detailedprofile
+                indexName: profile_detailedprofile_6340c63c
+      changes:
+        - createIndex:
+            tableName: profile_detailedprofile
+            indexName: profile_detailedprofile_6340c63c
+            columns:
+              - column:
+                  name: user

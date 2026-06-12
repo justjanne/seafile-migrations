@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_create_trusted_ip_trustedip
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: trusted_ip_trustedip
+      changes:
+        - createTable:
+            tableName: trusted_ip_trustedip
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: ip
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V062_add_index_to_trusted_ip_trustedip
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: trusted_ip_trustedip
+              indexName: trusted_ip_trustedip_957b527b
+      changes:
+        - createIndex:
+            tableName: trusted_ip_trustedip
+            indexName: trusted_ip_trustedip_957b527b
+            columns:
+              - column:
+                  name: ip

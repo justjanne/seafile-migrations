@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: V120_add_is_manually_set_contact_email_to_profile_profile
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: profile_profile
+                columnName: is_manually_set_contact_email
+      changes:
+        - addColumn:
+            tableName: profile_profile
+            columns:
+              - column:
+                  name: is_manually_set_contact_email
+                  type: boolean
+                  defaultValueBoolean: false

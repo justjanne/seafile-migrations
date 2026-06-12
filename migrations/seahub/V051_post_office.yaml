@@ -1,0 +1,445 @@
+databaseChangeLog:
+  - changeSet:
+      id: V051_create_post_office_attachment
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: post_office_attachment
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: file
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V051_create_post_office_emailtemplate
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: post_office_emailtemplate
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_updated
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: subject
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: html_content
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: language
+                  type: varchar(12)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: default_template_id
+                  type: int
+
+  - changeSet:
+      id: V051_add_unique_constraint_to_post_office_emailtemplate_language
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - not:
+                - indexExists:
+                    tableName: post_office_emailtemplate
+                    indexName: post_office_emailtemplate_language_29c8606d390b61ee_uniq
+            - not:
+                - indexExists:
+                    tableName: post_office_emailtemplate
+                    indexName: unq_post_office_emailtemplate_language
+      changes:
+        - addUniqueConstraint:
+            tableName: post_office_emailtemplate
+            constraintName: post_office_emailtemplate_language_29c8606d390b61ee_uniq
+            columnNames: language, default_template_id
+
+  - changeSet:
+      id: V051_add_index_to_post_office_emailtemplate_default_template_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: post_office_emailtemplate
+                indexName: post_office_emailtemplate_dea6f63e
+      changes:
+        - createIndex:
+            tableName: post_office_emailtemplate
+            indexName: post_office_emailtemplate_dea6f63e
+            columns:
+              - column:
+                  name: default_template_id
+
+  - changeSet:
+      id: V051_add_fk_post_office_emailtemplate_default_template_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: post_office_emailtemplate
+                foreignKeyName: D0d1b6711ab19cd27206adfa5a4f8f80
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: post_office_emailtemplate
+            baseColumnNames: default_template_id
+            referencedTableName: post_office_emailtemplate
+            referencedColumnNames: id
+            constraintName: D0d1b6711ab19cd27206adfa5a4f8f80
+
+  - changeSet:
+      id: V051_create_post_office_email
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: post_office_email
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: from_email
+                  type: varchar(254)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cc
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: bcc
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: subject
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: message
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: html_message
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: integer unsigned
+              - column:
+                  name: priority
+                  type: integer unsigned
+              - column:
+                  name: created
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_updated
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: scheduled_time
+                  type: datetime
+              - column:
+                  name: headers
+                  type: longtext
+              - column:
+                  name: template_id
+                  type: int
+              - column:
+                  name: context
+                  type: longtext
+              - column:
+                  name: backend_alias
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V051_add_indexes_to_post_office_email
+      author: seafile
+      changes:
+        - createIndex:
+            tableName: post_office_email
+            indexName: post_office_email_9acb4454
+            columns:
+              - column:
+                  name: status
+        - createIndex:
+            tableName: post_office_email
+            indexName: post_office_email_e2fa5388
+            columns:
+              - column:
+                  name: created
+        - createIndex:
+            tableName: post_office_email
+            indexName: post_office_email_3acc0b7a
+            columns:
+              - column:
+                  name: last_updated
+        - createIndex:
+            tableName: post_office_email
+            indexName: post_office_email_ed24d584
+            columns:
+              - column:
+                  name: scheduled_time
+        - createIndex:
+            tableName: post_office_email
+            indexName: post_office_email_74f53564
+            columns:
+              - column:
+                  name: template_id
+
+  - changeSet:
+      id: V051_add_fk_post_office_email_template_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: post_office_email
+                foreignKeyName: pos_template_id_3c48ffa2f1c17f43_fk_post_office_emailtemplate_i
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: post_office_email
+            baseColumnNames: template_id
+            referencedTableName: post_office_emailtemplate
+            referencedColumnNames: id
+            constraintName: pos_template_id_3c48ffa2f1c17f43_fk_post_office_emailtemplate_i
+
+  - changeSet:
+      id: V051_create_post_office_attachment_emails
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: post_office_attachment_emails
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: attachment_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V051_drop_post_office_attachment_emails_attachment_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: post_office_attachment_emails
+            indexName: attachment_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: post_office_attachment_emails
+            constraintName: attachment_id
+
+  - changeSet:
+      id: V051_drop_post_office_attachment_emails_unq_post_office_attachment_emails_attachment_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: post_office_attachment_emails
+            indexName: unq_post_office_attachment_emails_attachment_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: post_office_attachment_emails
+            constraintName: unq_post_office_attachment_emails_attachment_id
+
+  - changeSet:
+      id: V051_add_post_office_attachment_emails_post_office_attachment_emails_attachment_id_email_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: post_office_attachment_emails
+                indexName: post_office_attachment_emails_attachment_id_email_id_key
+      changes:
+        - addUniqueConstraint:
+            tableName: post_office_attachment_emails
+            constraintName: post_office_attachment_emails_attachment_id_email_id_key
+            columnNames: attachment_id, email_id
+
+  - changeSet:
+      id: V051_add_indexes_to_post_office_attachment_emails
+      author: seafile
+      changes:
+        - createIndex:
+            tableName: post_office_attachment_emails
+            indexName: post_office_att_email_id_f053bb3a1fa4afd_fk_post_office_email_i
+            columns:
+              - column:
+                  name: email_id
+
+  - changeSet:
+      id: V051_add_fks_to_post_office_attachment_emails
+      author: seafile
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: post_office_attachment_emails
+            baseColumnNames: attachment_id
+            referencedTableName: post_office_attachment
+            referencedColumnNames: id
+            constraintName: post__attachment_id_388fa287a684f8f_fk_post_office_attachment_i
+        - addForeignKeyConstraint:
+            baseTableName: post_office_attachment_emails
+            baseColumnNames: email_id
+            referencedTableName: post_office_email
+            referencedColumnNames: id
+            constraintName: post_office_att_email_id_f053bb3a1fa4afd_fk_post_office_email_i
+
+  - changeSet:
+      id: V051_create_post_office_log
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: post_office_log
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: integer unsigned
+                  constraints:
+                    nullable: false
+              - column:
+                  name: exception_type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: message
+                  type: longtext
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V051_add_index_to_post_office_log_email_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: post_office_log
+                indexName: post_office_lo_email_id_72165efe97e2d836_fk_post_office_email_i
+      changes:
+        - createIndex:
+            tableName: post_office_log
+            indexName: post_office_lo_email_id_72165efe97e2d836_fk_post_office_email_i
+            columns:
+              - column:
+                  name: email_id
+
+  - changeSet:
+      id: V051_add_fk_post_office_log_email_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: post_office_log
+                foreignKeyName: post_office_lo_email_id_72165efe97e2d836_fk_post_office_email_i
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: post_office_log
+            baseColumnNames: email_id
+            referencedTableName: post_office_email
+            referencedColumnNames: id
+            constraintName: post_office_lo_email_id_72165efe97e2d836_fk_post_office_email_i

@@ -1,0 +1,86 @@
+databaseChangeLog:
+  # two_factor_statictoken
+  - changeSet:
+      id: V063_drop_two_factor_statictoken_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: two_factor_statictoken
+            foreignKeyName: two_fac_device_id_55a7b345293a7c6c_fk_two_factor_staticdevice_i
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: two_factor_statictoken
+            constraintName: two_fac_device_id_55a7b345293a7c6c_fk_two_factor_staticdevice_i
+  - changeSet:
+      id: V063_drop_two_factor_statictoken_device_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: two_factor_statictoken
+            indexName: two_fac_device_id_55a7b345293a7c6c_fk_two_factor_staticdevice_i
+      changes:
+        - dropIndex:
+            tableName: two_factor_statictoken
+            indexName: two_fac_device_id_55a7b345293a7c6c_fk_two_factor_staticdevice_i
+  - changeSet:
+      id: V063_drop_two_factor_statictoken_token_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: two_factor_statictoken
+            indexName: two_factor_statictoken_94a08da1
+      changes:
+        - dropIndex:
+            tableName: two_factor_statictoken
+            indexName: two_factor_statictoken_94a08da1
+  - changeSet:
+      id: V063_recreate_two_factor_statictoken_token_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: two_factor_statictoken
+                indexName: two_factor_statictoken_token_2ade1084
+      changes:
+        - createIndex:
+            tableName: two_factor_statictoken
+            indexName: two_factor_statictoken_token_2ade1084
+            columns:
+              - column:
+                  name: token
+  - changeSet:
+      id: V063_recreate_two_factor_statictoken_device_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: two_factor_statictoken
+                indexName: two_factor_statictok_device_id_93095b45_fk_two_facto
+      changes:
+        - createIndex:
+            tableName: two_factor_statictoken
+            indexName: two_factor_statictok_device_id_93095b45_fk_two_facto
+            columns:
+              - column:
+                  name: device_id
+  - changeSet:
+      id: V063_recreate_two_factor_statictoken_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: two_factor_statictoken
+                foreignKeyName: two_factor_statictok_device_id_93095b45_fk_two_facto
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: two_factor_statictoken
+            baseColumnNames: device_id
+            referencedTableName: two_factor_staticdevice
+            referencedColumnNames: id
+            constraintName: two_factor_statictok_device_id_93095b45_fk_two_facto

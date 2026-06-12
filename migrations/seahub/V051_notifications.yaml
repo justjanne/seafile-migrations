@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: V051_notifications_usernotification_indexes_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_265e5521
+      changes:
+        - dropIndex:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_265e5521
+        - dropIndex:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_bc172800
+        - createIndex:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_486af403
+            columns:
+              - column:
+                  name: msg_type
+        - createIndex:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_86899d6f
+            columns:
+              - column:
+                  name: to_user

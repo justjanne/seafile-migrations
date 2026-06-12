@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: V100_create_org_saml_config
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: org_saml_config
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: metadata_url
+                  type: longtext
+                  constraints:
+                    nullable: false

@@ -1,0 +1,283 @@
+databaseChangeLog:
+  - changeSet:
+      id: V051_drop_old_base_userenabledmodule_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_userenabledmodule
+            indexName: base_userenabledmodule_ee0cafa2
+      changes:
+        - dropIndex:
+            tableName: base_userenabledmodule
+            indexName: base_userenabledmodule_ee0cafa2
+
+  - changeSet:
+      id: V051_add_new_base_userenabledmodule_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_userenabledmodule
+                indexName: base_userenabledmodule_14c4b06b
+      changes:
+        - createIndex:
+            tableName: base_userenabledmodule
+            indexName: base_userenabledmodule_14c4b06b
+            columns:
+              - column:
+                  name: username
+
+  - changeSet:
+      id: V051_drop_old_base_userlastlogin_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_userlastlogin
+            indexName: base_userlastlogin_ee0cafa2
+      changes:
+        - dropIndex:
+            tableName: base_userlastlogin
+            indexName: base_userlastlogin_ee0cafa2
+
+  - changeSet:
+      id: V051_add_new_base_userlastlogin_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_userlastlogin
+                indexName: base_userlastlogin_14c4b06b
+      changes:
+        - createIndex:
+            tableName: base_userlastlogin
+            indexName: base_userlastlogin_14c4b06b
+            columns:
+              - column:
+                  name: username
+
+  - changeSet:
+      id: V051_modify_from_email_in_base_innerpubmsg
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: base_innerpubmsg
+            columnName: from_email
+            newDataType: varchar(254)
+        - addNotNullConstraint:
+            tableName: base_innerpubmsg
+            columnName: from_email
+            columnDataType: varchar(254)
+
+  - changeSet:
+      id: V051_modify_from_email_in_base_innerpubmsgreply
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: base_innerpubmsgreply
+            columnName: from_email
+            newDataType: varchar(254)
+        - addNotNullConstraint:
+            tableName: base_innerpubmsgreply
+            columnName: from_email
+            columnDataType: varchar(254)
+
+  - changeSet:
+      id: V051_modify_email_in_base_userstarredfiles
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: base_userstarredfiles
+            columnName: email
+            newDataType: varchar(254)
+        - addNotNullConstraint:
+            tableName: base_userstarredfiles
+            columnName: email
+            columnDataType: varchar(254)
+
+  - changeSet:
+      id: V051_drop_base_uuidobjidmap
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: base_uuidobjidmap
+      changes:
+        - dropTable:
+            tableName: base_uuidobjidmap
+
+  - changeSet:
+      id: V051_drop_pubfile_grouppublicfile
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: pubfile_grouppublicfile
+      changes:
+        - dropTable:
+            tableName: pubfile_grouppublicfile
+
+  - changeSet:
+      id: V051_drop_old_base_clientlogintoken_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_clientlogintoken
+            indexName: base_clientlogintoken_ee0cafa2
+      changes:
+        - dropIndex:
+            tableName: base_clientlogintoken
+            indexName: base_clientlogintoken_ee0cafa2
+
+  - changeSet:
+      id: V051_add_new_base_clientlogintoken_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_clientlogintoken
+                indexName: base_clientlogintoken_14c4b06b
+      changes:
+        - createIndex:
+            tableName: base_clientlogintoken
+            indexName: base_clientlogintoken_14c4b06b
+            columns:
+              - column:
+                  name: username
+
+  - changeSet:
+      id: V051_base_filediscuss_fk_and_index_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_filediscuss
+            indexName: base_filediscuss_12d5396a
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: base_filediscuss
+            constraintName: group_message_id_refs_id_c336ac2f
+        - dropIndex:
+            tableName: base_filediscuss
+            indexName: base_filediscuss_12d5396a
+        - dropIndex:
+            tableName: base_filediscuss
+            indexName: base_filediscuss_656b4f4a
+        - createIndex:
+            tableName: base_filediscuss
+            indexName: base__group_message_id_6915ac55a0bd929c_fk_group_groupmessage_i
+            columns:
+              - column:
+                  name: group_message_id
+        - createIndex:
+            tableName: base_filediscuss
+            indexName: base_filediscuss_b57d9b6b
+            columns:
+              - column:
+                  name: path_hash
+        - addForeignKeyConstraint:
+            baseTableName: base_filediscuss
+            baseColumnNames: group_message_id
+            referencedTableName: group_groupmessage
+            referencedColumnNames: id
+            constraintName: base__group_message_id_6915ac55a0bd929c_fk_group_groupmessage_i
+
+  - changeSet:
+      id: V051_base_groupenabledmodule_index_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_groupenabledmodule
+            indexName: base_groupenabledmodule_dc00373b
+      changes:
+        - dropIndex:
+            tableName: base_groupenabledmodule
+            indexName: base_groupenabledmodule_dc00373b
+        - createIndex:
+            tableName: base_groupenabledmodule
+            indexName: base_groupenabledmodule_0e939a4f
+            columns:
+              - column:
+                  name: group_id
+
+  - changeSet:
+      id: V051_drop_base_innerpubmsgreply_reply_to_id_refs_id_bff92b48
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyName: reply_to_id_refs_id_bff92b48
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: base_innerpubmsgreply
+            constraintName: reply_to_id_refs_id_bff92b48
+
+  - changeSet:
+      id: V051_drop_base_innerpubmsgreply_base_innerpubmsgreply_3fde75e6
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_innerpubmsgreply
+            indexName: base_innerpubmsgreply_3fde75e6
+      changes:
+        - dropIndex:
+            tableName: base_innerpubmsgreply
+            indexName: base_innerpubmsgreply_3fde75e6
+
+  - changeSet:
+      id: V051_base_innerpubmsgreply_fk_and_index_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_innerpubmsgreply
+                indexName: base_innerpu_reply_to_id_27731e1a4586de01_fk_base_innerpubmsg_i
+      changes:
+        - createIndex:
+            tableName: base_innerpubmsgreply
+            indexName: base_innerpu_reply_to_id_27731e1a4586de01_fk_base_innerpubmsg_i
+            columns:
+              - column:
+                  name: reply_to_id
+        - addForeignKeyConstraint:
+            baseTableName: base_innerpubmsgreply
+            baseColumnNames: reply_to_id
+            referencedTableName: base_innerpubmsg
+            referencedColumnNames: id
+            constraintName: base_innerpu_reply_to_id_27731e1a4586de01_fk_base_innerpubmsg_i
+
+  - changeSet:
+      id: V051_base_userstarredfiles_indexes_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_2059abe4
+      changes:
+        - dropIndex:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_2059abe4
+        - dropIndex:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_830a6ccb
+        - createIndex:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_9a8c79bf
+            columns:
+              - column:
+                  name: repo_id
+        - createIndex:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_0c83f57c
+            columns:
+              - column:
+                  name: email

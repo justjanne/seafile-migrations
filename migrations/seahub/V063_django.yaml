@@ -1,0 +1,58 @@
+databaseChangeLog:
+  # django_content_type
+  - changeSet:
+      id: V063_drop_django_content_type_unique_constraint
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: django_content_type
+            indexName: django_content_type_app_label_45f3b1d93ec8c61c_uniq
+      changes:
+        - dropUniqueConstraint:
+            tableName: django_content_type
+            constraintName: django_content_type_app_label_45f3b1d93ec8c61c_uniq
+  - changeSet:
+      id: V063_recreate_django_content_type_unique_constraint
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: django_content_type
+                indexName: django_content_type_app_label_model_76bd3d3b_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: django_content_type
+            columnNames: app_label, model
+            constraintName: django_content_type_app_label_model_76bd3d3b_uniq
+
+  # django_session
+  - changeSet:
+      id: V063_drop_django_session_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: django_session
+            indexName: django_session_de54fa62
+      changes:
+        - dropIndex:
+            tableName: django_session
+            indexName: django_session_de54fa62
+  - changeSet:
+      id: V063_recreate_django_session_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: django_session
+                indexName: django_session_expire_date_a5c62663
+      changes:
+        - createIndex:
+            tableName: django_session
+            indexName: django_session_expire_date_a5c62663
+            columns:
+              - column:
+                  name: expire_date

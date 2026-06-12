@@ -1,0 +1,30 @@
+databaseChangeLog:
+  # trusted_ip_trustedip
+  - changeSet:
+      id: V063_drop_trusted_ip_trustedip_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: trusted_ip_trustedip
+            indexName: trusted_ip_trustedip_957b527b
+      changes:
+        - dropIndex:
+            tableName: trusted_ip_trustedip
+            indexName: trusted_ip_trustedip_957b527b
+  - changeSet:
+      id: V063_recreate_trusted_ip_trustedip_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: trusted_ip_trustedip
+                indexName: trusted_ip_trustedip_ip_e898970c
+      changes:
+        - createIndex:
+            tableName: trusted_ip_trustedip
+            indexName: trusted_ip_trustedip_ip_e898970c
+            columns:
+              - column:
+                  name: ip

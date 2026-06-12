@@ -1,0 +1,191 @@
+databaseChangeLog:
+  - changeSet:
+      id: V015_create_group_groupmessage
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: group_groupmessage
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: from_email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: message
+                  type: varchar(2048)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_add_index_to_group_groupmessage_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: group_groupmessage
+                indexName: group_groupmessage_dc00373b
+      changes:
+        - createIndex:
+            tableName: group_groupmessage
+            indexName: group_groupmessage_dc00373b
+            columns:
+              - column:
+                  name: group_id
+  - changeSet:
+      id: V015_create_group_messageattachment
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: group_messageattachment
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_message_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: attach_type
+                  type: varchar(5)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: src
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_add_index_to_group_messageattachment_group_message_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: group_messageattachment
+                indexName: group_messageattachment_12d5396a
+      changes:
+        - createIndex:
+            tableName: group_messageattachment
+            indexName: group_messageattachment_12d5396a
+            columns:
+              - column:
+                  name: group_message_id
+  - changeSet:
+      id: V015_add_fk_group_messageattachment_group_message_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: group_messageattachment
+                foreignKeyName: group_message_id_refs_id_e9a00d2a
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: group_messageattachment
+            baseColumnNames: group_message_id
+            referencedTableName: group_groupmessage
+            referencedColumnNames: id
+            constraintName: group_message_id_refs_id_e9a00d2a
+  - changeSet:
+      id: V015_create_group_messagereply
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: group_messagereply
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: reply_to_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: from_email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: message
+                  type: varchar(2048)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_add_index_to_group_messagereply_reply_to_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: group_messagereply
+                indexName: group_messagereply_3fde75e6
+      changes:
+        - createIndex:
+            tableName: group_messagereply
+            indexName: group_messagereply_3fde75e6
+            columns:
+              - column:
+                  name: reply_to_id
+  - changeSet:
+      id: V015_add_fk_group_messagereply_reply_to_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: group_messagereply
+                foreignKeyName: reply_to_id_refs_id_261fb244
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: group_messagereply
+            baseColumnNames: reply_to_id
+            referencedTableName: group_groupmessage
+            referencedColumnNames: id
+            constraintName: reply_to_id_refs_id_261fb244

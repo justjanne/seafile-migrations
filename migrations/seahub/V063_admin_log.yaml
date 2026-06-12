@@ -1,0 +1,58 @@
+databaseChangeLog:
+  # admin_log_adminlog
+  - changeSet:
+      id: V063_drop_admin_log_adminlog_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: admin_log_adminlog
+            indexName: admin_log_adminlog_0c83f57c
+      changes:
+        - dropIndex:
+            tableName: admin_log_adminlog
+            indexName: admin_log_adminlog_0c83f57c
+  - changeSet:
+      id: V063_recreate_admin_log_adminlog_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: admin_log_adminlog
+                indexName: admin_log_adminlog_email_7213c993
+      changes:
+        - createIndex:
+            tableName: admin_log_adminlog
+            indexName: admin_log_adminlog_email_7213c993
+            columns:
+              - column:
+                  name: email
+  - changeSet:
+      id: V063_drop_admin_log_adminlog_operation
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: admin_log_adminlog
+            indexName: admin_log_adminlog_f7235a61
+      changes:
+        - dropIndex:
+            tableName: admin_log_adminlog
+            indexName: admin_log_adminlog_f7235a61
+  - changeSet:
+      id: V063_recreate_admin_log_adminlog_operation
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: admin_log_adminlog
+                indexName: admin_log_adminlog_operation_4bad7bd1
+      changes:
+        - createIndex:
+            tableName: admin_log_adminlog
+            indexName: admin_log_adminlog_operation_4bad7bd1
+            columns:
+              - column:
+                  name: operation

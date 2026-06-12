@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_sdoc_notification_add_index_user_seen
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: sdoc_notification
+                indexName: idx_user_seen
+      changes:
+        - createIndex:
+            tableName: sdoc_notification
+            indexName: idx_user_seen
+            columns:
+              - column:
+                  name: username
+              - column:
+                  name: seen

@@ -1,0 +1,18 @@
+databaseChangeLog:
+  # options_useroptions
+  - changeSet:
+      id: V070_add_index_to_options_useroptions_option_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: options_useroptions
+                indexName: options_useroptions_option_key_7bf7ae4b
+      changes:
+        - createIndex:
+            tableName: options_useroptions
+            indexName: options_useroptions_option_key_7bf7ae4b
+            columns:
+              - column:
+                  name: option_key

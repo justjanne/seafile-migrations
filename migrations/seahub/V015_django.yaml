@@ -1,0 +1,109 @@
+databaseChangeLog:
+  - changeSet:
+      id: V015_create_django_content_type
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: django_content_type
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: app_label
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: model
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_drop_django_content_type_app_label
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: django_content_type
+            indexName: app_label
+      changes:
+        - dropUniqueConstraint:
+            tableName: django_content_type
+            constraintName: app_label
+  - changeSet:
+      id: V015_drop_django_content_type_unq_django_content_type_app_label_model
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: django_content_type
+            indexName: unq_django_content_type_app_label_model
+      changes:
+        - dropUniqueConstraint:
+            tableName: django_content_type
+            constraintName: unq_django_content_type_app_label_model
+  - changeSet:
+      id: V015_add_django_content_type_
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: django_content_type
+                indexName: django_content_type_app_label_model_key
+      changes:
+        - addUniqueConstraint:
+            tableName: django_content_type
+            constraintName: django_content_type_app_label_model_key
+            columnNames: app_label, model
+  - changeSet:
+      id: V015_create_django_session
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: django_session
+            columns:
+              - column:
+                  name: session_key
+                  type: varchar(40)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: session_data
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expire_date
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_add_index_to_django_session_expire_date
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: django_session
+                indexName: django_session_b7b81f0c
+      changes:
+        - createIndex:
+            tableName: django_session
+            indexName: django_session_b7b81f0c
+            columns:
+              - column:
+                  name: expire_date

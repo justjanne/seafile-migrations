@@ -1,0 +1,64 @@
+databaseChangeLog:
+  - changeSet:
+      id: V061_create_institutions_institutionquota
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: institutions_institutionquota
+      changes:
+        - createTable:
+            tableName: institutions_institutionquota
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: quota
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: institution_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V061_add_index_to_institutions_institutionquota_institution_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: institutions_institutionquota
+              indexName: i_institution_id_2ca7c89373390e2c_fk_institutions_institution_i
+      changes:
+        - createIndex:
+            tableName: institutions_institutionquota
+            indexName: i_institution_id_2ca7c89373390e2c_fk_institutions_institution_i
+            columns:
+              - column:
+                  name: institution_id
+
+  - changeSet:
+      id: V061_add_fk_institutions_institutionquota_institution_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            foreignKeyConstraintExists:
+              foreignKeyTableName: institutions_institutionquota
+              foreignKeyName: i_institution_id_2ca7c89373390e2c_fk_institutions_institution_i
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: institutions_institutionquota
+            baseColumnNames: institution_id
+            referencedTableName: institutions_institution
+            referencedColumnNames: id
+            constraintName: i_institution_id_2ca7c89373390e2c_fk_institutions_institution_i

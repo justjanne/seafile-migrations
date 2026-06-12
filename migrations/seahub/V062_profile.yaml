@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_profile_profile_address_book_drop_default
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: profile_profile
+            columnName: list_in_address_book
+      changes:
+        - dropDefaultValue:
+            tableName: profile_profile
+            columnName: list_in_address_book
+            columnDataType: boolean
+  - changeSet:
+      id: V062_add_list_in_address_book_to_profile_profile
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: profile_profile
+                columnName: list_in_address_book
+      changes:
+        - addColumn:
+            tableName: profile_profile
+            columns:
+              - column:
+                  name: list_in_address_book
+                  type: boolean
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V062_add_index_to_profile_profile_list_in_address_book
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_profile
+                indexName: profile_profile_3d5d3631
+      changes:
+        - createIndex:
+            tableName: profile_profile
+            indexName: profile_profile_3d5d3631
+            columns:
+              - column:
+                  name: list_in_address_book

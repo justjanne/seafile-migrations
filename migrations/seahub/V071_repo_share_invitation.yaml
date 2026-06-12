@@ -1,0 +1,84 @@
+databaseChangeLog:
+  - changeSet:
+      id: V071_create_repo_share_invitation
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repo_share_invitation
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: invitation_id
+                  type: int
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V071_add_index_to_repo_share_invitation_invitation_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repo_share_invitation
+                indexName: repo_share_invitatio_invitation_id_b71effd2_fk_invitatio
+      changes:
+        - createIndex:
+            tableName: repo_share_invitation
+            indexName: repo_share_invitatio_invitation_id_b71effd2_fk_invitatio
+            columns:
+              - column:
+                  name: invitation_id
+  - changeSet:
+      id: V071_add_index_to_repo_share_invitation_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repo_share_invitation
+                indexName: repo_share_invitation_repo_id_7bcf84fa
+      changes:
+        - createIndex:
+            tableName: repo_share_invitation
+            indexName: repo_share_invitation_repo_id_7bcf84fa
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V071_add_foreign_key_to_repo_share_invitation_invitation_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: repo_share_invitation
+                foreignKeyName: repo_share_invitatio_invitation_id_b71effd2_fk_invitatio
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: repo_share_invitation
+            baseColumnNames: invitation_id
+            referencedTableName: invitations_invitation
+            referencedColumnNames: id
+            constraintName: repo_share_invitatio_invitation_id_b71effd2_fk_invitatio

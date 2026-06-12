@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: V061_drop_message_usermsgattachment
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: message_usermsgattachment
+      changes:
+        - dropTable:
+            tableName: message_usermsgattachment
+
+  - changeSet:
+      id: V061_drop_message_usermessage
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: message_usermessage
+      changes:
+        - dropTable:
+            tableName: message_usermessage
+
+  - changeSet:
+      id: V061_drop_message_usermsglastcheck
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: message_usermsglastcheck
+      changes:
+        - dropTable:
+            tableName: message_usermsglastcheck

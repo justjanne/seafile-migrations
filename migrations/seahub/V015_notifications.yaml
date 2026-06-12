@@ -1,0 +1,98 @@
+databaseChangeLog:
+  - changeSet:
+      id: V015_create_notifications_notification
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: notifications_notification
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: message
+                  type: varchar(512)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: primary
+                  type: boolean
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_create_notifications_usernotification
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: notifications_usernotification
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: to_user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: msg_type
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: detail
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: seen
+                  type: boolean
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_add_index_to_notifications_usernotification_to_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: notifications_usernotification
+                indexName: notifications_usernotification_bc172800
+      changes:
+        - createIndex:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_bc172800
+            columns:
+              - column:
+                  name: to_user
+  - changeSet:
+      id: V015_add_index_to_notifications_usernotification_msg_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: notifications_usernotification
+                indexName: notifications_usernotification_265e5521
+      changes:
+        - createIndex:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_265e5521
+            columns:
+              - column:
+                  name: msg_type

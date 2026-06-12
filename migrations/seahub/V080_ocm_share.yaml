@@ -1,0 +1,109 @@
+databaseChangeLog:
+  - changeSet:
+      id: V080_create_ocm_share
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: ocm_share
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: shared_secret
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: from_user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to_user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to_server_url
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ctime
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V080_add_unique_constraint_to_ocm_share_shared_secret
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: ocm_share
+                indexName: shared_secret
+      changes:
+        - addUniqueConstraint:
+            tableName: ocm_share
+            columnNames: shared_secret
+            constraintName: shared_secret
+  - changeSet:
+      id: V080_add_indexes_to_ocm_share
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: ocm_share
+                indexName: ocm_share_from_user_7fbb7bb6
+      changes:
+        - createIndex:
+            tableName: ocm_share
+            indexName: ocm_share_from_user_7fbb7bb6
+            columns:
+              - column:
+                  name: from_user
+        - createIndex:
+            tableName: ocm_share
+            indexName: ocm_share_to_user_4e255523
+            columns:
+              - column:
+                  name: to_user
+        - createIndex:
+            tableName: ocm_share
+            indexName: ocm_share_to_server_url_43f0e89b
+            columns:
+              - column:
+                  name: to_server_url
+        - createIndex:
+            tableName: ocm_share
+            indexName: ocm_share_repo_id_51937581
+            columns:
+              - column:
+                  name: repo_id

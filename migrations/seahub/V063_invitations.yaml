@@ -1,0 +1,58 @@
+databaseChangeLog:
+  # invitations_invitation
+  - changeSet:
+      id: V063_drop_invitations_invitation_inviter_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: invitations_invitation
+            indexName: invitations_invitation_d5dd16f8
+      changes:
+        - dropIndex:
+            tableName: invitations_invitation
+            indexName: invitations_invitation_d5dd16f8
+  - changeSet:
+      id: V063_drop_invitations_invitation_token_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: invitations_invitation
+            indexName: invitations_invitation_token_1961fbb98c05e5fd_uniq
+      changes:
+        - dropIndex:
+            tableName: invitations_invitation
+            indexName: invitations_invitation_token_1961fbb98c05e5fd_uniq
+  - changeSet:
+      id: V063_recreate_invitations_invitation_inviter_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: invitations_invitation
+                indexName: invitations_invitation_inviter_b0a7b855
+      changes:
+        - createIndex:
+            tableName: invitations_invitation
+            indexName: invitations_invitation_inviter_b0a7b855
+            columns:
+              - column:
+                  name: inviter
+  - changeSet:
+      id: V063_recreate_invitations_invitation_token_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: invitations_invitation
+                indexName: invitations_invitation_token_25a92a38
+      changes:
+        - createIndex:
+            tableName: invitations_invitation
+            indexName: invitations_invitation_token_25a92a38
+            columns:
+              - column:
+                  name: token

@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: V042_create_organizations_orgmemberquota
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: organizations_orgmemberquota
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quota
+                  type: int
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V042_add_index_to_organizations_orgmemberquota_org_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: organizations_orgmemberquota
+                indexName: organizations_orgmemberquota_944dadb6
+      changes:
+        - createIndex:
+            tableName: organizations_orgmemberquota
+            indexName: organizations_orgmemberquota_944dadb6
+            columns:
+              - column:
+                  name: org_id

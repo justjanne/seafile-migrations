@@ -1,0 +1,83 @@
+databaseChangeLog:
+  - changeSet:
+      id: V060_create_invitations_invitation
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: invitations_invitation
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: inviter
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: accepter
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: invite_time
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: accept_time
+                  type: datetime
+              - column:
+                  name: invite_type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expire_time
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V060_add_inviter_index_to_invitations_invitation
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: invitations_invitation
+                indexName: invitations_invitation_d5dd16f8
+      changes:
+        - createIndex:
+            tableName: invitations_invitation
+            indexName: invitations_invitation_d5dd16f8
+            columns:
+              - column:
+                  name: inviter
+
+  - changeSet:
+      id: V060_add_token_index_to_invitations_invitation
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: invitations_invitation
+                indexName: invitations_invitation_token_1961fbb98c05e5fd_uniq
+      changes:
+        - createIndex:
+            tableName: invitations_invitation
+            indexName: invitations_invitation_token_1961fbb98c05e5fd_uniq
+            columns:
+              - column:
+                  name: token

@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_sysadmin_extra_userloginlog_login_success_drop_default
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: sysadmin_extra_userloginlog
+            columnName: login_success
+      changes:
+        - dropDefaultValue:
+            tableName: sysadmin_extra_userloginlog
+            columnName: login_success
+            columnDataType: boolean
+  - changeSet:
+      id: V062_add_login_success_to_sysadmin_extra_userloginlog
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            columnExists:
+              tableName: sysadmin_extra_userloginlog
+              columnName: login_success
+      changes:
+        - addColumn:
+            tableName: sysadmin_extra_userloginlog
+            columns:
+              - column:
+                  name: login_success
+                  type: boolean
+                  constraints:
+                    nullable: false

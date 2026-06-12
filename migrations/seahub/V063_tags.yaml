@@ -1,0 +1,172 @@
+databaseChangeLog:
+  # tags_filetag
+  - changeSet:
+      id: V063_drop_tags_filetag_tag_id_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: tags_filetag
+            foreignKeyName: tags_filetag_tag_id_39c4746ee9d70b71_fk_tags_tags_id
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: tags_filetag
+            constraintName: tags_filetag_tag_id_39c4746ee9d70b71_fk_tags_tags_id
+  - changeSet:
+      id: V063_drop_tags_filetag_uuid_id_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: tags_filetag
+            foreignKeyName: tags_filetag_uuid_id_5e2dc8ebbab85301_fk_tags_fileuuidmap_uuid
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: tags_filetag
+            constraintName: tags_filetag_uuid_id_5e2dc8ebbab85301_fk_tags_fileuuidmap_uuid
+  - changeSet:
+      id: V063_drop_tags_filetag_tag_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: tags_filetag
+            indexName: tags_filetag_tag_id_39c4746ee9d70b71_fk_tags_tags_id
+      changes:
+        - dropIndex:
+            tableName: tags_filetag
+            indexName: tags_filetag_tag_id_39c4746ee9d70b71_fk_tags_tags_id
+  - changeSet:
+      id: V063_drop_tags_filetag_uuid_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: tags_filetag
+            indexName: tags_filetag_uuid_id_5e2dc8ebbab85301_fk_tags_fileuuidmap_uuid
+      changes:
+        - dropIndex:
+            tableName: tags_filetag
+            indexName: tags_filetag_uuid_id_5e2dc8ebbab85301_fk_tags_fileuuidmap_uuid
+  - changeSet:
+      id: V063_recreate_tags_filetag_tag_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: tags_filetag
+                indexName: tags_filetag_tag_id_0f264fc9_fk_tags_tags_id
+      changes:
+        - createIndex:
+            tableName: tags_filetag
+            indexName: tags_filetag_tag_id_0f264fc9_fk_tags_tags_id
+            columns:
+              - column:
+                  name: tag_id
+  - changeSet:
+      id: V063_recreate_tags_filetag_uuid_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: tags_filetag
+                indexName: tags_filetag_uuid_id_2aa2266c_fk_tags_fileuuidmap_uuid
+      changes:
+        - createIndex:
+            tableName: tags_filetag
+            indexName: tags_filetag_uuid_id_2aa2266c_fk_tags_fileuuidmap_uuid
+            columns:
+              - column:
+                  name: uuid_id
+  - changeSet:
+      id: V063_recreate_tags_filetag_uuid_id_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: tags_filetag
+                foreignKeyName: tags_filetag_uuid_id_2aa2266c_fk_tags_fileuuidmap_uuid
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: tags_filetag
+            baseColumnNames: uuid_id
+            referencedTableName: tags_fileuuidmap
+            referencedColumnNames: uuid
+            constraintName: tags_filetag_uuid_id_2aa2266c_fk_tags_fileuuidmap_uuid
+  - changeSet:
+      id: V063_recreate_tags_filetag_tag_id_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: tags_filetag
+                foreignKeyName: tags_filetag_tag_id_0f264fc9_fk_tags_tags_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: tags_filetag
+            baseColumnNames: tag_id
+            referencedTableName: tags_tags
+            referencedColumnNames: id
+            constraintName: tags_filetag_tag_id_0f264fc9_fk_tags_tags_id
+
+  # tags_fileuuidmap
+  - changeSet:
+      id: V063_drop_tags_fileuuidmap_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: tags_fileuuidmap
+            indexName: tags_fileuuidmap_9a8c79bf
+      changes:
+        - dropIndex:
+            tableName: tags_fileuuidmap
+            indexName: tags_fileuuidmap_9a8c79bf
+  - changeSet:
+      id: V063_drop_tags_fileuuidmap_repo_id_parent_path_md5_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: tags_fileuuidmap
+            indexName: tags_fileuuidmap_c5bf47d4
+      changes:
+        - dropIndex:
+            tableName: tags_fileuuidmap
+            indexName: tags_fileuuidmap_c5bf47d4
+  - changeSet:
+      id: V063_recreate_tags_fileuuidmap_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: tags_fileuuidmap
+                indexName: tags_fileuuidmap_repo_id_ac67aa33
+      changes:
+        - createIndex:
+            tableName: tags_fileuuidmap
+            indexName: tags_fileuuidmap_repo_id_ac67aa33
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V063_recreate_tags_fileuuidmap_repo_id_parent_path_md5_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: tags_fileuuidmap
+                indexName: tags_fileuuidmap_repo_id_parent_path_md5_c8bb0860
+      changes:
+        - createIndex:
+            tableName: tags_fileuuidmap
+            indexName: tags_fileuuidmap_repo_id_parent_path_md5_c8bb0860
+            columns:
+              - column:
+                  name: repo_id_parent_path_md5

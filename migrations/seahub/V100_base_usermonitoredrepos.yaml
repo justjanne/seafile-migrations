@@ -1,0 +1,67 @@
+databaseChangeLog:
+  - changeSet:
+      id: V100_create_base_usermonitoredrepos
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_usermonitoredrepos
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(254)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V100_add_unique_constraint_to_base_usermonitoredrepos_email_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_usermonitoredrepos
+                indexName: base_usermonitoredrepos_email_repo_id_b4ab00e4_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: base_usermonitoredrepos
+            columnNames: email, repo_id
+            constraintName: base_usermonitoredrepos_email_repo_id_b4ab00e4_uniq
+  - changeSet:
+      id: V100_add_indexes_to_base_usermonitoredrepos
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_usermonitoredrepos
+                indexName: base_usermonitoredrepos_email_55ead1b9
+      changes:
+        - createIndex:
+            tableName: base_usermonitoredrepos
+            indexName: base_usermonitoredrepos_email_55ead1b9
+            columns:
+              - column:
+                  name: email
+        - createIndex:
+            tableName: base_usermonitoredrepos
+            indexName: base_usermonitoredrepos_repo_id_00e624c3
+            columns:
+              - column:
+                  name: repo_id

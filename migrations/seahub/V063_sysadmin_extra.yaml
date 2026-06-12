@@ -1,0 +1,58 @@
+databaseChangeLog:
+  # sysadmin_extra_userloginlog
+  - changeSet:
+      id: V063_drop_sysadmin_extra_userloginlog_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: sysadmin_extra_userloginlog
+            indexName: sysadmin_extra_userloginlog_14c4b06b
+      changes:
+        - dropIndex:
+            tableName: sysadmin_extra_userloginlog
+            indexName: sysadmin_extra_userloginlog_14c4b06b
+  - changeSet:
+      id: V063_drop_sysadmin_extra_userloginlog_login_date_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: sysadmin_extra_userloginlog
+            indexName: sysadmin_extra_userloginlog_28ed1ef0
+      changes:
+        - dropIndex:
+            tableName: sysadmin_extra_userloginlog
+            indexName: sysadmin_extra_userloginlog_28ed1ef0
+  - changeSet:
+      id: V063_recreate_sysadmin_extra_userloginlog_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: sysadmin_extra_userloginlog
+                indexName: sysadmin_extra_userloginlog_username_5748b9e3
+      changes:
+        - createIndex:
+            tableName: sysadmin_extra_userloginlog
+            indexName: sysadmin_extra_userloginlog_username_5748b9e3
+            columns:
+              - column:
+                  name: username
+  - changeSet:
+      id: V063_recreate_sysadmin_extra_userloginlog_login_date_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: sysadmin_extra_userloginlog
+                indexName: sysadmin_extra_userloginlog_login_date_c171d790
+      changes:
+        - createIndex:
+            tableName: sysadmin_extra_userloginlog
+            indexName: sysadmin_extra_userloginlog_login_date_c171d790
+            columns:
+              - column:
+                  name: login_date

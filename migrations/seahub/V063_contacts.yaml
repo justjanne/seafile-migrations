@@ -1,0 +1,30 @@
+databaseChangeLog:
+  # contacts_contact
+  - changeSet:
+      id: V063_drop_contacts_contact_user_email_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: contacts_contact
+            indexName: contacts_contact_40c27bdc
+      changes:
+        - dropIndex:
+            tableName: contacts_contact
+            indexName: contacts_contact_40c27bdc
+  - changeSet:
+      id: V063_recreate_contacts_contact_user_email_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: contacts_contact
+                indexName: contacts_contact_user_email_149035d4
+      changes:
+        - createIndex:
+            tableName: contacts_contact
+            indexName: contacts_contact_user_email_149035d4
+            columns:
+              - column:
+                  name: user_email

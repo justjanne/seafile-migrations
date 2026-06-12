@@ -1,0 +1,116 @@
+databaseChangeLog:
+  - changeSet:
+      id: V021_create_share_uploadlinkshare
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: share_uploadlinkshare
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ctime
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: view_cnt
+                  type: int
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V021_drop_share_uploadlinkshare_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_uploadlinkshare
+            indexName: token
+      changes:
+        - dropUniqueConstraint:
+            tableName: share_uploadlinkshare
+            constraintName: token
+  - changeSet:
+      id: V021_drop_share_uploadlinkshare_unq_share_uploadlinkshare_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_uploadlinkshare
+            indexName: unq_share_uploadlinkshare_token
+      changes:
+        - dropUniqueConstraint:
+            tableName: share_uploadlinkshare
+            constraintName: unq_share_uploadlinkshare_token
+  - changeSet:
+      id: V021_add_unique_constraint_to_share_uploadlinkshare_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_uploadlinkshare
+                indexName: share_uploadlinkshare_token_key
+      changes:
+        - addUniqueConstraint:
+            tableName: share_uploadlinkshare
+            constraintName: share_uploadlinkshare_token_key
+            columnNames: token
+  - changeSet:
+      id: V021_add_index_to_share_uploadlinkshare_username
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_uploadlinkshare
+                indexName: share_uploadlinkshare_ee0cafa2
+      changes:
+        - createIndex:
+            tableName: share_uploadlinkshare
+            indexName: share_uploadlinkshare_ee0cafa2
+            columns:
+              - column:
+                  name: username
+  - changeSet:
+      id: V021_add_index_to_share_uploadlinkshare_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_uploadlinkshare
+                indexName: share_uploadlinkshare_2059abe4
+      changes:
+        - createIndex:
+            tableName: share_uploadlinkshare
+            indexName: share_uploadlinkshare_2059abe4
+            columns:
+              - column:
+                  name: repo_id

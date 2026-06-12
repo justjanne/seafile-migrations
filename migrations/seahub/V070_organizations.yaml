@@ -1,0 +1,29 @@
+databaseChangeLog:
+  # organizations_orgsettings
+  - changeSet:
+      id: V070_create_organizations_orgsettings
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: organizations_orgsettings
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: organizations_orgsettings_org_id_630f6843_uniq
+              - column:
+                  name: role
+                  type: varchar(100)
+                  constraints:
+                    nullable: true

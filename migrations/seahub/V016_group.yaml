@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: V016_create_group_publicgroup
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: group_publicgroup
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: int
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V016_add_index_to_group_publicgroup_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: group_publicgroup
+                indexName: group_publicgroup_dc00373b
+      changes:
+        - createIndex:
+            tableName: group_publicgroup
+            indexName: group_publicgroup_dc00373b
+            columns:
+              - column:
+                  name: group_id

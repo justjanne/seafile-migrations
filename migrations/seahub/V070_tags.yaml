@@ -1,0 +1,122 @@
+databaseChangeLog:
+  # repo_tags_repotags
+  - changeSet:
+      id: V070_create_repo_tags_repotags
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repo_tags_repotags
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: color
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V070_create_repo_tags_repotags_indexes
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repo_tags_repotags
+                indexName: repo_tags_repotags_repo_id_1163a48f
+      changes:
+        - createIndex:
+            tableName: repo_tags_repotags
+            indexName: repo_tags_repotags_repo_id_1163a48f
+            columns:
+              - column:
+                  name: repo_id
+        - createIndex:
+            tableName: repo_tags_repotags
+            indexName: repo_tags_repotags_name_3f4c9027
+            columns:
+              - column:
+                  name: name
+        - createIndex:
+            tableName: repo_tags_repotags
+            indexName: repo_tags_repotags_color_1292b6c1
+            columns:
+              - column:
+                  name: color
+
+  # file_tags_filetags
+  - changeSet:
+      id: V070_create_file_tags_filetags
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: file_tags_filetags
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: file_uuid_id
+                  type: char(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_tag_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V070_create_file_tags_filetags_foreign_keys_1
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: file_tags_filetags
+                foreignKeyName: file_tags_filetags_file_uuid_id_e30f0ec8_fk_tags_file
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: file_tags_filetags
+            baseColumnNames: file_uuid_id
+            referencedTableName: tags_fileuuidmap
+            referencedColumnNames: uuid
+            constraintName: file_tags_filetags_file_uuid_id_e30f0ec8_fk_tags_file
+
+  - changeSet:
+      id: V070_create_file_tags_filetags_foreign_keys_2
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: file_tags_filetags
+                foreignKeyName: file_tags_filetags_repo_tag_id_c39660cb_fk_repo_tags_repotags_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: file_tags_filetags
+            baseColumnNames: repo_tag_id
+            referencedTableName: repo_tags_repotags
+            referencedColumnNames: id
+            constraintName: file_tags_filetags_repo_tag_id_c39660cb_fk_repo_tags_repotags_id

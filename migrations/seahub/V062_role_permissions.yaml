@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_create_role_permissions_adminrole
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: role_permissions_adminrole
+      changes:
+        - createTable:
+            tableName: role_permissions_adminrole
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(254)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V062_drop_role_permissions_adminrole_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: role_permissions_adminrole
+            indexName: email
+      changes:
+        - dropUniqueConstraint:
+            tableName: role_permissions_adminrole
+            constraintName: email
+  - changeSet:
+      id: V062_create_role_permissions_adminrole_role_permissions_adminrole_email_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: role_permissions_adminrole
+              indexName: role_permissions_adminrole_email_key
+      changes:
+        - addUniqueConstraint:
+            tableName: role_permissions_adminrole
+            constraintName: role_permissions_adminrole_email_key
+            columnNames: email

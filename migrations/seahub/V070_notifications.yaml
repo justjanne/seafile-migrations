@@ -1,0 +1,18 @@
+databaseChangeLog:
+  # notifications_usernotification
+  - changeSet:
+      id: V070_add_index_to_notifications_usernotification_timestamp
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: notifications_usernotification
+                indexName: notifications_usernotification_timestamp_125067e8
+      changes:
+        - createIndex:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_timestamp_125067e8
+            columns:
+              - column:
+                  name: timestamp

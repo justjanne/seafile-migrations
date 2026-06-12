@@ -1,0 +1,119 @@
+databaseChangeLog:
+  - changeSet:
+      id: V050_add_login_id_to_profile_profile
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: profile_profile
+                columnName: login_id
+      changes:
+        - addColumn:
+            tableName: profile_profile
+            columns:
+              - column:
+                  name: login_id
+                  type: varchar(225)
+  - changeSet:
+      id: V050_add_contact_email_to_profile_profile
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: profile_profile
+                columnName: contact_email
+      changes:
+        - addColumn:
+            tableName: profile_profile
+            columns:
+              - column:
+                  name: contact_email
+                  type: varchar(225)
+  - changeSet:
+      id: V050_add_institution_to_profile_profile
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: profile_profile
+                columnName: institution
+      changes:
+        - addColumn:
+            tableName: profile_profile
+            columns:
+              - column:
+                  name: institution
+                  type: varchar(225)
+  - changeSet:
+      id: V050_drop_profile_profile_login_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: profile_profile
+            indexName: login_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: profile_profile
+            constraintName: login_id
+  - changeSet:
+      id: V050_drop_profile_profile_unq_profile_profile_login_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: profile_profile
+            indexName: unq_profile_profile_login_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: profile_profile
+            constraintName: unq_profile_profile_login_id
+  - changeSet:
+      id: V050_add_profile_profile_profile_profile_login_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_profile
+                indexName: profile_profile_login_id_key
+      changes:
+        - addUniqueConstraint:
+            tableName: profile_profile
+            constraintName: profile_profile_login_id_key
+            columnNames: login_id
+  - changeSet:
+      id: V050_add_index_to_profile_profile_contact_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_profile
+                indexName: profile_profile_3b46cb17
+      changes:
+        - createIndex:
+            tableName: profile_profile
+            indexName: profile_profile_3b46cb17
+            columns:
+              - column:
+                  name: contact_email
+  - changeSet:
+      id: V050_add_index_to_profile_profile_institution
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_profile
+                indexName: profile_profile_71bbc151
+      changes:
+        - createIndex:
+            tableName: profile_profile
+            indexName: profile_profile_71bbc151
+            columns:
+              - column:
+                  name: institution

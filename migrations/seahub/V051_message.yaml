@@ -1,0 +1,74 @@
+databaseChangeLog:
+  - changeSet:
+      id: V051_message_usermessage_indexes_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: message_usermessage
+            indexName: message_usermessage_590d1560
+      changes:
+        - dropIndex:
+            tableName: message_usermessage
+            indexName: message_usermessage_590d1560
+        - dropIndex:
+            tableName: message_usermessage
+            indexName: message_usermessage_8b1dd4eb
+        - createIndex:
+            tableName: message_usermessage
+            indexName: message_usermessage_acc047cf
+            columns:
+              - column:
+                  name: to_email
+        - createIndex:
+            tableName: message_usermessage
+            indexName: message_usermessage_f50bd8c4
+            columns:
+              - column:
+                  name: from_email
+
+  - changeSet:
+      id: V051_message_usermsgattachment_fks_and_indexes_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: message_usermsgattachment
+            indexName: message_usermsgattachment_72f290f5
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: message_usermsgattachment
+            constraintName: priv_file_dir_share_id_refs_id_163f8f83
+        - dropForeignKeyConstraint:
+            baseTableName: message_usermsgattachment
+            constraintName: user_msg_id_refs_message_id_debb82ad
+        - dropIndex:
+            tableName: message_usermsgattachment
+            indexName: message_usermsgattachment_cee41a9a
+        - dropIndex:
+            tableName: message_usermsgattachment
+            indexName: message_usermsgattachment_72f290f5
+        - createIndex:
+            tableName: message_usermsgattachment
+            indexName: D0bceb1017884f579a81b2fab45df4e7
+            columns:
+              - column:
+                  name: priv_file_dir_share_id
+        - createIndex:
+            tableName: message_usermsgattachment
+            indexName: m_user_msg_id_3f10b9ac43610631_fk_message_usermessage_message_i
+            columns:
+              - column:
+                  name: user_msg_id
+        - addForeignKeyConstraint:
+            baseTableName: message_usermsgattachment
+            baseColumnNames: priv_file_dir_share_id
+            referencedTableName: share_privatefiledirshare
+            referencedColumnNames: id
+            constraintName: D0bceb1017884f579a81b2fab45df4e7
+        - addForeignKeyConstraint:
+            baseTableName: message_usermsgattachment
+            baseColumnNames: user_msg_id
+            referencedTableName: message_usermessage
+            referencedColumnNames: message_id
+            constraintName: m_user_msg_id_3f10b9ac43610631_fk_message_usermessage_message_i

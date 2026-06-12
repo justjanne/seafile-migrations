@@ -1,0 +1,193 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_create_tags_fileuuidmap
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: tags_fileuuidmap
+      changes:
+        - createTable:
+            tableName: tags_fileuuidmap
+            columns:
+              - column:
+                  name: uuid
+                  type: char(32)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id_parent_path_md5
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: parent_path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: filename
+                  type: varchar(1024)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_dir
+                  type: boolean
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V062_add_indexes_to_tags_fileuuidmap
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: tags_fileuuidmap
+              indexName: tags_fileuuidmap_9a8c79bf
+      changes:
+        - createIndex:
+            tableName: tags_fileuuidmap
+            indexName: tags_fileuuidmap_9a8c79bf
+            columns:
+              - column:
+                  name: repo_id
+        - createIndex:
+            tableName: tags_fileuuidmap
+            indexName: tags_fileuuidmap_c5bf47d4
+            columns:
+              - column:
+                  name: repo_id_parent_path_md5
+  - changeSet:
+      id: V062_create_tags_tags
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: tags_tags
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V062_drop_tags_tags_name
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+              tableName: tags_tags
+              indexName: name
+      changes:
+        - dropUniqueConstraint:
+            tableName: tags_tags
+            constraintName: name
+  - changeSet:
+      id: V062_create_tags_tags_tags_tags_name_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: tags_tags
+              indexName: tags_tags_name_key
+      changes:
+        - addUniqueConstraint:
+            tableName: tags_tags
+            constraintName: tags_tags_name_key
+            columnNames: name
+  - changeSet:
+      id: V062_create_tags_filetag
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: tags_filetag
+      changes:
+        - createTable:
+            tableName: tags_filetag
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: uuid_id
+                  type: char(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tag_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V062_add_indexes_to_tags_filetag
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: tags_filetag
+              indexName: tags_filetag_uuid_id_5e2dc8ebbab85301_fk_tags_fileuuidmap_uuid
+      changes:
+        - createIndex:
+            tableName: tags_filetag
+            indexName: tags_filetag_uuid_id_5e2dc8ebbab85301_fk_tags_fileuuidmap_uuid
+            columns:
+              - column:
+                  name: uuid_id
+        - createIndex:
+            tableName: tags_filetag
+            indexName: tags_filetag_tag_id_39c4746ee9d70b71_fk_tags_tags_id
+            columns:
+              - column:
+                  name: tag_id
+
+  - changeSet:
+      id: V062_add_fks_to_tags_filetag
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            foreignKeyConstraintExists:
+              foreignKeyTableName: tags_filetag
+              foreignKeyName: tags_filetag_tag_id_39c4746ee9d70b71_fk_tags_tags_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: tags_filetag
+            baseColumnNames: tag_id
+            referencedTableName: tags_tags
+            referencedColumnNames: id
+            constraintName: tags_filetag_tag_id_39c4746ee9d70b71_fk_tags_tags_id
+        - addForeignKeyConstraint:
+            baseTableName: tags_filetag
+            baseColumnNames: uuid_id
+            referencedTableName: tags_fileuuidmap
+            referencedColumnNames: uuid
+            constraintName: tags_filetag_uuid_id_5e2dc8ebbab85301_fk_tags_fileuuidmap_uuid

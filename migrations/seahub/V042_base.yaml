@@ -1,0 +1,76 @@
+databaseChangeLog:
+  - changeSet:
+      id: V042_create_base_clientlogintoken
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_clientlogintoken
+            columns:
+              - column:
+                  name: token
+                  type: varchar(32)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V042_add_index_to_base_clientlogintoken_username
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_clientlogintoken
+                indexName: base_clientlogintoken_ee0cafa2
+      changes:
+        - createIndex:
+            tableName: base_clientlogintoken
+            indexName: base_clientlogintoken_ee0cafa2
+            columns:
+              - column:
+                  name: username
+
+  - changeSet:
+      id: V042_add_password_to_share_uploadlinkshare
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: share_uploadlinkshare
+                columnName: password
+      changes:
+        - addColumn:
+            tableName: share_uploadlinkshare
+            columns:
+              - column:
+                  name: password
+                  type: varchar(128)
+
+  - changeSet:
+      id: V042_add_expire_date_to_share_uploadlinkshare
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: share_uploadlinkshare
+                columnName: expire_date
+      changes:
+        - addColumn:
+            tableName: share_uploadlinkshare
+            columns:
+              - column:
+                  name: expire_date
+                  type: datetime
+

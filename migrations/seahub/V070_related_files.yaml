@@ -1,0 +1,50 @@
+databaseChangeLog:
+  # related_files_relatedfiles
+  - changeSet:
+      id: V070_create_related_files_relatedfiles
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: related_files_relatedfiles
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: o_uuid_id
+                  type: char(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: r_uuid_id
+                  type: char(32)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V070_create_related_files_relatedfiles_foreign_keys
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: related_files_relatedfiles
+                foreignKeyName: related_files_relate_o_uuid_id_aaa8e613_fk_tags_file
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: related_files_relatedfiles
+            baseColumnNames: o_uuid_id
+            referencedTableName: tags_fileuuidmap
+            referencedColumnNames: uuid
+            constraintName: related_files_relate_o_uuid_id_aaa8e613_fk_tags_file
+        - addForeignKeyConstraint:
+            baseTableName: related_files_relatedfiles
+            baseColumnNames: r_uuid_id
+            referencedTableName: tags_fileuuidmap
+            referencedColumnNames: uuid
+            constraintName: related_files_relate_r_uuid_id_031751df_fk_tags_file

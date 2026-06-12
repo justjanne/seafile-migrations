@@ -1,0 +1,553 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_create_repo_extra_config
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repo_extra_config
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: config_type
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: config_details
+                  type: longtext
+  - changeSet:
+      id: V130_add_ix_repo_extra_repo_idconfig_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repo_extra_config
+                indexName: ix_repo_extra_repo_idconfig_type
+      changes:
+        - addUniqueConstraint:
+            tableName: repo_extra_config
+            columnNames: repo_id, config_type
+            constraintName: ix_repo_extra_repo_idconfig_type
+  - changeSet:
+      id: V130_add_ix_repo_extra_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repo_extra_config
+                indexName: ix_repo_extra_repo_id
+      changes:
+        - createIndex:
+            tableName: repo_extra_config
+            indexName: ix_repo_extra_repo_id
+            columns:
+              - column:
+                  name: repo_id
+
+  - changeSet:
+      id: V130_create_RepoTransfer
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: RepoTransfer
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: from_user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: operator
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V130_add_indexes_to_RepoTransfer
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: RepoTransfer
+                indexName: idx_file_transfer_org_id
+      changes:
+        - createIndex:
+            tableName: RepoTransfer
+            indexName: idx_file_transfer_org_id
+            columns:
+              - column:
+                  name: org_id
+        - createIndex:
+            tableName: RepoTransfer
+            indexName: idx_file_transfer_timestamp
+            columns:
+              - column:
+                  name: timestamp
+
+  - changeSet:
+      id: V130_create_group_invite_link
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: group_invite_link
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V130_add_indexes_to_group_invite_link
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: group_invite_link
+                indexName: group_invite_link_group_id
+      changes:
+        - createIndex:
+            tableName: group_invite_link
+            indexName: group_invite_link_group_id
+            columns:
+              - column:
+                  name: group_id
+        - createIndex:
+            tableName: group_invite_link
+            indexName: group_invite_link_token
+            columns:
+              - column:
+                  name: token
+
+  - changeSet:
+      id: V130_create_org_last_active_time
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: org_last_active_time
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V130_drop_org_last_active_time_org_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: org_last_active_time
+            indexName: org_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: org_last_active_time
+            constraintName: org_id
+  - changeSet:
+      id: V062_create_org_last_active_time_org_id_org_last_active_time_org_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: org_last_active_time
+              indexName: org_last_active_time_org_id_key
+      changes:
+        - addUniqueConstraint:
+            tableName: org_last_active_time
+            constraintName: org_last_active_time_org_id_key
+            columnNames: org_id
+  - changeSet:
+      id: V130_add_index_to_org_last_active_time
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: org_last_active_time
+                indexName: ix_org_last_active_time_org_id
+      changes:
+        - createIndex:
+            tableName: org_last_active_time
+            indexName: ix_org_last_active_time_org_id
+            columns:
+              - column:
+                  name: org_id
+
+  - changeSet:
+      id: V130_create_group_member_audit
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: group_member_audit
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: operator
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: operation
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V130_add_indexes_to_group_member_audit
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: group_member_audit
+                indexName: idx_group_member_audit_org_id
+      changes:
+        - createIndex:
+            tableName: group_member_audit
+            indexName: idx_group_member_audit_org_id
+            columns:
+              - column:
+                  name: org_id
+        - createIndex:
+            tableName: group_member_audit
+            indexName: idx_group_member_audit_timestamp
+            columns:
+              - column:
+                  name: timestamp
+        - createIndex:
+            tableName: group_member_audit
+            indexName: idx_group_member_audit_operator
+            columns:
+              - column:
+                  name: operator
+        - createIndex:
+            tableName: group_member_audit
+            indexName: idx_group_member_audit_user
+            columns:
+              - column:
+                  name: user
+        - createIndex:
+            tableName: group_member_audit
+            indexName: idx_group_member_audit_group_id
+            columns:
+              - column:
+                  name: group_id
+
+  - changeSet:
+      id: V130_create_notifications_sysusernotification
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: notifications_sysusernotification
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: message
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to_user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: seen
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V130_add_indexes_to_notifications_sysusernotification
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: notifications_sysusernotification
+                indexName: notifications_sysusernotification_to_user_e0c9101e
+      changes:
+        - createIndex:
+            tableName: notifications_sysusernotification
+            indexName: notifications_sysusernotification_to_user_e0c9101e
+            columns:
+              - column:
+                  name: to_user
+        - createIndex:
+            tableName: notifications_sysusernotification
+            indexName: notifications_sysusernotification_seen_9d851bf7
+            columns:
+              - column:
+                  name: seen
+        - createIndex:
+            tableName: notifications_sysusernotification
+            indexName: notifications_sysusernotification_created_at_56ffd2a0
+            columns:
+              - column:
+                  name: created_at
+
+  - changeSet:
+      id: V130_create_stats_ai_by_team
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: stats_ai_by_team
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: month
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: model
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: input_tokens
+                  type: int
+              - column:
+                  name: output_tokens
+                  type: int
+              - column:
+                  name: cost
+                  type: double
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime(6)
+              - column:
+                  name: updated_at
+                  type: datetime(6)
+  - changeSet:
+      id: V130_add_constraints_to_stats_ai_by_team
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: stats_ai_by_team
+                indexName: stats_ai_by_team_org_id_month_model
+      changes:
+        - addUniqueConstraint:
+            tableName: stats_ai_by_team
+            columnNames: org_id, month, model
+            constraintName: stats_ai_by_team_org_id_month_model
+  - changeSet:
+      id: V130_add_ix_stats_ai_by_team_org_id_month
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: stats_ai_by_team
+                indexName: ix_stats_ai_by_team_org_id_month
+      changes:
+        - createIndex:
+            tableName: stats_ai_by_team
+            indexName: ix_stats_ai_by_team_org_id_month
+            columns:
+              - column:
+                  name: org_id
+              - column:
+                  name: month
+
+  - changeSet:
+      id: V130_create_stats_ai_by_owner
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: stats_ai_by_owner
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: month
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: model
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: input_tokens
+                  type: int
+              - column:
+                  name: output_tokens
+                  type: int
+              - column:
+                  name: cost
+                  type: double
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime(6)
+              - column:
+                  name: updated_at
+                  type: datetime(6)
+  - changeSet:
+      id: V130_add_constraints_to_stats_ai_by_owner
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: stats_ai_by_owner
+                indexName: stats_ai_by_owner_username_month_model
+      changes:
+        - addUniqueConstraint:
+            tableName: stats_ai_by_owner
+            columnNames: username, month, model
+            constraintName: stats_ai_by_owner_username_month_model
+        - createIndex:
+            tableName: stats_ai_by_owner
+            indexName: ix_stats_ai_by_owner_username_month
+            columns:
+              - column:
+                  name: username
+              - column:
+                  name: month

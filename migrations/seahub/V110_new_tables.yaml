@@ -1,0 +1,577 @@
+databaseChangeLog:
+  - changeSet:
+      id: V110_create_history_name
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: history_name
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: doc_uuid
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: obj_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V110_drop_history_name_doc_uuid_obj_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: history_name
+            indexName: history_name_doc_uuid_obj_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: history_name
+            constraintName: history_name_doc_uuid_obj_id
+  - changeSet:
+      id: V110_add_constraints_to_history_name
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: history_name
+                indexName: history_name_doc_uuid_obj_id_key
+      changes:
+        - addUniqueConstraint:
+            tableName: history_name
+            columnNames: doc_uuid, obj_id
+            constraintName: history_name_doc_uuid_obj_id_key
+  - changeSet:
+      id: V110_add_history_name_doc_uuid
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: history_name
+                indexName: history_name_doc_uuid
+      changes:
+        - createIndex:
+            tableName: history_name
+            indexName: history_name_doc_uuid
+            columns:
+              - column:
+                  name: doc_uuid
+
+  - changeSet:
+      id: V110_create_sdoc_draft
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: sdoc_draft
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: doc_uuid
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: sdoc_draft_doc_uuid
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V110_add_indexes_to_sdoc_draft
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: sdoc_draft
+                indexName: sdoc_draft_repo_id
+      changes:
+        - createIndex:
+            tableName: sdoc_draft
+            indexName: sdoc_draft_repo_id
+            columns:
+              - column:
+                  name: repo_id
+        - createIndex:
+            tableName: sdoc_draft
+            indexName: sdoc_draft_username
+            columns:
+              - column:
+                  name: username
+
+  - changeSet:
+      id: V110_create_sdoc_revision
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: sdoc_revision
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: revision_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: doc_uuid
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: sdoc_revision_doc_uuid
+              - column:
+                  name: origin_doc_uuid
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: origin_doc_path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: origin_file_version
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: publish_file_version
+                  type: varchar(100)
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: publisher
+                  type: varchar(255)
+              - column:
+                  name: is_published
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V110_add_constraints_to_sdoc_revision
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: sdoc_revision
+                indexName: sdoc_revision_repo_id_revision_id
+      changes:
+        - addUniqueConstraint:
+            tableName: sdoc_revision
+            columnNames: repo_id, revision_id
+            constraintName: sdoc_revision_repo_id_revision_id
+        - createIndex:
+            tableName: sdoc_revision
+            indexName: sdoc_revision_repo_id
+            columns:
+              - column:
+                  name: repo_id
+        - createIndex:
+            tableName: sdoc_revision
+            indexName: sdoc_revision_origin_doc_uuid
+            columns:
+              - column:
+                  name: origin_doc_uuid
+        - createIndex:
+            tableName: sdoc_revision
+            indexName: sdoc_revision_username
+            columns:
+              - column:
+                  name: username
+        - createIndex:
+            tableName: sdoc_revision
+            indexName: sdoc_revision_is_published
+            columns:
+              - column:
+                  name: is_published
+
+  - changeSet:
+      id: V110_create_sdoc_comment_reply
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: sdoc_comment_reply
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: author
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reply
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: doc_uuid
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime(6)
+                  defaultValueComputed: current_timestamp(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime(6)
+                  defaultValueComputed: current_timestamp(6) ON UPDATE current_timestamp(6)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V110_add_indexes_to_sdoc_comment_reply
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: sdoc_comment_reply
+                indexName: sdoc_comment_reply_comment_id
+      changes:
+        - createIndex:
+            tableName: sdoc_comment_reply
+            indexName: sdoc_comment_reply_comment_id
+            columns:
+              - column:
+                  name: comment_id
+        - createIndex:
+            tableName: sdoc_comment_reply
+            indexName: sdoc_comment_reply_doc_uuid
+            columns:
+              - column:
+                  name: doc_uuid
+
+  - changeSet:
+      id: V110_create_deleted_files_count
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: deleted_files_count
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deleted_time
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: files_count
+                  type: bigint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V110_add_indexes_to_deleted_files_count
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: deleted_files_count
+                indexName: ix_deleted_files_count_repo_id
+      changes:
+        - createIndex:
+            tableName: deleted_files_count
+            indexName: ix_deleted_files_count_repo_id
+            columns:
+              - column:
+                  name: repo_id
+        - createIndex:
+            tableName: deleted_files_count
+            indexName: ix_deleted_files_count_deleted_time
+            columns:
+              - column:
+                  name: deleted_time
+
+  - changeSet:
+      id: V110_create_sdoc_notification
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: sdoc_notification
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: doc_uuid
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: msg_type
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: detail
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: seen
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V110_add_indexes_to_sdoc_notification
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: sdoc_notification
+                indexName: sdoc_notification_doc_uuid_username
+      changes:
+        - createIndex:
+            tableName: sdoc_notification
+            indexName: sdoc_notification_doc_uuid_username
+            columns:
+              - column:
+                  name: doc_uuid
+              - column:
+                  name: username
+        - createIndex:
+            tableName: sdoc_notification
+            indexName: sdoc_notification_created_at
+            columns:
+              - column:
+                  name: created_at
+
+  - changeSet:
+      id: V110_create_base_clientssotoken
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_clientssotoken
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+              - column:
+                  name: status
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: api_key
+                  type: varchar(40)
+              - column:
+                  name: created_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime(6)
+              - column:
+                  name: accessed_at
+                  type: datetime(6)
+  - changeSet:
+      id: V062_drop_base_clientssotoken_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_clientssotoken
+            indexName: token
+      changes:
+        - dropUniqueConstraint:
+            tableName: base_clientssotoken
+            constraintName: token
+  - changeSet:
+      id: V062_create_base_clientssotoken_base_clientssotoken_token_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: base_clientssotoken
+              indexName: base_clientssotoken_token_key
+      changes:
+        - addUniqueConstraint:
+            tableName: base_clientssotoken
+            constraintName: base_clientssotoken_token_key
+            columnNames: token
+  - changeSet:
+      id: V110_add_indexes_to_base_clientssotoken
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_clientssotoken
+                indexName: base_clientssotoken_username_651ec6b5
+      changes:
+        - createIndex:
+            tableName: base_clientssotoken
+            indexName: base_clientssotoken_username_651ec6b5
+            columns:
+              - column:
+                  name: username
+  - changeSet:
+      id: V110_add_base_clientssotoken_created_at_d185d3e0
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_clientssotoken
+                indexName: base_clientssotoken_created_at_d185d3e0
+      changes:
+        - createIndex:
+            tableName: base_clientssotoken
+            indexName: base_clientssotoken_created_at_d185d3e0
+            columns:
+              - column:
+                  name: created_at
+  - changeSet:
+      id: V110_add_base_clientssotoken_updated_at_591fc2cd
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_clientssotoken
+                indexName: base_clientssotoken_updated_at_591fc2cd
+      changes:
+        - createIndex:
+            tableName: base_clientssotoken
+            indexName: base_clientssotoken_updated_at_591fc2cd
+            columns:
+              - column:
+                  name: updated_at
+  - changeSet:
+      id: V110_add_base_clientssotoken_accessed_at_cdc66bf3
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_clientssotoken
+                indexName: base_clientssotoken_accessed_at_cdc66bf3
+      changes:
+        - createIndex:
+            tableName: base_clientssotoken
+            indexName: base_clientssotoken_accessed_at_cdc66bf3
+            columns:
+              - column:
+                  name: accessed_at

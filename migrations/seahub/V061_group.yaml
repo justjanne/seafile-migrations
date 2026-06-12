@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: V061_change_message_type_in_group_groupmessage
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: group_groupmessage
+            columnName: message
+      changes:
+        - modifyDataType:
+            tableName: group_groupmessage
+            columnName: message
+            newDataType: longtext
+        - addNotNullConstraint:
+            tableName: group_groupmessage
+            columnName: message
+            columnDataType: longtext
+
+  - changeSet:
+      id: V061_change_message_type_in_group_messagereply
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: group_messagereply
+            columnName: message
+      changes:
+        - modifyDataType:
+            tableName: group_messagereply
+            columnName: message
+            newDataType: longtext
+        - addNotNullConstraint:
+            tableName: group_messagereply
+            columnName: message
+            columnDataType: longtext

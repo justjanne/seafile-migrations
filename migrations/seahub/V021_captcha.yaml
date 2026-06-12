@@ -1,0 +1,74 @@
+databaseChangeLog:
+  - changeSet:
+      id: V021_create_captcha_captchastore
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: captcha_captchastore
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: challenge
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: response
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: hashkey
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expiration
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V021_drop_captcha_captchastore_hashkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: captcha_captchastore
+            indexName: hashkey
+      changes:
+        - dropUniqueConstraint:
+            tableName: captcha_captchastore
+            constraintName: hashkey
+  - changeSet:
+      id: V021_drop_captcha_captchastore_unq_captcha_captchastore_hashkey
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: captcha_captchastore
+            indexName: unq_captcha_captchastore_hashkey
+      changes:
+        - dropUniqueConstraint:
+            tableName: captcha_captchastore
+            constraintName: unq_captcha_captchastore_hashkey
+  - changeSet:
+      id: V021_add_captcha_captchastore_captcha_captchastore_hashkey_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: captcha_captchastore
+                indexName: captcha_captchastore_hashkey_key
+      changes:
+        - addUniqueConstraint:
+            tableName: captcha_captchastore
+            constraintName: captcha_captchastore_hashkey_key
+            columnNames: hashkey

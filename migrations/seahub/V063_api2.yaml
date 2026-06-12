@@ -1,0 +1,28 @@
+databaseChangeLog:
+  # api2_tokenv2
+  - changeSet:
+      id: V063_drop_api2_tokenv2_unique_constraint
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: api2_tokenv2
+            indexName: user
+      changes:
+        - dropUniqueConstraint:
+            tableName: api2_tokenv2
+            constraintName: user
+  - changeSet:
+      id: V063_recreate_api2_tokenv2_unique_constraint
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: api2_tokenv2
+                indexName: api2_tokenv2_user_platform_device_id_37005c24_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: api2_tokenv2
+            columnNames: user, platform, device_id
+            constraintName: api2_tokenv2_user_platform_device_id_37005c24_uniq

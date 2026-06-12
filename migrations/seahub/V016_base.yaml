@@ -1,0 +1,212 @@
+databaseChangeLog:
+  - changeSet:
+      id: V016_create_base_filediscuss
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_filediscuss
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_message_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path_hash
+                  type: varchar(12)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V016_add_index_to_base_filediscuss_group_message_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_filediscuss
+                indexName: base_filediscuss_12d5396a
+      changes:
+        - createIndex:
+            tableName: base_filediscuss
+            indexName: base_filediscuss_12d5396a
+            columns:
+              - column:
+                  name: group_message_id
+  - changeSet:
+      id: V016_add_index_to_base_filediscuss_path_hash
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_filediscuss
+                indexName: base_filediscuss_656b4f4a
+      changes:
+        - createIndex:
+            tableName: base_filediscuss
+            indexName: base_filediscuss_656b4f4a
+            columns:
+              - column:
+                  name: path_hash
+  - changeSet:
+      id: V016_add_fk_base_filediscuss_group_message_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: base_filediscuss
+                foreignKeyName: group_message_id_refs_id_c336ac2f
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: base_filediscuss
+            baseColumnNames: group_message_id
+            referencedTableName: group_groupmessage
+            referencedColumnNames: id
+            constraintName: group_message_id_refs_id_c336ac2f
+
+  - changeSet:
+      id: V016_create_base_filelastmodifiedinfo
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_filelastmodifiedinfo
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_path_hash
+                  type: varchar(12)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(75)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V016_drop_base_filelastmodifiedinfo_unq_base_filelmi_repo_hash
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_filelastmodifiedinfo
+            indexName: unq_base_filelmi_repo_hash
+      changes:
+        - dropUniqueConstraint:
+            tableName: base_filelastmodifiedinfo
+            constraintName: unq_base_filelmi_repo_hash
+  - changeSet:
+      id: V016_add_base_filelastmodifiedinfo_repo_id_file_path_hash_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_filelastmodifiedinfo
+                indexName: base_filelastmodifiedinfo_repo_id_file_path_hash_key
+      changes:
+        - addUniqueConstraint:
+            tableName: base_filelastmodifiedinfo
+            constraintName: base_filelastmodifiedinfo_repo_id_file_path_hash_key
+            columnNames: repo_id, file_path_hash
+  - changeSet:
+      id: V016_drop_base_filelastmodifiedinfo_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_filelastmodifiedinfo
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: base_filelastmodifiedinfo
+            constraintName: repo_id
+  - changeSet:
+      id: V016_drop_base_filelastmodifiedinfo_base_filelastmodifiedinfo_2059abe4
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_filelastmodifiedinfo_2059abe4
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: base_filelastmodifiedinfo_2059abe4
+            constraintName: repo_id
+  - changeSet:
+      id: V016_add_index_to_base_filelastmodifiedinfo_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_filelastmodifiedinfo
+                indexName: base_filelastmodifiedinfo_repo_id
+      changes:
+        - createIndex:
+            tableName: base_filelastmodifiedinfo
+            indexName: base_filelastmodifiedinfo_repo_id
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V016_add_index_to_base_filelastmodifiedinfo_file_path_hash
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_filelastmodifiedinfo
+                indexName: base_filelastmodifiedinfo_880f7193
+      changes:
+        - createIndex:
+            tableName: base_filelastmodifiedinfo
+            indexName: base_filelastmodifiedinfo_880f7193
+            columns:
+              - column:
+                  name: file_path_hash

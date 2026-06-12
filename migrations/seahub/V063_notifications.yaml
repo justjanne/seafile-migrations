@@ -1,0 +1,76 @@
+databaseChangeLog:
+  # notifications_notification
+  - changeSet:
+      id: V063_add_index_to_notifications_notification_primary
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: notifications_notification
+              indexName: notifications_notification_primary_4f95ec21
+      changes:
+        - createIndex:
+            tableName: notifications_notification
+            indexName: notifications_notification_primary_4f95ec21
+            columns:
+              - column:
+                  name: primary
+
+  # notifications_usernotification
+  - changeSet:
+      id: V063_drop_notifications_usernotification_to_user_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_86899d6f
+      changes:
+        - dropIndex:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_86899d6f
+  - changeSet:
+      id: V063_drop_notifications_usernotification_msg_type_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_486af403
+      changes:
+        - dropIndex:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_486af403
+  - changeSet:
+      id: V063_recreate_notifications_usernotification_to_user_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: notifications_usernotification
+                indexName: notifications_usernotification_to_user_6cadafa1
+      changes:
+        - createIndex:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_to_user_6cadafa1
+            columns:
+              - column:
+                  name: to_user
+  - changeSet:
+      id: V063_recreate_notifications_usernotification_msg_type_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: notifications_usernotification
+                indexName: notifications_usernotification_msg_type_985afd02
+      changes:
+        - createIndex:
+            tableName: notifications_usernotification
+            indexName: notifications_usernotification_msg_type_985afd02
+            columns:
+              - column:
+                  name: msg_type

@@ -1,0 +1,109 @@
+databaseChangeLog:
+  - changeSet:
+      id: V031_add_password_to_share_fileshare
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: share_fileshare
+                columnName: password
+      changes:
+        - addColumn:
+            tableName: share_fileshare
+            columns:
+              - column:
+                  name: password
+                  type: varchar(128)
+  - changeSet:
+      id: V031_add_expire_date_to_share_fileshare
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: share_fileshare
+                columnName: expire_date
+      changes:
+        - addColumn:
+            tableName: share_fileshare
+            columns:
+              - column:
+                  name: expire_date
+                  type: datetime
+  - changeSet:
+      id: V031_create_share_orgfileshare
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: share_orgfileshare
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_share_id
+                  type: int
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V031_add_unique_constraint_to_share_orgfileshare_file_share_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - not:
+                - indexExists:
+                    tableName: share_orgfileshare
+                    indexName: file_share_id
+            - not:
+                - indexExists:
+                    tableName: share_orgfileshare
+                    indexName: unq_share_orgfileshare_file_share_id
+      changes:
+        - addUniqueConstraint:
+            tableName: share_orgfileshare
+            constraintName: file_share_id
+            columnNames: file_share_id
+  - changeSet:
+      id: V031_add_index_to_share_orgfileshare_org_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_orgfileshare
+                indexName: share_orgfileshare_944dadb6
+      changes:
+        - createIndex:
+            tableName: share_orgfileshare
+            indexName: share_orgfileshare_944dadb6
+            columns:
+              - column:
+                  name: org_id
+  - changeSet:
+      id: V031_add_fk_share_orgfileshare_file_share_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: share_orgfileshare
+                foreignKeyName: file_share_id_refs_id_bd2fd9f8
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: share_orgfileshare
+            baseColumnNames: file_share_id
+            referencedTableName: share_fileshare
+            referencedColumnNames: id
+            constraintName: file_share_id_refs_id_bd2fd9f8

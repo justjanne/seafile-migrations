@@ -1,0 +1,137 @@
+databaseChangeLog:
+  - changeSet:
+      id: V090_create_ocm_via_webdav_received_shares
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: ocm_via_webdav_received_shares
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(255)
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: owner
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: owner_display_name
+                  type: varchar(255)
+              - column:
+                  name: protocol_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: shared_secret
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permissions
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: provider_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: resource_type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: share_type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: share_with
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: shared_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: shared_by_display_name
+                  type: varchar(255)
+              - column:
+                  name: ctime
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_dir
+                  type: boolean
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V090_add_indexes_to_ocm_via_webdav_received_shares
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: ocm_via_webdav_received_shares
+                indexName: ocm_via_webdav_share_received_owner_261eaa70
+      changes:
+        - createIndex:
+            tableName: ocm_via_webdav_received_shares
+            indexName: ocm_via_webdav_share_received_owner_261eaa70
+            columns:
+              - column:
+                  name: owner
+        - createIndex:
+            tableName: ocm_via_webdav_received_shares
+            indexName: ocm_via_webdav_share_received_shared_secret_fbb6be5a
+            columns:
+              - column:
+                  name: shared_secret
+        - createIndex:
+            tableName: ocm_via_webdav_received_shares
+            indexName: ocm_via_webdav_share_received_provider_id_a55680e9
+            columns:
+              - column:
+                  name: provider_id
+        - createIndex:
+            tableName: ocm_via_webdav_received_shares
+            indexName: ocm_via_webdav_share_received_resource_type_a3c71b57
+            columns:
+              - column:
+                  name: resource_type
+        - createIndex:
+            tableName: ocm_via_webdav_received_shares
+            indexName: ocm_via_webdav_share_received_share_type_7615aaab
+            columns:
+              - column:
+                  name: share_type
+        - createIndex:
+            tableName: ocm_via_webdav_received_shares
+            indexName: ocm_via_webdav_share_received_share_with_5a23eb17
+            columns:
+              - column:
+                  name: share_with
+        - createIndex:
+            tableName: ocm_via_webdav_received_shares
+            indexName: ocm_via_webdav_share_received_shared_by_1786d580
+            columns:
+              - column:
+                  name: shared_by

@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: V015_create_profile_profile
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: profile_profile
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(75)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: nickname
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: intro
+                  type: longtext
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_drop_profile_profile_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: profile_profile
+            indexName: user
+      changes:
+        - dropUniqueConstraint:
+            tableName: profile_profile
+            constraintName: user
+  - changeSet:
+      id: V015_add_profile_profile_profile_profile_user_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_profile
+                indexName: profile_profile_user_key
+      changes:
+        - addUniqueConstraint:
+            tableName: profile_profile
+            constraintName: profile_profile_user_key
+            columnNames: user

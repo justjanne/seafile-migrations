@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: V110_social_auth_usersocialauth_extra_data_nullable
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: social_auth_usersocialauth
+            columnName: extra_data
+      changes:
+        - dropNotNullConstraint:
+            tableName: social_auth_usersocialauth
+            columnName: extra_data
+            columnDataType: longtext

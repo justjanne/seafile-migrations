@@ -1,0 +1,151 @@
+databaseChangeLog:
+  - changeSet:
+      id: V071_drop_obsolete_tables
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: base_filediscuss
+      changes:
+        - dropTable:
+            tableName: base_filediscuss
+  - changeSet:
+      id: V071_drop_base_groupenabledmodule
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: base_groupenabledmodule
+      changes:
+        - dropTable:
+            tableName: base_groupenabledmodule
+  - changeSet:
+      id: V071_drop_base_innerpubmsgreply
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: base_innerpubmsgreply
+      changes:
+        - dropTable:
+            tableName: base_innerpubmsgreply
+  - changeSet:
+      id: V071_drop_base_innerpubmsg
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: base_innerpubmsg
+      changes:
+        - dropTable:
+            tableName: base_innerpubmsg
+  - changeSet:
+      id: V071_drop_base_userenabledmodule
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: base_userenabledmodule
+      changes:
+        - dropTable:
+            tableName: base_userenabledmodule
+  - changeSet:
+      id: V071_drop_group_messageattachment
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: group_messageattachment
+      changes:
+        - dropTable:
+            tableName: group_messageattachment
+  - changeSet:
+      id: V071_drop_group_messagereply
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: group_messagereply
+      changes:
+        - dropTable:
+            tableName: group_messagereply
+  - changeSet:
+      id: V071_drop_group_groupmessage
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: group_groupmessage
+      changes:
+        - dropTable:
+            tableName: group_groupmessage
+  - changeSet:
+      id: V071_drop_group_publicgroup
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: group_publicgroup
+      changes:
+        - dropTable:
+            tableName: group_publicgroup
+  - changeSet:
+      id: V071_drop_social_auth_association
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: social_auth_association
+      changes:
+        - dropTable:
+            tableName: social_auth_association
+  - changeSet:
+      id: V071_drop_social_auth_code
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: social_auth_code
+      changes:
+        - dropTable:
+            tableName: social_auth_code
+  - changeSet:
+      id: V071_drop_social_auth_nonce
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: social_auth_nonce
+      changes:
+        - dropTable:
+            tableName: social_auth_nonce
+  - changeSet:
+      id: V071_drop_social_auth_partial
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: social_auth_partial
+      changes:
+        - dropTable:
+            tableName: social_auth_partial
+  - changeSet:
+      id: V071_drop_wiki_groupwiki
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: wiki_groupwiki
+      changes:
+        - dropTable:
+            tableName: wiki_groupwiki
+  - changeSet:
+      id: V071_drop_wiki_personalwiki
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: wiki_personalwiki
+      changes:
+        - dropTable:
+            tableName: wiki_personalwiki

@@ -1,0 +1,443 @@
+databaseChangeLog:
+  # base_clientlogintoken
+  - changeSet:
+      id: V063_drop_base_clientlogintoken_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_clientlogintoken
+            indexName: base_clientlogintoken_14c4b06b
+      changes:
+        - dropIndex:
+            tableName: base_clientlogintoken
+            indexName: base_clientlogintoken_14c4b06b
+  - changeSet:
+      id: V063_recreate_base_clientlogintoken_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_clientlogintoken
+                indexName: base_clientlogintoken_username_4ad5d42c
+      changes:
+        - createIndex:
+            tableName: base_clientlogintoken
+            indexName: base_clientlogintoken_username_4ad5d42c
+            columns:
+              - column:
+                  name: username
+
+  # base_devicetoken
+  - changeSet:
+      id: V063_drop_base_devicetoken_unique_constraint
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_devicetoken
+            indexName: token
+      changes:
+        - dropUniqueConstraint:
+            tableName: base_devicetoken
+            constraintName: token
+  - changeSet:
+      id: V063_recreate_base_devicetoken_unique_constraint
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_devicetoken
+                indexName: base_devicetoken_token_user_38535636_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: base_devicetoken
+            columnNames: token, user
+            constraintName: base_devicetoken_token_user_38535636_uniq
+
+  # base_filecomment
+  - changeSet:
+      id: V063_drop_base_filecomment
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - tableExists:
+                tableName: base_filecomment
+            - not:
+                columnExists:
+                  tableName: base_filecomment
+                  columnName: uuid_id
+      changes:
+        - dropTable:
+            tableName: base_filecomment
+  - changeSet:
+      id: V063_recreate_base_filecomment
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: base_filecomment
+      changes:
+        - createTable:
+            tableName: base_filecomment
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: author
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: uuid_id
+                  type: char(32)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V063_recreate_base_filecomment_author
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                indexName: base_filecomment_author_8a4d7e91
+      changes:
+        - createIndex:
+            tableName: base_filecomment
+            indexName: base_filecomment_author_8a4d7e91
+            columns:
+              - column:
+                  name: author
+  - changeSet:
+      id: V063_recreate_base_filecomment_uuid_id_fl
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyName: base_filecomment_uuid_id_4f9a2ca2_fk_tags_fileuuidmap_uuid
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: base_filecomment
+            baseColumnNames: uuid_id
+            referencedTableName: tags_fileuuidmap
+            referencedColumnNames: uuid
+            constraintName: base_filecomment_uuid_id_4f9a2ca2_fk_tags_fileuuidmap_uuid
+
+  # base_filediscuss
+  - changeSet:
+      id: V063_drop_base_filediscuss_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: base_filediscuss
+            foreignKeyName: base__group_message_id_6915ac55a0bd929c_fk_group_groupmessage_i
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: base_filediscuss
+            constraintName: base__group_message_id_6915ac55a0bd929c_fk_group_groupmessage_i
+  - changeSet:
+      id: V063_drop_base_filediscuss_group_message_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_filediscuss
+            indexName: base__group_message_id_6915ac55a0bd929c_fk_group_groupmessage_i
+      changes:
+        - dropIndex:
+            tableName: base_filediscuss
+            indexName: base__group_message_id_6915ac55a0bd929c_fk_group_groupmessage_i
+  - changeSet:
+      id: V063_drop_base_filediscuss_path_hash_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_filediscuss
+            indexName: base_filediscuss_b57d9b6b
+      changes:
+        - dropIndex:
+            tableName: base_filediscuss
+            indexName: base_filediscuss_b57d9b6b
+  - changeSet:
+      id: V063_recreate_base_filediscuss_path_hash_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_filediscuss
+                indexName: base_filediscuss_path_hash_fd9f7348
+      changes:
+        - createIndex:
+            tableName: base_filediscuss
+            indexName: base_filediscuss_path_hash_fd9f7348
+            columns:
+              - column:
+                  name: path_hash
+  - changeSet:
+      id: V063_recreate_base_filediscuss_group_message_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_filediscuss
+                indexName: base_filediscuss_group_message_id_2f7d7046_fk_group_gro
+      changes:
+        - createIndex:
+            tableName: base_filediscuss
+            indexName: base_filediscuss_group_message_id_2f7d7046_fk_group_gro
+            columns:
+              - column:
+                  name: group_message_id
+  - changeSet:
+      id: V063_recreate_base_filediscuss_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: base_filediscuss
+                foreignKeyName: base_filediscuss_group_message_id_2f7d7046_fk_group_gro
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: base_filediscuss
+            baseColumnNames: group_message_id
+            referencedTableName: group_groupmessage
+            referencedColumnNames: id
+            constraintName: base_filediscuss_group_message_id_2f7d7046_fk_group_gro
+
+  # base_groupenabledmodule
+  - changeSet:
+      id: V063_drop_base_groupenabledmodule_group_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_groupenabledmodule
+            indexName: base_groupenabledmodule_0e939a4f
+      changes:
+        - dropIndex:
+            tableName: base_groupenabledmodule
+            indexName: base_groupenabledmodule_0e939a4f
+  - changeSet:
+      id: V063_recreate_base_groupenabledmodule_group_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_groupenabledmodule
+                indexName: base_groupenabledmodule_group_id_8c06b5bc
+      changes:
+        - createIndex:
+            tableName: base_groupenabledmodule
+            indexName: base_groupenabledmodule_group_id_8c06b5bc
+            columns:
+              - column:
+                  name: group_id
+
+  # base_innerpubmsgreply
+  - changeSet:
+      id: V063_drop_base_innerpubmsgreply_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: base_innerpubmsgreply
+            foreignKeyName: base_innerpu_reply_to_id_27731e1a4586de01_fk_base_innerpubmsg_i
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: base_innerpubmsgreply
+            constraintName: base_innerpu_reply_to_id_27731e1a4586de01_fk_base_innerpubmsg_i
+  - changeSet:
+      id: V063_drop_base_innerpubmsgreply_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_innerpubmsgreply
+            indexName: base_innerpu_reply_to_id_27731e1a4586de01_fk_base_innerpubmsg_i
+      changes:
+        - dropIndex:
+            tableName: base_innerpubmsgreply
+            indexName: base_innerpu_reply_to_id_27731e1a4586de01_fk_base_innerpubmsg_i
+  - changeSet:
+      id: V063_recreate_base_innerpubmsgreply_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_innerpubmsgreply
+                indexName: base_innerpubmsgrepl_reply_to_id_62ce6fe5_fk_base_inne
+      changes:
+        - createIndex:
+            tableName: base_innerpubmsgreply
+            indexName: base_innerpubmsgrepl_reply_to_id_62ce6fe5_fk_base_inne
+            columns:
+              - column:
+                  name: reply_to_id
+  - changeSet:
+      id: V063_recreate_base_innerpubmsgreply_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: base_innerpubmsgreply
+                foreignKeyName: base_innerpubmsgrepl_reply_to_id_62ce6fe5_fk_base_inne
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: base_innerpubmsgreply
+            baseColumnNames: reply_to_id
+            referencedTableName: base_innerpubmsg
+            referencedColumnNames: id
+            constraintName: base_innerpubmsgrepl_reply_to_id_62ce6fe5_fk_base_inne
+
+  # base_userenabledmodule
+  - changeSet:
+      id: V063_drop_base_userenabledmodule_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_userenabledmodule
+            indexName: base_userenabledmodule_14c4b06b
+      changes:
+        - dropIndex:
+            tableName: base_userenabledmodule
+            indexName: base_userenabledmodule_14c4b06b
+  - changeSet:
+      id: V063_recreate_base_userenabledmodule_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_userenabledmodule
+                indexName: base_userenabledmodule_username_4f1c3c88
+      changes:
+        - createIndex:
+            tableName: base_userenabledmodule
+            indexName: base_userenabledmodule_username_4f1c3c88
+            columns:
+              - column:
+                  name: username
+
+  # base_userlastlogin
+  - changeSet:
+      id: V063_drop_base_userlastlogin_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_userlastlogin
+            indexName: base_userlastlogin_14c4b06b
+      changes:
+        - dropIndex:
+            tableName: base_userlastlogin
+            indexName: base_userlastlogin_14c4b06b
+  - changeSet:
+      id: V063_recreate_base_userlastlogin_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_userlastlogin
+                indexName: base_userlastlogin_username_270de06f
+      changes:
+        - createIndex:
+            tableName: base_userlastlogin
+            indexName: base_userlastlogin_username_270de06f
+            columns:
+              - column:
+                  name: username
+
+  # base_userstarredfiles
+  - changeSet:
+      id: V063_drop_base_userstarredfiles_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_0c83f57c
+      changes:
+        - dropIndex:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_0c83f57c
+  - changeSet:
+      id: V063_recreate_base_userstarredfiles_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_userstarredfiles
+                indexName: base_userstarredfiles_email_29e69053
+      changes:
+        - createIndex:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_email_29e69053
+            columns:
+              - column:
+                  name: email
+
+  - changeSet:
+      id: V063_drop_base_userstarredfiles_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_9a8c79bf
+      changes:
+        - dropIndex:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_9a8c79bf
+
+  - changeSet:
+      id: V063_recreate_base_userstarredfiles_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_userstarredfiles
+                indexName: base_userstarredfiles_repo_id_f5ecc00a
+      changes:
+        - createIndex:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_repo_id_f5ecc00a
+            columns:
+              - column:
+                  name: repo_id

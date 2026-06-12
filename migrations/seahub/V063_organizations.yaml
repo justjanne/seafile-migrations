@@ -1,0 +1,30 @@
+databaseChangeLog:
+  # organizations_orgmemberquota
+  - changeSet:
+      id: V063_drop_organizations_orgmemberquota_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: organizations_orgmemberquota
+            indexName: organizations_orgmemberquota_9cf869aa
+      changes:
+        - dropIndex:
+            tableName: organizations_orgmemberquota
+            indexName: organizations_orgmemberquota_9cf869aa
+  - changeSet:
+      id: V063_recreate_organizations_orgmemberquota_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: organizations_orgmemberquota
+                indexName: organizations_orgmemberquota_org_id_93dde51d
+      changes:
+        - createIndex:
+            tableName: organizations_orgmemberquota
+            indexName: organizations_orgmemberquota_org_id_93dde51d
+            columns:
+              - column:
+                  name: org_id

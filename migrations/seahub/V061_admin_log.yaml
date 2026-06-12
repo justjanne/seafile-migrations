@@ -1,0 +1,63 @@
+databaseChangeLog:
+  - changeSet:
+      id: V061_create_admin_log_adminlog
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: admin_log_adminlog
+      changes:
+        - createTable:
+            tableName: admin_log_adminlog
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(254)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: operation
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: detail
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: datetime
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V061_add_indexes_to_admin_log_adminlog
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: admin_log_adminlog
+              indexName: admin_log_adminlog_0c83f57c
+      changes:
+        - createIndex:
+            tableName: admin_log_adminlog
+            indexName: admin_log_adminlog_0c83f57c
+            columns:
+              - column:
+                  name: email
+        - createIndex:
+            tableName: admin_log_adminlog
+            indexName: admin_log_adminlog_f7235a61
+            columns:
+              - column:
+                  name: operation

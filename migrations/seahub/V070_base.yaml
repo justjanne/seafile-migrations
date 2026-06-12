@@ -1,0 +1,84 @@
+databaseChangeLog:
+  # base_filecomment changes
+  - changeSet:
+      id: V070_add_detail_to_base_filecomment
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            columnExists:
+              tableName: base_filecomment
+              columnName: detail
+      changes:
+        - addColumn:
+            tableName: base_filecomment
+            columns:
+              - column:
+                  name: detail
+                  type: longtext
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V070_add_resolved_to_base_filecomment
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            columnExists:
+              tableName: base_filecomment
+              columnName: resolved
+      changes:
+        - addColumn:
+            tableName: base_filecomment
+            columns:
+              - column:
+                  name: resolved
+                  type: boolean
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V070_create_base_filecomment_resolved_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: base_filecomment
+              indexName: base_filecomment_resolved_e0717eca
+      changes:
+        - createIndex:
+            tableName: base_filecomment
+            indexName: base_filecomment_resolved_e0717eca
+            columns:
+              - column:
+                  name: resolved
+
+  # base_reposecretkey
+  - changeSet:
+      id: V070_create_base_reposecretkey
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_reposecretkey
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: secret_key
+                  type: varchar(44)
+                  constraints:
+                    nullable: false

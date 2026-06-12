@@ -1,0 +1,76 @@
+databaseChangeLog:
+  - changeSet:
+      id: V090_create_onlyoffice_onlyofficedockey
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: onlyoffice_onlyofficedockey
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: doc_key
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id_file_path_md5
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_time
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V090_add_unique_constraint_to_onlyoffice_onlyofficedockey_repo_id_file_path_md5
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: onlyoffice_onlyofficedockey
+                indexName: repo_id_file_path_md5
+      changes:
+        - addUniqueConstraint:
+            tableName: onlyoffice_onlyofficedockey
+            columnNames: repo_id_file_path_md5
+            constraintName: repo_id_file_path_md5
+  - changeSet:
+      id: V090_add_index_to_onlyoffice_onlyofficedockey_doc_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: onlyoffice_onlyofficedockey
+                indexName: onlyoffice_onlyofficedockey_doc_key_edba1352
+      changes:
+        - createIndex:
+            tableName: onlyoffice_onlyofficedockey
+            indexName: onlyoffice_onlyofficedockey_doc_key_edba1352
+            columns:
+              - column:
+                  name: doc_key

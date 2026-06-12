@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: V015_create_registration_registrationprofile
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: registration_registrationprofile
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: emailuser_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: activation_key
+                  type: varchar(40)
+                  constraints:
+                    nullable: false

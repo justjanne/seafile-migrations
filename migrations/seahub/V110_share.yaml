@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: V110_share_fileshare_path_utf8mb4
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: share_fileshare
+            columnName: path
+      changes:
+        - modifyDataType:
+            tableName: share_fileshare
+            columnName: path
+            newDataType: longtext COLLATE utf8mb4_bin
+        - addNotNullConstraint:
+            tableName: share_fileshare
+            columnName: path
+            columnDataType: longtext COLLATE utf8mb4_bin
+
+  - changeSet:
+      id: V110_share_uploadlinkshare_add_index_expire_date
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_uploadlinkshare
+                indexName: share_uploadlinkshare_expire_date
+      changes:
+        - createIndex:
+            tableName: share_uploadlinkshare
+            indexName: share_uploadlinkshare_expire_date
+            columns:
+              - column:
+                  name: expire_date

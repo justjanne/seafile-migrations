@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: V021_create_options_useroptions
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: options_useroptions
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: option_key
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: option_val
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V021_add_index_to_options_useroptions_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: options_useroptions
+                indexName: options_useroptions_830a6ccb
+      changes:
+        - createIndex:
+            tableName: options_useroptions
+            indexName: options_useroptions_830a6ccb
+            columns:
+              - column:
+                  name: email

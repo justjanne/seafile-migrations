@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: V050_drop_base_dirfileslastmodifiedinfo
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: base_dirfileslastmodifiedinfo
+      changes:
+        - dropTable:
+            tableName: base_dirfileslastmodifiedinfo
+  - changeSet:
+      id: V050_drop_base_filecontributors
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: base_filecontributors
+      changes:
+        - dropTable:
+            tableName: base_filecontributors
+  - changeSet:
+      id: V050_drop_base_filelastmodifiedinfo
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: base_filelastmodifiedinfo
+      changes:
+        - dropTable:
+            tableName: base_filelastmodifiedinfo
+  - changeSet:
+      id: V050_add_index_to_base_userstarredfiles_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_userstarredfiles
+                indexName: base_userstarredfiles_830a6ccb
+      changes:
+        - createIndex:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_830a6ccb
+            columns:
+              - column:
+                  name: email

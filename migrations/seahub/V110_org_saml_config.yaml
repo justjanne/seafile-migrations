@@ -1,0 +1,125 @@
+databaseChangeLog:
+  - changeSet:
+      id: V110_org_saml_config_add_domain
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: org_saml_config
+                columnName: domain
+      changes:
+        - addColumn:
+            tableName: org_saml_config
+            columns:
+              - column:
+                  name: domain
+                  type: varchar(255)
+  - changeSet:
+      id: V110_org_saml_config_add_dns_txt
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: org_saml_config
+                columnName: dns_txt
+      changes:
+        - addColumn:
+            tableName: org_saml_config
+            columns:
+              - column:
+                  name: dns_txt
+                  type: varchar(64)
+  - changeSet:
+      id: V110_org_saml_config_add_domain_verified
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: org_saml_config
+                columnName: domain_verified
+      changes:
+        - addColumn:
+            tableName: org_saml_config
+            columns:
+              - column:
+                  name: domain_verified
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V110_org_saml_config_add_idp_certificate
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: org_saml_config
+                columnName: idp_certificate
+      changes:
+        - addColumn:
+            tableName: org_saml_config
+            columns:
+              - column:
+                  name: idp_certificate
+                  type: longtext
+
+  - changeSet:
+      id: V110_drop_org_saml_config_domain
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+                tableName: org_saml_config
+                indexName: domain
+      changes:
+        - dropUniqueConstraint:
+            tableName: org_saml_config
+            constraintName: domain
+
+  - changeSet:
+      id: V110_org_saml_config_domain_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: org_saml_config
+                indexName: org_saml_config_domain_key
+      changes:
+        - addUniqueConstraint:
+            tableName: org_saml_config
+            columnNames: domain
+            constraintName: org_saml_config_domain_key
+
+  - changeSet:
+      id: V110_org_saml_config_add_constraints
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: org_saml_config
+                indexName: org_saml_config_domain_verified_398065b9
+      changes:
+        - createIndex:
+            tableName: org_saml_config
+            indexName: org_saml_config_domain_verified_398065b9
+            columns:
+              - column:
+                  name: domain_verified
+
+  - changeSet:
+      id: V110_org_saml_config_update_domain_verified
+      author: seafile
+      changes:
+        - update:
+            tableName: org_saml_config
+            columns:
+              - column:
+                  name: domain_verified
+                  value: true
+            where: domain_verified=false

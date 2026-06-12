@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: V120_alter_share_fileshare
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: share_fileshare
+                columnName: user_scope
+      changes:
+        - addColumn:
+            tableName: share_fileshare
+            columns:
+              - column:
+                  name: user_scope
+                  type: varchar(225)
+                  defaultValue: all_users
+              - column:
+                  name: authed_details
+                  type: longtext
+
+  - changeSet:
+      id: V120_add_indexes_to_share_fileshare
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_fileshare
+                indexName: idx_ctime
+      changes:
+        - createIndex:
+            tableName: share_fileshare
+            indexName: idx_ctime
+            columns:
+              - column:
+                  name: ctime
+        - createIndex:
+            tableName: share_fileshare
+            indexName: idx_view_cnt
+            columns:
+              - column:
+                  name: view_cnt

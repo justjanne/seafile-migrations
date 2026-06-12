@@ -1,0 +1,240 @@
+databaseChangeLog:
+  - changeSet:
+      id: V120_create_wiki_wiki2
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: wiki_wiki2
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: owner
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V120_add_constraints_to_wiki_wiki2
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: wiki_wiki2
+                indexName: wiki_owner_repo_id_4c8925af_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: wiki_wiki2
+            columnNames: owner, repo_id
+            constraintName: wiki_owner_repo_id_4c8925af_uniq
+        - createIndex:
+            tableName: wiki_wiki2
+            indexName: wiki_wiki_created_at_54930e36
+            columns:
+              - column:
+                  name: created_at
+        - createIndex:
+            tableName: wiki_wiki2
+            indexName: wiki_wiki_repo_id_2ee93c31
+            columns:
+              - column:
+                  name: repo_id
+
+  - changeSet:
+      id: V120_create_WikiPageTrash
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: WikiPageTrash
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: doc_uuid
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: page_id
+                  type: varchar(4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: parent_page_id
+                  type: varchar(4)
+              - column:
+                  name: subpages
+                  type: longtext
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: delete_time
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: size
+                  type: bigint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V120_add_index_to_WikiPageTrash
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: WikiPageTrash
+                indexName: ix_WikiPageTrash_repo_id
+      changes:
+        - createIndex:
+            tableName: WikiPageTrash
+            indexName: ix_WikiPageTrash_repo_id
+            columns:
+              - column:
+                  name: repo_id
+
+  # wiki_wiki2_publish
+  - changeSet:
+      id: V120_create_wiki_wiki2_publish
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: wiki_wiki2_publish
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: publish_url
+                  type: varchar(40)
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: current_timestamp()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: visit_count
+                  type: int
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V120_drop_wiki_wiki2_publish_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: wiki_wiki2_publish
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: wiki_wiki2_publish
+            constraintName: repo_id
+  - changeSet:
+      id: V120_add_wiki_wiki2_publish_repo_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: wiki_wiki2_publish
+                indexName: wiki_wiki2_publish_repo_id_key
+      changes:
+        - addUniqueConstraint:
+            tableName: wiki_wiki2_publish
+            columnNames: repo_id
+            constraintName: wiki_wiki2_publish_repo_id_key
+  - changeSet:
+      id: V120_drop_wiki_wiki2_publish_publish_url
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: wiki_wiki2_publish
+            indexName: publish_url
+      changes:
+        - dropUniqueConstraint:
+            tableName: wiki_wiki2_publish
+            constraintName: publish_url
+  - changeSet:
+      id: V120_add_wiki_wiki2_publish_publish_url_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: wiki_wiki2_publish
+                indexName: wiki_wiki2_publish_publish_url_key
+      changes:
+        - addUniqueConstraint:
+            tableName: wiki_wiki2_publish
+            columnNames: publish_url
+            constraintName: wiki_wiki2_publish_publish_url_key
+  - changeSet:
+      id: V120_add_ix_wiki2_publish_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: wiki_wiki2_publish
+                indexName: ix_wiki2_publish_repo_id
+      changes:
+        - createIndex:
+            tableName: wiki_wiki2_publish
+            indexName: ix_wiki2_publish_repo_id
+            columns:
+              - column:
+                  name: repo_id

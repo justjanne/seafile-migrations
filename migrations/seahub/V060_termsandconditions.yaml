@@ -1,0 +1,150 @@
+databaseChangeLog:
+  - changeSet:
+      id: V060_create_termsandconditions_termsandconditions
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: termsandconditions_termsandconditions
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: slug
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version_number
+                  type: decimal(6,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: text
+                  type: longtext
+              - column:
+                  name: info
+                  type: longtext
+              - column:
+                  name: date_active
+                  type: datetime
+              - column:
+                  name: date_created
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V060_add_index_to_termsandconditions_termsandconditions_slug
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: termsandconditions_termsandconditions
+                indexName: termsandconditions_termsandconditions_2dbcba41
+      changes:
+        - createIndex:
+            tableName: termsandconditions_termsandconditions
+            indexName: termsandconditions_termsandconditions_2dbcba41
+            columns:
+              - column:
+                  name: slug
+
+  - changeSet:
+      id: V060_create_termsandconditions_usertermsandconditions
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: termsandconditions_usertermsandconditions
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ip_address
+                  type: char(39)
+              - column:
+                  name: date_accepted
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: terms_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V060_add_unique_constraint_to_termsandconditions_usertermsandconditions
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          and:
+            - not:
+                - indexExists:
+                    tableName: termsandconditions_usertermsandconditions
+                    indexName: termsandconditions_usertermsandcon_username_f4ab54cafa29322_uniq
+            - not:
+                - indexExists:
+                    tableName: termsandconditions_usertermsandconditions
+                    indexName: unq_termsandconditions_usertermsandcon_username_terms_id
+      changes:
+        - addUniqueConstraint:
+            tableName: termsandconditions_usertermsandconditions
+            constraintName: termsandconditions_usertermsandcon_username_f4ab54cafa29322_uniq
+            columnNames: username, terms_id
+
+  - changeSet:
+      id: V060_add_index_to_termsandconditions_usertermsandconditions_terms_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: termsandconditions_usertermsandconditions
+                indexName: e4da106203f3f13ff96409b55de6f515
+      changes:
+        - createIndex:
+            tableName: termsandconditions_usertermsandconditions
+            indexName: e4da106203f3f13ff96409b55de6f515
+            columns:
+              - column:
+                  name: terms_id
+
+  - changeSet:
+      id: V060_add_fk_termsandconditions_usertermsandconditions_terms_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: termsandconditions_usertermsandconditions
+                foreignKeyName: e4da106203f3f13ff96409b55de6f515
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: termsandconditions_usertermsandconditions
+            baseColumnNames: terms_id
+            referencedTableName: termsandconditions_termsandconditions
+            referencedColumnNames: id
+            constraintName: e4da106203f3f13ff96409b55de6f515

@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: V031_normalize_profile_profile_lang_code
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: profile_profile
+            columnName: lang_code
+      changes:
+        - modifyDataType:
+            tableName: profile_profile
+            columnName: lang_code
+            newDataType: longtext
+  - changeSet:
+      id: V031_add_lang_code_to_profile_profile
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: profile_profile
+                columnName: lang_code
+      changes:
+        - addColumn:
+            tableName: profile_profile
+            columns:
+              - column:
+                  name: lang_code
+                  type: longtext

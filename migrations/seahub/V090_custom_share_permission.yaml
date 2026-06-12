@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: V090_create_custom_share_permission
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: custom_share_permission
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission
+                  type: longtext
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V090_add_index_to_custom_share_permission_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: custom_share_permission
+                indexName: custom_share_permission_repo_id_578fe49f
+      changes:
+        - createIndex:
+            tableName: custom_share_permission
+            indexName: custom_share_permission_repo_id_578fe49f
+            columns:
+              - column:
+                  name: repo_id

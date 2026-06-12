@@ -1,0 +1,101 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_create_django_cas_ng_proxygrantingticket
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: django_cas_ng_proxygrantingticket
+      changes:
+        - createTable:
+            tableName: django_cas_ng_proxygrantingticket
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: session_key
+                  type: varchar(255)
+              - column:
+                  name: pgtiou
+                  type: varchar(255)
+              - column:
+                  name: pgt
+                  type: varchar(255)
+              - column:
+                  name: date
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V063_add_unique_constraint_to_django_cas_ng_proxygrantingticket
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: django_cas_ng_proxygrantingticket
+                indexName: django_cas_ng_proxygrant_session_key_user_id_4cd2ea19_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: django_cas_ng_proxygrantingticket
+            columnNames: session_key, user
+            constraintName: django_cas_ng_proxygrant_session_key_user_id_4cd2ea19_uniq
+
+  - changeSet:
+      id: V063_add_index_to_django_cas_ng_proxygrantingticket_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: django_cas_ng_proxygrantingticket
+              indexName: django_cas_ng_proxyg_user_id_f833edd2_fk_auth_user
+      changes:
+        - createIndex:
+            tableName: django_cas_ng_proxygrantingticket
+            indexName: django_cas_ng_proxyg_user_id_f833edd2_fk_auth_user
+            columns:
+              - column:
+                  name: user
+
+  - changeSet:
+      id: V063_create_django_cas_ng_sessionticket
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: django_cas_ng_sessionticket
+      changes:
+        - createTable:
+            tableName: django_cas_ng_sessionticket
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: session_key
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ticket
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

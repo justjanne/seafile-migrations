@@ -1,0 +1,30 @@
+databaseChangeLog:
+  # options_useroptions
+  - changeSet:
+      id: V063_drop_options_useroptions_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: options_useroptions
+            indexName: options_useroptions_0c83f57c
+      changes:
+        - dropIndex:
+            tableName: options_useroptions
+            indexName: options_useroptions_0c83f57c
+  - changeSet:
+      id: V063_recreate_options_useroptions_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: options_useroptions
+                indexName: options_useroptions_email_77d5726a
+      changes:
+        - createIndex:
+            tableName: options_useroptions
+            indexName: options_useroptions_email_77d5726a
+            columns:
+              - column:
+                  name: email

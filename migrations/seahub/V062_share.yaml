@@ -1,0 +1,116 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_create_share_extrasharepermission
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: share_extrasharepermission
+      changes:
+        - createTable:
+            tableName: share_extrasharepermission
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: share_to
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V062_add_indexes_to_share_extrasharepermission
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: share_extrasharepermission
+              indexName: share_extrasharepermission_9a8c79bf
+      changes:
+        - createIndex:
+            tableName: share_extrasharepermission
+            indexName: share_extrasharepermission_9a8c79bf
+            columns:
+              - column:
+                  name: repo_id
+        - createIndex:
+            tableName: share_extrasharepermission
+            indexName: share_extrasharepermission_e4fb1dad
+            columns:
+              - column:
+                  name: share_to
+
+  - changeSet:
+      id: V062_create_share_extragroupssharepermission
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: share_extragroupssharepermission
+      changes:
+        - createTable:
+            tableName: share_extragroupssharepermission
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V062_add_indexes_to_share_extragroupssharepermission
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: share_extragroupssharepermission
+              indexName: share_extragroupssharepermission_9a8c79bf
+      changes:
+        - createIndex:
+            tableName: share_extragroupssharepermission
+            indexName: share_extragroupssharepermission_9a8c79bf
+            columns:
+              - column:
+                  name: repo_id
+        - createIndex:
+            tableName: share_extragroupssharepermission
+            indexName: share_extragroupssharepermission_0e939a4f
+            columns:
+              - column:
+                  name: group_id

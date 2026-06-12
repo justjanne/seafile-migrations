@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_repo_metadata_add_columns
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: repo_metadata
+                columnName: tags_enabled
+      changes:
+        - addColumn:
+            tableName: repo_metadata
+            columns:
+              - column:
+                  name: tags_enabled
+                  type: boolean
+              - column:
+                  name: tags_lang
+                  type: varchar(36)
+              - column:
+                  name: details_settings
+                  type: longtext
+              - column:
+                  name: ocr_enabled
+                  type: boolean
+              - column:
+                  name: global_hidden_columns
+                  type: longtext
+
+  - changeSet:
+      id: V130_repo_metadata_add_index_face
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repo_metadata
+                indexName: key_last_face_cluster_time_face_recognition_enabled
+      changes:
+        - createIndex:
+            tableName: repo_metadata
+            indexName: key_last_face_cluster_time_face_recognition_enabled
+            columns:
+              - column:
+                  name: face_recognition_enabled
+              - column:
+                  name: last_face_cluster_time

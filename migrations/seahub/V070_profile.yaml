@@ -1,0 +1,29 @@
+databaseChangeLog:
+  # profile_profile
+  - changeSet:
+      id: V070_drop_old_profile_profile_contact_email_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: profile_profile
+            indexName: profile_profile_contact_email_0975e4bf
+      changes:
+        - dropIndex:
+            tableName: profile_profile
+            indexName: profile_profile_contact_email_0975e4bf
+
+  - changeSet:
+      id: V070_add_unique_profile_profile_contact_email_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_profile
+                indexName: profile_profile_contact_email_0975e4bf_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: profile_profile
+            columnNames: contact_email
+            constraintName: profile_profile_contact_email_0975e4bf_uniq

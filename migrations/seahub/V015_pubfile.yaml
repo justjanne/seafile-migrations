@@ -1,0 +1,67 @@
+databaseChangeLog:
+  - changeSet:
+      id: V015_create_pubfile_grouppublicfile
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: pubfile_grouppublicfile
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: varchar(4096)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_dir
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: added_by
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(1024)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: download_count
+                  type: int
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_add_index_to_pubfile_grouppublicfile_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: pubfile_grouppublicfile
+                indexName: pubfile_grouppublicfile_dc00373b
+      changes:
+        - createIndex:
+            tableName: pubfile_grouppublicfile
+            indexName: pubfile_grouppublicfile_dc00373b
+            columns:
+              - column:
+                  name: group_id

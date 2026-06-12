@@ -1,0 +1,152 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_share_fileshare_permission_drop_default
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: wiki_wiki
+            columnName: permission
+      changes:
+        - dropDefaultValue:
+            tableName: wiki_wiki
+            columnName: permission
+            columnDataType: varchar(50)
+  - changeSet:
+      id: V063_create_wiki_wiki
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: wiki_wiki
+      changes:
+        - createTable:
+            tableName: wiki_wiki
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: slug
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V063_drop_wiki_wiki_slug
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: wiki_wiki
+            indexName: slug
+      changes:
+        - dropUniqueConstraint:
+            tableName: wiki_wiki
+            constraintName: slug
+  - changeSet:
+      id: V063_create_wiki_wiki_wiki_wiki_slug_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: wiki_wiki
+              indexName: wiki_wiki_slug_key
+      changes:
+        - addUniqueConstraint:
+            tableName: wiki_wiki
+            constraintName: wiki_wiki_slug_key
+            columnNames: slug
+  - changeSet:
+      id: V063_drop_unique_constraint_to_wiki_wiki
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: wiki_wiki
+            indexName: wiki_wiki_username_3c0f83e1b93de663_uniq
+      changes:
+        - dropIndex:
+            tableName: wiki_wiki
+            indexName: wiki_wiki_username_3c0f83e1b93de663_uniq
+
+  - changeSet:
+      id: V063_add_unique_constraint_to_wiki_wiki
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: wiki_wiki
+                indexName: wiki_wiki_username_repo_id_4c8925af_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: wiki_wiki
+            columnNames: username, repo_id
+            constraintName: wiki_wiki_username_repo_id_4c8925af_uniq
+
+  - changeSet:
+      id: V063_create_wiki_wiki_created_at_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: wiki_wiki
+              indexName: wiki_wiki_created_at_54930e39
+      changes:
+        - createIndex:
+            tableName: wiki_wiki
+            indexName: wiki_wiki_created_at_54930e39
+            columns:
+              - column:
+                  name: created_at
+
+  - changeSet:
+      id: V063_create_wiki_wiki_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: wiki_wiki
+              indexName: wiki_wiki_repo_id_2ee93c37
+      changes:
+        - createIndex:
+            tableName: wiki_wiki
+            indexName: wiki_wiki_repo_id_2ee93c37
+            columns:
+              - column:
+                  name: repo_id

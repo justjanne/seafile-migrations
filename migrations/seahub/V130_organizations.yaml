@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: V130_organizations_orgsettings_add_is_active
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: organizations_orgsettings
+                columnName: is_active
+      changes:
+        - addColumn:
+            tableName: organizations_orgsettings
+            columns:
+              - column:
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false

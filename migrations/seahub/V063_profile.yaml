@@ -1,0 +1,128 @@
+databaseChangeLog:
+  # profile_detailedprofile
+  - changeSet:
+      id: V063_drop_profile_detailedprofile_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: profile_detailedprofile
+            indexName: profile_detailedprofile_ee11cbb1
+      changes:
+        - dropIndex:
+            tableName: profile_detailedprofile
+            indexName: profile_detailedprofile_ee11cbb1
+  - changeSet:
+      id: V063_recreate_profile_detailedprofile_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_detailedprofile
+                indexName: profile_detailedprofile_user_612c11ba
+      changes:
+        - createIndex:
+            tableName: profile_detailedprofile
+            indexName: profile_detailedprofile_user_612c11ba
+            columns:
+              - column:
+                  name: user
+
+  # profile_profile
+  - changeSet:
+      id: V063_drop_profile_profile_contact_email_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: profile_profile
+            indexName: profile_profile_b9973d8c
+      changes:
+        - dropIndex:
+            tableName: profile_profile
+            indexName: profile_profile_b9973d8c
+  - changeSet:
+      id: V063_recreate_profile_profile_contact_email_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_profile
+                indexName: profile_profile_contact_email_0975e4bf
+      changes:
+        - createIndex:
+            tableName: profile_profile
+            indexName: profile_profile_contact_email_0975e4bf
+            columns:
+              - column:
+                  name: contact_email
+  - changeSet:
+      id: V063_drop_profile_profile_institution_index_1
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: profile_profile
+            indexName: profile_profile_955bfff7
+      changes:
+        - dropIndex:
+            tableName: profile_profile
+            indexName: profile_profile_955bfff7
+  - changeSet:
+      id: V063_drop_profile_profile_institution_index_2
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: profile_profile
+            indexName: institution
+      changes:
+        - dropIndex:
+            tableName: profile_profile
+            indexName: institution
+  - changeSet:
+      id: V063_recreate_profile_profile_institution_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_profile
+                indexName: profile_profile_institution_c0286bd1
+      changes:
+        - createIndex:
+            tableName: profile_profile
+            indexName: profile_profile_institution_c0286bd1
+            columns:
+              - column:
+                  name: institution
+  - changeSet:
+      id: V063_drop_profile_profile_list_in_address_book_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: profile_profile
+            indexName: profile_profile_3d5d3631
+      changes:
+        - dropIndex:
+            tableName: profile_profile
+            indexName: profile_profile_3d5d3631
+  - changeSet:
+      id: V063_recreate_profile_profile_list_in_address_book_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_profile
+                indexName: profile_profile_list_in_address_book_b1009a78
+      changes:
+        - createIndex:
+            tableName: profile_profile
+            indexName: profile_profile_list_in_address_book_b1009a78
+            columns:
+              - column:
+                  name: list_in_address_book

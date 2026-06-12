@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: V018_change_message_type_in_group_groupmessage
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: group_groupmessage
+            columnName: message
+            newDataType: varchar(2048)
+        - addNotNullConstraint:
+            tableName: group_groupmessage
+            columnName: message
+            columnDataType: varchar(2048)
+
+  - changeSet:
+      id: V018_change_message_type_in_group_messagereply
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: group_messagereply
+            columnName: message
+            newDataType: varchar(2048)
+        - addNotNullConstraint:
+            tableName: group_messagereply
+            columnName: message
+            columnDataType: varchar(2048)

@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: V015_create_avatar_avatar
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: avatar_avatar
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: emailuser
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: primary
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: avatar
+                  type: varchar(1024)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_uploaded
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_create_avatar_groupavatar
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: avatar_groupavatar
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: avatar
+                  type: varchar(1024)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_uploaded
+                  type: datetime
+                  constraints:
+                    nullable: false

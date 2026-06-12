@@ -1,0 +1,148 @@
+databaseChangeLog:
+  - changeSet:
+      id: V062_create_revision_tag_tags
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: revision_tag_tags
+      changes:
+        - createTable:
+            tableName: revision_tag_tags
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V062_drop_revision_tag_tags_name
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: revision_tag_tags
+            indexName: name
+      changes:
+        - dropUniqueConstraint:
+            tableName: revision_tag_tags
+            constraintName: name
+  - changeSet:
+      id: V062_create_revision_tag_tags_revision_tag_tags_name_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: revision_tag_tags
+              indexName: revision_tag_tags_name_key
+      changes:
+        - addUniqueConstraint:
+            tableName: revision_tag_tags
+            constraintName: revision_tag_tags_name_key
+            columnNames: name
+  - changeSet:
+      id: V062_create_revision_tag_revisiontags
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: revision_tag_revisiontags
+      changes:
+        - createTable:
+            tableName: revision_tag_revisiontags
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: revision_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tag_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V062_add_indexes_to_revision_tag_revisiontags
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: revision_tag_revisiontags
+              indexName: revision_tag_revisiontags_9a8c79bf
+      changes:
+        - createIndex:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisiontags_9a8c79bf
+            columns:
+              - column:
+                  name: repo_id
+        - createIndex:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisiontags_5de09a8d
+            columns:
+              - column:
+                  name: revision_id
+        - createIndex:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisiontags_14c4b06b
+            columns:
+              - column:
+                  name: username
+        - createIndex:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_rev_tag_id_37c2d76166c50597_fk_revision_tag_tags_i
+            columns:
+              - column:
+                  name: tag_id
+
+  - changeSet:
+      id: V062_add_fk_to_revision_tag_revisiontags
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            foreignKeyConstraintExists:
+              foreignKeyTableName: revision_tag_revisiontags
+              foreignKeyName: revision_tag_rev_tag_id_37c2d76166c50597_fk_revision_tag_tags_i
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: revision_tag_revisiontags
+            baseColumnNames: tag_id
+            referencedTableName: revision_tag_tags
+            referencedColumnNames: id
+            constraintName: revision_tag_rev_tag_id_37c2d76166c50597_fk_revision_tag_tags_i

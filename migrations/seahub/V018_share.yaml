@@ -1,0 +1,153 @@
+databaseChangeLog:
+  - changeSet:
+      id: V018_create_share_privatefiledirshare
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: share_privatefiledirshare
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: from_user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to_user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission
+                  type: varchar(5)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: s_type
+                  type: varchar(5)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V018_drop_share_privatefiledirshare_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_privatefiledirshare
+            indexName: token
+      changes:
+        - dropUniqueConstraint:
+            tableName: share_privatefiledirshare
+            constraintName: token
+  - changeSet:
+      id: V018_drop_share_privatefiledirshare_unq_share_privatefiledirshare_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_privatefiledirshare
+            indexName: unq_share_privatefiledirshare_token
+      changes:
+        - dropUniqueConstraint:
+            tableName: share_privatefiledirshare
+            constraintName: unq_share_privatefiledirshare_token
+  - changeSet:
+      id: V018_add_share_privatefiledirshare_token_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_privatefiledirshare
+                indexName: share_privatefiledirshare_token_key
+      changes:
+        - addUniqueConstraint:
+            tableName: share_privatefiledirshare
+            constraintName: share_privatefiledirshare_token_key
+            columnNames: token
+  - changeSet:
+      id: V018_add_index_to_share_privatefiledirshare_from_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_privatefiledirshare
+                indexName: share_privatefiledirshare_0e7efed3
+      changes:
+        - createIndex:
+            tableName: share_privatefiledirshare
+            indexName: share_privatefiledirshare_0e7efed3
+            columns:
+              - column:
+                  name: from_user
+  - changeSet:
+      id: V018_add_index_to_share_privatefiledirshare_to_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_privatefiledirshare
+                indexName: share_privatefiledirshare_bc172800
+      changes:
+        - createIndex:
+            tableName: share_privatefiledirshare
+            indexName: share_privatefiledirshare_bc172800
+            columns:
+              - column:
+                  name: to_user
+  - changeSet:
+      id: V018_add_index_to_share_privatefiledirshare_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_privatefiledirshare
+                indexName: share_privatefiledirshare_2059abe4
+      changes:
+        - createIndex:
+            tableName: share_privatefiledirshare
+            indexName: share_privatefiledirshare_2059abe4
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V018_add_fk_message_usermsgattachment_priv_file_dir_share_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: message_usermsgattachment
+                foreignKeyName: priv_file_dir_share_id_refs_id_163f8f83
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: message_usermsgattachment
+            baseColumnNames: priv_file_dir_share_id
+            referencedTableName: share_privatefiledirshare
+            referencedColumnNames: id
+            constraintName: priv_file_dir_share_id_refs_id_163f8f83

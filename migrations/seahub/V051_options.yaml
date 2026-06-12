@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: V051_options_useroptions_index_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: options_useroptions
+            indexName: options_useroptions_830a6ccb
+      changes:
+        - dropIndex:
+            tableName: options_useroptions
+            indexName: options_useroptions_830a6ccb
+        - createIndex:
+            tableName: options_useroptions
+            indexName: options_useroptions_0c83f57c
+            columns:
+              - column:
+                  name: email

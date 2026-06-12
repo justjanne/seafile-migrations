@@ -1,0 +1,114 @@
+databaseChangeLog:
+  # termsandconditions_termsandconditions
+  - changeSet:
+      id: V063_drop_termsandconditions_termsandconditions_slug_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: termsandconditions_termsandconditions
+            indexName: termsandconditions_termsandconditions_2dbcba41
+      changes:
+        - dropIndex:
+            tableName: termsandconditions_termsandconditions
+            indexName: termsandconditions_termsandconditions_2dbcba41
+  - changeSet:
+      id: V063_recreate_termsandconditions_termsandconditions_slug_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: termsandconditions_termsandconditions
+                indexName: termsandconditions_termsandconditions_slug_489d1e9d
+      changes:
+        - createIndex:
+            tableName: termsandconditions_termsandconditions
+            indexName: termsandconditions_termsandconditions_slug_489d1e9d
+            columns:
+              - column:
+                  name: slug
+
+  # termsandconditions_usertermsandconditions
+  - changeSet:
+      id: V063_drop_termsandconditions_usertermsandconditions_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: termsandconditions_usertermsandconditions
+            foreignKeyName: e4da106203f3f13ff96409b55de6f515
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: termsandconditions_usertermsandconditions
+            constraintName: e4da106203f3f13ff96409b55de6f515
+  - changeSet:
+      id: V063_drop_termsandconditions_usertermsandconditions_unique_constraint
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: termsandconditions_usertermsandconditions
+            indexName: termsandconditions_usertermsandcon_username_f4ab54cafa29322_uniq
+      changes:
+        - dropUniqueConstraint:
+            tableName: termsandconditions_usertermsandconditions
+            constraintName: termsandconditions_usertermsandcon_username_f4ab54cafa29322_uniq
+  - changeSet:
+      id: V063_drop_termsandconditions_usertermsandconditions_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: termsandconditions_usertermsandconditions
+            indexName: e4da106203f3f13ff96409b55de6f515
+      changes:
+        - dropIndex:
+            tableName: termsandconditions_usertermsandconditions
+            indexName: e4da106203f3f13ff96409b55de6f515
+  - changeSet:
+      id: V063_recreate_termsandconditions_usertermsandconditions_unique_constraint
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: termsandconditions_usertermsandconditions
+                indexName: termsandconditions_usert_username_terms_id_a7dabb70_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: termsandconditions_usertermsandconditions
+            columnNames: username, terms_id
+            constraintName: termsandconditions_usert_username_terms_id_a7dabb70_uniq
+  - changeSet:
+      id: V063_recreate_termsandconditions_usertermsandconditions_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: termsandconditions_usertermsandconditions
+                indexName: termsandconditions_u_terms_id_eacdbcc7_fk_termsandc
+      changes:
+        - createIndex:
+            tableName: termsandconditions_usertermsandconditions
+            indexName: termsandconditions_u_terms_id_eacdbcc7_fk_termsandc
+            columns:
+              - column:
+                  name: terms_id
+  - changeSet:
+      id: V063_recreate_termsandconditions_usertermsandconditions_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: termsandconditions_usertermsandconditions
+                foreignKeyName: termsandconditions_u_terms_id_eacdbcc7_fk_termsandc
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: termsandconditions_usertermsandconditions
+            baseColumnNames: terms_id
+            referencedTableName: termsandconditions_termsandconditions
+            referencedColumnNames: id
+            constraintName: termsandconditions_u_terms_id_eacdbcc7_fk_termsandc

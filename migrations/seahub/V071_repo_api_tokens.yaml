@@ -1,0 +1,97 @@
+databaseChangeLog:
+  - changeSet:
+      id: V071_create_repo_api_tokens
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repo_api_tokens
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: app_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: generated_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: generated_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_access
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission
+                  type: varchar(15)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V071_add_unique_constraint_to_repo_api_tokens_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repo_api_tokens
+                indexName: token
+      changes:
+        - addUniqueConstraint:
+            tableName: repo_api_tokens
+            columnNames: token
+            constraintName: token
+  - changeSet:
+      id: V071_add_index_to_repo_api_tokens_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repo_api_tokens
+                indexName: repo_api_tokens_repo_id_47a50fef
+      changes:
+        - createIndex:
+            tableName: repo_api_tokens
+            indexName: repo_api_tokens_repo_id_47a50fef
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V071_add_index_to_repo_api_tokens_app_name
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repo_api_tokens
+                indexName: repo_api_tokens_app_name_7c395c31
+      changes:
+        - createIndex:
+            tableName: repo_api_tokens
+            indexName: repo_api_tokens_app_name_7c395c31
+            columns:
+              - column:
+                  name: app_name

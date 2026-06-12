@@ -1,0 +1,86 @@
+databaseChangeLog:
+  - changeSet:
+      id: V051_create_institutions_institution
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: institutions_institution
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: create_time
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V051_create_institutions_institutionadmin
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: institutions_institutionadmin
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(254)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: institution_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V051_add_index_to_institutions_institutionadmin_institution_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: institutions_institutionadmin
+                indexName: i_institution_id_5f792d6fe9a87ac9_fk_institutions_institution_i
+      changes:
+        - createIndex:
+            tableName: institutions_institutionadmin
+            indexName: i_institution_id_5f792d6fe9a87ac9_fk_institutions_institution_i
+            columns:
+              - column:
+                  name: institution_id
+
+  - changeSet:
+      id: V051_add_fk_institutions_institutionadmin_institution_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: institutions_institutionadmin
+                foreignKeyName: i_institution_id_5f792d6fe9a87ac9_fk_institutions_institution_i
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: institutions_institutionadmin
+            baseColumnNames: institution_id
+            referencedTableName: institutions_institution
+            referencedColumnNames: id
+            constraintName: i_institution_id_5f792d6fe9a87ac9_fk_institutions_institution_i

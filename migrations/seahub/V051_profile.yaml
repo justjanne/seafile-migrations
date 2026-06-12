@@ -1,0 +1,103 @@
+databaseChangeLog:
+  - changeSet:
+      id: V051_modify_user_in_profile_profile
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: profile_profile
+            columnName: user
+            newDataType: varchar(254)
+        - addNotNullConstraint:
+            tableName: profile_profile
+            columnName: user
+            columnDataType: varchar(254)
+
+  - changeSet:
+      id: V051_drop_old_profile_detailedprofile_user_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: profile_detailedprofile
+            indexName: profile_detailedprofile_6340c63c
+      changes:
+        - dropIndex:
+            tableName: profile_detailedprofile
+            indexName: profile_detailedprofile_6340c63c
+
+  - changeSet:
+      id: V051_add_new_profile_detailedprofile_user_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_detailedprofile
+                indexName: profile_detailedprofile_ee11cbb1
+      changes:
+        - createIndex:
+            tableName: profile_detailedprofile
+            indexName: profile_detailedprofile_ee11cbb1
+            columns:
+              - column:
+                  name: user
+
+  - changeSet:
+      id: V051_drop_old_profile_profile_contact_email_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: profile_profile
+            indexName: profile_profile_3b46cb17
+      changes:
+        - dropIndex:
+            tableName: profile_profile
+            indexName: profile_profile_3b46cb17
+
+  - changeSet:
+      id: V051_add_new_profile_profile_contact_email_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_profile
+                indexName: profile_profile_b9973d8c
+      changes:
+        - createIndex:
+            tableName: profile_profile
+            indexName: profile_profile_b9973d8c
+            columns:
+              - column:
+                  name: contact_email
+
+  - changeSet:
+      id: V051_drop_old_profile_profile_institution_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: profile_profile
+            indexName: profile_profile_71bbc151
+      changes:
+        - dropIndex:
+            tableName: profile_profile
+            indexName: profile_profile_71bbc151
+
+  - changeSet:
+      id: V051_add_new_profile_profile_institution_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: profile_profile
+                indexName: profile_profile_955bfff7
+      changes:
+        - createIndex:
+            tableName: profile_profile
+            indexName: profile_profile_955bfff7
+            columns:
+              - column:
+                  name: institution

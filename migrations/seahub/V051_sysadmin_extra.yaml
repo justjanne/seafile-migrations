@@ -1,0 +1,73 @@
+databaseChangeLog:
+  - changeSet:
+      id: V051_modify_login_ip_in_sysadmin_extra_userloginlog
+      author: seafile
+      changes:
+        - modifyDataType:
+            tableName: sysadmin_extra_userloginlog
+            columnName: login_ip
+            newDataType: varchar(128)
+        - addNotNullConstraint:
+            tableName: sysadmin_extra_userloginlog
+            columnName: login_ip
+            columnDataType: varchar(128)
+
+  - changeSet:
+      id: V051_drop_old_username_index_in_sysadmin_extra_userloginlog
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: sysadmin_extra_userloginlog
+            indexName: sysadmin_extra_userloginlog_ee0cafa2
+      changes:
+        - dropIndex:
+            tableName: sysadmin_extra_userloginlog
+            indexName: sysadmin_extra_userloginlog_ee0cafa2
+
+  - changeSet:
+      id: V051_add_new_username_index_in_sysadmin_extra_userloginlog
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: sysadmin_extra_userloginlog
+                indexName: sysadmin_extra_userloginlog_14c4b06b
+      changes:
+        - createIndex:
+            tableName: sysadmin_extra_userloginlog
+            indexName: sysadmin_extra_userloginlog_14c4b06b
+            columns:
+              - column:
+                  name: username
+
+  - changeSet:
+      id: V051_drop_old_login_date_index_in_sysadmin_extra_userloginlog
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: sysadmin_extra_userloginlog
+            indexName: sysadmin_extra_userloginlog_c8db99ec
+      changes:
+        - dropIndex:
+            tableName: sysadmin_extra_userloginlog
+            indexName: sysadmin_extra_userloginlog_c8db99ec
+
+  - changeSet:
+      id: V051_add_new_login_date_index_in_sysadmin_extra_userloginlog
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: sysadmin_extra_userloginlog
+                indexName: sysadmin_extra_userloginlog_28ed1ef0
+      changes:
+        - createIndex:
+            tableName: sysadmin_extra_userloginlog
+            indexName: sysadmin_extra_userloginlog_28ed1ef0
+            columns:
+              - column:
+                  name: login_date

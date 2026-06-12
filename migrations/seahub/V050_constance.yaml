@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: V050_normalize_constance_config
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: constance_config
+            columnName: key
+      changes:
+        - renameColumn:
+            tableName: constance_config
+            oldColumnName: key
+            newColumnName: constance_key
+  - changeSet:
+      id: V050_create_constance_config
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: constance_config
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: constance_key
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: longtext
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V050_drop_constance_config_constance_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: constance_config
+            indexName: constance_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: constance_config
+            constraintName: constance_key
+  - changeSet:
+      id: V050_add_constance_config_constance_config_constance_key_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: constance_config
+                indexName: constance_config_constance_key_key
+      changes:
+        - addUniqueConstraint:
+            tableName: constance_config
+            constraintName: constance_config_constance_key_key
+            columnNames: constance_key

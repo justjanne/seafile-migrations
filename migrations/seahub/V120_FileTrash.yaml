@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: V120_create_FileTrash
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: FileTrash
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: obj_type
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: obj_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: obj_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: delete_time
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: commit_id
+                  type: varchar(40)
+              - column:
+                  name: path
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: size
+                  type: bigint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V120_add_index_to_FileTrash
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: FileTrash
+                indexName: ix_FileTrash_repo_id
+      changes:
+        - createIndex:
+            tableName: FileTrash
+            indexName: ix_FileTrash_repo_id
+            columns:
+              - column:
+                  name: repo_id

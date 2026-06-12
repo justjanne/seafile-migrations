@@ -1,0 +1,94 @@
+databaseChangeLog:
+  - changeSet:
+      id: V017_create_message_usermessage
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: message_usermessage
+            columns:
+              - column:
+                  name: message_id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: message
+                  type: varchar(512)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: from_email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to_email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ifread
+                  type: boolean
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V017_add_index_to_message_usermessage_from_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: message_usermessage
+                indexName: message_usermessage_8b1dd4eb
+      changes:
+        - createIndex:
+            tableName: message_usermessage
+            indexName: message_usermessage_8b1dd4eb
+            columns:
+              - column:
+                  name: from_email
+  - changeSet:
+      id: V017_add_index_to_message_usermessage_to_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: message_usermessage
+                indexName: message_usermessage_590d1560
+      changes:
+        - createIndex:
+            tableName: message_usermessage
+            indexName: message_usermessage_590d1560
+            columns:
+              - column:
+                  name: to_email
+  - changeSet:
+      id: V017_create_message_usermsglastcheck
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: message_usermsglastcheck
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: check_time
+                  type: datetime
+                  constraints:
+                    nullable: false

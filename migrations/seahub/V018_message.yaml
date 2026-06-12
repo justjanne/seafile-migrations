@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: V018_create_message_usermsgattachment
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: message_usermsgattachment
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_msg_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: priv_file_dir_share_id
+                  type: int
+  - changeSet:
+      id: V018_add_index_to_message_usermsgattachment_user_msg_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: message_usermsgattachment
+                indexName: message_usermsgattachment_72f290f5
+      changes:
+        - createIndex:
+            tableName: message_usermsgattachment
+            indexName: message_usermsgattachment_72f290f5
+            columns:
+              - column:
+                  name: user_msg_id
+  - changeSet:
+      id: V018_add_index_to_message_usermsgattachment_priv_file_dir_share_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: message_usermsgattachment
+                indexName: message_usermsgattachment_cee41a9a
+      changes:
+        - createIndex:
+            tableName: message_usermsgattachment
+            indexName: message_usermsgattachment_cee41a9a
+            columns:
+              - column:
+                  name: priv_file_dir_share_id
+  - changeSet:
+      id: V018_add_fk_message_usermsgattachment_user_msg_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyName: user_msg_id_refs_message_id_debb82ad
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: message_usermsgattachment
+            baseColumnNames: user_msg_id
+            referencedTableName: message_usermessage
+            referencedColumnNames: message_id
+            constraintName: user_msg_id_refs_message_id_debb82ad

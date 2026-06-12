@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: V080_create_external_department
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: external_department
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: provider
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: outer_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V080_drop_external_department_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: external_department
+            indexName: group_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: external_department
+            constraintName: group_id
+  - changeSet:
+      id: V080_add_external_department_group_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: external_department
+                indexName: external_department_group_id_key
+      changes:
+        - addUniqueConstraint:
+            tableName: external_department
+            columnNames: group_id
+            constraintName: external_department_group_id_key
+  - changeSet:
+      id: V080_add_unique_constraints_to_external_department
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: external_department
+                indexName: external_department_provider_outer_id_8dns6vkw_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: external_department
+            columnNames: provider, outer_id
+            constraintName: external_department_provider_outer_id_8dns6vkw_uniq

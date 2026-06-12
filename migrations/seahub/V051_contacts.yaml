@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: V051_contacts_contact_index_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: contacts_contact
+            indexName: contacts_contact_d3d8b136
+      changes:
+        - dropIndex:
+            tableName: contacts_contact
+            indexName: contacts_contact_d3d8b136
+        - createIndex:
+            tableName: contacts_contact
+            indexName: contacts_contact_40c27bdc
+            columns:
+              - column:
+                  name: user_email

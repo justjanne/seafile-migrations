@@ -1,0 +1,87 @@
+databaseChangeLog:
+  - changeSet:
+      id: V061_change_token_type_in_share_fileshare
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: share_fileshare
+            columnName: token
+      changes:
+        - modifyDataType:
+            tableName: share_fileshare
+            columnName: token
+            newDataType: varchar(100)
+        - addNotNullConstraint:
+            tableName: share_fileshare
+            columnName: token
+            columnDataType: varchar(100)
+
+  - changeSet:
+      id: V061_change_token_type_in_share_uploadlinkshare
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: share_uploadlinkshare
+            columnName: token
+      changes:
+        - modifyDataType:
+            tableName: share_uploadlinkshare
+            columnName: token
+            newDataType: varchar(100)
+        - addNotNullConstraint:
+            tableName: share_uploadlinkshare
+            columnName: token
+            columnDataType: varchar(100)
+  - changeSet:
+      id: V061_share_fileshare_permission
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: share_fileshare
+            columnName: permission
+      changes:
+        - dropDefaultValue:
+            tableName: share_fileshare
+            columnName: permission
+            columnDataType: varchar(50)
+  - changeSet:
+      id: V061_add_permission_to_share_fileshare
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            columnExists:
+              tableName: share_fileshare
+              columnName: permission
+      changes:
+        - addColumn:
+            tableName: share_fileshare
+            columns:
+              - column:
+                  name: permission
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+        - dropDefaultValue:
+            tableName: share_fileshare
+            columnName: permission
+
+  - changeSet:
+      id: V061_add_index_to_share_fileshare_permission
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: share_fileshare
+              indexName: share_fileshare_4b65ca0f
+      changes:
+        - createIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_4b65ca0f
+            columns:
+              - column:
+                  name: permission

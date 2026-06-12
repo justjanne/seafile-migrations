@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: V071_create_file_participants_fileparticipant
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: file_participants_fileparticipant
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: uuid_id
+                  type: char(32)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V071_add_unique_constraint_to_file_participants_fileparticipant_uuid_id_username
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: file_participants_fileparticipant
+                indexName: file_participants_fileparticipant_uuid_id_username_c747dd36_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: file_participants_fileparticipant
+            columnNames: uuid_id, username
+            constraintName: file_participants_fileparticipant_uuid_id_username_c747dd36_uniq
+  - changeSet:
+      id: V071_add_foreign_key_to_file_participants_fileparticipant_uuid_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: file_participants_fileparticipant
+                foreignKeyName: file_participants_fi_uuid_id_861b7339_fk_tags_file
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: file_participants_fileparticipant
+            baseColumnNames: uuid_id
+            referencedTableName: tags_fileuuidmap
+            referencedColumnNames: uuid
+            constraintName: file_participants_fi_uuid_id_861b7339_fk_tags_file

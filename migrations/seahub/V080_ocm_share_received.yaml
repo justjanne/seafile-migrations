@@ -1,0 +1,132 @@
+databaseChangeLog:
+  - changeSet:
+      id: V080_create_ocm_share_received
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: ocm_share_received
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: shared_secret
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: from_user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to_user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: from_server_url
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: provider_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ctime
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V080_drop_ocm_share_received_shared_secret
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: ocm_share_received
+            indexName: shared_secret
+      changes:
+        - dropUniqueConstraint:
+            tableName: ocm_share_received
+            constraintName: shared_secret
+  - changeSet:
+      id: V080_add_unique_constraint_to_ocm_share_received_shared_secret
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: ocm_share_received
+                indexName: ocm_share_received_shared_secret_key
+      changes:
+        - addUniqueConstraint:
+            tableName: ocm_share_received
+            columnNames: shared_secret
+            constraintName: ocm_share_received_shared_secret_key
+  - changeSet:
+      id: V080_add_indexes_to_ocm_share_received
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: ocm_share_received
+                indexName: ocm_share_received_from_user_8137d8eb
+      changes:
+        - createIndex:
+            tableName: ocm_share_received
+            indexName: ocm_share_received_from_user_8137d8eb
+            columns:
+              - column:
+                  name: from_user
+        - createIndex:
+            tableName: ocm_share_received
+            indexName: ocm_share_received_to_user_0921d09a
+            columns:
+              - column:
+                  name: to_user
+        - createIndex:
+            tableName: ocm_share_received
+            indexName: ocm_share_received_from_server_url_10527b80
+            columns:
+              - column:
+                  name: from_server_url
+        - createIndex:
+            tableName: ocm_share_received
+            indexName: ocm_share_received_repo_id_9e77a1b9
+            columns:
+              - column:
+                  name: repo_id
+        - createIndex:
+            tableName: ocm_share_received
+            indexName: ocm_share_received_provider_id_60c873e0
+            columns:
+              - column:
+                  name: provider_id

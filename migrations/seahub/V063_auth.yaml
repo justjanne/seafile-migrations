@@ -1,0 +1,493 @@
+databaseChangeLog:
+  - changeSet:
+      id: V063_create_auth_group
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: auth_group
+      changes:
+        - createTable:
+            tableName: auth_group
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(80)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V062_drop_auth_group_name
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: auth_group
+            indexName: name
+      changes:
+        - dropUniqueConstraint:
+            tableName: auth_group
+            constraintName: name
+  - changeSet:
+      id: V062_create_auth_group_auth_group_name_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: auth_group
+              indexName: auth_group_name_key
+      changes:
+        - addUniqueConstraint:
+            tableName: auth_group
+            constraintName: auth_group_name_key
+            columnNames: name
+
+  - changeSet:
+      id: V063_create_auth_permission
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: auth_permission
+      changes:
+        - createTable:
+            tableName: auth_permission
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content_type_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: codename
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V063_add_unique_constraint_to_auth_permission
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: auth_permission
+                indexName: auth_permission_content_type_id_codename_01ab375a_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: auth_permission
+            columnNames: content_type_id, codename
+            constraintName: auth_permission_content_type_id_codename_01ab375a_uniq
+
+  - changeSet:
+      id: V063_add_fk_to_auth_permission
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyName: auth_permission_content_type_id_2f476e4b_fk_django_co
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: auth_permission
+            baseColumnNames: content_type_id
+            referencedTableName: django_content_type
+            referencedColumnNames: id
+            constraintName: auth_permission_content_type_id_2f476e4b_fk_django_co
+
+  - changeSet:
+      id: V063_create_auth_group_permissions
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: auth_group_permissions
+      changes:
+        - createTable:
+            tableName: auth_group_permissions
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V063_add_unique_constraint_to_auth_group_permissions
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: auth_group_permissions
+                indexName: auth_group_permissions_group_id_permission_id_0cd325b0_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: auth_group_permissions
+            columnNames: group_id, permission_id
+            constraintName: auth_group_permissions_group_id_permission_id_0cd325b0_uniq
+
+  - changeSet:
+      id: V063_add_index_to_auth_group_permissions_permission_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: auth_group_permissions
+                indexName: auth_group_permissio_permission_id_84c5c92e_fk_auth_perm
+      changes:
+        - createIndex:
+            tableName: auth_group_permissions
+            indexName: auth_group_permissio_permission_id_84c5c92e_fk_auth_perm
+            columns:
+              - column:
+                  name: permission_id
+
+  - changeSet:
+      id: V063_add_fk_to_auth_group_permissions_permission_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyName: auth_group_permissio_permission_id_84c5c92e_fk_auth_perm
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: auth_group_permissions
+            baseColumnNames: permission_id
+            referencedTableName: auth_permission
+            referencedColumnNames: id
+            constraintName: auth_group_permissio_permission_id_84c5c92e_fk_auth_perm
+
+  - changeSet:
+      id: V063_add_fk_to_auth_group_permissions_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyName: auth_group_permissions_group_id_b120cbf9_fk_auth_group_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: auth_group_permissions
+            baseColumnNames: group_id
+            referencedTableName: auth_group
+            referencedColumnNames: id
+            constraintName: auth_group_permissions_group_id_b120cbf9_fk_auth_group_id
+
+  - changeSet:
+      id: V063_create_auth_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: auth_user
+      changes:
+        - createTable:
+            tableName: auth_user
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_login
+                  type: datetime
+              - column:
+                  name: is_superuser
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(150)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(254)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_staff
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_joined
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V062_drop_auth_user_username
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: auth_user
+            indexName: username
+      changes:
+        - dropUniqueConstraint:
+            tableName: auth_user
+            constraintName: username
+  - changeSet:
+      id: V062_create_auth_user_auth_user_username_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: auth_user
+              indexName: auth_user_username_key
+      changes:
+        - addUniqueConstraint:
+            tableName: auth_user
+            constraintName: auth_user_username_key
+            columnNames: username
+
+  - changeSet:
+      id: V063_create_auth_user_groups
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: auth_user_groups
+      changes:
+        - createTable:
+            tableName: auth_user_groups
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V063_add_unique_constraint_to_auth_user_groups
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: auth_user_groups
+                indexName: auth_user_groups_user_id_group_id_94350c0c_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: auth_user_groups
+            columnNames: user_id, group_id
+            constraintName: auth_user_groups_user_id_group_id_94350c0c_uniq
+
+  - changeSet:
+      id: V063_add_index_to_auth_user_groups_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: auth_user_groups
+                indexName: auth_user_groups_group_id_97559544_fk_auth_group_id
+      changes:
+        - createIndex:
+            tableName: auth_user_groups
+            indexName: auth_user_groups_group_id_97559544_fk_auth_group_id
+            columns:
+              - column:
+                  name: group_id
+
+  - changeSet:
+      id: V063_add_fk_to_auth_user_groups_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyName: auth_user_groups_group_id_97559544_fk_auth_group_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: auth_user_groups
+            baseColumnNames: group_id
+            referencedTableName: auth_group
+            referencedColumnNames: id
+            constraintName: auth_user_groups_group_id_97559544_fk_auth_group_id
+
+  - changeSet:
+      id: V063_add_fk_to_auth_user_groups_user_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyName: auth_user_groups_user_id_6a12ed8b_fk_auth_user_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: auth_user_groups
+            baseColumnNames: user_id
+            referencedTableName: auth_user
+            referencedColumnNames: id
+            constraintName: auth_user_groups_user_id_6a12ed8b_fk_auth_user_id
+
+  - changeSet:
+      id: V063_create_auth_user_user_permissions
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: auth_user_user_permissions
+      changes:
+        - createTable:
+            tableName: auth_user_user_permissions
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V063_add_unique_constraint_to_auth_user_user_permissions
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: auth_user_user_permissions
+                indexName: auth_user_user_permissions_user_id_permission_id_14a6b632_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: auth_user_user_permissions
+            columnNames: user_id, permission_id
+            constraintName: auth_user_user_permissions_user_id_permission_id_14a6b632_uniq
+
+  - changeSet:
+      id: V063_add_index_to_auth_user_user_permissions_permission_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: auth_user_user_permissions
+                indexName: auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm
+      changes:
+        - createIndex:
+            tableName: auth_user_user_permissions
+            indexName: auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm
+            columns:
+              - column:
+                  name: permission_id
+
+  - changeSet:
+      id: V063_add_fk_to_auth_user_user_permissions_permission_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyName: auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: auth_user_user_permissions
+            baseColumnNames: permission_id
+            referencedTableName: auth_permission
+            referencedColumnNames: id
+            constraintName: auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm
+
+  - changeSet:
+      id: V063_add_fk_to_auth_user_user_permissions_user_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyName: auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: auth_user_user_permissions
+            baseColumnNames: user_id
+            referencedTableName: auth_user
+            referencedColumnNames: id
+            constraintName: auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id

@@ -1,0 +1,426 @@
+databaseChangeLog:
+  - changeSet:
+      id: V015_create_base_commandslastcheck
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_commandslastcheck
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: command_type
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_check
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_create_base_devicetoken
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_devicetoken
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(80)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: platform
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: pversion
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_drop_base_devicetoken_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_devicetoken
+            indexName: token
+      changes:
+        - dropUniqueConstraint:
+            tableName: base_devicetoken
+            constraintName: token
+  - changeSet:
+      id: V015_drop_base_devicetoken_unq_base_devicetoken_token_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_devicetoken
+            indexName: unq_base_devicetoken_token_user
+      changes:
+        - dropUniqueConstraint:
+            tableName: base_devicetoken
+            constraintName: unq_base_devicetoken_token_user
+  - changeSet:
+      id: V015_add_base_devicetoken_token_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_devicetoken
+                indexName: base_devicetoken_token_key
+      changes:
+        - addUniqueConstraint:
+            tableName: base_devicetoken
+            constraintName: base_devicetoken_token_key
+            columnNames: token, user
+  - changeSet:
+      id: V015_create_base_dirfileslastmodifiedinfo
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_dirfileslastmodifiedinfo
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: parent_dir
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: parent_dir_hash
+                  type: varchar(12)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: dir_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_info
+                  type: longtext
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_drop_base_dirfileslastmodifiedinfo_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_dirfileslastmodifiedinfo
+            indexName: repo_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: base_dirfileslastmodifiedinfo
+            constraintName: repo_id
+  - changeSet:
+      id: V015_drop_base_dirfileslastmodifiedinfo_unq_base_dirfileslmi_repo_hash
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: base_dirfileslastmodifiedinfo
+            indexName: unq_base_dirfileslmi_repo_hash
+      changes:
+        - dropUniqueConstraint:
+            tableName: base_dirfileslastmodifiedinfo
+            constraintName: unq_base_dirfileslmi_repo_hash
+  - changeSet:
+      id: V015_add_base_dirfileslastmodifiedinfo_repo_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_dirfileslastmodifiedinfo
+                indexName: base_dirfileslastmodifiedinfo_repo_id_key
+      changes:
+        - addUniqueConstraint:
+            tableName: base_dirfileslastmodifiedinfo
+            constraintName: base_dirfileslastmodifiedinfo_repo_id_key
+            columnNames: repo_id, parent_dir_hash
+  - changeSet:
+      id: V015_create_base_filecontributors
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_filecontributors
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_path_hash
+                  type: varchar(12)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_commit_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: emails
+                  type: longtext
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_add_index_to_base_filecontributors_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_filecontributors
+                indexName: base_filecontributors_2059abe4
+      changes:
+        - createIndex:
+            tableName: base_filecontributors
+            indexName: base_filecontributors_2059abe4
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V015_create_base_innerpubmsg
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_innerpubmsg
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: from_email
+                  type: varchar(75)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: message
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_create_base_innerpubmsgreply
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_innerpubmsgreply
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: reply_to_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: from_email
+                  type: varchar(75)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: message
+                  type: varchar(150)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_add_index_to_base_innerpubmsgreply_reply_to_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyName: reply_to_id_refs_id_bff92b48
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: base_innerpubmsgreply
+            baseColumnNames: reply_to_id
+            referencedTableName: base_innerpubmsg
+            referencedColumnNames: id
+            constraintName: reply_to_id_refs_id_bff92b48
+  - changeSet:
+      id: V015_add_foreign_key_to_base_innerpubmsgreply_reply_to_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_innerpubmsgreply
+                indexName: base_innerpubmsgreply_3fde75e6
+      changes:
+        - createIndex:
+            tableName: base_innerpubmsgreply
+            indexName: base_innerpubmsgreply_3fde75e6
+            columns:
+              - column:
+                  name: reply_to_id
+  - changeSet:
+      id: V015_create_base_userstarredfiles
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_userstarredfiles
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(75)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_dir
+                  type: boolean
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_add_index_to_base_userstarredfiles_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_userstarredfiles
+                indexName: base_userstarredfiles_2059abe4
+      changes:
+        - createIndex:
+            tableName: base_userstarredfiles
+            indexName: base_userstarredfiles_2059abe4
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V015_create_base_uuidobjidmap
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_uuidobjidmap
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: uuid
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: obj_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+                    unique: true

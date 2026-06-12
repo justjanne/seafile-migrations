@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: V015_create_contacts_contact
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: contacts_contact
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: contact_email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: contact_name
+                  type: varchar(255)
+              - column:
+                  name: note
+                  type: varchar(255)
+  - changeSet:
+      id: V015_add_index_to_contacts_contact_user_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: contacts_contact
+                indexName: contacts_contact_d3d8b136
+      changes:
+        - createIndex:
+            tableName: contacts_contact
+            indexName: contacts_contact_d3d8b136
+            columns:
+              - column:
+                  name: user_email

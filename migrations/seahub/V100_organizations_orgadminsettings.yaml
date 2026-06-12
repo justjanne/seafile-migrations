@@ -1,0 +1,61 @@
+databaseChangeLog:
+  - changeSet:
+      id: V100_create_organizations_orgadminsettings
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: organizations_orgadminsettings
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: org_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: key
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: longtext
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V100_add_unique_constraint_to_organizations_orgadminsettings_org_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: organizations_orgadminsettings
+                indexName: organizations_orgadminsettings_org_id_key_a01cc7de_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: organizations_orgadminsettings
+            columnNames: org_id, key
+            constraintName: organizations_orgadminsettings_org_id_key_a01cc7de_uniq
+  - changeSet:
+      id: V100_add_index_to_organizations_orgadminsettings_org_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: organizations_orgadminsettings
+                indexName: organizations_orgadminsettings_org_id_4f70d186
+      changes:
+        - createIndex:
+            tableName: organizations_orgadminsettings
+            indexName: organizations_orgadminsettings_org_id_4f70d186
+            columns:
+              - column:
+                  name: org_id

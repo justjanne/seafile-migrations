@@ -1,0 +1,462 @@
+databaseChangeLog:
+  # post_office_attachment column addition
+  - changeSet:
+      id: V063_add_mimetype_to_post_office_attachment
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            columnExists:
+              tableName: post_office_attachment
+              columnName: mimetype
+      changes:
+        - addColumn:
+            tableName: post_office_attachment
+            columns:
+              - column:
+                  name: mimetype
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  # post_office_email column modification
+  - changeSet:
+      id: V063_modify_subject_in_post_office_email
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: post_office_email
+            columnName: subject
+      changes:
+        - modifyDataType:
+            tableName: post_office_email
+            columnName: subject
+            newDataType: varchar(989)
+        - addNotNullConstraint:
+            tableName: post_office_email
+            columnName: subject
+            columnDataType: varchar(989)
+
+  # post_office_attachment_emails renames
+  - changeSet:
+      id: V063_drop_post_office_attachment_emails_fk_attachment_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: post_office_attachment_emails
+            foreignKeyName: post__attachment_id_388fa287a684f8f_fk_post_office_attachment_i
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: post_office_attachment_emails
+            constraintName: post__attachment_id_388fa287a684f8f_fk_post_office_attachment_i
+  - changeSet:
+      id: V063_drop_post_office_attachment_emails_fk_email_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyName: post_office_att_email_id_f053bb3a1fa4afd_fk_post_office_email_i
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: post_office_attachment_emails
+            constraintName: post_office_att_email_id_f053bb3a1fa4afd_fk_post_office_email_i
+  - changeSet:
+      id: V063_drop_post_office_attachment_emails_unique_attachment_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: post_office_attachment_emails
+            indexName: attachment_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: post_office_attachment_emails
+            constraintName: attachment_id
+  - changeSet:
+      id: V063_drop_post_office_attachment_emails_index_email_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: post_office_attachment_emails
+            indexName: post_office_att_email_id_f053bb3a1fa4afd_fk_post_office_email_i
+      changes:
+        - dropIndex:
+            tableName: post_office_attachment_emails
+            indexName: post_office_att_email_id_f053bb3a1fa4afd_fk_post_office_email_i
+  - changeSet:
+      id: V063_recreate_post_office_attachment_emails_unique_constraint
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: post_office_attachment_emails
+              indexName: post_office_attachment_e_attachment_id_email_id_8e046917_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: post_office_attachment_emails
+            columnNames: attachment_id, email_id
+            constraintName: post_office_attachment_e_attachment_id_email_id_8e046917_uniq
+  - changeSet:
+      id: V063_recreate_post_office_attachment_emails_index_email_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: post_office_attachment_emails
+              indexName: post_office_attachme_email_id_96875fd9_fk_post_offi
+      changes:
+        - createIndex:
+            tableName: post_office_attachment_emails
+            indexName: post_office_attachme_email_id_96875fd9_fk_post_offi
+            columns:
+              - column:
+                  name: email_id
+  - changeSet:
+      id: V063_recreate_post_office_attachment_emails_fk_attachment_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            foreignKeyConstraintExists:
+              foreignKeyTableName: post_office_attachment_emails
+              foreignKeyName: post_office_attachme_attachment_id_6136fd9a_fk_post_offi
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: post_office_attachment_emails
+            baseColumnNames: attachment_id
+            referencedTableName: post_office_attachment
+            referencedColumnNames: id
+            constraintName: post_office_attachme_attachment_id_6136fd9a_fk_post_offi
+  - changeSet:
+      id: V063_recreate_post_office_attachment_emails_fk_email_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            foreignKeyConstraintExists:
+              foreignKeyTableName: post_office_attachment_emails
+              foreignKeyName: post_office_attachme_email_id_96875fd9_fk_post_offi
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: post_office_attachment_emails
+            baseColumnNames: email_id
+            referencedTableName: post_office_email
+            referencedColumnNames: id
+            constraintName: post_office_attachme_email_id_96875fd9_fk_post_offi
+
+  # post_office_email renames
+  - changeSet:
+      id: V063_drop_post_office_email_fk_template_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: post_office_email
+            foreignKeyName: pos_template_id_3c48ffa2f1c17f43_fk_post_office_emailtemplate_i
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: post_office_email
+            constraintName: pos_template_id_3c48ffa2f1c17f43_fk_post_office_emailtemplate_i
+  - changeSet:
+      id: V063_drop_post_office_email_index_status
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: post_office_email
+            indexName: post_office_email_9acb4454
+      changes:
+        - dropIndex:
+            tableName: post_office_email
+            indexName: post_office_email_9acb4454
+  - changeSet:
+      id: V063_drop_post_office_email_index_created
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: post_office_email
+            indexName: post_office_email_e2fa5388
+      changes:
+        - dropIndex:
+            tableName: post_office_email
+            indexName: post_office_email_e2fa5388
+  - changeSet:
+      id: V063_drop_post_office_email_index_last_updated
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: post_office_email
+            indexName: post_office_email_3acc0b7a
+      changes:
+        - dropIndex:
+            tableName: post_office_email
+            indexName: post_office_email_3acc0b7a
+  - changeSet:
+      id: V063_drop_post_office_email_index_scheduled_time
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: post_office_email
+            indexName: post_office_email_ed24d584
+      changes:
+        - dropIndex:
+            tableName: post_office_email
+            indexName: post_office_email_ed24d584
+  - changeSet:
+      id: V063_drop_post_office_email_index_template_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: post_office_email
+            indexName: post_office_email_74f53564
+      changes:
+        - dropIndex:
+            tableName: post_office_email
+            indexName: post_office_email_74f53564
+  - changeSet:
+      id: V063_recreate_post_office_email_index_status
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: post_office_email
+                indexName: post_office_email_status_013a896c
+      changes:
+        - createIndex:
+            tableName: post_office_email
+            indexName: post_office_email_status_013a896c
+            columns:
+              - column:
+                  name: status
+  - changeSet:
+      id: V063_recreate_post_office_email_index_created
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: post_office_email
+                indexName: post_office_email_created_1306952f
+      changes:
+        - createIndex:
+            tableName: post_office_email
+            indexName: post_office_email_created_1306952f
+            columns:
+              - column:
+                  name: created
+  - changeSet:
+      id: V063_recreate_post_office_email_index_last_updated
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: post_office_email
+                indexName: post_office_email_last_updated_0ffcec35
+      changes:
+        - createIndex:
+            tableName: post_office_email
+            indexName: post_office_email_last_updated_0ffcec35
+            columns:
+              - column:
+                  name: last_updated
+  - changeSet:
+      id: V063_recreate_post_office_email_index_scheduled_time
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: post_office_email
+                indexName: post_office_email_scheduled_time_3869ebec
+      changes:
+        - createIndex:
+            tableName: post_office_email
+            indexName: post_office_email_scheduled_time_3869ebec
+            columns:
+              - column:
+                  name: scheduled_time
+  - changeSet:
+      id: V063_recreate_post_office_email_index_template_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: post_office_email
+                indexName: post_office_email_template_id_417da7da_fk_post_offi
+      changes:
+        - createIndex:
+            tableName: post_office_email
+            indexName: post_office_email_template_id_417da7da_fk_post_offi
+            columns:
+              - column:
+                  name: template_id
+  - changeSet:
+      id: V063_recreate_post_office_email_fk_template_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            foreignKeyConstraintExists:
+              foreignKeyTableName: post_office_email
+              foreignKeyName: post_office_email_template_id_417da7da_fk_post_offi
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: post_office_email
+            baseColumnNames: template_id
+            referencedTableName: post_office_emailtemplate
+            referencedColumnNames: id
+            constraintName: post_office_email_template_id_417da7da_fk_post_offi
+
+  # post_office_emailtemplate renames
+  - changeSet:
+      id: V063_drop_post_office_emailtemplate_fk_default_template_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: post_office_emailtemplate
+            foreignKeyName: D0d1b6711ab19cd27206adfa5a4f8f80
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: post_office_emailtemplate
+            constraintName: D0d1b6711ab19cd27206adfa5a4f8f80
+  - changeSet:
+      id: V063_drop_post_office_emailtemplate_unique_language
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: post_office_emailtemplate
+            indexName: post_office_emailtemplate_language_29c8606d390b61ee_uniq
+      changes:
+        - dropUniqueConstraint:
+            tableName: post_office_emailtemplate
+            constraintName: post_office_emailtemplate_language_29c8606d390b61ee_uniq
+  - changeSet:
+      id: V063_drop_post_office_emailtemplate_index_default_template_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: post_office_emailtemplate
+            indexName: post_office_emailtemplate_dea6f63e
+      changes:
+        - dropIndex:
+            tableName: post_office_emailtemplate
+            indexName: post_office_emailtemplate_dea6f63e
+  - changeSet:
+      id: V063_recreate_post_office_emailtemplate_unique_constraint
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            indexExists:
+              tableName: post_office_emailtemplate
+              indexName: post_office_emailtemplat_name_language_default_te_4023e3e4_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: post_office_emailtemplate
+            columnNames: name, language, default_template_id
+            constraintName: post_office_emailtemplat_name_language_default_te_4023e3e4_uniq
+  - changeSet:
+      id: V063_recreate_post_office_emailtemplate_index_default_template_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: post_office_emailtemplate
+                indexName: post_office_emailtem_default_template_id_2ac2f889_fk_post_offi
+      changes:
+        - createIndex:
+            tableName: post_office_emailtemplate
+            indexName: post_office_emailtem_default_template_id_2ac2f889_fk_post_offi
+            columns:
+              - column:
+                  name: default_template_id
+  - changeSet:
+      id: V063_recreate_post_office_emailtemplate_fk_default_template_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            foreignKeyConstraintExists:
+              foreignKeyTableName: post_office_emailtemplate
+              foreignKeyName: post_office_emailtem_default_template_id_2ac2f889_fk_post_offi
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: post_office_emailtemplate
+            baseColumnNames: default_template_id
+            referencedTableName: post_office_emailtemplate
+            referencedColumnNames: id
+            constraintName: post_office_emailtem_default_template_id_2ac2f889_fk_post_offi
+
+  # post_office_log renames
+  - changeSet:
+      id: V063_drop_post_office_log_fk_email_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: post_office_log
+            foreignKeyName: post_office_lo_email_id_72165efe97e2d836_fk_post_office_email_i
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: post_office_log
+            constraintName: post_office_lo_email_id_72165efe97e2d836_fk_post_office_email_i
+  - changeSet:
+      id: V063_drop_post_office_log_index_email_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: post_office_log
+            indexName: post_office_lo_email_id_72165efe97e2d836_fk_post_office_email_i
+      changes:
+        - dropIndex:
+            tableName: post_office_log
+            indexName: post_office_lo_email_id_72165efe97e2d836_fk_post_office_email_i
+  - changeSet:
+      id: V063_recreate_post_office_log_index_email_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: post_office_log
+                indexName: post_office_log_email_id_d42c8808_fk_post_office_email_id
+      changes:
+        - createIndex:
+            tableName: post_office_log
+            indexName: post_office_log_email_id_d42c8808_fk_post_office_email_id
+            columns:
+              - column:
+                  name: email_id
+  - changeSet:
+      id: V063_recreate_post_office_log_fk_email_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            foreignKeyConstraintExists:
+              foreignKeyTableName: post_office_log
+              foreignKeyName: post_office_log_email_id_d42c8808_fk_post_office_email_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: post_office_log
+            baseColumnNames: email_id
+            referencedTableName: post_office_email
+            referencedColumnNames: id
+            constraintName: post_office_log_email_id_d42c8808_fk_post_office_email_id

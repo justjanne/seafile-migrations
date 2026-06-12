@@ -1,0 +1,157 @@
+databaseChangeLog:
+  # institutions_institutionadmin
+  - changeSet:
+      id: V063_drop_institutions_institutionadmin_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: institutions_institutionadmin
+            foreignKeyName: i_institution_id_5f792d6fe9a87ac9_fk_institutions_institution_i
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: institutions_institutionadmin
+            constraintName: i_institution_id_5f792d6fe9a87ac9_fk_institutions_institution_i
+  - changeSet:
+      id: V063_drop_institutions_institutionadmin_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: institutions_institutionadmin
+            indexName: i_institution_id_5f792d6fe9a87ac9_fk_institutions_institution_i
+      changes:
+        - dropIndex:
+            tableName: institutions_institutionadmin
+            indexName: i_institution_id_5f792d6fe9a87ac9_fk_institutions_institution_i
+  - changeSet:
+      id: V063_alter_institutions_institutionadmin_user
+      author: seafile
+      # No preCondition needed for modifyDataType as it is idempotent usually or handles itself
+      changes:
+        - modifyDataType:
+            tableName: institutions_institutionadmin
+            columnName: user
+            newDataType: varchar(255)
+        - addNotNullConstraint:
+            tableName: institutions_institutionadmin
+            columnName: user
+            columnDataType: varchar(255)
+  - changeSet:
+      id: V063_recreate_institutions_institutionadmin_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: institutions_institutionadmin
+                indexName: institutions_institu_institution_id_1e9bb58b_fk_instituti
+      changes:
+        - createIndex:
+            tableName: institutions_institutionadmin
+            indexName: institutions_institu_institution_id_1e9bb58b_fk_instituti
+            columns:
+              - column:
+                  name: institution_id
+  - changeSet:
+      id: V063_recreate_institutions_institutionadmin_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: institutions_institutionadmin
+                foreignKeyName: institutions_institu_institution_id_1e9bb58b_fk_instituti
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: institutions_institutionadmin
+            baseColumnNames: institution_id
+            referencedTableName: institutions_institution
+            referencedColumnNames: id
+            constraintName: institutions_institu_institution_id_1e9bb58b_fk_instituti
+  - changeSet:
+      id: V063_drop_institutions_institutionadmin_user_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: institutions_institutionadmin
+            indexName: institutions_institutionadmin_user_7560167c8413ff0e_uniq
+      changes:
+        - dropIndex:
+            tableName: institutions_institutionadmin
+            indexName: institutions_institutionadmin_user_7560167c8413ff0e_uniq
+  - changeSet:
+      id: V063_create_institutions_institutionadmin_user_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: institutions_institutionadmin
+                indexName: institutions_institutionadmin_user_c71d766d
+      changes:
+        - createIndex:
+            tableName: institutions_institutionadmin
+            indexName: institutions_institutionadmin_user_c71d766d
+            columns:
+              - column:
+                  name: user
+
+  # institutions_institutionquota
+  - changeSet:
+      id: V063_drop_institutions_institutionquota_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: institutions_institutionquota
+            foreignKeyName: i_institution_id_2ca7c89373390e2c_fk_institutions_institution_i
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: institutions_institutionquota
+            constraintName: i_institution_id_2ca7c89373390e2c_fk_institutions_institution_i
+  - changeSet:
+      id: V063_drop_institutions_institutionquota_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: institutions_institutionquota
+            indexName: i_institution_id_2ca7c89373390e2c_fk_institutions_institution_i
+      changes:
+        - dropIndex:
+            tableName: institutions_institutionquota
+            indexName: i_institution_id_2ca7c89373390e2c_fk_institutions_institution_i
+  - changeSet:
+      id: V063_recreate_institutions_institutionquota_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: institutions_institutionquota
+                indexName: institutions_institu_institution_id_d23201d9_fk_instituti
+      changes:
+        - createIndex:
+            tableName: institutions_institutionquota
+            indexName: institutions_institu_institution_id_d23201d9_fk_instituti
+            columns:
+              - column:
+                  name: institution_id
+  - changeSet:
+      id: V063_recreate_institutions_institutionquota_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: institutions_institutionquota
+                foreignKeyName: institutions_institu_institution_id_d23201d9_fk_instituti
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: institutions_institutionquota
+            baseColumnNames: institution_id
+            referencedTableName: institutions_institution
+            referencedColumnNames: id
+            constraintName: institutions_institu_institution_id_d23201d9_fk_instituti

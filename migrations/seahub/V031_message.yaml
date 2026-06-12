@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: V031_add_sender_deleted_at_to_message_usermessage
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: message_usermessage
+                columnName: sender_deleted_at
+      changes:
+        - addColumn:
+            tableName: message_usermessage
+            columns:
+              - column:
+                  name: sender_deleted_at
+                  type: datetime
+  - changeSet:
+      id: V031_add_recipient_deleted_at_to_message_usermessage
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: message_usermessage
+                columnName: recipient_deleted_at
+      changes:
+        - addColumn:
+            tableName: message_usermessage
+            columns:
+              - column:
+                  name: recipient_deleted_at
+                  type: datetime

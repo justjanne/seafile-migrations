@@ -1,0 +1,126 @@
+databaseChangeLog:
+  - changeSet:
+      id: V020_create_base_groupenabledmodule
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_groupenabledmodule
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: module_name
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V020_add_index_to_base_groupenabledmodule_group_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_groupenabledmodule
+                indexName: base_groupenabledmodule_dc00373b
+      changes:
+        - createIndex:
+            tableName: base_groupenabledmodule
+            indexName: base_groupenabledmodule_dc00373b
+            columns:
+              - column:
+                  name: group_id
+
+  - changeSet:
+      id: V020_create_base_userenabledmodule
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_userenabledmodule
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: module_name
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V020_add_index_to_base_userenabledmodule_username
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_userenabledmodule
+                indexName: base_userenabledmodule_ee0cafa2
+      changes:
+        - createIndex:
+            tableName: base_userenabledmodule
+            indexName: base_userenabledmodule_ee0cafa2
+            columns:
+              - column:
+                  name: username
+
+  - changeSet:
+      id: V020_create_base_userlastlogin
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: base_userlastlogin
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_login
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V020_add_index_to_base_userlastlogin_username
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: base_userlastlogin
+                indexName: base_userlastlogin_ee0cafa2
+      changes:
+        - createIndex:
+            tableName: base_userlastlogin
+            indexName: base_userlastlogin_ee0cafa2
+            columns:
+              - column:
+                  name: username

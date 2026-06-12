@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: V080_create_repo_auto_delete
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: repo_auto_delete
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: days
+                  type: int
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V080_add_unique_constraint_to_repo_auto_delete_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: repo_auto_delete
+                indexName: repo_id
+      changes:
+        - addUniqueConstraint:
+            tableName: repo_auto_delete
+            columnNames: repo_id
+            constraintName: repo_id

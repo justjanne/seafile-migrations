@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: V015_create_api2_token
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: api2_token
+            columns:
+              - column:
+                  name: key
+                  type: varchar(40)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: created
+                  type: datetime
+                  constraints:
+                    nullable: false

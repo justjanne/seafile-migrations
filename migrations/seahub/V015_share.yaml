@@ -1,0 +1,223 @@
+databaseChangeLog:
+  - changeSet:
+      id: V015_create_share_anonymousshare
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: share_anonymousshare
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: repo_owner
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: anonymous_email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(25)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_drop_unique_constraint_to_share_anonymousshare_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_anonymousshare
+            indexName: token
+      changes:
+        - dropUniqueConstraint:
+            tableName: share_anonymousshare
+            constraintName: token
+  - changeSet:
+      id: V015_add_unique_constraint_to_share_anonymousshare_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_anonymousshare
+                indexName: share_anonymousshare_token_key
+      changes:
+        - addUniqueConstraint:
+            tableName: share_anonymousshare
+            constraintName: share_anonymousshare_token_key
+            columnNames: token
+
+  - changeSet:
+      id: V015_create_share_fileshare
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: share_fileshare
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ctime
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: view_cnt
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: s_type
+                  type: varchar(2)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V015_drop_unique_constraint_to_share_fileshare_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_fileshare
+            indexName: token
+      changes:
+        - dropUniqueConstraint:
+            tableName: share_fileshare
+            constraintName: token
+  - changeSet:
+      id: V015_add_unique_constraint_to_share_fileshare_token
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_fileshare
+                indexName: share_fileshare_token_key
+      changes:
+        - addUniqueConstraint:
+            tableName: share_fileshare
+            constraintName: share_fileshare_token_key
+            columnNames: token
+  - changeSet:
+      id: V015_drop_index_to_share_fileshare_username
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: share_fileshare
+            indexName: share_fileshare_ee0cafa2
+      changes:
+        - dropIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_ee0cafa2
+  - changeSet:
+      id: V015_add_index_to_share_fileshare_username
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_fileshare
+                indexName: share_fileshare_token_key
+      changes:
+        - createIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_token_key
+            columns:
+              - column:
+                  name: username
+  - changeSet:
+      id: V015_drop_index_to_share_fileshare_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+                tableName: share_fileshare
+                indexName: share_fileshare_2059abe4
+      changes:
+        - dropIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_2059abe4
+  - changeSet:
+      id: V015_add_index_to_share_fileshare_repo_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_fileshare
+                indexName: share_fileshare_repo_id_9b5ae27a
+      changes:
+        - createIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_repo_id_9b5ae27a
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V015_drop_index_to_share_fileshare_s_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+                tableName: share_fileshare
+                indexName: share_fileshare_44096fd5
+      changes:
+        - dropIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_44096fd5
+  - changeSet:
+      id: V015_add_index_to_share_fileshare_s_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: share_fileshare
+                indexName: share_fileshare_s_type_724eb6c1
+      changes:
+        - createIndex:
+            tableName: share_fileshare
+            indexName: share_fileshare_s_type_724eb6c1
+            columns:
+              - column:
+                  name: s_type

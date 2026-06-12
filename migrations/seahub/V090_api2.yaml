@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: V090_api2_tokenv2_device_name_utf8mb4
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: api2_tokenv2
+            columnName: device_name
+      changes:
+        - modifyDataType:
+            tableName: api2_tokenv2
+            columnName: device_name
+            newDataType: varchar(40)
+        - addNotNullConstraint:
+            tableName: api2_tokenv2
+            columnName: device_name
+            columnDataType: varchar(40)

@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: V071_post_office_attachment_add_headers
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: post_office_attachment
+                columnName: headers
+      changes:
+        - addColumn:
+            tableName: post_office_attachment
+            columns:
+              - column:
+                  name: headers
+                  type: longtext

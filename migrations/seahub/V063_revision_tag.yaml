@@ -1,0 +1,142 @@
+databaseChangeLog:
+  # revision_tag_revisiontags
+  - changeSet:
+      id: V063_drop_revision_tag_revisiontags_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          foreignKeyConstraintExists:
+            foreignKeyTableName: revision_tag_revisiontags
+            foreignKeyName: revision_tag_rev_tag_id_37c2d76166c50597_fk_revision_tag_tags_i
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: revision_tag_revisiontags
+            constraintName: revision_tag_rev_tag_id_37c2d76166c50597_fk_revision_tag_tags_i
+  - changeSet:
+      id: V063_drop_revision_tag_revisiontags_tag_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_rev_tag_id_37c2d76166c50597_fk_revision_tag_tags_i
+      changes:
+        - dropIndex:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_rev_tag_id_37c2d76166c50597_fk_revision_tag_tags_i
+  - changeSet:
+      id: V063_drop_revision_tag_revisiontags_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisiontags_9a8c79bf
+      changes:
+        - dropIndex:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisiontags_9a8c79bf
+  - changeSet:
+      id: V063_drop_revision_tag_revisiontags_revision_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisiontags_5de09a8d
+      changes:
+        - dropIndex:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisiontags_5de09a8d
+  - changeSet:
+      id: V063_drop_revision_tag_revisiontags_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisiontags_14c4b06b
+      changes:
+        - dropIndex:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisiontags_14c4b06b
+  - changeSet:
+      id: V063_recreate_revision_tag_revisiontags_repo_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: revision_tag_revisiontags
+                indexName: revision_tag_revisiontags_repo_id_212c0c69
+      changes:
+        - createIndex:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisiontags_repo_id_212c0c69
+            columns:
+              - column:
+                  name: repo_id
+  - changeSet:
+      id: V063_recreate_revision_tag_revisiontags_revision_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: revision_tag_revisiontags
+                indexName: revision_tag_revisiontags_revision_id_fd9fe0f9
+      changes:
+        - createIndex:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisiontags_revision_id_fd9fe0f9
+            columns:
+              - column:
+                  name: revision_id
+  - changeSet:
+      id: V063_recreate_revision_tag_revisiontags_username_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: revision_tag_revisiontags
+                indexName: revision_tag_revisiontags_username_3007d29e
+      changes:
+        - createIndex:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisiontags_username_3007d29e
+            columns:
+              - column:
+                  name: username
+  - changeSet:
+      id: V063_recreate_revision_tag_revisiontags_tag_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: revision_tag_revisiontags
+                indexName: revision_tag_revisio_tag_id_ee4e9b00_fk_revision_
+      changes:
+        - createIndex:
+            tableName: revision_tag_revisiontags
+            indexName: revision_tag_revisio_tag_id_ee4e9b00_fk_revision_
+            columns:
+              - column:
+                  name: tag_id
+  - changeSet:
+      id: V063_recreate_revision_tag_revisiontags_fk
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: revision_tag_revisiontags
+                foreignKeyName: revision_tag_revisio_tag_id_ee4e9b00_fk_revision_
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: revision_tag_revisiontags
+            baseColumnNames: tag_id
+            referencedTableName: revision_tag_tags
+            referencedColumnNames: id
+            constraintName: revision_tag_revisio_tag_id_ee4e9b00_fk_revision_

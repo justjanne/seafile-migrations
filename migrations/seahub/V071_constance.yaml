@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: V071_constance_config_value_nullable
+      author: seafile
+      changes:
+        - dropNotNullConstraint:
+            tableName: constance_config
+            columnName: value
+            columnDataType: longtext
+
+  - changeSet:
+      id: V071_constance_config_rename_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: constance_config
+                columnName: constance_key
+      changes:
+        - renameColumn:
+            tableName: constance_config
+            oldColumnName: key
+            newColumnName: constance_key
+            columnDataType: varchar(255)
+
+  - changeSet:
+      id: V071_constance_config_constance_key_not_null
+      author: seafile
+      changes:
+        - addNotNullConstraint:
+            tableName: constance_config
+            columnName: constance_key
+            columnDataType: varchar(255)
+
+  - changeSet:
+      id: V071_drop_constance_config_constance_key_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: constance_config
+            indexName: constance_config_constance_key_key
+      changes:
+        - dropUniqueConstraint:
+            tableName: constance_config
+            constraintName: constance_config_constance_key_key
+
+  - changeSet:
+      id: V071_drop_constance_config_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: constance_config
+            indexName: key
+      changes:
+        - dropIndex:
+            tableName: constance_config
+            indexName: key
+
+  - changeSet:
+      id: V071_recreate_constance_config_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: constance_config
+                indexName: constance_key
+      changes:
+        - addUniqueConstraint:
+            tableName: constance_config
+            columnNames: constance_key
+            constraintName: constance_key

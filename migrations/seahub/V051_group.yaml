@@ -1,0 +1,94 @@
+databaseChangeLog:
+  - changeSet:
+      id: V051_group_groupmessage_index_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: group_groupmessage
+            indexName: group_groupmessage_dc00373b
+      changes:
+        - dropIndex:
+            tableName: group_groupmessage
+            indexName: group_groupmessage_dc00373b
+        - createIndex:
+            tableName: group_groupmessage
+            indexName: group_groupmessage_0e939a4f
+            columns:
+              - column:
+                  name: group_id
+
+  - changeSet:
+      id: V051_group_messageattachment_fk_and_index_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: group_messageattachment
+            indexName: group_messageattachment_12d5396a
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: group_messageattachment
+            constraintName: group_message_id_refs_id_e9a00d2a
+        - dropIndex:
+            tableName: group_messageattachment
+            indexName: group_messageattachment_12d5396a
+        - createIndex:
+            tableName: group_messageattachment
+            indexName: group_group_message_id_1cf3436c2d475be7_fk_group_groupmessage_i
+            columns:
+              - column:
+                  name: group_message_id
+        - addForeignKeyConstraint:
+            baseTableName: group_messageattachment
+            baseColumnNames: group_message_id
+            referencedTableName: group_groupmessage
+            referencedColumnNames: id
+            constraintName: group_group_message_id_1cf3436c2d475be7_fk_group_groupmessage_i
+
+  - changeSet:
+      id: V051_group_messagereply_fk_and_index_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: group_messagereply
+            indexName: group_messagereply_3fde75e6
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: group_messagereply
+            constraintName: reply_to_id_refs_id_261fb244
+        - dropIndex:
+            tableName: group_messagereply
+            indexName: group_messagereply_3fde75e6
+        - createIndex:
+            tableName: group_messagereply
+            indexName: group_mess_reply_to_id_23113ea180894951_fk_group_groupmessage_i
+            columns:
+              - column:
+                  name: reply_to_id
+        - addForeignKeyConstraint:
+            baseTableName: group_messagereply
+            baseColumnNames: reply_to_id
+            referencedTableName: group_groupmessage
+            referencedColumnNames: id
+            constraintName: group_mess_reply_to_id_23113ea180894951_fk_group_groupmessage_i
+
+  - changeSet:
+      id: V051_group_publicgroup_index_rename
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: group_publicgroup
+            indexName: group_publicgroup_dc00373b
+      changes:
+        - dropIndex:
+            tableName: group_publicgroup
+            indexName: group_publicgroup_dc00373b
+        - createIndex:
+            tableName: group_publicgroup
+            indexName: group_publicgroup_0e939a4f
+            columns:
+              - column:
+                  name: group_id

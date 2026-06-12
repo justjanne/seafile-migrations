@@ -1,0 +1,91 @@
+databaseChangeLog:
+  - changeSet:
+      id: V030_create_api2_tokenv2
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: api2_tokenv2
+            columns:
+              - column:
+                  name: key
+                  type: varchar(40)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: platform
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: device_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: device_name
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: platform_version
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: client_version
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_accessed
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_login_ip
+                  type: char(39)
+  - changeSet:
+      id: V030_drop_api2_tokenv2_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: api2_tokenv2
+            indexName: user
+      changes:
+        - dropUniqueConstraint:
+            tableName: api2_tokenv2
+            constraintName: user
+  - changeSet:
+      id: V030_drop_api2_tokenv2_unq_api2_tokenv2_user_platform_device_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: api2_tokenv2
+            indexName: unq_api2_tokenv2_user_platform_device_id
+      changes:
+        - dropUniqueConstraint:
+            tableName: api2_tokenv2
+            constraintName: unq_api2_tokenv2_user_platform_device_id
+  - changeSet:
+      id: V030_add_api2_tokenv2_user_platform_device_id_key
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: api2_tokenv2
+                indexName: api2_tokenv2_user_platform_device_id_key
+      changes:
+        - addUniqueConstraint:
+            tableName: api2_tokenv2
+            constraintName: api2_tokenv2_user_platform_device_id_key
+            columnNames: user, platform, device_id

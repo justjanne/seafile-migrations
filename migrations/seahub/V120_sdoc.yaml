@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: V120_create_sdoc_operation_log
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: sdoc_operation_log
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: doc_uuid
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: op_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: op_time
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: operations
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V120_add_indexes_to_sdoc_operation_log
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: sdoc_operation_log
+                indexName: sdoc_operation_log_op_time
+      changes:
+        - createIndex:
+            tableName: sdoc_operation_log
+            indexName: sdoc_operation_log_op_time
+            columns:
+              - column:
+                  name: op_time
+        - createIndex:
+            tableName: sdoc_operation_log
+            indexName: sdoc_operation_log_doc_uuid
+            columns:
+              - column:
+                  name: doc_uuid
+        - createIndex:
+            tableName: sdoc_operation_log
+            indexName: sdoc_idx_operation_log_doc_uuid_op_id
+            columns:
+              - column:
+                  name: doc_uuid
+              - column:
+                  name: op_id

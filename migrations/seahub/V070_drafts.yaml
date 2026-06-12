@@ -1,0 +1,293 @@
+databaseChangeLog:
+  - changeSet:
+      id: V070_change_id_type_in_drafts_draft
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: drafts_draft
+      changes:
+        - modifyDataType:
+            tableName: drafts_draft
+            columnName: id
+            newDataType: serial
+  - changeSet:
+      id: V070_normalize_drafts_draft_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: drafts_draft
+      changes:
+        - addAutoIncrement:
+            tableName: drafts_draft
+            columnName: id
+            columnDataType: int
+  - changeSet:
+      id: V070_normalize_drafts_draft_id_created_at
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: drafts_draft
+            columnName: created_at
+      changes:
+        - modifyDataType:
+            tableName: drafts_draft
+            columnName: created_at
+            newDataType: datetime
+        - addNotNullConstraint:
+            tableName: drafts_draft
+            columnName: created_at
+            columnDataType: datetime
+        - dropDefaultValue:
+            tableName: drafts_draft
+            columnName: created_at
+  - changeSet:
+      id: V070_normalize_drafts_draft_id_updated_at
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: drafts_draft
+            columnName: updated_at
+      changes:
+        - modifyDataType:
+            tableName: drafts_draft
+            columnName: updated_at
+            newDataType: datetime
+        - addNotNullConstraint:
+            tableName: drafts_draft
+            columnName: updated_at
+            columnDataType: datetime
+        - dropDefaultValue:
+            tableName: drafts_draft
+            columnName: updated_at
+  - changeSet:
+      id: V070_create_drafts_draft
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: drafts_draft
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: origin_repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: origin_file_version
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: draft_file_path
+                  type: varchar(1024)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: origin_file_uuid
+                  type: char(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: publish_file_version
+                  type: varchar(100)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V070_create_drafts_draft_origin_file_uuid_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: drafts_draft
+                indexName: drafts_draft_origin_file_uuid_id_f150319e_fk_tags_file
+      changes:
+        - createIndex:
+            tableName: drafts_draft
+            indexName: drafts_draft_origin_file_uuid_id_f150319e_fk_tags_file
+            columns:
+              - column:
+                  name: origin_file_uuid
+  - changeSet:
+      id: V070_create_drafts_draft_created_at
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: drafts_draft
+                indexName: drafts_draft_created_at_e9f4523f
+      changes:
+        - createIndex:
+            tableName: drafts_draft
+            indexName: drafts_draft_created_at_e9f4523f
+            columns:
+              - column:
+                  name: created_at
+  - changeSet:
+      id: V070_create_drafts_draft_updated_at
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: drafts_draft
+                indexName: drafts_draft_updated_at_0a144b05
+      changes:
+        - createIndex:
+            tableName: drafts_draft
+            indexName: drafts_draft_updated_at_0a144b05
+            columns:
+              - column:
+                  name: updated_at
+  - changeSet:
+      id: V070_create_drafts_draft_username
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: drafts_draft
+                indexName: drafts_draft_username_73e6738b
+      changes:
+        - createIndex:
+            tableName: drafts_draft
+            indexName: drafts_draft_username_73e6738b
+            columns:
+              - column:
+                  name: username
+
+  - changeSet:
+      id: V070_change_id_type_in_drafts_draftreviewer
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: drafts_draftreviewer
+      changes:
+        - modifyDataType:
+            tableName: drafts_draftreviewer
+            columnName: id
+            newDataType: serial
+  - changeSet:
+      id: V070_normalize_drafts_draftreviewer_id_autoincrement
+      author: seafile
+      dbms: mysql,mariadb
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: drafts_draftreviewer
+      changes:
+        - addAutoIncrement:
+            tableName: drafts_draftreviewer
+            columnName: id
+            columnDataType: int
+  # drafts_draftreviewer
+  - changeSet:
+      id: V070_create_drafts_draftreviewer
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: drafts_draftreviewer
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: reviewer
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: draft_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V070_create_drafts_draftreviewer_reviewer
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: drafts_draftreviewer
+                indexName: drafts_draftreviewer_reviewer_e4c777ac
+      changes:
+        - createIndex:
+            tableName: drafts_draftreviewer
+            indexName: drafts_draftreviewer_reviewer_e4c777ac
+            columns:
+              - column:
+                  name: reviewer
+
+  - changeSet:
+      id: V070_create_drafts_draftreviewer_draft_id_index
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: drafts_draftreviewer
+                indexName: drafts_draftreviewer_draft_id_4ea59775_fk_drafts_draft_id
+      changes:
+        - createIndex:
+            tableName: drafts_draftreviewer
+            indexName: drafts_draftreviewer_draft_id_4ea59775_fk_drafts_draft_id
+            columns:
+              - column:
+                  name: draft_id
+
+  - changeSet:
+      id: V070_create_drafts_draftreviewer_draft_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyName: drafts_draftreviewer_draft_id_4ea59775_fk_drafts_draft_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: drafts_draftreviewer
+            baseColumnNames: draft_id
+            referencedTableName: drafts_draft
+            referencedColumnNames: id
+            constraintName: drafts_draftreviewer_draft_id_4ea59775_fk_drafts_draft_id

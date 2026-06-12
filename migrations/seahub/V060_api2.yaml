@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: V060_add_wiped_at_to_api2_tokenv2
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: api2_tokenv2
+                columnName: wiped_at
+      changes:
+        - addColumn:
+            tableName: api2_tokenv2
+            columns:
+              - column:
+                  name: wiped_at
+                  type: datetime
+
+  - changeSet:
+      id: V062_api2_tokenv2_created_at_drop_default
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            tableName: api2_tokenv2
+            columnName: created_at
+      changes:
+        - dropDefaultValue:
+            tableName: api2_tokenv2
+            columnName: created_at
+            columnDataType: datetime
+  - changeSet:
+      id: V060_add_created_at_to_api2_tokenv2
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                tableName: api2_tokenv2
+                columnName: created_at
+      changes:
+        - addColumn:
+            tableName: api2_tokenv2
+            columns:
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false

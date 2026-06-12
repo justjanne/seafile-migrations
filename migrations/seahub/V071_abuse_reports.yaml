@@ -1,0 +1,82 @@
+databaseChangeLog:
+  - changeSet:
+      id: V071_create_abuse_reports_abusereport
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: abuse_reports_abusereport
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: reporter
+                  type: longtext
+              - column:
+                  name: repo_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repo_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_path
+                  type: longtext
+              - column:
+                  name: abuse_type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: longtext
+              - column:
+                  name: handled
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: time
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: V071_add_index_to_abuse_reports_abusereport_abuse_type
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: abuse_reports_abusereport
+                indexName: abuse_reports_abusereport_abuse_type_703d5335
+      changes:
+        - createIndex:
+            tableName: abuse_reports_abusereport
+            indexName: abuse_reports_abusereport_abuse_type_703d5335
+            columns:
+              - column:
+                  name: abuse_type
+  - changeSet:
+      id: V071_add_index_to_abuse_reports_abusereport_handled
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: abuse_reports_abusereport
+                indexName: abuse_reports_abusereport_handled_94b8304c
+      changes:
+        - createIndex:
+            tableName: abuse_reports_abusereport
+            indexName: abuse_reports_abusereport_handled_94b8304c
+            columns:
+              - column:
+                  name: handled

@@ -1,0 +1,296 @@
+databaseChangeLog:
+  # social_auth_association
+  - changeSet:
+      id: V070_create_social_auth_association
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: social_auth_association
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: server_url
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: handle
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: secret
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: issued
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lifetime
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: assoc_type
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V070_create_social_auth_association_unique_constraint
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: social_auth_association
+                indexName: social_auth_association_server_url_handle_078befa2_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: social_auth_association
+            columnNames: server_url, handle
+            constraintName: social_auth_association_server_url_handle_078befa2_uniq
+
+  # social_auth_code
+  - changeSet:
+      id: V070_create_social_auth_code
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: social_auth_code
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(254)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: code
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: verified
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V070_create_social_auth_code_unique_and_indexes
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: social_auth_code
+                indexName: social_auth_code_email_code_801b2d02_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: social_auth_code
+            columnNames: email, code
+            constraintName: social_auth_code_email_code_801b2d02_uniq
+        - createIndex:
+            tableName: social_auth_code
+            indexName: social_auth_code_code_a2393167
+            columns:
+              - column:
+                  name: code
+        - createIndex:
+            tableName: social_auth_code
+            indexName: social_auth_code_timestamp_176b341f
+            columns:
+              - column:
+                  name: timestamp
+
+  # social_auth_nonce
+  - changeSet:
+      id: V070_create_social_auth_nonce
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: social_auth_nonce
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: server_url
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: salt
+                  type: varchar(65)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V070_create_social_auth_nonce_unique_constraint
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: social_auth_nonce
+                indexName: social_auth_nonce_server_url_timestamp_salt_f6284463_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: social_auth_nonce
+            columnNames: server_url, timestamp, salt
+            constraintName: social_auth_nonce_server_url_timestamp_salt_f6284463_uniq
+
+  # social_auth_partial
+  - changeSet:
+      id: V070_create_social_auth_partial
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: social_auth_partial
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: next_step
+                  type: integer unsigned
+                  constraints:
+                    nullable: false
+              - column:
+                  name: backend
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: data
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V070_create_social_auth_partial_indexes
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: social_auth_partial
+                indexName: social_auth_partial_token_3017fea3
+      changes:
+        - createIndex:
+            tableName: social_auth_partial
+            indexName: social_auth_partial_token_3017fea3
+            columns:
+              - column:
+                  name: token
+        - createIndex:
+            tableName: social_auth_partial
+            indexName: social_auth_partial_timestamp_50f2119f
+            columns:
+              - column:
+                  name: timestamp
+
+  # social_auth_usersocialauth
+  - changeSet:
+      id: V070_create_social_auth_usersocialauth
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: social_auth_usersocialauth
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: provider
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: uid
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: extra_data
+                  type: longtext
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V070_create_social_auth_usersocialauth_unique_and_indexes
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: social_auth_usersocialauth
+                indexName: social_auth_usersocialauth_provider_uid_e6b5e668_uniq
+      changes:
+        - addUniqueConstraint:
+            tableName: social_auth_usersocialauth
+            columnNames: provider, uid
+            constraintName: social_auth_usersocialauth_provider_uid_e6b5e668_uniq
+        - createIndex:
+            tableName: social_auth_usersocialauth
+            indexName: social_auth_usersocialauth_username_3f06b5cf
+            columns:
+              - column:
+                  name: username

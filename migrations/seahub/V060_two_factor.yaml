@@ -1,0 +1,343 @@
+databaseChangeLog:
+  - changeSet:
+      id: V060_create_two_factor_totpdevice
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: two_factor_totpdevice
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: confirmed
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: key
+                  type: varchar(80)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: step
+                  type: integer unsigned
+                  constraints:
+                    nullable: false
+              - column:
+                  name: t0
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: digits
+                  type: integer unsigned
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tolerance
+                  type: integer unsigned
+                  constraints:
+                    nullable: false
+              - column:
+                  name: drift
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_t
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V060_drop_two_factor_totpdevice_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: two_factor_totpdevice
+            indexName: user
+      changes:
+        - dropUniqueConstraint:
+            tableName: two_factor_totpdevice
+            constraintName: user
+
+  - changeSet:
+      id: V060_drop_two_factor_totpdevice_unq_two_factor_totpdevice_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: two_factor_totpdevice
+            indexName: unq_two_factor_totpdevice_user
+      changes:
+        - dropUniqueConstraint:
+            tableName: two_factor_totpdevice
+            constraintName: unq_two_factor_totpdevice_user
+
+  - changeSet:
+      id: V060_add_unique_constraint_to_two_factor_totpdevice_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: two_factor_totpdevice
+                indexName: two_factor_totpdevice_user_key
+      changes:
+        - addUniqueConstraint:
+            tableName: two_factor_totpdevice
+            constraintName: two_factor_totpdevice_user_key
+            columnNames: user
+
+  - changeSet:
+      id: V060_create_two_factor_phonedevice
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: two_factor_phonedevice
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: confirmed
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: number
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: key
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: method
+                  type: varchar(4)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V060_drop_two_factor_phonedevice_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: two_factor_phonedevice
+            indexName: user
+      changes:
+        - dropUniqueConstraint:
+            tableName: two_factor_phonedevice
+            constraintName: user
+
+  - changeSet:
+      id: V060_drop_two_factor_phonedevice_unq_two_factor_phonedevice_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: two_factor_phonedevice
+            indexName: unq_two_factor_phonedevice_user
+      changes:
+        - dropUniqueConstraint:
+            tableName: two_factor_phonedevice
+            constraintName: unq_two_factor_phonedevice_user
+
+  - changeSet:
+      id: V060_add_unique_constraint_to_two_factor_phonedevice_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: two_factor_phonedevice
+                indexName: two_factor_phonedevice_user_key
+      changes:
+        - addUniqueConstraint:
+            tableName: two_factor_phonedevice
+            constraintName: two_factor_phonedevice_user_key
+            columnNames: user
+
+  - changeSet:
+      id: V060_create_two_factor_staticdevice
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: two_factor_staticdevice
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: confirmed
+                  type: boolean
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V060_drop_two_factor_staticdevice_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: two_factor_staticdevice
+            indexName: user
+      changes:
+        - dropUniqueConstraint:
+            tableName: two_factor_staticdevice
+            constraintName: user
+
+  - changeSet:
+      id: V060_drop_two_factor_staticdevice_unq_two_factor_staticdevice_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          indexExists:
+            tableName: two_factor_staticdevice
+            indexName: unq_two_factor_staticdevice_user
+      changes:
+        - dropUniqueConstraint:
+            tableName: two_factor_staticdevice
+            constraintName: unq_two_factor_staticdevice_user
+
+  - changeSet:
+      id: V060_add_unique_constraint_to_two_factor_staticdevice_user
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: two_factor_staticdevice
+                indexName: two_factor_staticdevice_user_key
+      changes:
+        - addUniqueConstraint:
+            tableName: two_factor_staticdevice
+            constraintName: two_factor_staticdevice_user_key
+            columnNames: user
+
+  - changeSet:
+      id: V060_create_two_factor_statictoken
+      author: seafile
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: two_factor_statictoken
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: device_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: V060_add_device_id_index_to_two_factor_statictoken
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: two_factor_statictoken
+                indexName: two_fac_device_id_55a7b345293a7c6c_fk_two_factor_staticdevice_i
+      changes:
+        - createIndex:
+            tableName: two_factor_statictoken
+            indexName: two_fac_device_id_55a7b345293a7c6c_fk_two_factor_staticdevice_i
+            columns:
+              - column:
+                  name: device_id
+
+  - changeSet:
+      id: V060_add_token_index_to_two_factor_statictoken
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - indexExists:
+                tableName: two_factor_statictoken
+                indexName: two_factor_statictoken_94a08da1
+      changes:
+        - createIndex:
+            tableName: two_factor_statictoken
+            indexName: two_factor_statictoken_94a08da1
+            columns:
+              - column:
+                  name: token
+
+  - changeSet:
+      id: V060_add_fk_two_factor_statictoken_device_id
+      author: seafile
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - foreignKeyConstraintExists:
+                foreignKeyTableName: two_factor_statictoken
+                foreignKeyName: two_fac_device_id_55a7b345293a7c6c_fk_two_factor_staticdevice_i
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: two_factor_statictoken
+            baseColumnNames: device_id
+            referencedTableName: two_factor_staticdevice
+            referencedColumnNames: id
+            constraintName: two_fac_device_id_55a7b345293a7c6c_fk_two_factor_staticdevice_i
