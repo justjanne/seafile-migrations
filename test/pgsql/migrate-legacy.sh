@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-psql postgres://postgres:password@localhost/$1 --file=pgsql/schemas/$1/018.sql || true
+psql postgres://postgres:password@localhost/$1 --file=$(ls pgsql/schemas/$1/*.sql | sort -n | head -n1) || true
 for i in $(ls pgsql/migrations/$1/*.sql | sort); do
   psql postgres://postgres:password@localhost/$1 --file=$i || true
 done

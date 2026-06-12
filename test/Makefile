@@ -2,12 +2,13 @@ PGSQL_VERSION=42.7.11
 MYSQL_VERSION=3.5.8
 
 .PHONY: test
-test: reports/ccnet.txt reports/seafile.txt
+test: clean reports/seahub.txt reports/ccnet.txt reports/seafile.txt
 
 .PHONY: clean
 clean:
-	rm reports/ccnet/*
-	rm reports/seafile/*
+	rm reports/ccnet* || true
+	rm reports/seafile* || true
+	rm reports/seahub* || true
 
 reports/%.txt: drivers \
 	reports/%-mysql-clean.json \
@@ -19,8 +20,9 @@ reports/%.txt: drivers \
 	reports/%-pgsql-test.json
 	$(eval database := $(patsubst %.txt,%,$(@F)))
 
-	./process_results.sh $(database) > $@
+	./process_results.sh $(database) > $@ || true
 
+.PRECIOUS: reports/%.json
 reports/%.json:
 	$(eval target := $(subst -, ,$(patsubst %.json,%,$(@F))))
 	$(eval database := $(word 1,$(target)))

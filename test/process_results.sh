@@ -2,11 +2,11 @@
 set -euo pipefail
 
 echo "-- mysql-upstream"
-diff -u reports/$1-mysql-clean.json reports/$1-mysql-upstream.json && echo "no change"
+diff -u reports/$1-pgsql-clean.json reports/$1-mysql-upstream.json && echo "no change"
 echo
 
 echo "-- mysql-legacy"
-diff -u reports/$1-mysql-clean.json reports/$1-mysql-legacy.json && echo "no change"
+diff -u reports/$1-pgsql-clean.json reports/$1-mysql-legacy.json && echo "no change"
 echo
 
 echo "-- pgsql-upstream"
